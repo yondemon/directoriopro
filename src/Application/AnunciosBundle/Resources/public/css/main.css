@@ -1,0 +1,56 @@
+*{font-family:arial;font-size:12px}
+BODY{padding:0;margin:0}
+H1{font-size:20px;margin:0 0 15px 0}
+A{color:#4183C4;text-decoration:none}
+	A:HOVER{text-decoration:underline}
+UL{margin:0;padding:0;list-style-type:none}
+	UL LI{padding:10px 0 10px 0;margin:10x 0 0 0;border-top:1px #efefef solid}
+
+HEADER{display:block;background:#000;color:white;margin-bottom:10px;font-size:15px}
+	HEADER A{color:white;font-size:15px}
+	HEADER B{color:white;font-size:15px}
+	
+	
+.wrap{width:750px;margin:auto;padding:10px}
+.floatR{float:right}
+
+A.title{font-size:20px}
+SPAN.date{color:#666}
+SPAN.price{float:right;color:orange;font-size:18px}
+
+.filters{background:#fafafa;padding:10px;border:1px #efefef solid;margin-top:10px;float:left;width:180px;float:right}
+	.filters A{display:block;padding-top:10px}
+
+/*********/
+	
+.button {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b6d14c), color-stop(100%,#83a01c));
+    background: -moz-linear-gradient(center top, #b6d14c 0%, #83a01c 100%);
+    -webkit-box-shadow: 0px 1px 0px 0px #d1f25a inset, 0px -1px 0px 0px #99bc27 inset, 0px 2px 2px 0px #d4d4d4;
+    -moz-box-shadow: 0px 1px 0px 0px #d1f25a inset, 0px -1px 0px 0px #99bc27 inset, 0px 2px 2px 0px #d4d4d4;
+    box-shadow: 0px 1px 0px 0px #d1f25a inset, 0px -1px 0px 0px #99bc27 inset, 0px 2px 2px 0px #d4d4d4;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    text-shadow: 0px 1px 0px #789b1f;
+    padding: 10px 20px;
+    display: block;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #97b134;
+    font-family: 'Lucida Grande';
+    font-size: 14px;
+    color: #FFFFFF;
+}
+.button:hover {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bbda4c), color-stop(100%,#83a01d));
+    background: -moz-linear-gradient(center top, #bbda4c 0%, #83a01d 100%);
+}
+.button:active {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#83a01d), color-stop(100%,#a7c248));
+    background: -moz-linear-gradient(center top, #83a01d 0%, #a7c248 100%);
+    -webkit-box-shadow: 0px 1px 0px 0px #a3c229 inset;
+    -moz-box-shadow: 0px 1px 0px 0px #a3c229 inset;
+    box-shadow: 0px 1px 0px 0px #a3c229 inset;
+}
+

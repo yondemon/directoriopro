@@ -1,0 +1,56 @@
+{% set categories = ["Todos", "Programador web", "Programador apps móvil", "Diseñadores", "Bloggers", "Communiy managers", "SEO", "Traductor"] %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{% block title %}Demo Bundle{% endblock %}</title>
+	{% stylesheets '@ApplicationAnunciosBundle/Resources/public/css/*.css' output='css/main.css' %} <link href="{{ asset_url }}" type="text/css" rel="stylesheet" /> {% endstylesheets %}
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+	
+<header>
+	<div class="wrap">
+	
+		<b style="float:right">&lt;betabeers&gt;</b>
+		<a href="{{ path('post') }}">Anuncios</a> &nbsp;|&nbsp; <a href="#">Profesionales</a>
+			
+
+	
+	</div>
+</header>
+	
+<div class="wrap">
+	
+<div style="text-align:center;padding-bottom:20px">
+<form action="{{ path('post') }}search">
+	buscar: <input name="q"> 
+	en: 
+	<select name="c">
+		{% for category in categories %}
+			<option value="{{loop.index0}}">{{category}}</option>
+		{% endfor %}
+	</select> 
+	<input type="submit" value="Buscar"/>
+</form>
+</div>
+
+
+	<div class="filters">
+	<a href="{{ path('post_new') }}" class="button">Publicar anuncio</a>
+	<br/><br/>
+	
+	<b>Filtrar anuncios:</b><br/>
+	{% for category in categories %}
+		<a href="{{ path('post') }}search?c={{loop.index0}}">{{category}}</a>
+	{% endfor %}
+	</div>
+	<div style="float:left;width:500px">
+		{% block content %}{% endblock %}
+	</div>
+
+</div>
+
+</body>
+</html>

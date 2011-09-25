@@ -1,0 +1,27 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title entity.title %}
+
+{% block content %}
+
+
+
+<h1>{{ entity.title }}</h1>
+
+{{ entity.body }}<br/><br/>
+
+#{{ entity.id }} | {{ entity.userid }} | {{ entity.categoryid }} | {{ entity.price }} | <span class="date">{{ entity.date|date('d/m/Y H:i:s') }}</span>
+
+<br/><br/>
+
+<a href="{{ path('post_edit', { 'id': entity.id }) }}">Edit</a>
+
+
+<div style="float:left;margin-right:10px">
+<form action="{{ path('post_delete', { 'id': entity.id }) }}" method="post">
+    {{ form_widget(delete_form) }}
+    <button type="submit">Delete</button>
+</form>
+</div>
+
+{% endblock %}

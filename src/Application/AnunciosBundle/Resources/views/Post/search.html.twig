@@ -1,0 +1,27 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Buscar" %}
+
+{% block content %}
+
+
+
+<h1>Buscar</h1>
+
+
+<ul>
+    {% for entity in entities %}
+        <li>
+			<span class="price">{{ entity.price }} €</span>
+            <!--<b>{{ categories[ entity.categoryid ] }}</b><br/>#{{ entity.id }} -->
+            <a href="{{ path('post_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
+            {{ entity.body }}<br/>
+            <!--{{ entity.userid }}<br/>-->
+            <span class="date">{{ entity.date|date('d/m/Y') }}</span>
+			<!--<br/><a href="{{ path('post_edit', { 'id': entity.id }) }}">editar</a>-->
+			<br/><br/>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
