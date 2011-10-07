@@ -2,17 +2,30 @@
 
 {% block title "Anuncios" %}
 
+
+{% block sidebar %}
+	<a href="{{ path('post_new') }}" class="btn large primary">Publicar anuncio</a>
+	<br/>
+
+	<b>Filtrar por categoría</b><br/>
+	{% for category in categories %}
+		<a href="{{ path('post') }}search?c={{loop.index0}}">{{category}}</a>
+	{% endfor %}
+{% endblock %}
+
+
+
 {% block content %}
 
 
+<h1>Anuncios</h1>
 
-<!--<h1>Anuncios</h1>-->
+
 
 
 <ul>
     {% for entity in entities %}
         <li>
-			<span class="price">{{ entity.price }} €</span>
             <!--<b>{{ categories[ entity.categoryid ] }}</b><br/>#{{ entity.id }} -->
             <a href="{{ path('post_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
             {{ entity.body }}<br/>
@@ -23,5 +36,14 @@
         </li>
     {% endfor %}
 </ul>
+
+
+
+
+
+{{ pager|raw }}
+
+
+
 
 {% endblock %}

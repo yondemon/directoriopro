@@ -1,3 +1,8 @@
+ApplicationUserBundle:
+    resource: "@ApplicationUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 ApplicationAnunciosBundle:
     resource: "@ApplicationAnunciosBundle/Controller/"
     type:     annotation

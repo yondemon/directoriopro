@@ -1,27 +1,46 @@
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
-
+{% set form_url = path('post_contact', { 'id': entity.id }) %}
 {% block title entity.title %}
 
+
+{% block sidebar %}
+	{% include "ApplicationAnunciosBundle:Form:contact.html.twig" %}
+{% endblock %}
+
+
+
 {% block content %}
+
+
+<ul class="breadcrumb">
+  <li><a href="/">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="/">Anuncios</a> <span class="divider">/</span></li>
+  <li class="active"><a href="{{ path('post_search') }}?c={{ entity.categoryid }}">{{ categories[ entity.categoryid ] }}</a> <span class="divider">/</span></li>
+</ul>
 
 
 
 <h1>{{ entity.title }}</h1>
 
-{{ entity.body }}<br/><br/>
 
-#{{ entity.id }} | {{ entity.userid }} | {{ entity.categoryid }} | {{ entity.price }} | <span class="date">{{ entity.date|date('d/m/Y H:i:s') }}</span>
+
+
+	<pre>{{ entity.body }}</pre>
+	
+
+
+
+	Publicado por <a href="{{ user.getProfileUrl() }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }}
+
 
 <br/><br/>
 
-<a href="{{ path('post_edit', { 'id': entity.id }) }}">Edit</a>
+{% if user.id == app.session.get('id') %}
+	<a class="btn" href="{{ path('post_edit', { 'id': entity.id }) }}">Editar anuncio</a>
+
+{% endif %}
 
 
-<div style="float:left;margin-right:10px">
-<form action="{{ path('post_delete', { 'id': entity.id }) }}" method="post">
-    {{ form_widget(delete_form) }}
-    <button type="submit">Delete</button>
-</form>
-</div>
+
 
 {% endblock %}

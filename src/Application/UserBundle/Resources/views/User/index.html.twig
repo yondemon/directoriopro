@@ -1,0 +1,61 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Profesionales" %}
+
+{% block sidebar %}
+	<a href="{{ path('post_new') }}" class="btn large primary">Publicar anuncio</a>
+	<br/>
+
+	<b>Filtrar por categoría</b><br/>
+	{% for category in categories %}
+		<a href="{{ path('user') }}search?c={{loop.index0}}">{{category}}</a>
+	{% endfor %}
+{% endblock %}
+
+{% block content %}
+
+
+
+<ul class="breadcrumb">
+  <li><a href="/">Inicio</a> <span class="divider">/</span></li>
+  <li class="active"><a href="{{ path('user') }}">Profesionales</a> <span class="divider">/</span></li>
+</ul>
+
+
+<h1>Profesionales</h1>
+
+
+<ul style="list-style-type:none;margin:0;padding:0;width:480px">
+    {% for entity in entities %}
+        <li>
+
+			
+			
+			
+			
+			<img src="{{ entity.getAvatar(50) }}" width="35" height="35" style="float:left;margin-right:13px"/>
+			<div style="float:left;width:425px">
+            <a href="{{ entity.getProfileUrl() }}">{{ entity.name }}</a> 
+			{% if entity.freelance %}
+				<span class="freelance">&#149; freelance</span>
+			{% endif %}
+				
+			<br/><b>{{ categories[ entity.categoryid ] }}</b><br/>
+			
+            {{ entity.body|truncate(200) }}
+			<br/><span style="color:#ccc;">{{ entity.location }}</span>
+
+
+			</div>
+
+			<br class="clear"/><br/>
+			
+			
+        </li>
+    {% endfor %}
+</ul>
+
+{{ pager|raw }}
+
+{% endblock %}
+

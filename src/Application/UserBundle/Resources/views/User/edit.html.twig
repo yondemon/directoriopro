@@ -1,0 +1,111 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme edit_form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Editar perfil" %}
+
+{% block content %}
+
+<h1>Editar perfil</h1>
+
+{% if updated is defined %}
+
+<div class="alert-message block-message success">
+	<b>Perfil editado con exito</b>
+	<div class="alert-actions">
+		<a class="btn small" href="{{ entity.getProfileUrl() }}">Visitar mi perfil</a>
+	</div>
+</div>
+
+{% endif %}
+
+<form action="{{ path('user_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+
+
+
+
+	{{ form_errors(edit_form) }}
+	
+
+	
+
+	
+
+
+	
+	<div class="clearfix">
+		<b>Información personal</b>
+	</div>
+
+
+
+	{{ form_row(edit_form.email, { 'label': 'Email' }) }}
+	{{ form_row(edit_form.name, { 'label': 'Nombre y apellidos' }) }}
+	{{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
+	{{ form_row(edit_form.location, { 'label': 'Localización' }) }}
+	
+
+
+	
+	<div class="clearfix">
+		<label>Categoría</label>
+		<div class="input">
+			<select id="application_userbundle_usertype_category_id" name="application_userbundle_usertype[category_id]">
+				{% for category in categories %}
+					{% if loop.index0 > 0 %}
+						<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+	<div class="clearfix">
+		<b>Opciones</b>	
+	</div>
+	
+	
+	<div class="input">
+	    <ul class="inputs-list">
+        <li>
+          <label for="application_userbundle_usertype_freelance" class=" required">
+            <input type="checkbox" {% if entity.getFreelance() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_freelance" name="application_userbundle_usertype[freelance]" value="1">
+            <span>¿Eres freelance?</span>
+          </label>
+        </li>
+        <li>
+          <label for="application_userbundle_usertype_can_contact" class=" required">
+            <input type="checkbox" {% if entity.getCanContact() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_can_contact" name="application_userbundle_usertype[can_contact]" value="1">
+            <span>Permitir que contacten conmigo</span>
+          </label>
+        </li>
+      </ul>
+    </div>
+
+
+	<div class="clearfix">
+
+		<b>Enseña tus trabajos</b>
+	</div>
+
+	
+	{{ form_row(edit_form.url, { 'label': 'Portafolio' }) }}
+	{{ form_row(edit_form.linkedin_url) }}
+	{{ form_row(edit_form.twitter_url) }}
+	{{ form_row(edit_form.forrst_url) }}
+	{{ form_row(edit_form.github_url) }}
+	{{ form_row(edit_form.dribbble_url) }}
+	{{ form_row(edit_form.flickr_url) }}
+	{{ form_row(edit_form.youtube_url) }}
+
+
+    <div class="actions">
+        <button type="submit" class="btn primary">Guardar cambios</button> &nbsp;
+		<a href="{{ entity.getProfileUrl() }}" class="btn">Cancelar</a>
+    </div>
+
+	{{ form_row(edit_form._token) }}
+
+</form>
+
+
+{% endblock %}

@@ -1,35 +1,56 @@
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme edit_form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
 
 {% block title "Editar anuncio" %}
 
 {% block content %}
 
-
+<ul class="breadcrumb">
+  <li><a href="/">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="/">Anuncios</a> <span class="divider">/</span></li>
+  <li class="active">Editar anuncio <span class="divider">/</span></li>
+</ul>
 
 <h1>Editar anuncio</h1>
 
+<form class="form" action="{{ path('post_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
 
 
-<form action="{{ path('post_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
+
+	{{ form_errors(edit_form) }}
+	
+	{{ form_row(edit_form.title, { 'label': 'Titulo' }) }}
+
+	{{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
+	
+	{{ form_row(edit_form.email, { 'label': 'Email' }) }}
+	
+	<div class="clearfix">
+		<label>Categoría</label>
+		<div class="input">
+			<select id="application_anunciosbundle_posttype_category_id" name="application_anunciosbundle_posttype[category_id]">
+				{% for category in categories %}
+					<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+	
+
+	
+	<div class="actions">
+
+		<button type="submit" class="btn primary">Guardar cambios</button> &nbsp;
+		<a href="{{ path('post_show', { 'id': entity.id }) }}" class="btn">Cancelar</a> &nbsp;
+	
+		{% if app.session.get('admin') %}	
+			<a href="{{ path('post_delete', { 'id': entity.id }) }}" class="btn danger pull-right">Eliminar</a>
+		{% endif %}
+	
+	</div>
+	
+	{{ form_row(edit_form._token) }}
+
 </form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('post') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('post_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
-
 
 {% endblock %}

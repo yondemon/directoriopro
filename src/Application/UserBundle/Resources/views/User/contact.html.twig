@@ -1,0 +1,51 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Contacto" %}
+
+
+
+{% block content %}
+
+<h1>Contactar</h1>
+
+
+{% if result == 0 %}
+
+<form action="{{ path('user_contact', { 'id': entity.id }) }}" method="post">
+
+	
+  {{ form_errors(form) }}
+
+
+		
+		{{ form_row(form._token) }}
+		{{ form_row(form.name, { 'label': 'Nombre' }) }}
+        {{ form_row(form.email, { 'label': 'Email' }) }}
+        {{ form_row(form.subject, { 'label': 'Asunto' }) }}
+        {{ form_row(form.body, { 'label': 'Mensaje' }) }}
+
+
+
+		<div class="actions">
+			<button type="submit" class="btn primary">Enviar</button> &nbsp;
+			<a href="{{ entity.getProfileUrl() }}" class="btn">Cancelar</a>
+		</div>
+	
+	
+</form>
+
+{% elseif result == 1 %}
+
+	
+	<div class="alert-message block-message success">
+		<b>Mensaje enviado correctamente</b>
+		<div class="alert-actions">
+			<a class="btn small" href="{{ entity.getProfileUrl() }}">Volver al perfil</a>
+		</div>
+	</div>
+	
+{% endif %}
+
+
+{% endblock %}

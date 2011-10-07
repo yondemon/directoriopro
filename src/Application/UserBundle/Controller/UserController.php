@@ -1,14 +1,14 @@
 <?php
 
-namespace Application\AnunciosBundle\Controller;
+namespace Application\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Application\AnunciosBundle\Entity\Post;
+use Application\UserBundle\Entity\User;
 use Application\UserBundle\Entity\Contact;
-use Application\AnunciosBundle\Form\PostType;
+use Application\UserBundle\Form\UserType;
 use Application\UserBundle\Form\ContactType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,18 +17,17 @@ use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\View\DefaultView;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 
-
 /**
- * Post controller.
+ * User controller.
  *
- * @Route("/post")
+ * @Route("/user")
  */
-class PostController extends Controller
+class UserController extends Controller
 {
     /**
-     * Lists all Post entities.
+     * Lists all User entities.
      *
-     * @Route("/", name="post")
+     * @Route("/", name="user")
      * @Template()
      */
     public function indexAction()
@@ -38,9 +37,9 @@ class PostController extends Controller
 		if( !$page ) $page = 1;
 	
         $em = $this->getDoctrine()->getEntityManager();
-        //$entities = $em->getRepository('ApplicationAnunciosBundle:Post')->findAll();
 
-		$dql = "SELECT p FROM ApplicationAnunciosBundle:Post p";
+        //$entities = $em->getRepository('ApplicationUserBundle:User')->findAll();
+		$dql = "SELECT u FROM ApplicationUserBundle:User u";
         $query = $em->createQuery($dql);
         $adapter = new DoctrineORMAdapter($query);
 
@@ -55,39 +54,47 @@ class PostController extends Controller
 		};
 		$view = new DefaultView();
 		$html = $view->render($pagerfanta, $routeGenerator);
-		
-
 
 
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 
-        return array('pager' => $html, 'entities' => $entities, 'nav_post' => 1 );
+        return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1);
     }
 
     /**
-     * Finds and displays a Post entity.
+     * Finds and displays a User entity.
      *
-     * @Route("/{id}/show", name="post_show")
+     * @Route("/{id}/show", name="user_show")
      * @Template()
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('ApplicationAnunciosBundle:Post')->find($id);
+        $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Post entity.');
+            throw $this->createNotFoundException('Unable to find User entity.');
         }
 
-        //$deleteForm = $this->createDeleteForm($id);
-
-		$user = $em->getRepository('ApplicationUserBundle:User')->find($entity->getUserId());
-
-
-
-
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	
+		/*
+		// es diferencia usuario, visitas + 1
+		$session = $this->getRequest()->getSession();
+		$id = $session->get('id');
+		if( $id != $entity->getId() ){
+			$entity->setVisits($entity->getVisits() + 1 );
+			$em = $this->get('doctrine.orm.entity_manager');
+			$em->persist($entity);
+			$em->flush();
+		}
+		*/	
+		
+		$contact_form_html = false;
+		if( $entity->getCanContact() ){
 			$session = $this->getRequest()->getSession();
 			$contact = new \Application\UserBundle\Entity\Contact;
 			$id = $session->get('id');
@@ -96,29 +103,31 @@ class PostController extends Controller
 				$contact->setName( $user_login->getName() );
 				$contact->setEmail( $user_login->getEmail() );
 			}
-			$contact->setSubject( "RE: " . $entity->getTitle() );
+			$contact->setSubject( "Contacto desde betabeers" );
 			$contact_form = $this->createForm(new ContactType(), $contact);
 			$contact_form_html = $contact_form->createView();
+		}
+		
 
+		
 
 
         return array(
             'entity'      => $entity,
-            'user'      => $user,
 			'contact_form' => $contact_form_html,
 			);
     }
 
     /**
-     * Displays a form to create a new Post entity.
+     * Displays a form to create a new User entity.
      *
-     * @Route("/new", name="post_new")
+     * @Route("/new", name="user_new")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Post();
-        $form   = $this->createForm(new PostType(), $entity);
+        $entity = new User();
+        $form   = $this->createForm(new UserType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -127,33 +136,25 @@ class PostController extends Controller
     }
 
     /**
-     * Creates a new Post entity.
+     * Creates a new User entity.
      *
-     * @Route("/create", name="post_create")
+     * @Route("/create", name="user_create")
      * @Method("post")
-     * @Template("ApplicationAnunciosBundle:Post:new.html.twig")
+     * @Template("ApplicationUserBundle:User:new.html.twig")
      */
     public function createAction()
     {
-        $entity  = new Post();
+        $entity  = new User();
         $request = $this->getRequest();
-        $form    = $this->createForm(new PostType(), $entity);
+        $form    = $this->createForm(new UserType(), $entity);
         $form->bindRequest($request);
-
-		// rellenar campos que faltan
-		$session = $this->getRequest()->getSession();
-		$user_id = $session->get('id');
-		$entity->setUserId( $user_id );
-		$entity->setDate( new \DateTime("now") );
-		$entity->setFeatured( 3 );
-		
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('post_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getId())));
             
         }
 
@@ -164,49 +165,59 @@ class PostController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Post entity.
+     * Displays a form to edit an existing User entity.
      *
-     * @Route("/{id}/edit", name="post_edit")
+     * @Route("/edit", name="user_edit")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction()
     {
+	
+		// esta logueado?
+		$session = $this->getRequest()->getSession();
+		$id = $session->get('id');
+		if( !$id ){
+			return $this->redirect('/');
+		}
+		
+		
+	
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('ApplicationAnunciosBundle:Post')->find($id);
+        $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Post entity.');
+            throw $this->createNotFoundException('Unable to find User entity.');
         }
 
-        $editForm = $this->createForm(new PostType(), $entity);
+        $editForm = $this->createForm(new UserType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            //'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-     * Edits an existing Post entity.
+     * Edits an existing User entity.
      *
-     * @Route("/{id}/update", name="post_update")
+     * @Route("/{id}/update", name="user_update")
      * @Method("post")
-     * @Template("ApplicationAnunciosBundle:Post:edit.html.twig")
+     * @Template("ApplicationUserBundle:User:edit.html.twig")
      */
     public function updateAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('ApplicationAnunciosBundle:Post')->find($id);
+        $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Post entity.');
+            throw $this->createNotFoundException('Unable to find User entity.');
         }
 
-        $editForm   = $this->createForm(new PostType(), $entity);
+        $editForm   = $this->createForm(new UserType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -214,78 +225,27 @@ class PostController extends Controller
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
+		
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('post_show', array('id' => $id)));
+            //return $this->redirect($this->generateUrl('user_edit'));
+			//return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getId())));
+
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            //'delete_form' => $deleteForm->createView(),
+			'updated' => 1
         );
     }
 
     /**
-     * Deletes a Post entity.
+     * Search User entities.
      *
-     * @Route("/{id}/delete", name="post_delete")
-     */
-    public function deleteAction($id)
-    {
-		$em = $this->getDoctrine()->getEntityManager();
-		$entity = $em->getRepository('ApplicationAnunciosBundle:Post')->find($id);
-		if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Post entity.');
-        }
-		
-		$session = $this->getRequest()->getSession();
-		$user_id = $session->get('id');
-		$admin = $session->get('admin');
-		
-		if( ( $entity->getUserId() == $user_id ) || $admin ){
-
-            $em->remove($entity);
-            $em->flush();
-
-			$url = $this->generateUrl('post');
-		}else{
-			$url = $this->generateUrl('post_show', array('id' => $entity->getId()));
-			
-		}
-		return $this->redirect($url);
-	
-    
-		/*
-	
-	
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('ApplicationAnunciosBundle:Post')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Post entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('post'));
-
-		*/
-    }
-
-    /**
-     * Search Post entities.
-     *
-     * @Route("/search", name="post_search")
+     * @Route("/search", name="user_search")
      * @Template()
      */
     public function searchAction()
@@ -294,9 +254,9 @@ class PostController extends Controller
 		$search = $request->query->get('q');
 		$category_id = $request->query->get('c');
 		
-		$query = "SELECT p FROM ApplicationAnunciosBundle:Post p WHERE 1 = 1";
+		$query = "SELECT p FROM ApplicationUserBundle:User p WHERE 1 = 1";
 		
-		if( $search ) $query .= " AND p.body LIKE '%".$search."%' OR p.title LIKE '%".$search."%'";
+		if( $search ) $query .= " AND p.body LIKE '%".$search."%'";
 		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
 
 		$entities = $this->get('doctrine')->getEntityManager()
@@ -309,18 +269,46 @@ class PostController extends Controller
         return array('entities' => $entities, 'form_category' =>$category_id);
     }
 
+    /**
+     * Deletes a User entity.
+     *
+     * @Route("/{id}/delete", name="user_delete")
+     * @Method("post")
+     */
+    public function deleteAction($id)
+    {
+        $form = $this->createDeleteForm($id);
+        $request = $this->getRequest();
+
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find User entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('user'));
+    }
+
 
 
     /**
      * Contact form
      *
-     * @Route("/{id}/contact", name="post_contact")
+     * @Route("/{id}/contact", name="user_contact")
      * @Template()
      */
     public function contactAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-		$entity = $em->getRepository('ApplicationAnunciosBundle:Post')->find($id);
+		$entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
@@ -414,9 +402,9 @@ class PostController extends Controller
 
         //$entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
 
-        //if (!$entity) {
-         //   throw $this->createNotFoundException('Unable to find User entity.');
-        //}
+       // if (!$entity) {
+       //     throw $this->createNotFoundException('Unable to find User entity.');
+       // }
 
 
         //$deleteForm = $this->createDeleteForm($id);
@@ -433,6 +421,92 @@ class PostController extends Controller
 
 
     }
+
+	
+
+    /**
+     * Facebook connect login
+     *
+     * @Route("/login", name="user_login")
+     * @Template()
+     */
+    public function loginAction()
+    {
+		require '/Applications/MAMP/htdocs/directoriopro/vendor/facebook/examples/example.php';
+		
+		
+		//print_r( $user_profile );
+		
+		// login ok ?
+		if( isset( $user_profile ) ){
+			
+			
+			// existe usuario en la bd?
+			$em = $this->getDoctrine()->getEntityManager();
+			$user = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('facebook_id' => $user_profile['id']));
+			
+			
+			if( !$user ){
+
+				
+				$user = new \Application\UserBundle\Entity\User;
+				$user->setAdmin(0);
+				$user->setFacebookId($user_profile['id']);
+				$user->setCategoryId(1);
+				$user->setEmail($user_profile['email']);
+				$user->setName($user_profile['name']);
+				$user->setBody('');
+				$user->setLocation($user_profile['location']['name']);
+				$user->setDate( new \DateTime("now") );
+				$user->setVotes(0);
+				$user->setVisits(0);
+				$user->setUrl('');
+				$user->setLinkedinUrl('');
+				$user->setTwitterUrl('');
+				$user->setForrstUrl('');
+				$user->setGithubUrl('');
+				$user->setDribbbleUrl('');
+				$user->setFlickrUrl('');
+				$user->setYoutubeUrl('');
+				$user->setFreelance(0);
+				$user->setCanContact(1);
+
+				$em = $this->get('doctrine.orm.entity_manager');
+				$em->persist($user);
+				$em->flush();
+			}
+			
+			$session = $this->getRequest()->getSession();
+			$session->set('id', $user->getId());
+			$session->set('facebook_id', $user->getFacebookId());
+			$session->set('name', $user->getName());
+			$session->set('admin', $user->getAdmin());
+			
+			// redirigir al perfil
+			$url = $this->generateUrl('user_show', array('id' => $user->getId()));
+		}else{
+			$url = $loginUrl;
+		}
+		
+		return $this->redirect($url);
+    }
+
+
+    /**
+     * Facebook connect logout
+     *
+     * @Route("/logout", name="user_logout")
+     * @Template()
+     */
+    public function logoutAction()
+    {
+		$session = $this->getRequest()->getSession();
+		$session->set('id',null);
+		$session->set('facebook_id',null);
+		$session->set('name',null);
+		$session->set('admin',null);
+		return $this->redirect('/');
+	}
 
     private function createDeleteForm($id)
     {

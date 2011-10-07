@@ -1,27 +1,41 @@
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
 
-{% block title "Nuevo anuncio" %}
+{% block title "Publicar anuncio" %}
 
 {% block content %}
 
-
-
-<h1>Nuevo anuncio</h1>
+<h1>Publicar anuncio</h1>
 
 <form action="{{ path('post_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
+
+
+
+	{{ form_errors(form) }}
+
+	{{ form_row(form.title, { 'label': 'Titulo' }) }}
+	
+	{{ form_row(form.body, { 'label': 'Descripción' }) }}
+	
+	{{ form_row(form.email, { 'label': 'Email' }) }}
+    
+	<div class="clearfix">
+		<label>Categoría</label>
+		<div class="input">
+			<select id="application_anunciosbundle_posttype_category_id" name="application_anunciosbundle_posttype[category_id]">
+				{% for category in categories %}
+					<option value="{{loop.index0}}">{{category}}</a>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+	<div class="actions">
+        <button type="submit" class="btn primary">Publicar</button>
+	</div>
+
+	{{ form_row(form._token) }}
+
 </form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('post') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
-
 
 {% endblock %}

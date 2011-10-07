@@ -2,26 +2,48 @@
 
 {% block title "Buscar" %}
 
+{% block sidebar %}
+	<a href="{{ path('post_new') }}" class="btn large primary">Publicar anuncio</a>
+	<br/>
+
+	<b>Filtrar por categoría</b><br/>
+	{% for category in categories %}
+		<a href="{{ path('post') }}search?c={{loop.index0}}">{{category}}</a>
+	{% endfor %}
+{% endblock %}
+
 {% block content %}
 
 
+<ul class="breadcrumb">
+  <li><a href="/">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="/">Anuncios</a> <span class="divider">/</span></li>
+  <li><a href="/">Anuncios</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('post_search') }}?c={{ form_category }}">{{ categories[ form_category ] }}</a> <span class="divider">/</span></li>
+  <li class="active">Buscar <span class="divider">/</span></li>
+</ul>
 
 <h1>Buscar</h1>
 
 
 <ul>
-    {% for entity in entities %}
-        <li>
-			<span class="price">{{ entity.price }} €</span>
-            <!--<b>{{ categories[ entity.categoryid ] }}</b><br/>#{{ entity.id }} -->
-            <a href="{{ path('post_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
-            {{ entity.body }}<br/>
-            <!--{{ entity.userid }}<br/>-->
-            <span class="date">{{ entity.date|date('d/m/Y') }}</span>
-			<!--<br/><a href="{{ path('post_edit', { 'id': entity.id }) }}">editar</a>-->
-			<br/><br/>
-        </li>
-    {% endfor %}
+	{% if entities %}
+
+	    {% for entity in entities %}
+	        <li>
+	            <!--<b>{{ categories[ entity.categoryid ] }}</b><br/>#{{ entity.id }} -->
+	            <a href="{{ path('post_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
+	            {{ entity.body }}<br/>
+	            <!--{{ entity.userid }}<br/>-->
+	            <span class="date">{{ entity.date|date('d/m/Y') }}</span>
+				<!--<br/><a href="{{ path('post_edit', { 'id': entity.id }) }}">editar</a>-->
+				<br/><br/>
+	        </li>
+	    {% endfor %}
+
+	{% else %}
+		<li>sin resultados, prueba con otra busqueda</li>
+	{% endif %}
 </ul>
 
 {% endblock %}

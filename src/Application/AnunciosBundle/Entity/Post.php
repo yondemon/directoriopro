@@ -1,16 +1,16 @@
-<?php
+<?php 
  
 namespace Application\AnunciosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Application\AnunciosBundle\Entity\Post  
+ * Application\AnunciosBundle\Entity\Post
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Post
+class Post	    
 {
     /**
      * @var integer $id
@@ -50,18 +50,26 @@ class Post
     private $body;
 
     /**
-     * @var integer $price
-     *
-     * @ORM\Column(name="price", type="integer")
-     */
-    private $price;
-
-    /**
      * @var datetime $date
      *
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
+
+    /**
+     * @var integer $featured
+     *
+     * @ORM\Column(name="featured", type="integer")
+     */
+    private $featured;
+
+
+    /**
+     * @var string $email
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
 
 
     /**
@@ -155,26 +163,6 @@ class Post
     }
 
     /**
-     * Set price
-     *
-     * @param integer $price
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-
-    /**
-     * Get price
-     *
-     * @return integer 
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
      * Set date
      *
      * @param datetime $date
@@ -192,5 +180,45 @@ class Post
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set featured
+     *
+     * @param integer $featured
+     */
+    public function setFeatured($featured)
+    {
+        $this->featured = $featured;
+    }
+
+    /**
+     * Get featured
+     *
+     * @return integer 
+     */
+    public function getFeatured()
+    {
+        return $this->featured;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }
