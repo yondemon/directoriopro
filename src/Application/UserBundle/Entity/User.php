@@ -581,13 +581,4 @@ class User
         return "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->email ) ) ) . "?s=" . $size;
     }
 
-    /**
-     * Get profile url
-     *
-     * @return string 
-     */
-    public function getProfileUrl()
-    {
-        return '/user/' . $this->getId() . '/show';
-    }
 }

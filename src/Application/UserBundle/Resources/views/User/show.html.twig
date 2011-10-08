@@ -15,7 +15,7 @@
 
 
 <ul class="breadcrumb">
-  <li><a href="/">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
   <li><a href="{{ path('user') }}">Profesionales</a> <span class="divider">/</span></li>
   <li class="active"><a href="{{ path('post_search') }}?c={{ entity.categoryid }}">{{ categories[ entity.categoryid ] }}</a> <span class="divider">/</span></li>
 </ul>

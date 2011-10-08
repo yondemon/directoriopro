@@ -13,8 +13,8 @@
 
 
 <ul class="breadcrumb">
-  <li><a href="/">Inicio</a> <span class="divider">/</span></li>
-  <li><a href="/">Anuncios</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('post') }}">Anuncios</a> <span class="divider">/</span></li>
   <li class="active"><a href="{{ path('post_search') }}?c={{ entity.categoryid }}">{{ categories[ entity.categoryid ] }}</a> <span class="divider">/</span></li>
 </ul>
 
@@ -30,7 +30,7 @@
 
 
 
-	Publicado por <a href="{{ user.getProfileUrl() }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }}
+	Publicado por <a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }}
 
 
 <br/><br/>

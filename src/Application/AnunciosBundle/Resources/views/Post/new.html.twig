@@ -7,6 +7,9 @@
 
 <h1>Publicar anuncio</h1>
 
+
+{% if app.session.get('id') %}
+
 <form action="{{ path('post_create') }}" method="post" {{ form_enctype(form) }}>
 
 
@@ -24,7 +27,9 @@
 		<div class="input">
 			<select id="application_anunciosbundle_posttype_category_id" name="application_anunciosbundle_posttype[category_id]">
 				{% for category in categories %}
-					<option value="{{loop.index0}}">{{category}}</a>
+					{% if loop.index0 > 0 %}
+						<option value="{{loop.index0}}">{{category}}</a>
+					{% endif %}
 				{% endfor %}
 			</select>
 		</div>
@@ -37,5 +42,9 @@
 	{{ form_row(form._token) }}
 
 </form>
+
+{% else %}
+	Area restringida, solo accesible para usuarios
+{% endif %}
 
 {% endblock %}

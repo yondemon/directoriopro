@@ -12,7 +12,7 @@
 <div class="alert-message block-message success">
 	<b>Perfil editado con exito</b>
 	<div class="alert-actions">
-		<a class="btn small" href="{{ entity.getProfileUrl() }}">Visitar mi perfil</a>
+		<a class="btn small" href="{{ path('user_show', { 'id': entity.id }) }}">Visitar mi perfil</a>
 	</div>
 </div>
 
@@ -100,7 +100,7 @@
 
     <div class="actions">
         <button type="submit" class="btn primary">Guardar cambios</button> &nbsp;
-		<a href="{{ entity.getProfileUrl() }}" class="btn">Cancelar</a>
+		<a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn">Cancelar</a>
     </div>
 
 	{{ form_row(edit_form._token) }}

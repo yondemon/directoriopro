@@ -1,3 +1,4 @@
+{% set nav_user = 1 %}
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 
 {% block title "Profesionales" %}
@@ -17,7 +18,7 @@
 
 
 <ul class="breadcrumb">
-  <li><a href="/">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
   <li class="active"><a href="{{ path('user') }}">Profesionales</a> <span class="divider">/</span></li>
 </ul>
 
@@ -30,20 +31,20 @@
         <li>
 
 			
-			
-			
-			
 			<img src="{{ entity.getAvatar(50) }}" width="35" height="35" style="float:left;margin-right:13px"/>
 			<div style="float:left;width:425px">
-            <a href="{{ entity.getProfileUrl() }}">{{ entity.name }}</a> 
+            <a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.name }}</a> 
 			{% if entity.freelance %}
 				<span class="freelance">&#149; freelance</span>
 			{% endif %}
 				
 			<br/><b>{{ categories[ entity.categoryid ] }}</b><br/>
+
+			{% if entity.body %}
+				{{ entity.body|truncate(200) }}<br/>
+			{% endif %}
 			
-            {{ entity.body|truncate(200) }}
-			<br/><span style="color:#ccc;">{{ entity.location }}</span>
+			<span class="date">{{ entity.location }}</span>
 
 
 			</div>

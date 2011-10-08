@@ -1,3 +1,4 @@
+{% set nav_post = 1 %}
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 
 {% block title "Anuncios" %}
@@ -26,12 +27,9 @@
 <ul>
     {% for entity in entities %}
         <li>
-            <!--<b>{{ categories[ entity.categoryid ] }}</b><br/>#{{ entity.id }} -->
             <a href="{{ path('post_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
-            {{ entity.body }}<br/>
-            <!--{{ entity.userid }}<br/>-->
+            {{ entity.body|truncate(200) }}<br/>
             <span class="date">{{ entity.date|date('d/m/Y') }}</span>
-			<!--<br/><a href="{{ path('post_edit', { 'id': entity.id }) }}">editar</a>-->
 			<br/><br/>
         </li>
     {% endfor %}

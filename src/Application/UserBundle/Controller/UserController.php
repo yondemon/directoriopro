@@ -432,7 +432,8 @@ class UserController extends Controller
      */
     public function loginAction()
     {
-		require '/Applications/MAMP/htdocs/directoriopro/vendor/facebook/examples/example.php';
+
+		require __DIR__ . '/../../../../vendor/facebook/examples/example.php';
 		
 		
 		//print_r( $user_profile );
@@ -445,6 +446,9 @@ class UserController extends Controller
 			$em = $this->getDoctrine()->getEntityManager();
 			$user = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('facebook_id' => $user_profile['id']));
 			
+			if( !$user ){
+				$user = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('email' => $user_profile['email']));
+			}
 			
 			if( !$user ){
 
@@ -505,7 +509,7 @@ class UserController extends Controller
 		$session->set('facebook_id',null);
 		$session->set('name',null);
 		$session->set('admin',null);
-		return $this->redirect('/');
+		return $this->redirect( $this->generateUrl('post') );
 	}
 
     private function createDeleteForm($id)

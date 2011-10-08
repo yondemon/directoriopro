@@ -6,12 +6,14 @@
 {% block content %}
 
 <ul class="breadcrumb">
-  <li><a href="/">Inicio</a> <span class="divider">/</span></li>
-  <li><a href="/">Anuncios</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('post') }}">Anuncios</a> <span class="divider">/</span></li>
   <li class="active">Editar anuncio <span class="divider">/</span></li>
 </ul>
 
 <h1>Editar anuncio</h1>
+
+{% if app.session.get('id') == entity.getUserId() %}
 
 <form class="form" action="{{ path('post_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
 
@@ -30,7 +32,9 @@
 		<div class="input">
 			<select id="application_anunciosbundle_posttype_category_id" name="application_anunciosbundle_posttype[category_id]">
 				{% for category in categories %}
-					<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
+					{% if loop.index0 > 0 %}
+						<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
+					{% endif %}
 				{% endfor %}
 			</select>
 		</div>
@@ -52,5 +56,9 @@
 	{{ form_row(edit_form._token) }}
 
 </form>
+
+{% else %}
+	No puedes editar un anuncio que no sea creado por ti
+{% endif %}
 
 {% endblock %}

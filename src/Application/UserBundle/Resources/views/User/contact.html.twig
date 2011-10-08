@@ -29,7 +29,7 @@
 
 		<div class="actions">
 			<button type="submit" class="btn primary">Enviar</button> &nbsp;
-			<a href="{{ entity.getProfileUrl() }}" class="btn">Cancelar</a>
+			<a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn">Cancelar</a>
 		</div>
 	
 	

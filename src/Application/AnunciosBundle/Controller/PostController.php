@@ -62,7 +62,7 @@ class PostController extends Controller
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 
-        return array('pager' => $html, 'entities' => $entities, 'nav_post' => 1 );
+        return array('pager' => $html, 'entities' => $entities );
     }
 
     /**
