@@ -464,9 +464,8 @@ class UserController extends Controller
 			
 			if( !$user ){
 
-				if( !isset( $user_profile['location']['name'] ) ){
-					$user_profile['location']['name'] = '';
-				}
+				if( !isset( $user_profile['location']['name'] ) ) $user_profile['location']['name'] = '';
+				if( !isset( $user_profile['website'] ) ) $user_profile['website'] = '';
 				
 				$user = new \Application\UserBundle\Entity\User;
 				$user->setAdmin(0);
@@ -479,7 +478,7 @@ class UserController extends Controller
 				$user->setDate( new \DateTime("now") );
 				$user->setVotes(0);
 				$user->setVisits(0);
-				$user->setUrl('');
+				$user->setUrl( $user_profile['website'] );
 				$user->setLinkedinUrl('');
 				$user->setTwitterUrl('');
 				$user->setForrstUrl('');
