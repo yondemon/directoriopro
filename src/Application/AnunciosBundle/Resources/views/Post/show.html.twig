@@ -1,10 +1,22 @@
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% set share_url = url('post_show', { 'id': entity.id }) %}
 {% set form_url = path('post_contact', { 'id': entity.id }) %}
 {% block title entity.title %}
 
 
 {% block sidebar %}
 	{% include "ApplicationAnunciosBundle:Form:contact.html.twig" %}
+	
+	<br/><br/><br/>
+	
+	<b>Compartir</b>
+	
+	<br/>
+	
+	<a href="http://twitter.com/?status={{ entity.title }} {{ share_url }} #betajobs" target="_blank">twitter</a>
+	<a href="http://facebook.com/sharer.php?u={{ share_url }}&t={{ entity.title }}" target="_blank">facebook</a>
+	<a href="http://www.linkedin.com/shareArticle?mini=true&url={{ share_url }}&title={{ entity.title }}" target="_blank">linkedin</a>
+	
 {% endblock %}
 
 

@@ -6,6 +6,21 @@
 
 	{% include "ApplicationAnunciosBundle:Form:contact.html.twig" %}
 	
+	<br/><br/><br/>
+	
+	<b>Perfiles</b>
+	
+	<br/>
+	
+	{% if entity.url %}<a href="{{ entity.url }}">Portafolio</a>{% endif %}
+	{% if entity.twitterurl %}<a href="http://twitter.com/{{ entity.twitterurl }}">Twitter</a>{% endif %}
+	{% if entity.linkedinurl %}<a href="http://es.linkedin.com/in/{{ entity.linkedinurl }}">Linkedin</a>{% endif %}
+	{% if entity.forrsturl %}<a href="http://forrst.com/people/{{ entity.forrsturl }}">Forrst</a>{% endif %}
+	{% if entity.githuburl %}<a href="http://github.com/{{ entity.githuburl }}">Github</a>{% endif %}
+	{% if entity.dribbbleurl %}<a href="http://dribbble.com/{{ entity.dribbbleurl }}">Dribbble</a>{% endif %}
+	{% if entity.flickrurl %}<a href="http://flickr.com/{{ entity.flickrurl }}">Flickr</a>{% endif %}
+	{% if entity.youtubeurl %}<a href="http://www.youtube.com/user/{{ entity.youtubeurl }}">Youtube</a>{% endif %}
+	
 {% endblock %}
 
 
@@ -56,16 +71,6 @@
 	<pre>{{ entity.body}}</pre>
 {% endif %}
 
-<div style="padding:10px 0">
-	{% if entity.url %}<a href="{{ entity.url }}">portafolio</a> &nbsp;&nbsp; {% endif %}
-	{% if entity.linkedinurl %}<a href="http://es.linkedin.com/in/{{ entity.linkedinurl }}">linkedin</a> &nbsp;&nbsp; {% endif %}
-	{% if entity.twitterurl %}<a href="http://twitter.com/{{ entity.twitterurl }}">twitter</a> &nbsp;&nbsp; {% endif %}
-	{% if entity.forrsturl %}<a href="http://forrst.com/people/{{ entity.forrsturl }}">forrst</a> &nbsp;&nbsp; {% endif %}
-	{% if entity.githuburl %}<a href="http://github.com/{{ entity.githuburl }}">github</a> &nbsp;&nbsp; {% endif %}
-	{% if entity.dribbbleurl %}<a href="http://dribbble.com/{{ entity.dribbbleurl }}">dribbble</a> &nbsp;&nbsp; {% endif %}
-	{% if entity.flickrurl %}<a href="http://flickr.com/{{ entity.flickrurl }}">flickr</a> &nbsp;&nbsp; {% endif %}
-	{% if entity.youtubeurl %}<a href="http://www.youtube.com/user/{{ entity.youtubeurl }}">youtube</a> &nbsp;&nbsp; {% endif %}
-</div>	
 
 	
 
