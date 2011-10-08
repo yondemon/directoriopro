@@ -64,8 +64,7 @@ if ($user) {
   $logoutUrl = $facebook->getLogoutUrl();
 } else {
 
-	$par['scope'] = "email,
-	        user_about_me";
+	$par['scope'] = "email, user_about_me, user_location";
 		$loginUrl = $facebook->getLoginUrl($par);
 
 }

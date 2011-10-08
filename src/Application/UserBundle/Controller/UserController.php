@@ -451,6 +451,9 @@ class UserController extends Controller
 		// login ok ?
 		if( $user_profile ){
 			
+			print_r($user_profile);
+			die();
+			
 			// existe usuario en la bd?
 			$em = $this->getDoctrine()->getEntityManager();
 			$user = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('facebook_id' => $user_profile['id']));
