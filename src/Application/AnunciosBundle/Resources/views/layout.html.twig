@@ -91,9 +91,9 @@
 <div class="topbar" id="topbar">
   <div class="fill">
     <div class="container">
-      <a class="brand" href="/">{{sitename}}</a>
+      <a class="brand" href="{{ path('post') }}">{{sitename}}</a>
       <ul class="nav">
-        <li {% if nav_post is defined %}class="active"{% endif %}><a href="/">Anuncios</a></li>
+        <li {% if nav_post is defined %}class="active"{% endif %}><a href="{{ path('post') }}">Anuncios</a></li>
         <li {% if nav_user is defined %}class="active"{% endif %}><a href="{{ path('user') }}">Profesionales</a></li>
 
 
