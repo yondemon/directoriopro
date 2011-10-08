@@ -1,0 +1,64 @@
+
+
+PRE{background:#FEFBF3;border-color:#DDD}
+
+	
+
+.wrap{width:750px;margin:auto;padding:10px}
+.floatL{float:left}
+.floatR{float:right}
+.clear{clear:both}
+
+
+A.title{font-size:20px}
+SPAN.date{color:#ccc}
+SPAN.freelance{color:#33CC00;padding-left:10px}
+
+.filters{padding-left:20px;border-left:1px #efefef solid;float:left;width:180px;float:right}
+	.filters A{display:block;padding-top:10px}
+
+
+
+
+/*********/
+
+
+/*
+.content .button {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b6d14c), color-stop(100%,#83a01c));
+    background: -moz-linear-gradient(center top, #b6d14c 0%, #83a01c 100%);
+    -webkit-box-shadow: 0px 1px 0px 0px #d1f25a inset, 0px -1px 0px 0px #99bc27 inset, 0px 2px 2px 0px #d4d4d4;
+    -moz-box-shadow: 0px 1px 0px 0px #d1f25a inset, 0px -1px 0px 0px #99bc27 inset, 0px 2px 2px 0px #d4d4d4;
+    box-shadow: 0px 1px 0px 0px #d1f25a inset, 0px -1px 0px 0px #99bc27 inset, 0px 2px 2px 0px #d4d4d4;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    text-shadow: 0px 1px 0px #789b1f;
+    padding: 10px 20px;
+    display: block;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #97b134;
+    font-family: 'Lucida Grande';
+    font-size: 14px;
+    color: #FFFFFF;
+}
+.content .button:hover {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bbda4c), color-stop(100%,#83a01d));
+    background: -moz-linear-gradient(center top, #bbda4c 0%, #83a01d 100%);
+}
+.content .button:active {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#83a01d), color-stop(100%,#a7c248));
+    background: -moz-linear-gradient(center top, #83a01d 0%, #a7c248 100%);
+    -webkit-box-shadow: 0px 1px 0px 0px #a3c229 inset;
+    -moz-box-shadow: 0px 1px 0px 0px #a3c229 inset;
+    box-shadow: 0px 1px 0px 0px #a3c229 inset;
+}
+*/
+
+
+/* formulario */
+/*.form LABEL{float:left;width:90px}
+.form DIV{padding-bottom:10px}
+.form TEXTAREA{width:350px;height:60px}
+.form INPUT{width:350px;}*/
