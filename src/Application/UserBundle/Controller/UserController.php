@@ -451,9 +451,6 @@ class UserController extends Controller
 		// login ok ?
 		if( $user_profile ){
 			
-			print_r($user_profile);
-			die();
-			
 			// existe usuario en la bd?
 			$em = $this->getDoctrine()->getEntityManager();
 			$user = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('facebook_id' => $user_profile['id']));
@@ -464,6 +461,9 @@ class UserController extends Controller
 			
 			if( !$user ){
 
+				if( !isset( $user_profile['location']['name'] ) ){
+					$user_profile['location']['name'] = '';
+				}
 				
 				$user = new \Application\UserBundle\Entity\User;
 				$user->setAdmin(0);
