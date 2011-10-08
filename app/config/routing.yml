@@ -1,3 +1,7 @@
+_welcome:
+    pattern:  /
+    defaults: { _controller: ApplicationAnunciosBundle:Post:index }
+
 ApplicationUserBundle:
     resource: "@ApplicationUserBundle/Controller/"
     type:     annotation
