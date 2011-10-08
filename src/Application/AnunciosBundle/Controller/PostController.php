@@ -40,7 +40,7 @@ class PostController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         //$entities = $em->getRepository('ApplicationAnunciosBundle:Post')->findAll();
 
-		$dql = "SELECT p FROM ApplicationAnunciosBundle:Post p";
+		$dql = "SELECT p FROM ApplicationAnunciosBundle:Post p ORDER BY p.id DESC";
         $query = $em->createQuery($dql);
         $adapter = new DoctrineORMAdapter($query);
 
@@ -330,6 +330,8 @@ class PostController extends Controller
 		
 		if( $search ) $query .= " AND p.body LIKE '%".$search."%' OR p.title LIKE '%".$search."%'";
 		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
+
+		$query .= " ORDER BY id";
 
 		$entities = $this->get('doctrine')->getEntityManager()
 		            ->createQuery($query)

@@ -39,7 +39,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         //$entities = $em->getRepository('ApplicationUserBundle:User')->findAll();
-		$dql = "SELECT u FROM ApplicationUserBundle:User u";
+		$dql = "SELECT u FROM ApplicationUserBundle:User u ORDER BY u.id DESC";
         $query = $em->createQuery($dql);
         $adapter = new DoctrineORMAdapter($query);
 
@@ -267,6 +267,8 @@ class UserController extends Controller
 		
 		if( $search ) $query .= " AND p.body LIKE '%".$search."%'";
 		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
+		
+		$query .= " ORDER BY id";
 
 		$entities = $this->get('doctrine')->getEntityManager()
 		            ->createQuery($query)
