@@ -441,4 +441,26 @@ class PostController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * about page
+     *
+     * @Route("/about", name="post_about")
+     * @Template()
+     */
+    public function aboutAction()
+    {
+        return array();
+    }
+
+    /**
+     * how page
+     *
+     * @Route("/how", name="post_how")
+     * @Template()
+     */
+    public function howAction()
+    {
+        return array();
+    }
 }
