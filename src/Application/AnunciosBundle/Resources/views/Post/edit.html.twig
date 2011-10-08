@@ -5,6 +5,10 @@
 
 {% block content %}
 
+<style>
+TEXTAREA.xlarge{width:500px}
+</style>
+
 <ul class="breadcrumb">
   <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
   <li><a href="{{ path('post') }}">Anuncios</a> <span class="divider">/</span></li>
@@ -12,8 +16,6 @@
 </ul>
 
 <h1>Editar anuncio</h1>
-
-{% if app.session.get('id') == entity.getUserId() %}
 
 <form class="form" action="{{ path('post_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
 
@@ -56,9 +58,5 @@
 	{{ form_row(edit_form._token) }}
 
 </form>
-
-{% else %}
-	No puedes editar un anuncio que no sea creado por ti
-{% endif %}
 
 {% endblock %}

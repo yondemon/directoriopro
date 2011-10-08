@@ -179,14 +179,29 @@ class PostController extends Controller
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
 
-        $editForm = $this->createForm(new PostType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+		$session = $this->getRequest()->getSession();
+		$user_id = $session->get('id');
+		$admin = $session->get('admin');
+		
+		if( ( $entity->getUserId() == $user_id ) || $admin ){
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+	       $editForm = $this->createForm(new PostType(), $entity);
+	        $deleteForm = $this->createDeleteForm($id);
+
+	        return array(
+	            'entity'      => $entity,
+	            'edit_form'   => $editForm->createView(),
+	            'delete_form' => $deleteForm->createView(),
+	        );
+	
+		}else{
+			$url = $this->generateUrl('post_show', array('id' => $entity->getId()));
+			return $this->redirect($url);
+		}
+		
+		
+		
+ 
     }
 
     /**
@@ -206,25 +221,42 @@ class PostController extends Controller
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
 
-        $editForm   = $this->createForm(new PostType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+		
+		$session = $this->getRequest()->getSession();
+		$user_id = $session->get('id');
+		$admin = $session->get('admin');
+		
+		if( ( $entity->getUserId() == $user_id ) || $admin ){
 
-        $request = $this->getRequest();
+	        $editForm   = $this->createForm(new PostType(), $entity);
+	        $deleteForm = $this->createDeleteForm($id);
 
-        $editForm->bindRequest($request);
+	        $request = $this->getRequest();
 
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
+	        $editForm->bindRequest($request);
 
-            return $this->redirect($this->generateUrl('post_show', array('id' => $id)));
-        }
+	        if ($editForm->isValid()) {
+	            $em->persist($entity);
+	            $em->flush();
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+	            return $this->redirect($this->generateUrl('post_show', array('id' => $id)));
+	        }
+
+	        return array(
+	            'entity'      => $entity,
+	            'edit_form'   => $editForm->createView(),
+	            'delete_form' => $deleteForm->createView(),
+	        );
+	
+		}else{
+			$url = $this->generateUrl('post_show', array('id' => $entity->getId()));
+			return $this->redirect($url);
+		}
+		
+		
+		
+		
+
     }
 
     /**

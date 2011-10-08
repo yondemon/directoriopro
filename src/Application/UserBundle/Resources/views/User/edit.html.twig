@@ -5,6 +5,11 @@
 
 {% block content %}
 
+
+<style>
+TEXTAREA.xlarge{width:500px}
+</style>
+
 <h1>Editar perfil</h1>
 
 {% if updated is defined %}
@@ -104,8 +109,10 @@
     </div>
 
 	{{ form_row(edit_form._token) }}
+	
 
 </form>
+
 
 
 {% endblock %}
