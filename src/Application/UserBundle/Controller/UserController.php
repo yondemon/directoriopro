@@ -44,7 +44,7 @@ class UserController extends Controller
         $adapter = new DoctrineORMAdapter($query);
 
 		$pagerfanta = new Pagerfanta($adapter);
-		$pagerfanta->setMaxPerPage(3); // 10 by default
+		$pagerfanta->setMaxPerPage(10); // 10 by default
 		$maxPerPage = $pagerfanta->getMaxPerPage();
 
 		$pagerfanta->setCurrentPage($page); // 1 by default

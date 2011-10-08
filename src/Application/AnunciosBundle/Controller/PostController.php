@@ -45,7 +45,7 @@ class PostController extends Controller
         $adapter = new DoctrineORMAdapter($query);
 
 		$pagerfanta = new Pagerfanta($adapter);
-		$pagerfanta->setMaxPerPage(3); // 10 by default
+		$pagerfanta->setMaxPerPage(10); // 10 by default
 		$maxPerPage = $pagerfanta->getMaxPerPage();
 
 		$pagerfanta->setCurrentPage($page); // 1 by default
@@ -145,7 +145,7 @@ class PostController extends Controller
 		$user_id = $session->get('id');
 		$entity->setUserId( $user_id );
 		$entity->setDate( new \DateTime("now") );
-		$entity->setFeatured( 3 );
+		$entity->setFeatured( 0 );
 		
 
         if ($form->isValid()) {
