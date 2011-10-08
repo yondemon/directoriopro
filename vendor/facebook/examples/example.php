@@ -47,6 +47,8 @@ $user = $facebook->getUser();
 // Facebook, but we don't know if the access token is valid. An access
 // token is invalid if the user logged out of Facebook.
 
+$user_profile = false;
+
 if ($user) {
   try {
     // Proceed knowing you have a logged in user who's authenticated.
@@ -61,12 +63,10 @@ if ($user) {
 if ($user) {
   $logoutUrl = $facebook->getLogoutUrl();
 } else {
-	
-	
+
 	$par['scope'] = "email,
 	        user_about_me";
 		$loginUrl = $facebook->getLoginUrl($par);
-
 
 }
 

@@ -447,10 +447,9 @@ class UserController extends Controller
 		require __DIR__ . '/../../../../vendor/facebook/examples/example.php';
 		
 		
-		//print_r( $user_profile );
 		
 		// login ok ?
-		if( isset( $user_profile ) ){
+		if( $user_profile ){
 			
 			
 			// existe usuario en la bd?
