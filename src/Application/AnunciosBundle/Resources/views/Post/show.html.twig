@@ -47,7 +47,7 @@
 
 <br/><br/>
 
-{% if user.id == app.session.get('id') %}
+{% if user.id == app.session.get('id') || app.session.get('admin') %}
 	<a class="btn" href="{{ path('post_edit', { 'id': entity.id }) }}">Editar anuncio</a>
 
 {% endif %}
