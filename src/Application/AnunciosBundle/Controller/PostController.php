@@ -331,7 +331,7 @@ class PostController extends Controller
 		if( $search ) $query .= " AND p.body LIKE '%".$search."%' OR p.title LIKE '%".$search."%'";
 		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
 
-		$query .= " ORDER BY id";
+		$query .= " ORDER BY p.id";
 
 		$entities = $this->get('doctrine')->getEntityManager()
 		            ->createQuery($query)

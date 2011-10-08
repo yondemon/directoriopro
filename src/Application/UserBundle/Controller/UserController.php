@@ -268,7 +268,7 @@ class UserController extends Controller
 		if( $search ) $query .= " AND p.body LIKE '%".$search."%'";
 		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
 		
-		$query .= " ORDER BY id";
+		$query .= " ORDER BY p.id";
 
 		$entities = $this->get('doctrine')->getEntityManager()
 		            ->createQuery($query)
@@ -489,6 +489,12 @@ class UserController extends Controller
 				$em = $this->get('doctrine.orm.entity_manager');
 				$em->persist($user);
 				$em->flush();
+				
+				$url = $this->generateUrl('user_edit');
+				
+			}else{
+				
+				$url = $this->generateUrl('user_show', array('id' => $user->getId()));
 			}
 			
 			$session = $this->getRequest()->getSession();
@@ -498,7 +504,7 @@ class UserController extends Controller
 			$session->set('admin', $user->getAdmin());
 			
 			// redirigir al perfil
-			$url = $this->generateUrl('user_show', array('id' => $user->getId()));
+			
 		}else{
 			$url = $loginUrl;
 		}

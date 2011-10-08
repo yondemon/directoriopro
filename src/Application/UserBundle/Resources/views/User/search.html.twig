@@ -19,7 +19,9 @@
 
 <ul class="breadcrumb">
   <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
-  <li class="active"><a href="{{ path('user') }}">Profesionales</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('user') }}">Profesionales</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('post_search') }}?c={{ form_category }}">{{ categories[ form_category ] }}</a> <span class="divider">/</span></li>
+  <li class="active">Buscar <span class="divider">/</span></li>
 </ul>
 
 
