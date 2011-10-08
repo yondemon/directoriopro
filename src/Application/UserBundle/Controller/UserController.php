@@ -203,12 +203,21 @@ class UserController extends Controller
     /**
      * Edits an existing User entity.
      *
-     * @Route("/{id}/update", name="user_update")
+     * @Route("/update", name="user_update")
      * @Method("post")
      * @Template("ApplicationUserBundle:User:edit.html.twig")
      */
-    public function updateAction($id)
+    public function updateAction()
     {
+	
+
+		// esta logueado?
+		$session = $this->getRequest()->getSession();
+		$id = $session->get('id');
+		if( !$id ){
+			return $this->redirect('/');
+		}
+	
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
