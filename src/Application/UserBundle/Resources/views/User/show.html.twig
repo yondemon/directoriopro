@@ -6,11 +6,10 @@
 
 	{% include "ApplicationAnunciosBundle:Form:contact.html.twig" %}
 	
+	
 	<br/><br/>
 	
-	<b>Perfiles</b>
 	
-	<br/>
 	
 	{% if entity.url %}<a class="portafolio" href="{{ entity.url }}">Portafolio</a>{% endif %}
 	{% if entity.twitterurl %}<a class="twitter" href="http://twitter.com/{{ entity.twitterurl }}">Twitter</a>{% endif %}
@@ -27,7 +26,7 @@
 {% block content %}
 
 <style>
-H1{font-size:24px}
+H1{font-size:24px;margin-bottom:5px}
 </style>
 
 
