@@ -268,7 +268,7 @@ class UserController extends Controller
 		if( $search ) $query .= " AND p.body LIKE '%".$search."%'";
 		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
 		
-		$query .= " ORDER BY p.id";
+		$query .= " ORDER BY p.id DESC";
 
 		$entities = $this->get('doctrine')->getEntityManager()
 		            ->createQuery($query)
