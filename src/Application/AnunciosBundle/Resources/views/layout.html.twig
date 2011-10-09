@@ -83,7 +83,7 @@
 	<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-dropdown.js') }}"></script>
 	<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-modal.js') }}"></script>
 
-	<link rel="stylesheet" href="{{ asset('bundles/applicationanuncios/css/main.css') }}?v=3" type="text/css" media="all" />
+	<link rel="stylesheet" href="{{ asset('bundles/applicationanuncios/css/main.css') }}?v=4" type="text/css" media="all" />
 	
 	<link rel="alternate" type="application/rss+xml" title="Betabeers jobs" href="http://feeds.feedburner.com/betabeersjobs" />
 </head>
@@ -180,19 +180,12 @@
 <script>
 $().ready(function(){
 	$('#topbar').dropdown()
-	
-
-
-	$('form[method="post"]').find('input:first').focus();
-
-
 });
 </script>
 
 
 
 <script type="text/javascript">
-
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '{{ analytics_id }}']);
   _gaq.push(['_trackPageview']);
