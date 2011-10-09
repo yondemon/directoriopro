@@ -18,7 +18,14 @@ SPAN.freelance{color:#33CC00;padding-left:10px}
 	.filters A{display:block;padding-top:10px}
 
 A.rss{clear:both;float:left;margin-right:7px}
-
+A.facebook{background:url('../images/facebook.png') no-repeat left center;padding-left:23px}
+A.twitter{background:url('../images/twitter.png') no-repeat left center;padding-left:23px}
+A.flickr{background:url('../images/flickr.png') no-repeat left center;padding-left:23px}
+A.github{background:url('../images/github.png') no-repeat left center;padding-left:23px}
+A.linkedin{background:url('../images/linkedin.png') no-repeat left center;padding-left:23px}
+A.dribbble{background:url('../images/dribbble.png') no-repeat left center;padding-left:23px}
+A.youtube{background:url('../images/youtube.png') no-repeat left center;padding-left:23px}
+A.forrst{background:url('../images/forrst.png') no-repeat left center;padding-left:23px}
 
 /*********/
 

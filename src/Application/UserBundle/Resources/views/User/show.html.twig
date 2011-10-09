@@ -13,13 +13,13 @@
 	<br/>
 	
 	{% if entity.url %}<a href="{{ entity.url }}">Portafolio</a>{% endif %}
-	{% if entity.twitterurl %}<a href="http://twitter.com/{{ entity.twitterurl }}">Twitter</a>{% endif %}
-	{% if entity.linkedinurl %}<a href="http://es.linkedin.com/in/{{ entity.linkedinurl }}">Linkedin</a>{% endif %}
-	{% if entity.forrsturl %}<a href="http://forrst.com/people/{{ entity.forrsturl }}">Forrst</a>{% endif %}
-	{% if entity.githuburl %}<a href="http://github.com/{{ entity.githuburl }}">Github</a>{% endif %}
-	{% if entity.dribbbleurl %}<a href="http://dribbble.com/{{ entity.dribbbleurl }}">Dribbble</a>{% endif %}
-	{% if entity.flickrurl %}<a href="http://flickr.com/{{ entity.flickrurl }}">Flickr</a>{% endif %}
-	{% if entity.youtubeurl %}<a href="http://www.youtube.com/user/{{ entity.youtubeurl }}">Youtube</a>{% endif %}
+	{% if entity.twitterurl %}<a class="twitter" href="http://twitter.com/{{ entity.twitterurl }}">Twitter</a>{% endif %}
+	{% if entity.linkedinurl %}<a class="linkedin" href="http://es.linkedin.com/in/{{ entity.linkedinurl }}">Linkedin</a>{% endif %}
+	{% if entity.forrsturl %}<a class="forrst" href="http://forrst.com/people/{{ entity.forrsturl }}">Forrst</a>{% endif %}
+	{% if entity.githuburl %}<a class="github" href="http://github.com/{{ entity.githuburl }}">Github</a>{% endif %}
+	{% if entity.dribbbleurl %}<a class="dribbble" href="http://dribbble.com/{{ entity.dribbbleurl }}">Dribbble</a>{% endif %}
+	{% if entity.flickrurl %}<a class="flickr" href="http://flickr.com/{{ entity.flickrurl }}">Flickr</a>{% endif %}
+	{% if entity.youtubeurl %}<a class="youtube" href="http://www.youtube.com/user/{{ entity.youtubeurl }}">Youtube</a>{% endif %}
 	
 {% endblock %}
 
