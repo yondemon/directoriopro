@@ -30,7 +30,6 @@ if (in_array(@$_SERVER['REMOTE_ADDR'], array(
 }
 
 require __DIR__ . '/../src/facebook.php';
-//require '../src/facebook.php';
 
 // Create our Application instance (replace this with your appId and secret).
 $facebook = new Facebook(array(

@@ -455,9 +455,9 @@ class UserController extends Controller
 			$em = $this->getDoctrine()->getEntityManager();
 			$user = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('facebook_id' => $user_profile['id']));
 			
-			//if( !$user ){
-			//	$user = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('email' => $user_profile['email']));
-			//}
+			if( !$user ){
+				$user = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('email' => $user_profile['email']));
+			}
 			
 			if( !$user ){
 
