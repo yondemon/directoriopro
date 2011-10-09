@@ -12,6 +12,12 @@
 		<a href="{{ path('post_feed') }}?c={{loop.index0}}" class="rss"><img src="{{ asset( 'bundles/applicationanuncios/images/rss.png' ) }}" width="12" height="12"/></a>
 		<a href="{{ path('post_search') }}?c={{loop.index0}}">{{category}}</a>
 	{% endfor %}
+	
+	<br/>
+	
+	<form style="" action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=betabeersjobs', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"><b>Suscribete por email</b><br/><br/><input type="text" style="width:100px" name="email"/> <input type="hidden" value="betabeersjobs" name="uri"/><input type="hidden" name="loc" value="es_ES"/><input type="submit" value="Enviar" class="btn" /></form>
+	
+	<!--<a href="http://feeds.feedburner.com/betabeersjobs"><img src="http://feeds.feedburner.com/~fc/betabeersjobs?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>-->
 {% endblock %}
 
 {% block content %}

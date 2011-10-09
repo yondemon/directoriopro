@@ -85,7 +85,7 @@
 
 	<link rel="stylesheet" href="{{ asset('bundles/applicationanuncios/css/main.css') }}?v=3" type="text/css" media="all" />
 	
-	
+	<link rel="alternate" type="application/rss+xml" title="Betabeers jobs" href="http://feeds.feedburner.com/betabeersjobs" />
 </head>
 <body>
 	
@@ -135,9 +135,7 @@
 		            </li>
 	  </ul>
 
-		<div class="pull-right">
-
-		</div>
+		
 
     </div>
   </div>
@@ -165,14 +163,19 @@
 
 </div>
 <div class="footer">
-	&copy; 2011 betabeers &nbsp;&nbsp; <a href="{{ path('post_about') }}">¿Qué es esto?</a> &nbsp;&nbsp; <a href="{{ path('post_how') }}">¿Cómo está hecho?</a>
+	
+	<a href="https://twitter.com/miquelcamps" class="twitter-follow-button" data-show-count="false" data-lang="es">Segui @miquelcamps</a>
+	<script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
+	
+	<div class="pull-right">
+		<a href="{{ path('post_about') }}">¿Qué es esto?</a> &nbsp;&nbsp; 
+		<a href="{{ path('post_how') }}">¿Cómo está hecho?</a> &nbsp;&nbsp; 
+		&copy; 2011 betabeers
+	</div>
 </div>
 </div>
 
 
-<style>
-PRE{background:white;border:0;padding:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;}
-</style>
 
 <script>
 $().ready(function(){
