@@ -1,0 +1,25 @@
+{% set sitename = "RSS Ofertas Betabeers" %}
+{% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Otros"] %}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" version="2.0">
+<channel>
+	<title>{{ sitename }}</title>
+	<link>{{ url('post') }}</link>
+	<description></description>
+	<lastBuildDate>{{ "now"|date('D, d M Y H:i:s O') }}</lastBuildDate>
+	<language>es</language>
+	
+	{% for entity in entities %}
+
+		<item>
+			<title>{{ entity.title }}</title>
+			<link>{{ url('post_show', { 'id': entity.id }) }}</link>
+			<pubDate>{{ entity.date|date('D, d M Y H:i:s O') }}</pubDate>
+			<category><![CDATA[{{ categories[ entity.getCategoryId() ] }}]]></category>
+			<description><![CDATA[{{ entity.body|truncate(200) }}]]></description>
+		</item>
+
+	{% endfor %}
+	
+	</channel>
+</rss>

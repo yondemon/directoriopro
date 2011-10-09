@@ -343,7 +343,36 @@ class PostController extends Controller
         return array('entities' => $entities, 'form_category' =>$category_id);
     }
 
+    /**
+     * Feed Post entities.
+     *
+     * @Route("/feed", name="post_feed", defaults={"_format"="xml"})
+     * @Template()
+     */
+    public function feedAction()
+    {
 
+		$request = Request::createFromGlobals();
+		$category_id = $request->query->get('c');
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		$query = "SELECT p FROM ApplicationAnunciosBundle:Post p WHERE 1 = 1";
+		
+		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
+
+		$query .= " ORDER BY p.id DESC";
+
+		$entities = $this->get('doctrine')->getEntityManager()
+		            ->createQuery($query)
+		            ->setMaxResults(10)
+		            ->getResult();
+		
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+		
+        return array('entities' => $entities, 'form_category' =>$category_id);
+    }
 
     /**
      * Contact form
