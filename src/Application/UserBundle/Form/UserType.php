@@ -20,7 +20,7 @@ class UserType extends AbstractType
             //->add('date')
             //->add('votes')
             //->add('visits')
-            //->add('freelance')
+            ->add('freelance')
             ->add('url')
             ->add('linkedin_url')
             ->add('twitter_url')
