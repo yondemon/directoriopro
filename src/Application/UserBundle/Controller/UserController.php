@@ -449,7 +449,7 @@ class UserController extends Controller
 		
 		
 		// login ok ?
-		if( $user_profile ){
+		if( isset( $user_profile['id'] ) ){
 			
 			// existe usuario en la bd?
 			$em = $this->getDoctrine()->getEntityManager();
