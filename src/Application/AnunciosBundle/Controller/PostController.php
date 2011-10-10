@@ -443,55 +443,11 @@ class PostController extends Controller
 	
 	        }
 	    }
-		
-		
-		
-		
-		/*
-		$form = $this->get('form.contact')
-			->createBuilder('form')
-			->add('email','text')
-			->add('subject','text')
-			->add('message','text')
-			->getForm();
-			
-
-        $request = $this->getRequest();
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find User entity.');
-            }
-            $em->remove($entity);
-            $em->flush();
-			return $this->redirect($this->generateUrl('user'));
-			print_r($form);
-        }
-
-		*/
-		
-       // $em = $this->getDoctrine()->getEntityManager();
-
-        //$entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
-
-        //if (!$entity) {
-         //   throw $this->createNotFoundException('Unable to find User entity.');
-        //}
-
-
-        //$deleteForm = $this->createDeleteForm($id);
-
-		//$user = $em->getRepository('ApplicationUserBundle:User')->find($entity->getUserId());
 
         return array(
 			'form' => $form->createView(),
             'entity'      => $entity,
 			'result'      => $result,
-            //'user'      => $user,
-            //'delete_form' => $deleteForm->createView(),        
 			);
 
 
@@ -503,6 +459,53 @@ class PostController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    /**
+     * Admin Post entities.
+     *
+     * @Route("/admin", name="post_admin")
+     * @Template()
+     */
+    public function adminAction()
+    {
+	
+		$session = $this->getRequest()->getSession();
+		if( !$session->get('admin') ){
+			return $this->redirect('/');
+		}
+	
+	
+		$request = Request::createFromGlobals();
+		$page = $request->query->get('page');
+		if( !$page ) $page = 1;
+	
+        $em = $this->getDoctrine()->getEntityManager();
+        //$entities = $em->getRepository('ApplicationAnunciosBundle:Post')->findAll();
+
+		$dql = "SELECT p FROM ApplicationAnunciosBundle:Post p ORDER BY p.id DESC";
+        $query = $em->createQuery($dql);
+        $adapter = new DoctrineORMAdapter($query);
+
+		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setMaxPerPage(10); // 10 by default
+		$maxPerPage = $pagerfanta->getMaxPerPage();
+
+		$pagerfanta->setCurrentPage($page); // 1 by default
+		$entities = $pagerfanta->getCurrentPageResults();
+		$routeGenerator = function($page) {
+		    return '?page='.$page;
+		};
+		$view = new DefaultView();
+		$html = $view->render($pagerfanta, $routeGenerator);
+		
+
+
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+
+        return array('pager' => $html, 'entities' => $entities );
     }
 
     /**

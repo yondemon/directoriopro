@@ -1,0 +1,44 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Admin" %}
+
+
+{% block sidebar %}
+
+<b>Filtrar anuncios</b><br/>
+
+<a href="#">Aprobados</a>
+<a href="#">Sin aprobar</a>
+<a href="#">Destacados</a>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<h1>Admin</h1>
+
+
+
+
+<table class="zebra-striped">
+    {% for entity in entities %}
+        <tr>
+			<td>{{ entity.date|date('d/m/Y') }}<br/><a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}</a></td>
+			<td><a href="#" class="btn primary">editar</a><!-- | <a href="#" class="btn">aprobar</a> | <a href="#" class="btn">destacar</a>--></td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+
+
+
+{{ pager|raw }}
+
+
+
+
+{% endblock %}
