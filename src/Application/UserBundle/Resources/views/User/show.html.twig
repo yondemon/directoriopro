@@ -11,14 +11,14 @@
 	
 	
 	
-	{% if entity.url %}<a class="portafolio" href="{{ entity.url }}">Portafolio</a>{% endif %}
-	{% if entity.twitterurl %}<a class="twitter" href="http://twitter.com/{{ entity.twitterurl }}">Twitter</a>{% endif %}
-	{% if entity.linkedinurl %}<a class="linkedin" href="http://es.linkedin.com/in/{{ entity.linkedinurl }}">Linkedin</a>{% endif %}
-	{% if entity.forrsturl %}<a class="forrst" href="http://forrst.com/people/{{ entity.forrsturl }}">Forrst</a>{% endif %}
-	{% if entity.githuburl %}<a class="github" href="http://github.com/{{ entity.githuburl }}">Github</a>{% endif %}
-	{% if entity.dribbbleurl %}<a class="dribbble" href="http://dribbble.com/{{ entity.dribbbleurl }}">Dribbble</a>{% endif %}
-	{% if entity.flickrurl %}<a class="flickr" href="http://flickr.com/{{ entity.flickrurl }}">Flickr</a>{% endif %}
-	{% if entity.youtubeurl %}<a class="youtube" href="http://www.youtube.com/user/{{ entity.youtubeurl }}">Youtube</a>{% endif %}
+	{% if entity.url %}<a rel="nofollow,noindex" target="_blank" class="portafolio" href="{{ entity.url }}">Portafolio</a>{% endif %}
+	{% if entity.twitterurl %}<a rel="nofollow,noindex" target="_blank" class="twitter" href="http://twitter.com/{{ entity.twitterurl }}">Twitter</a>{% endif %}
+	{% if entity.linkedinurl %}<a rel="nofollow,noindex" target="_blank" class="linkedin" href="http://es.linkedin.com/in/{{ entity.linkedinurl }}">Linkedin</a>{% endif %}
+	{% if entity.forrsturl %}<a rel="nofollow,noindex" target="_blank" class="forrst" href="http://forrst.com/people/{{ entity.forrsturl }}">Forrst</a>{% endif %}
+	{% if entity.githuburl %}<a rel="nofollow,noindex" target="_blank" class="github" href="http://github.com/{{ entity.githuburl }}">Github</a>{% endif %}
+	{% if entity.dribbbleurl %}<a rel="nofollow,noindex" target="_blank" class="dribbble" href="http://dribbble.com/{{ entity.dribbbleurl }}">Dribbble</a>{% endif %}
+	{% if entity.flickrurl %}<a rel="nofollow,noindex" target="_blank" class="flickr" href="http://flickr.com/{{ entity.flickrurl }}">Flickr</a>{% endif %}
+	{% if entity.youtubeurl %}<a rel="nofollow,noindex" target="_blank" class="youtube" href="http://www.youtube.com/user/{{ entity.youtubeurl }}">Youtube</a>{% endif %}
 	
 {% endblock %}
 
