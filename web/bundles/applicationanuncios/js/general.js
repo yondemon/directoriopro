@@ -22,7 +22,7 @@ function get_dribbble(){
 				    });
 					$('#dribbble_images A:first').click();
 				}else{
-					$('#dribbble_images').html('no se han encontrado imagenes');
+					$('#content_dribbble').html('no se han encontrado imagenes');
 				}
 			},
 			type: 'GET',
