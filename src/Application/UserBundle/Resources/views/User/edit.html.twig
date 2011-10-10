@@ -10,6 +10,14 @@
 TEXTAREA.xlarge{width:500px}
 </style>
 
+
+<ul class="breadcrumb">
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('user') }}">Usuarios</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('user_show', { 'id': entity.id }) }}">Perfil</a> <span class="divider">/</span></li>
+  <li class="active">Editar</li>
+</ul>
+
 <h1>Editar perfil</h1>
 
 {% if updated is defined %}
@@ -23,7 +31,16 @@ TEXTAREA.xlarge{width:500px}
 
 {% endif %}
 
-<form action="{{ path('user_update') }}" method="post" {{ form_enctype(edit_form) }}>
+
+<ul id="tabs" class="tabs">
+  <li id="tab_info" class="active"><a href="#">Información</a></li>
+  <li id="tab_networks"><a href="#">Redes</a></li>
+  <li id="tab_options"><a href="#">Opciones</a></li>
+</ul>
+
+
+
+<form id="tabs_content" action="{{ path('user_update') }}" method="post" {{ form_enctype(edit_form) }}>
 
 
 
@@ -33,74 +50,55 @@ TEXTAREA.xlarge{width:500px}
 
 	
 
-	
-
-
-	
-	<div class="clearfix">
-		<b>Información personal</b>
-	</div>
-
-
-
-	{{ form_row(edit_form.email, { 'label': 'Email' }) }}
-	{{ form_row(edit_form.name, { 'label': 'Nombre y apellidos' }) }}
-	{{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
-	{{ form_row(edit_form.location, { 'label': 'Localización' }) }}
-	
-
-
-	
-	<div class="clearfix">
-		<label>Categoría</label>
-		<div class="input">
-			<select id="application_userbundle_usertype_category_id" name="application_userbundle_usertype[category_id]">
-				{% for category in categories %}
-					{% if loop.index0 > 0 %}
-						<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
-					{% endif %}
-				{% endfor %}
-			</select>
+	<div id="content_info">
+		<div class="clearfix">
+			<label>Categoría</label>
+			<div class="input">
+				<select id="application_userbundle_usertype_category_id" name="application_userbundle_usertype[category_id]">
+					{% for category in categories %}
+						{% if loop.index0 > 0 %}
+							<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
+						{% endif %}
+					{% endfor %}
+				</select>
+			</div>
 		</div>
-	</div>
-
-	<div class="clearfix">
-		<b>Opciones</b>	
+		{{ form_row(edit_form.name, { 'label': 'Nombre y apellidos' }) }}
+		{{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
+		{{ form_row(edit_form.location, { 'label': 'Localización' }) }}
+		{{ form_row(edit_form.email, { 'label': 'Email' }) }}
 	</div>
 	
-	
-	<div class="input">
-	    <ul class="inputs-list">
-        <li>
-          <label for="application_userbundle_usertype_freelance" class=" required">
-            <input type="checkbox" {% if entity.getFreelance() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_freelance" name="application_userbundle_usertype[freelance]" value="1">
-            <span>¿Eres freelance?</span>
-          </label>
-        </li>
-        <li>
-          <label for="application_userbundle_usertype_can_contact" class=" required">
-            <input type="checkbox" {% if entity.getCanContact() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_can_contact" name="application_userbundle_usertype[can_contact]" value="1">
-            <span>Permitir que contacten conmigo</span>
-          </label>
-        </li>
-      </ul>
-    </div>
-
-
-	<div class="clearfix">
-
-		<b>Enseña tus trabajos</b>
+	<div id="content_networks" style="display:none">
+		{{ form_row(edit_form.url, { 'label': 'Portafolio' }) }}
+		{{ form_row(edit_form.linkedin_url, { 'label': 'Usuario linkedin' }) }}
+		{{ form_row(edit_form.twitter_url, { 'label': 'Usuario twitter' }) }}
+		{{ form_row(edit_form.forrst_url, { 'label': 'Usuario forrst' }) }}
+		{{ form_row(edit_form.github_url, { 'label': 'Usuario github' }) }}
+		{{ form_row(edit_form.dribbble_url, { 'label': 'Usuario dribbble' }) }}
+		{{ form_row(edit_form.flickr_url, { 'label': 'Usuario flickr' }) }}
+		{{ form_row(edit_form.youtube_url, { 'label': 'Usuario youtube' }) }}
 	</div>
 
-	
-	{{ form_row(edit_form.url, { 'label': 'Portafolio' }) }}
-	{{ form_row(edit_form.linkedin_url) }}
-	{{ form_row(edit_form.twitter_url) }}
-	{{ form_row(edit_form.forrst_url) }}
-	{{ form_row(edit_form.github_url) }}
-	{{ form_row(edit_form.dribbble_url) }}
-	{{ form_row(edit_form.flickr_url) }}
-	{{ form_row(edit_form.youtube_url) }}
+	<div id="content_options" style="display:none">	
+		<div class="input">
+		    <ul class="inputs-list">
+	        <li>
+	          <label for="application_userbundle_usertype_freelance" class=" required">
+	            <input type="checkbox" {% if entity.getFreelance() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_freelance" name="application_userbundle_usertype[freelance]" value="1">
+	            <span>¿Eres freelance?</span>
+	          </label>
+	        </li>
+	        <li>
+	          <label for="application_userbundle_usertype_can_contact" class=" required">
+	            <input type="checkbox" {% if entity.getCanContact() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_can_contact" name="application_userbundle_usertype[can_contact]" value="1">
+	            <span>Permitir que contacten conmigo</span>
+	          </label>
+	        </li>
+	      </ul>
+	    </div>
+	</div>
+
 
 
     <div class="actions">
@@ -108,11 +106,28 @@ TEXTAREA.xlarge{width:500px}
 		<a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn">Cancelar</a>
     </div>
 
+
 	{{ form_row(edit_form._token) }}
 	
 
 </form>
 
+
+<script>
+$().ready(function(){
+	$('#tabs a').each(function(){
+		$(this).click(function(){
+			id = '#' + $(this).parent().attr('id');
+			
+			$('#tabs li').attr('class','');
+			$(id).attr('class','active');
+
+			$('#tabs_content > div[class!="actions"]').hide();
+			$(id.replace('tab_','content_')).show();
+		});
+	});
+});
+</script>
 
 
 {% endblock %}
