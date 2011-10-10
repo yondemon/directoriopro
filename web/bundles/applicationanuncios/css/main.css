@@ -1,7 +1,6 @@
 
 
-PRE{background:#FEFBF3;border-color:#DDD}
-
+.footer{padding:15px 0 15px 0;margin-top:5px;border-top:1px #efefef solid;}
 	
 
 .wrap{width:750px;margin:auto;padding:10px}
@@ -32,6 +31,6 @@ A.portafolio{background:url('../images/portafolio.png') no-repeat left center;pa
 
 html, body {background:#fff}
 .content{-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none}
-.footer{padding:15px 0 15px 0;margin-top:5px;border-top:1px #efefef solid;}
 
 PRE{background:white;border:0;padding:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;}
+.filters .primary{width:179px;text-align:center}

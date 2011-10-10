@@ -27,6 +27,7 @@
 
 <style>
 H1{font-size:24px;margin-bottom:5px}
+.carrusel img{width:100px;height:100px}
 </style>
 
 
@@ -35,7 +36,6 @@ H1{font-size:24px;margin-bottom:5px}
   <li><a href="{{ path('user') }}">Profesionales</a> <span class="divider">/</span></li>
   <li><a href="{{ path('post_search') }}?c={{ entity.categoryid }}">{{ categories[ entity.categoryid ] }}</a></li>
 </ul>
-
 
 
 
@@ -67,17 +67,64 @@ H1{font-size:24px;margin-bottom:5px}
 <br/><br/><br/>
 
 
+<ul id="tabs" class="tabs">
+  <li id="tab_info" class="active"><a href="#">Información</a></li>
+  <!--<li id="tab_networks"><a href="#">Curriculum</a></li>-->
+  <li id="tab_dribbble" style="display:none"><a href="#">Dribbble</a></li>
+  <!--<li id="tab_options"><a href="#">Youtube</a></li>-->
+</ul>
 
-{% if entity.body %}
-	<pre>{{ entity.body}}</pre>
+<div id="tabs_content">
+
+
+<div id="content_info">
+	{% if entity.body %}
+		<pre>{{ entity.body}}</pre>
+	{% endif %}
+</div>
+
+
+
+
+
+{% if entity.dribbbleurl %}
+
+	<div id="content_dribbble" style="display:none" class="function">
+		<ul class="media-grid carrusel" id="dribbble_images"></ul>
+		<img id="dribbble_big"/>
+	</div>
+
+	<script>
+	var dribbble_user = '{{ entity.dribbbleurl }}';
+	$('#tab_dribbble').show();
+	</script>
+
 {% endif %}
 
 
-	
+</div>
 
 
 
+<script>
+$().ready(function(){
+	$('#tabs a').each(function(){
+		$(this).click(function(){
+			id = $(this).parent().attr('id').replace('tab_','');
+			
+			$('#tabs li').attr('class','');
+			$('#tab_' + id).attr('class','active');
 
+			$('#tabs_content > div[class!="actions"]').hide();
+			
+			$( '#content_' + id).show();
+			if( $( '#content_' + id).hasClass('function') ){
+				eval('get_'+id+'();');
+			}
+		});
+	});
+});
+</script>
 
 
 {% endblock %}
