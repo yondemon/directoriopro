@@ -205,7 +205,7 @@ function get_twitter(){
 				if( data.lists.length ){
 				    $.each(data.lists, function(i,item){
 
-				      $('<li><a href="http://twitter.com' + item.url + '" target="_blank">' + item.name + '</a> en la lista de <a style="color:gray" href="http://twitter.com/' + item.user.screen_name + '" target="_blank">@' + item.user.screen_name + '</a></li>').appendTo("#twitter_list");
+				      $('<li><a href="http://twitter.com' + item.url + '" target="_blank">' + item.name + '</a> añadido por <a style="color:gray" href="http://twitter.com/' + item.user.screen_name + '" target="_blank">@' + item.user.screen_name + '</a></li>').appendTo("#twitter_list");
 
 				    });
 
