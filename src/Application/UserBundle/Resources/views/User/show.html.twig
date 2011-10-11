@@ -25,10 +25,7 @@
 
 {% block content %}
 
-<style>
-H1{font-size:24px;margin-bottom:5px}
-.carrusel img{width:100px;height:100px}
-</style>
+
 
 
 <ul class="breadcrumb">
@@ -68,16 +65,23 @@ H1{font-size:24px;margin-bottom:5px}
 
 
 <ul id="tabs" class="tabs">
-  <li id="tab_info" class="active"><a href="#">Información</a></li>
-  <!--<li id="tab_networks"><a href="#">Curriculum</a></li>-->
-  <li id="tab_dribbble" style="display:none"><a href="#">Dribbble</a></li>
-  <!--<li id="tab_options"><a href="#">Youtube</a></li>-->
+	<li class="active"><a href="#info">Información</a></li>
+	<li id="tab_dribbble" style="display:none"><a href="#dribbble" onclick="get_dribbble();">Dribbble</a></li>
+	<li id="tab_flickr" style="display:none"><a href="#flickr" onclick="get_flickr();">Flickr</a></li>
+	<li id="tab_github" style="display:none"><a href="#github" onclick="get_github();">Github</a></li>
+	<li id="tab_youtube" style="display:none"><a href="#youtube" onclick="get_youtube();">Youtube</a></li>
 </ul>
 
-<div id="tabs_content">
+<div id="loader"><img src="{{ asset('bundles/applicationanuncios/images/loader.gif') }}"/></div>
+
+<div class="pill-content">
 
 
-<div id="content_info">
+
+
+
+
+<div class="active" id="info">
 	{% if entity.body %}
 		<pre>{{ entity.body}}</pre>
 	{% endif %}
@@ -89,14 +93,59 @@ H1{font-size:24px;margin-bottom:5px}
 
 {% if entity.dribbbleurl %}
 
-	<div id="content_dribbble" style="display:none" class="function">
+	<div id="dribbble">
 		<ul class="media-grid carrusel" id="dribbble_images"></ul>
-		<img id="dribbble_big"/>
+		<ul class="media-grid" id="dribbble_big"><li></li></ul>
 	</div>
 
 	<script>
 	var dribbble_user = '{{ entity.dribbbleurl }}';
 	$('#tab_dribbble').show();
+	</script>
+
+{% endif %}
+
+
+{% if entity.flickrurl %}
+
+	<div id="flickr">
+		<ul class="media-grid carrusel" id="flickr_images"></ul>
+		<ul class="media-grid" id="flickr_big"><li></li></ul>
+	</div>
+
+	<script>
+	var flickr_user = '{{ entity.flickrurl }}';
+	$('#tab_flickr').show();
+	</script>
+
+{% endif %}
+
+
+{% if entity.githuburl %}
+
+	<div id="github">
+		<div id="github_graph"></div>
+		<ul id="github_projects"></ul>
+	</div>
+
+	<script>
+	var github_user = '{{ entity.githuburl }}';
+	$('#tab_github').show();
+	</script>
+
+{% endif %}
+
+
+{% if entity.youtubeurl %}
+	
+	<div id="youtube">
+		<ul class="media-grid carrusel" id="youtube_list"></ul>
+		<div id="youtube_big"></div>
+	</div>
+
+	<script>
+	var youtube_user = '{{ entity.youtubeurl }}';
+	$('#tab_youtube').show();
 	</script>
 
 {% endif %}
@@ -108,21 +157,7 @@ H1{font-size:24px;margin-bottom:5px}
 
 <script>
 $().ready(function(){
-	$('#tabs a').each(function(){
-		$(this).click(function(){
-			id = $(this).parent().attr('id').replace('tab_','');
-			
-			$('#tabs li').attr('class','');
-			$('#tab_' + id).attr('class','active');
-
-			$('#tabs_content > div[class!="actions"]').hide();
-			
-			$( '#content_' + id).show();
-			if( $( '#content_' + id).hasClass('function') ){
-				eval('get_'+id+'();');
-			}
-		});
-	});
+	$('.tabs').tabs();
 });
 </script>
 

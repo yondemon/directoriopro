@@ -27,10 +27,11 @@ TEXTAREA.xlarge{width:500px}
 
 
 <ul id="tabs" class="tabs">
-  <li id="tab_info" class="active"><a href="#">Información</a></li>
-  <li id="tab_networks"><a href="#">Redes</a></li>
-  <li id="tab_options"><a href="#">Opciones</a></li>
+  <li class="active"><a href="#info">Información</a></li>
+  <li><a href="#networks">Redes</a></li>
+  <li><a href="#options">Opciones</a></li>
 </ul>
+
 
 
 
@@ -42,9 +43,9 @@ TEXTAREA.xlarge{width:500px}
 	{{ form_errors(edit_form) }}
 	
 
-	
+	<div class="pill-content">
 
-	<div id="content_info">
+	<div id="info" class="active">
 		<div class="clearfix">
 			<label>Categoría</label>
 			<div class="input">
@@ -63,7 +64,7 @@ TEXTAREA.xlarge{width:500px}
 		{{ form_row(edit_form.email, { 'label': 'Email' }) }}
 	</div>
 	
-	<div id="content_networks" style="display:none">
+	<div id="networks">
 		{{ form_row(edit_form.url, { 'label': 'Portafolio' }) }}
 		{{ form_row(edit_form.linkedin_url, { 'label': 'Usuario linkedin' }) }}
 		{{ form_row(edit_form.twitter_url, { 'label': 'Usuario twitter' }) }}
@@ -74,7 +75,7 @@ TEXTAREA.xlarge{width:500px}
 		{{ form_row(edit_form.youtube_url, { 'label': 'Usuario youtube' }) }}
 	</div>
 
-	<div id="content_options" style="display:none">	
+	<div id="options">	
 		<div class="input">
 		    <ul class="inputs-list">
 	        <li>
@@ -92,7 +93,7 @@ TEXTAREA.xlarge{width:500px}
 	      </ul>
 	    </div>
 	</div>
-
+	</div>
 
 
     <div class="actions">
@@ -109,17 +110,7 @@ TEXTAREA.xlarge{width:500px}
 
 <script>
 $().ready(function(){
-	$('#tabs a').each(function(){
-		$(this).click(function(){
-			id = '#' + $(this).parent().attr('id');
-			
-			$('#tabs li').attr('class','');
-			$(id).attr('class','active');
-
-			$('#tabs_content > div[class!="actions"]').hide();
-			$(id.replace('tab_','content_')).show();
-		});
-	});
+	$('.tabs').tabs();
 });
 </script>
 
