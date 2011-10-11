@@ -100,7 +100,6 @@ var github_load = false;
 var github_langs = [];
 var github_langs_values = {};
 var github_langs_values_aux = [];
-https://chart.googleapis.com/chart?cht=p&chd=t:10,20,30,40&chs=200x100&chl=January|February|March|April
 
 function get_github(){
 	if( !github_load ){
@@ -119,11 +118,8 @@ function get_github(){
 
 
 				      $('<li><a href="' + item.url + '" target="_blank">' + item.name + ' (' + item.language + ')</a><br/>' + item.description + '</li>').appendTo("#github_projects");
-				      //if ( i == 4 ) return false;
+
 				    });
-					$('#github_images A:first').click();
-					
-					
 					
 					
 					
@@ -132,7 +128,6 @@ function get_github(){
 						github_langs_values_aux.push(github_langs_values[lang]);
 					}
 					
-					//console.log(github_langs_values_aux);
 					
 					url = 'https://chart.googleapis.com/chart?cht=p&chd=t:' + github_langs_values_aux.join(',') + '&chs=300x150&chl=' + github_langs.join('|');
 					$('#github_graph').html('<img src="' + url + '"/>');
@@ -189,6 +184,40 @@ function get_youtube(){
 			},
 			type: 'GET',
 			url: 'http://gdata.youtube.com/feeds/users/' + youtube_user + '/uploads?alt=json'
+		});
+	}
+}
+
+
+/* twitter */
+
+var twitter_load = false;
+
+function get_twitter(){
+	if( !twitter_load ){
+		$('#loader').show();
+		twitter_load = true;
+		$.ajax({
+			dataType: 'jsonp',
+			success: function(data){
+				$('#loader').hide();
+				
+				if( data.lists.length ){
+				    $.each(data.lists, function(i,item){
+
+				      $('<li><a href="http://twitter.com' + item.url + '" target="_blank">' + item.name + '</a> en la lista de <a style="color:gray" href="http://twitter.com/' + item.user.screen_name + '" target="_blank">@' + item.user.screen_name + '</a></li>').appendTo("#twitter_list");
+
+				    });
+
+					
+
+					
+				}else{
+					$('#twitter').html('todavía no ha sido añadido en una lista');
+				}
+			},
+			type: 'GET',
+			url: 'https://api.twitter.com/1/lists/memberships.json?screen_name=' + twitter_user
 		});
 	}
 }

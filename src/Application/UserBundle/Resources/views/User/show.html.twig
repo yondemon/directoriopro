@@ -70,6 +70,7 @@
 	<li id="tab_flickr" style="display:none"><a href="#flickr" onclick="get_flickr();">Flickr</a></li>
 	<li id="tab_github" style="display:none"><a href="#github" onclick="get_github();">Github</a></li>
 	<li id="tab_youtube" style="display:none"><a href="#youtube" onclick="get_youtube();">Youtube</a></li>
+	<li id="tab_twitter" style="display:none"><a href="#twitter" onclick="get_twitter();">Twitter</a></li>
 </ul>
 
 <div id="loader"><img src="{{ asset('bundles/applicationanuncios/images/loader.gif') }}"/></div>
@@ -125,7 +126,7 @@
 
 	<div id="github">
 		<div id="github_graph"></div>
-		<ul id="github_projects"></ul>
+		<ul id="github_projects" class="list"></ul>
 	</div>
 
 	<script>
@@ -146,6 +147,20 @@
 	<script>
 	var youtube_user = '{{ entity.youtubeurl }}';
 	$('#tab_youtube').show();
+	</script>
+
+{% endif %}
+
+{% if entity.twitterurl %}
+
+	<div id="twitter">
+		Una forma de saber que hace una persona es saber en que listas lo han añadido en twitter<br/><br/>
+		<ul id="twitter_list" class="list"></ul>
+	</div>
+
+	<script>
+	var twitter_user = '{{ entity.twitterurl }}';
+	$('#tab_twitter').show();
 	</script>
 
 {% endif %}
