@@ -1,0 +1,17 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Estadísticas de usuarios" %}
+
+{% block content %}
+
+<h1>Estadísticas de usuarios</h1>
+
+<ol>
+{% for entity in entities %}
+
+<li>{{ categories[ entity.category_id ] }}: {{ entity.total }}</li>
+
+{% endfor %}
+</ol>
+
+{% endblock %}

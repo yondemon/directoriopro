@@ -191,7 +191,7 @@ class UserController extends Controller
         }
 
         $editForm = $this->createForm(new UserType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        //$deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
@@ -227,7 +227,7 @@ class UserController extends Controller
         }
 
         $editForm   = $this->createForm(new UserType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        //$deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
@@ -280,12 +280,13 @@ class UserController extends Controller
         return array('entities' => $entities, 'form_category' =>$category_id);
     }
 
-    /**
+    /*
      * Deletes a User entity.
      *
      * @Route("/{id}/delete", name="user_delete")
      * @Method("post")
-     */
+     *
+
     public function deleteAction($id)
     {
         $form = $this->createDeleteForm($id);
@@ -307,6 +308,16 @@ class UserController extends Controller
 
         return $this->redirect($this->generateUrl('user'));
     }
+
+private function createDeleteForm($id)
+{
+    return $this->createFormBuilder(array('id' => $id))
+        ->add('id', 'hidden')
+        ->getForm()
+    ;
+}
+
+	*/
 
 
 
@@ -529,11 +540,22 @@ class UserController extends Controller
 		return $this->redirect( $this->generateUrl('post') );
 	}
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+
+
+
+    /**
+     * Stats User entities.
+     *
+     * @Route("/stats", name="user_stats")
+     * @Template()
+     */
+    public function statsAction()
+    {		
+		$query = "SELECT COUNT(u.id) AS total, u.category_id FROM User u GROUP BY u.category_id ORDER BY u.category_id DESC";
+
+		$db = $this->get('database_connection');
+        $entities = $db->fetchAll($query);
+
+        return array('entities' => $entities);
     }
 }
