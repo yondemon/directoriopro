@@ -209,7 +209,7 @@ function get_twitter(){
 
 				    });
 
-					
+					$('<li><a href="http://twitter.com/' + twitter_user + '/lists/memberships" style="font-weight:bold" target="_blank">Ver todas las listas</a></li>').appendTo("#twitter_list");
 
 					
 				}else{
