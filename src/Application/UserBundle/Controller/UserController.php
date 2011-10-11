@@ -551,7 +551,7 @@ private function createDeleteForm($id)
      */
     public function statsAction()
     {		
-		$query = "SELECT COUNT(u.id) AS total, u.category_id FROM User u GROUP BY u.category_id ORDER BY u.category_id DESC";
+		$query = "SELECT COUNT(u.id) AS total, u.category_id FROM User u GROUP BY u.category_id ORDER BY total DESC";
 
 		$db = $this->get('database_connection');
         $entities = $db->fetchAll($query);

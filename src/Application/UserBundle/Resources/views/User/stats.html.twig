@@ -9,7 +9,7 @@
 <ol>
 {% for entity in entities %}
 
-<li>{{ categories[ entity.category_id ] }}: {{ entity.total }}</li>
+	<li><a href="{{ path('user_search') }}?c={{ entity.category_id }}">{{ categories[ entity.category_id ] }}: {{ entity.total }}</a></li>
 
 {% endfor %}
 </ol>
