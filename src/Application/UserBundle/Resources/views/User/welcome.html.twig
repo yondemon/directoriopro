@@ -4,9 +4,6 @@
 
 
 {% block sidebar %}
-	<a href="{{ path('user_login') }}" class="btn large primary">Iniciar sesión con facebook</a>
-	
-	<br/>
 	
 	
 	<b>Red de profesionales</b><br/>
@@ -65,19 +62,28 @@
 
 <br/>
 
-<h3>Ya están registrados</h3>
 
-{% for user in users %}
-
-	<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="{{ user.getName() }} - {{ categories[ user.getCategoryId() ] }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar(60) }}" width="60" height="60"/></a>
 	
+<div style="float:left;padding:0 20px 0 60px;">
+	<br/>
+	<a href="{{ path('user_login') }}" class="btn large primary">Iniciar sesión con facebook</a>
+</div>
 
-{% endfor %}
-
-
-
+<div style="float:left;color:#666">
+	Ya están registrados...<br/>
+	{% for user in users %}
+		<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="{{ user.getName() }} - {{ categories[ user.getCategoryId() ] }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar(38) }}" width="38" height="38"/></a>
+	{% endfor %}
+</div>
 
 <br class="clear"/>
+
+
+
+
+
+
+
 
 
 
