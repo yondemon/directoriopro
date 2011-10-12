@@ -496,16 +496,16 @@ class UserController extends Controller
 			}
 		}
 		
+		// estadisticas de usuarios
 		$query = "SELECT COUNT(u.id) AS total, u.category_id FROM User u GROUP BY u.category_id ORDER BY total DESC";
 		$db = $this->get('database_connection');
         $categories = $db->fetchAll($query);
-
-
-
+		
+		// ultimos usuarios
 		$query = "SELECT u FROM ApplicationUserBundle:User u ORDER BY u.id DESC";
 		$users = $this->get('doctrine')->getEntityManager()
 		            ->createQuery($query)
-					->setMaxResults(6)
+					->setMaxResults(5)
 		            ->getResult();
 		
         return array('categories_aux' => $categories, 'users' => $users);
