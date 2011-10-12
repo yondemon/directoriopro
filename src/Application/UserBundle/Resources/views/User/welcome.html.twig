@@ -2,16 +2,68 @@
 
 {% block title "Bienvenido al directorio betabeers" %}
 
+
+{% block sidebar %}
+	<a href="{{ path('user_login') }}" class="btn large primary">Iniciar sesión con facebook</a>
+	
+	<br/><br/>
+	
+	
+	<b>Red de profesionales</b><br/>
+	
+	{% for entity in entities %}
+
+		<a href="{{ path('user_search') }}?c={{ entity.category_id }}"><b>{{ entity.total }}</b> &nbsp;{{ categories[ entity.category_id ] }}</a><br/><br/>
+
+	{% endfor %}
+
+
+	
+{% endblock %}
+
+
 {% block content %}
 
-<h1>Bienvenido al directorio betabeers</h1>
+<h3>Portal de empleo dedicado a startups</h3>
+Publica ofertas de trabajo y encuentra el mejor candidato sea programador frontend, programador móvil, diseñador, community manager, etc.
 
+<br/><br/>
+
+<h3>Forma un equipo, crea una startup</h3>
+Busca el perfil en el directorio o publica un anuncio con la idea que quieres desarrollar y los perfiles que buscas.
+
+<br/><br/>
+
+<h3>Encuentra betatesters</h3>
+Publica un anuncio para encontrar personas para que prueben la beta del proyecto que estés desarrollando sea web o móvil.
+
+<br/><br/>
+
+<h3>Amplia tu red de contactos</h3>
+Crea tu perfil, date a conocer y conecta con gente como tu o que te complemente.<br/>
+Tu perfil es abierto, puedes decidir si cualquier persona se puede poner en contacto contigo de forma privada.
+
+<br/><br/>
+
+<h3>Demuestra tu talento</h3>
+Introduce tus perfiles de las redes especializadas, muestra tus últimos trabajos y demuestra lo que eres capaz de hacer.
+
+<br/><br/>
+
+<h3>Opensource</h3>
+A diferencia de otras redes, el código fuente esta abierto al público en github para que cualquiera pueda participar en el desarrollo de esta web.
+
+
+
+<!--
 <ol>
 	<li>Crea tu perfil</li>
 	<li>Mira las ofertas de trabajo</li>
 	<li>Crea tu red de contactos</li>
 </ol>
+-->
 
-<a href="{{ path('user_login') }}"><img src="{{ asset( 'bundles/applicationanuncios/images/fbconnect.gif' ) }}"/></a>
+
+<!--<a href="{{ path('user_login') }}"><img src="{{ asset( 'bundles/applicationanuncios/images/fbconnect.gif' ) }}"/></a>-->
 
 {% endblock %}

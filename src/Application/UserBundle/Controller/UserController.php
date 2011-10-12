@@ -441,24 +441,6 @@ class UserController extends Controller
 	}
 
 
-
-
-    /**
-     * Stats User entities.
-     *
-     * @Route("/stats", name="user_stats")
-     * @Template()
-     */
-    public function statsAction()
-    {		
-		$query = "SELECT COUNT(u.id) AS total, u.category_id FROM User u GROUP BY u.category_id ORDER BY total DESC";
-
-		$db = $this->get('database_connection');
-        $entities = $db->fetchAll($query);
-
-        return array('entities' => $entities);
-    }
-
     /**
      * Invite contacts
      *
@@ -513,7 +495,13 @@ class UserController extends Controller
 				$session->set('ref_id', $ref_id);
 			}
 		}
-        return array();
+		
+		$query = "SELECT COUNT(u.id) AS total, u.category_id FROM User u GROUP BY u.category_id ORDER BY total DESC";
+
+		$db = $this->get('database_connection');
+        $entities = $db->fetchAll($query);
+
+        return array('entities' => $entities);
     }
 
 }
