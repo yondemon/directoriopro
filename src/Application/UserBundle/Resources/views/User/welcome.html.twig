@@ -25,13 +25,7 @@
 {% block content %}
 
 
-{% for user in users %}
 
-	<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="{{ user.getName() }} - {{ categories[ user.getCategoryId() ] }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar(80) }}" width="80" height="80"/></a>
-
-{% endfor %}
-
-<br class="clear"/><br/>
 
 
 <h3>Portal de empleo dedicado a startups</h3>
@@ -63,17 +57,19 @@ Introduce tus perfiles de las redes especializadas, muestra tus últimos trabajo
 <h3>Opensource</h3>
 A diferencia de otras redes, el código fuente esta abierto al público en github para que cualquiera pueda participar en el desarrollo de esta web.
 
+<br/><br/>
+
+<h3>Profesionales registrados</h3>
+
+{% for user in users %}
+
+	<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="{{ user.getName() }} - {{ categories[ user.getCategoryId() ] }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar(80) }}" width="80" height="80"/></a>
+
+{% endfor %}
+
+<br class="clear"/>
 
 
-<!--
-<ol>
-	<li>Crea tu perfil</li>
-	<li>Mira las ofertas de trabajo</li>
-	<li>Crea tu red de contactos</li>
-</ol>
--->
 
-
-<!--<a href="{{ path('user_login') }}"><img src="{{ asset( 'bundles/applicationanuncios/images/fbconnect.gif' ) }}"/></a>-->
 
 {% endblock %}
