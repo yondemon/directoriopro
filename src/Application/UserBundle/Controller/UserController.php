@@ -505,7 +505,7 @@ class UserController extends Controller
 		$query = "SELECT u FROM ApplicationUserBundle:User u ORDER BY u.id DESC";
 		$users = $this->get('doctrine')->getEntityManager()
 		            ->createQuery($query)
-					->setMaxResults(12)
+					->setMaxResults(6)
 		            ->getResult();
 		
         return array('categories_aux' => $categories, 'users' => $users);
