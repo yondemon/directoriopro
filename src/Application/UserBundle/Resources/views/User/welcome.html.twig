@@ -26,46 +26,56 @@
 
 
 
+<h1 style="font-size:40px;letter-spacing:-1px;line-height:40px;margin-bottom:30px">Amplia tu red de contactos, trabaja en la mejor startup</h1>
 
 
-<h3>Portal de empleo dedicado a startups</h3>
-Publica ofertas de trabajo y encuentra el mejor candidato sea programador frontend, programador móvil, diseñador, community manager, etc.
+<div class="row">
+	<div class="span1">
+		<img src="{{ asset('bundles/applicationanuncios/images/startups.png') }}"/>
+	</div>
+	<div class="span6">
+		<b>Portal de empleo dedicado a startups</b><br/>
+		Publica ofertas de trabajo y encuentra el mejor candidato sea programador frontend, programador móvil, diseñador, community manager, etc.
+	</div>
+</div>
 
-<br/><br/>
+<br/>
 
-<h3>Forma un equipo, crea una startup</h3>
-Busca el perfil en el directorio o publica un anuncio con la idea que quieres desarrollar y los perfiles que buscas.
+<div class="row">
+	<div class="span1">
+		<img src="{{ asset('bundles/applicationanuncios/images/team.png') }}"/>
+	</div>
+	<div class="span6">
+		<b>Forma un equipo para crear una startup</b><br/>
+		Busca el perfil en el directorio o publica un anuncio con la idea que quieres desarrollar y los perfiles que buscas.
+	</div>
+</div>
 
-<br/><br/>
+<br/>
 
-<h3>Encuentra betatesters</h3>
-Publica un anuncio para encontrar personas para que prueben la beta del proyecto que estés desarrollando sea web o móvil.
+<div class="row">
+	<div class="span1">
+		<img src="{{ asset('bundles/applicationanuncios/images/talent.png') }}"/>
+	</div>
+	<div class="span6">
+		<b>Demuestra tu talento</b><br/>
+		Introduce tus perfiles, muestra tus últimos trabajos y demuestra lo que eres capaz de hacer.
+	</div>
+</div>
 
-<br/><br/>
+<br/>
 
-<h3>Amplia tu red de contactos</h3>
-Crea tu perfil, date a conocer y conecta con gente como tu o que te complemente.<br/>
-Tu perfil es abierto, puedes decidir si cualquier persona se puede poner en contacto contigo de forma privada.
-
-<br/><br/>
-
-<h3>Demuestra tu talento</h3>
-Introduce tus perfiles de las redes especializadas, muestra tus últimos trabajos y demuestra lo que eres capaz de hacer.
-
-<br/><br/>
-
-<h3>Opensource</h3>
-A diferencia de otras redes, el código fuente esta abierto al público en github para que cualquiera pueda participar en el desarrollo de esta web.
-
-<br/><br/>
-
-<h3>Profesionales registrados</h3>
+<h3>Ya están registrados</h3>
 
 {% for user in users %}
 
-	<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="{{ user.getName() }} - {{ categories[ user.getCategoryId() ] }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar(80) }}" width="80" height="80"/></a>
+	<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="{{ user.getName() }} - {{ categories[ user.getCategoryId() ] }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar(60) }}" width="60" height="60"/></a>
+	
 
 {% endfor %}
+
+
+
 
 <br class="clear"/>
 
