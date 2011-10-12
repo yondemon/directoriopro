@@ -1,3 +1,4 @@
+{% set css_id = 7 %}
 {% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros"] %}
 {% set analytics_id = "UA-16938408-8" %}
 {% set sitename = "Directorio Betabeers" %}
@@ -87,7 +88,7 @@
 	<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-tabs.js') }}"></script>
 	<script src="{{ asset('bundles/applicationanuncios/js/general.js') }}?v=2"></script>
 
-	<link rel="stylesheet" href="{{ asset('bundles/applicationanuncios/css/main.css') }}?v=5" type="text/css" media="all" />
+	<link rel="stylesheet" href="{{ asset('bundles/applicationanuncios/css/main.css') }}?v={{ css_id }}" type="text/css" media="all" />
 	
 	<link rel="alternate" type="application/rss+xml" title="Betabeers jobs" href="http://feeds.feedburner.com/betabeersjobs" />
 </head>
