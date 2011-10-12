@@ -162,6 +162,13 @@ class User
     private $can_contact;
 
     /**
+     * @var string $ref_id
+     *
+     * @ORM\Column(name="ref_id", type="integer")
+     */
+    private $ref_id;
+
+    /**
      * Get id
      *
      * @return intger 
@@ -559,6 +566,26 @@ class User
     public function setCanContact($canContact)
     {
         $this->can_contact = $canContact;
+    }
+
+    /**
+     * Get ref_id
+     *
+     * @return string 
+     */
+    public function getRefId()
+    {
+        return $this->ref_id;
+    }
+
+    /**
+     * Set ref_id
+     *
+     * @param string $refId
+     */
+    public function setRefId($refId)
+    {
+        $this->ref_id = $refId;
     }
 
     /**

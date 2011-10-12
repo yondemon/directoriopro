@@ -73,6 +73,22 @@ class Post
 
 
     /**
+     * @var string $price
+     *
+     * @ORM\Column(name="price", type="string", length=100, nullable=true)
+     */
+    private $price;
+
+
+    /**
+     * @var string $location
+     *
+     * @ORM\Column(name="location", type="string", length=255, nullable=true)
+     */
+    private $location;
+
+
+    /**
      * Get id
      *
      * @return integer 
@@ -220,5 +236,45 @@ class Post
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set location
+     *
+     * @param string $location
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * Get location
+     *
+     * @return string 
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 }

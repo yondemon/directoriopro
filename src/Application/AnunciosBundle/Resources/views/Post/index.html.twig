@@ -33,7 +33,7 @@
 <ul>
     {% for entity in entities %}
         <li>
-			<span class="label">{{ categories[ entity.getCategoryId() ] }}</span><br/>
+			<b>{{ categories[ entity.getCategoryId() ] }}</b><br/>
             <a href="{{ path('post_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
             {{ entity.body|truncate(200) }}<br/>
             <span class="date">{{ entity.date|date('d/m/Y') }}</span>

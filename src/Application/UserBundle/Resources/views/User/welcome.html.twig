@@ -1,0 +1,17 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Bienvenido al directorio betabeers" %}
+
+{% block content %}
+
+<h1>Bienvenido al directorio betabeers</h1>
+
+<ol>
+	<li>Crea tu perfil</li>
+	<li>Mira las ofertas de trabajo</li>
+	<li>Crea tu red de contactos</li>
+</ol>
+
+<a href="{{ path('user_login') }}"><img src="{{ asset( 'bundles/applicationanuncios/images/fbconnect.gif' ) }}"/></a>
+
+{% endblock %}

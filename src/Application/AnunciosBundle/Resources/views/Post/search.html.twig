@@ -25,8 +25,10 @@
 
 <ul class="breadcrumb">
   <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
-  <li><a href="{{ path('post') }}">Anuncios</a> <span class="divider">/</span></li>
-  <li><a href="{{ path('post_search') }}?c={{ form_category }}">{{ categories[ form_category ] }}</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('post') }}">Anuncios</a> <span class="divider">/</span></li>	
+  {% if form_category %}
+  	<li><a href="{{ path('post_search') }}?c={{ form_category }}">{{ categories[ form_category ] }}</a> <span class="divider">/</span></li>
+  {% endif %}
   <li class="active">Buscar</li>
 </ul>
 
@@ -39,7 +41,7 @@
 	<ul>
 		{% for entity in entities %}
 	       <li>
-	           <span class="label">{{ categories[ entity.getCategoryId() ] }}</span><br/>
+	           <b>{{ categories[ entity.getCategoryId() ] }}</b><br/>
 	           <a href="{{ path('post_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
 	           {{ entity.body|truncate(200) }}<br/>
 	           <span class="date">{{ entity.date|date('d/m/Y') }}</span>

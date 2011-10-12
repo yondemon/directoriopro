@@ -27,7 +27,7 @@
     {% for entity in entities %}
         <tr>
 			<td>{{ entity.date|date('d/m/Y') }}<br/><a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}</a></td>
-			<td><a href="#" class="btn">editar</a><!-- <a href="#" class="btn">aprobar</a> | <a href="#" class="btn">destacar</a>--></td>
+			<td><a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn">editar</a><!-- <a href="#" class="btn">aprobar</a> | <a href="#" class="btn">destacar</a>--></td>
         </tr>
     {% endfor %}
 </table>

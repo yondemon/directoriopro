@@ -1,0 +1,23 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Invitar contactos" %}
+
+{% block sidebar %}
+	<div style="text-align:center;padding:20px 0;background:#FEE9CC">
+		Usuarios invitados<br/><br/>
+		<b style="font-size:60px">{{ total }}</b>
+	</div>
+{% endblock %}
+
+{% block content %}
+
+	<h1>Invitar contactos</h1>
+	
+	<textarea rows="2" id="status" class="xxlarge">Me he dado de alta en el directorio de betabeers {{ url('user_welcome') }}?ref_id={{ entity.id }}</textarea>
+	
+	<br/><br/>
+	
+	<input onclick="window.open('http://facebook.com/sharer.php?u=' + encodeURIComponent( '{{ url('user_welcome') }}?ref_id={{ entity.id }}' ) );" type="button" class="btn" value="Compartir en Facebook"/> &nbsp; 
+	<input onclick="window.open('http://twitter.com?status=' + encodeURIComponent( $('#status').val() ) );" type="button" class="btn" value="Compartir en Twitter"/> 
+	
+{% endblock %}

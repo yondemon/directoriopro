@@ -1,4 +1,4 @@
-{% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Otros"] %}
+{% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros"] %}
 {% set analytics_id = "UA-16938408-8" %}
 {% set sitename = "Directorio Betabeers" %}
 {% if form_category is not defined %}
@@ -43,16 +43,17 @@
       }
 
       /* The white background content wrapper */
-      .content {
+      #content {
         background-color: #fff;
         padding: 20px;
         margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
-        -webkit-border-radius: 0 0 6px 6px;
+        /*-webkit-border-radius: 0 0 6px 6px;
            -moz-border-radius: 0 0 6px 6px;
                 border-radius: 0 0 6px 6px;
         -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
                 box-shadow: 0 1px 2px rgba(0,0,0,.15);
+		*/
       }
 
       /* Page header tweaks */
@@ -125,6 +126,7 @@
         <ul class="dropdown-menu">
 			<li><a href="{{ path('user_show', { 'id': app.session.get('id') }) }}">Perfil</a></li>
           <li><a href="{{ path('user_edit') }}">Cuenta</a></li>
+		  <li><a href="{{ path('user_invite') }}">Invitar contactos</a></li>
 		  <li class="divider"></li>
           <li><a href="{{ path('user_logout') }}">Salir</a></li>
         </ul>
@@ -146,7 +148,7 @@
 	
 
 <div class="container">
-<div class="content">
+<div id="content">
 	
 
 

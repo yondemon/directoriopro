@@ -15,6 +15,8 @@ class PostType extends AbstractType
             ->add('title')
             ->add('body')
             ->add('email')
+			->add('price')
+			->add('location')
             //->add('featured')
         ;
     }

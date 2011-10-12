@@ -15,16 +15,8 @@ TEXTAREA.xlarge{width:500px}
 
 <form action="{{ path('post_create') }}" method="post" {{ form_enctype(form) }}>
 
-
-
 	{{ form_errors(form) }}
-
-	{{ form_row(form.title, { 'label': 'Titulo' }) }}
 	
-	{{ form_row(form.body, { 'label': 'Descripción' }) }}
-	
-	{{ form_row(form.email, { 'label': 'Email' }) }}
-    
 	<div class="clearfix">
 		<label>Categoría</label>
 		<div class="input">
@@ -38,6 +30,16 @@ TEXTAREA.xlarge{width:500px}
 		</div>
 	</div>
 
+	{{ form_row(form.title, { 'label': 'Titulo' }) }}
+	
+	{{ form_row(form.body, { 'label': 'Descripción' }) }}
+	
+	{{ form_row(form.email, { 'label': 'Email' }) }}
+	
+	{{ form_row(form.location, { 'label': 'Localización' }) }}
+
+	{{ form_row(form.price, { 'label': 'Precio' }) }}
+
 	<div class="actions">
         <button type="submit" class="btn primary">Publicar</button>
 	</div>
@@ -45,6 +47,33 @@ TEXTAREA.xlarge{width:500px}
 	{{ form_row(form._token) }}
 
 </form>
+
+
+
+
+<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-popover.js') }}"></script>
+<script>
+$(function () {
+	$('#application_anunciosbundle_posttype_location')
+		.attr('rel','popover')
+		.attr('data-original-title','¿Es presencial?')
+		.attr('data-content','Si es un empleo que requiera asistir introduce la ciudad, si es un trabajo freelance que no importa de donde es la persona no hace falta rellenar este campo');
+
+		$('#application_anunciosbundle_posttype_price')
+			.attr('rel','popover')
+			.attr('data-original-title','¿Es un trabajo freelance?')
+			.attr('data-content','Introduce un precio, puedes poner un valor fijo o un rango de precios');
+
+	$("*[rel=popover]")
+		.popover({offset: 10})
+		.click(function(e) {
+			e.preventDefault()
+		});
+});
+</script>
+
+
+
 
 {% else %}
 	Area restringida, solo accesible para usuarios

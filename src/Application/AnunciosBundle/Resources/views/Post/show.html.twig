@@ -2,7 +2,8 @@
 {% set share_url = url('post_show', { 'id': entity.id }) %}
 {% set form_url = path('post_contact', { 'id': entity.id }) %}
 {% block title entity.title %}
-
+{% set location = entity.getLocation() %}
+{% set price = entity.getPrice() %}
 
 {% block sidebar %}
 	{% include "ApplicationAnunciosBundle:Form:contact.html.twig" %}
@@ -35,12 +36,20 @@
 <h1>{{ entity.title }}</h1>
 
 
+	
+	{% if location %}
+		Trabajo presencial: {{ location }} &nbsp; &nbsp;
+	{% endif %}
+	
+	{% if price %}
+		Precio: {{ price }}
+	{% endif %}
 
+	{% if location or price %}
+		<br/><br/>
+	{% endif %}
 
 	<pre>{{ entity.body }}</pre>
-	
-
-
 
 	Publicado por <a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }}
 

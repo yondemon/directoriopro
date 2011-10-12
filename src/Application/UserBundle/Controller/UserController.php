@@ -195,8 +195,7 @@ class UserController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            //'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         );
     }
 
@@ -238,9 +237,6 @@ class UserController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            //return $this->redirect($this->generateUrl('user_edit'));
-			//return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getId())));
-
         }
 
         return array(
@@ -279,46 +275,6 @@ class UserController extends Controller
 		
         return array('entities' => $entities, 'form_category' =>$category_id);
     }
-
-    /*
-     * Deletes a User entity.
-     *
-     * @Route("/{id}/delete", name="user_delete")
-     * @Method("post")
-     *
-
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find User entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('user'));
-    }
-
-private function createDeleteForm($id)
-{
-    return $this->createFormBuilder(array('id' => $id))
-        ->add('id', 'hidden')
-        ->getForm()
-    ;
-}
-
-	*/
-
 
 
     /**
@@ -375,70 +331,15 @@ private function createDeleteForm($id)
 				
 				
 				
-				
-				
-				
-				
-				//return $this->renderView('BloggerBlogBundle:Page:contactEmail.txt.twig', array('result' => $enquiry));
-				
-				
-				//echo '<pre>';
-				//print_r($request);
-				//echo '</pre>';
-				
-	            //return $this->redirect($this->generateUrl('BloggerBlogBundle_contact'));
-	
 	        }
 	    }
 		
 		
 		
-		
-		/*
-		$form = $this->get('form.contact')
-			->createBuilder('form')
-			->add('email','text')
-			->add('subject','text')
-			->add('message','text')
-			->getForm();
-			
-
-        $request = $this->getRequest();
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find User entity.');
-            }
-            $em->remove($entity);
-            $em->flush();
-			return $this->redirect($this->generateUrl('user'));
-			print_r($form);
-        }
-
-		*/
-		
-       // $em = $this->getDoctrine()->getEntityManager();
-
-        //$entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
-
-       // if (!$entity) {
-       //     throw $this->createNotFoundException('Unable to find User entity.');
-       // }
-
-
-        //$deleteForm = $this->createDeleteForm($id);
-
-		//$user = $em->getRepository('ApplicationUserBundle:User')->find($entity->getUserId());
-
         return array(
 			'form' => $form->createView(),
             'entity'      => $entity,
-			'result'      => $result,
-            //'user'      => $user,
-            //'delete_form' => $deleteForm->createView(),        
+			'result'      => $result
 			);
 
 
@@ -462,6 +363,8 @@ private function createDeleteForm($id)
 		// login ok ?
 		if( isset( $user_profile['id'] ) ){
 			
+			$session = $this->getRequest()->getSession();
+			
 			// existe usuario en la bd?
 			$em = $this->getDoctrine()->getEntityManager();
 			$user = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('facebook_id' => $user_profile['id']));
@@ -474,6 +377,10 @@ private function createDeleteForm($id)
 
 				if( !isset( $user_profile['location']['name'] ) ) $user_profile['location']['name'] = '';
 				if( !isset( $user_profile['website'] ) ) $user_profile['website'] = '';
+				
+				// usuario referido
+				$ref_id = $session->get('ref_id');
+				if( !$ref_id ) $ref_id = 0;
 				
 				$user = new \Application\UserBundle\Entity\User;
 				$user->setAdmin(0);
@@ -496,6 +403,7 @@ private function createDeleteForm($id)
 				$user->setYoutubeUrl('');
 				$user->setFreelance(0);
 				$user->setCanContact(1);
+				$user->setRefId($ref_id);
 
 				$em = $this->get('doctrine.orm.entity_manager');
 				$em->persist($user);
@@ -508,7 +416,7 @@ private function createDeleteForm($id)
 				$url = $this->generateUrl('user_show', array('id' => $user->getId()));
 			}
 			
-			$session = $this->getRequest()->getSession();
+			//$session = $this->getRequest()->getSession();
 			$session->set('id', $user->getId());
 			$session->set('facebook_id', $user->getFacebookId());
 			$session->set('name', $user->getName());
@@ -558,4 +466,62 @@ private function createDeleteForm($id)
 
         return array('entities' => $entities);
     }
+
+    /**
+     * Invite contacts
+     *
+     * @Route("/invite", name="user_invite")
+     * @Template()
+     */
+    public function inviteAction()
+    {
+		// esta logueado?
+		$session = $this->getRequest()->getSession();
+		$id = $session->get('id');
+		if( !$id ){
+			return $this->redirect('/');
+		}
+	
+        $em = $this->getDoctrine()->getEntityManager();
+        $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
+
+
+
+
+		
+		$query = "SELECT COUNT(u.id) AS total FROM User u WHERE u.ref_id = " . $id;
+		$db = $this->get('database_connection');
+		$result = $db->query($query)->fetch();
+		//$total = $db->fetchAll($query);
+		$total = $result['total'];
+		
+		
+	    
+
+        return array('entity' => $entity, 'total' => $total);
+    }
+
+    /**
+     * Welcome invite
+     *
+     * @Route("/welcome", name="user_welcome")
+     * @Template()
+     */
+    public function welcomeAction()
+    {
+		$request = Request::createFromGlobals();
+		$ref_id = $request->query->get('ref_id');
+		if( $ref_id ){
+			
+	        $em = $this->getDoctrine()->getEntityManager();
+	        $entity = $em->getRepository('ApplicationUserBundle:User')->find($ref_id);
+	
+			if( $entity ){
+				$session = $this->getRequest()->getSession();
+				$session->set('ref_id', $ref_id);
+			}
+		}
+        return array();
+    }
+
 }

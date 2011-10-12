@@ -325,13 +325,18 @@ class PostController extends Controller
 		$request = Request::createFromGlobals();
 		$search = $request->query->get('q');
 		$category_id = $request->query->get('c');
+		$location = $request->query->get('location');
+		$freelance = $request->query->get('freelance');
 		
 		$query = "SELECT p FROM ApplicationAnunciosBundle:Post p WHERE 1 = 1";
 		
 		if( $search ) $query .= " AND p.body LIKE '%".$search."%' OR p.title LIKE '%".$search."%'";
 		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
+		if( $location ) $query .= " AND p.location = '" . $location . "'";
+		if( $freelance ) $query .= " AND p.location IS NULL AND p.price IS NOT NULL";
 
 		$query .= " ORDER BY p.id DESC";
+		
 
 		$entities = $this->get('doctrine')->getEntityManager()
 		            ->createQuery($query)
