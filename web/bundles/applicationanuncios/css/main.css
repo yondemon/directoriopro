@@ -37,6 +37,7 @@ A.android{background:url('../images/android.png') no-repeat left center;padding-
 /* twitter list */
 
 #twitter_list A{
+height:55px;
 width:150px;
 float:left;
 padding:10px;
