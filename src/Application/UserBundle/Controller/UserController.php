@@ -497,11 +497,18 @@ class UserController extends Controller
 		}
 		
 		$query = "SELECT COUNT(u.id) AS total, u.category_id FROM User u GROUP BY u.category_id ORDER BY total DESC";
-
 		$db = $this->get('database_connection');
-        $entities = $db->fetchAll($query);
+        $categories = $db->fetchAll($query);
 
-        return array('entities' => $entities);
+
+
+		$query = "SELECT u FROM ApplicationUserBundle:User u ORDER BY u.id DESC";
+		$users = $this->get('doctrine')->getEntityManager()
+		            ->createQuery($query)
+					->setMaxResults(7)
+		            ->getResult();
+		
+        return array('categories_aux' => $categories, 'users' => $users);
     }
 
 }

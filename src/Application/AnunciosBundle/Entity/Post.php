@@ -83,7 +83,7 @@ class Post
     /**
      * @var string $location
      *
-     * @ORM\Column(name="location", type="string", length=255, nullable=true)
+     * @ORM\Column(name="location", type="string", length=255)
      */
     private $location;
 
