@@ -16,6 +16,7 @@ SPAN.freelance{color:#33CC00;padding-left:10px}
 .filters{padding-left:20px;border-left:1px #efefef solid;float:left;width:180px;float:right}
 	.filters A{display:block;padding-top:10px}
 
+A.portafolio{background:url('../images/portafolio.png') no-repeat left center;padding-left:23px}
 A.rss{clear:both;float:left;margin-right:7px}
 A.facebook{background:url('../images/facebook.png') no-repeat left center;padding-left:23px}
 A.twitter{background:url('../images/twitter.png') no-repeat left center;padding-left:23px}
@@ -25,7 +26,13 @@ A.linkedin{background:url('../images/linkedin.png') no-repeat left center;paddin
 A.dribbble{background:url('../images/dribbble.png') no-repeat left center;padding-left:23px}
 A.youtube{background:url('../images/youtube.png') no-repeat left center;padding-left:23px}
 A.forrst{background:url('../images/forrst.png') no-repeat left center;padding-left:23px}
-A.portafolio{background:url('../images/portafolio.png') no-repeat left center;padding-left:23px}
+
+A.stackoverflow{background:url('../images/stackoverflow.png') no-repeat left center;padding-left:23px}
+A.vimeo{background:url('../images/vimeo.png') no-repeat left center;padding-left:23px}
+A.delicious{background:url('../images/delicious.png') no-repeat left center;padding-left:23px}
+A.pinboard{background:url('../images/pinboard.png') no-repeat left center;padding-left:23px}
+A.itunes{background:url('../images/itunes.png') no-repeat left center;padding-left:23px}
+A.android{background:url('../images/android.png') no-repeat left center;padding-left:23px}
 
 /* bootstrap rewrite */
 

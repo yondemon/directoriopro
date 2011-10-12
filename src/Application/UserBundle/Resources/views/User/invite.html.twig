@@ -16,8 +16,9 @@
 	<textarea rows="2" id="status" class="xxlarge">Me he dado de alta en el directorio de betabeers {{ url('user_welcome') }}?ref_id={{ entity.id }}</textarea>
 	
 	<br/><br/>
-	
-	<input onclick="window.open('http://facebook.com/sharer.php?u=' + encodeURIComponent( '{{ url('user_welcome') }}?ref_id={{ entity.id }}' ) );" type="button" class="btn" value="Compartir en Facebook"/> &nbsp; 
-	<input onclick="window.open('http://twitter.com?status=' + encodeURIComponent( $('#status').val() ) );" type="button" class="btn" value="Compartir en Twitter"/> 
+
+	<input onclick="window.open('http://twitter.com?status=' + encodeURIComponent( $('#status').val() ) );" type="button" class="btn" value="Compartir en Twitter"/> &nbsp; 	
+	<input onclick="window.open('http://facebook.com/sharer.php?u=' + encodeURIComponent( '{{ url('user_welcome') }}?ref_id={{ entity.id }}' ) );" type="button" class="btn" value="Compartir en Facebook"/>
+
 	
 {% endblock %}

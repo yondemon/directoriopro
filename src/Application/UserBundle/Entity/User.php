@@ -155,6 +155,48 @@ class User
     private $youtube_url;
 
     /**
+     * @var string $stackoverflow_url
+     *
+     * @ORM\Column(name="stackoverflow_url", type="string", length=255, nullable=true)
+     */
+    private $stackoverflow_url;
+
+    /**
+     * @var string $vimeo_url
+     *
+     * @ORM\Column(name="vimeo_url", type="string", length=255, nullable=true)
+     */
+    private $vimeo_url;
+
+    /**
+     * @var string $delicious_url
+     *
+     * @ORM\Column(name="delicious_url", type="string", length=255, nullable=true)
+     */
+    private $delicious_url;
+
+    /**
+     * @var string $pinboard_url
+     *
+     * @ORM\Column(name="pinboard_url", type="string", length=255, nullable=true)
+     */
+    private $pinboard_url;
+
+    /**
+     * @var string $itunes_url
+     *
+     * @ORM\Column(name="itunes_url", type="string", length=255, nullable=true)
+     */
+    private $itunes_url;
+
+    /**
+     * @var string $android_url
+     *
+     * @ORM\Column(name="android_url", type="string", length=255, nullable=true)
+     */
+    private $android_url;
+
+    /**
      * @var string $can_contact
      *
      * @ORM\Column(name="can_contact", type="integer")
@@ -556,6 +598,126 @@ class User
     public function getYoutubeUrl()
     {
         return $this->youtube_url;
+    }
+
+    /**
+     * Get stackoverflow_url
+     *
+     * @return string 
+     */
+    public function getStackoverflowUrl()
+    {
+        return $this->stackoverflow_url;
+    }
+
+    /**
+     * Set stackoverflow_url
+     *
+     * @param string $stackoverflowUrl
+     */
+    public function setStackoverflowUrl($stackoverflowUrl)
+    {
+        $this->stackoverflow_url = $stackoverflowUrl;
+    }
+
+    /**
+     * Set vimeo_url
+     *
+     * @param string $vimeoUrl
+     */
+    public function setVimeoUrl($vimeoUrl)
+    {
+        $this->vimeo_url = $vimeoUrl;
+    }
+
+    /**
+     * Get vimeo_url
+     *
+     * @return string 
+     */
+    public function getVimeoUrl()
+    {
+        return $this->vimeo_url;
+    }
+
+    /**
+     * Set delicious_url
+     *
+     * @param string $deliciousUrl
+     */
+    public function setDeliciousUrl($deliciousUrl)
+    {
+        $this->delicious_url = $deliciousUrl;
+    }
+
+    /**
+     * Get delicious_url
+     *
+     * @return string 
+     */
+    public function getDeliciousUrl()
+    {
+        return $this->delicious_url;
+    }
+
+    /**
+     * Set pinboard_url
+     *
+     * @param string $pinboardUrl
+     */
+    public function setPinboardUrl($pinboardUrl)
+    {
+        $this->pinboard_url = $pinboardUrl;
+    }
+
+    /**
+     * Get pinboard_url
+     *
+     * @return string 
+     */
+    public function getPinboardUrl()
+    {
+        return $this->pinboard_url;
+    }
+    
+    /**
+     * Set itunes_url
+     *
+     * @param string $itunesUrl
+     */
+    public function setItunesUrl($itunesUrl)
+    {
+        $this->itunes_url = $itunesUrl;
+    }
+
+    /**
+     * Get itunes_url
+     *
+     * @return string 
+     */
+    public function getItunesUrl()
+    {
+        return $this->itunes_url;
+    }
+    
+    /**
+     * Set android_url
+     *
+     * @param string $androidUrl
+     */
+    public function setAndroidUrl($androidUrl)
+    {
+        $this->android_url = $androidUrl;
+    }
+
+    /**
+     * Get android_url
+     *
+     * @return string 
+     */
+    public function getAndroidUrl()
+    {
+        return $this->android_url;
     }
 
     /**

@@ -20,6 +20,13 @@
 	{% if entity.flickrurl %}<a rel="nofollow,noindex" target="_blank" class="flickr" href="http://flickr.com/{{ entity.flickrurl }}">Flickr</a>{% endif %}
 	{% if entity.youtubeurl %}<a rel="nofollow,noindex" target="_blank" class="youtube" href="http://www.youtube.com/user/{{ entity.youtubeurl }}">Youtube</a>{% endif %}
 	
+	{% if entity.stackoverflowurl %}<a rel="nofollow,noindex" target="_blank" class="stackoverflow" href="http://stackoverflow.com/users/{{ entity.stackoverflowurl }}">Stackoverflow</a>{% endif %}
+	{% if entity.vimeourl %}<a rel="nofollow,noindex" target="_blank" class="vimeo" href="http://vimeo.com/{{ entity.vimeourl }}">Vimeo</a>{% endif %}
+	{% if entity.deliciousurl %}<a rel="nofollow,noindex" target="_blank" class="delicious" href="http://delicious.com/{{ entity.deliciousurl }}">Delicious</a>{% endif %}
+	{% if entity.pinboardurl %}<a rel="nofollow,noindex" target="_blank" class="pinboard" href="https://pinboard.in/u:{{ entity.pinboardurl }}">Pinboard</a>{% endif %}
+	{% if entity.itunesurl %}<a rel="nofollow,noindex" target="_blank" class="itunes" href="http://itunes.apple.com/es/artist/{{ entity.itunesurl }}">Aplicaciones iOS</a>{% endif %}
+	{% if entity.androidurl %}<a rel="nofollow,noindex" target="_blank" class="android" href="https://market.android.com/developer?pub={{ entity.androidurl }}">Aplicaciones Android</a>{% endif %}
+	
 {% endblock %}
 
 
@@ -151,11 +158,30 @@
 
 {% endif %}
 
+<style>
+#twitter_list A{
+width:150px;
+float:left;
+padding:10px;
+background:#FEFBF3;
+font-size:10px;
+margin:0 10px 10px 0;
+color:#93A1A4;
+}
+
+#twitter_list B{
+color:
+font-size:16px;
+display:block
+}
+</style>
+
 {% if entity.twitterurl %}
 
 	<div id="twitter">
 		Una forma de saber que hace una persona es ver en que listas lo han añadido en twitter<br/><br/>
-		<ul id="twitter_list" class="list"></ul>
+		<div id="twitter_list" class="list"></div>
+		<br style="clear:both"/>
 	</div>
 
 	<script>

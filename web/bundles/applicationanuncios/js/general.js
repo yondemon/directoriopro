@@ -210,11 +210,11 @@ function get_twitter(){
 				if( data.lists.length ){
 				    $.each(data.lists, function(i,item){
 					
-				      $('<li><a href="http://twitter.com' + item.uri + '" target="_blank">' + item.name + '</a> añadido por <a style="color:gray" href="http://twitter.com/' + item.user.screen_name + '" target="_blank">@' + item.user.screen_name + '</a></li>').appendTo("#twitter_list");
+				      $('<a href="http://twitter.com' + item.uri + '" target="_blank"><b>' + item.name + '</b>@' + item.user.screen_name + '</a>').appendTo("#twitter_list");
 
 				    });
 
-					$('<li><a href="http://twitter.com/' + twitter_user + '/lists/memberships" style="font-weight:bold" target="_blank">Ver todas las listas</a></li>').appendTo("#twitter_list");
+					//$('<li><a href="http://twitter.com/' + twitter_user + '/lists/memberships" style="font-weight:bold" target="_blank">Ver todas las listas</a></li>').appendTo("#twitter_list");
 
 					
 				}else{

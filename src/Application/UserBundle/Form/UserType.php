@@ -29,6 +29,12 @@ class UserType extends AbstractType
             ->add('dribbble_url')
             ->add('flickr_url')
             ->add('youtube_url')
+            ->add('stackoverflow_url')
+            ->add('vimeo_url')
+            ->add('delicious_url')
+            ->add('pinboard_url')
+            ->add('itunes_url')
+            ->add('android_url')
 			->add('can_contact')
         ;
     }
