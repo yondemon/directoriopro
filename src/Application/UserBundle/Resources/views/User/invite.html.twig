@@ -3,7 +3,7 @@
 {% block title "Invitar contactos" %}
 
 {% block sidebar %}
-	<div style="text-align:center;padding:15px 0;background:#FEE9CC">
+	<div class="alert-message block-message warning" style="text-align:center">
 		Usuarios invitados
 		<b style="font-size:80px;display:block;text-align:center;line-height:80px">{{ total }}</b>
 	</div>
@@ -11,17 +11,17 @@
 
 {% block content %}
 
-	<h1>Invitar contactos</h1>
+<h1>Invitar contactos</h1>
 
-	<a href="#" onclick="shareit('twitter')"><img src="{{ asset( 'bundles/applicationanuncios/images/big_twitter.png' ) }}"></a> &nbsp; 
-	<a href="#" onclick="shareit('google')"><img src="{{ asset( 'bundles/applicationanuncios/images/big_google.png' ) }}"></a> &nbsp; 
-	<a href="#" onclick="shareit('linkedin')"><img src="{{ asset( 'bundles/applicationanuncios/images/big_linkedin.png' ) }}"></a> &nbsp; 
-	<a href="#" onclick="shareit('facebook')"><img src="{{ asset( 'bundles/applicationanuncios/images/big_facebook.png' ) }}"></a> &nbsp; 
-	
-	<br/><br/>
-	
-	Comparte este enlace<br/>
-	<input value="{{ url('user_welcome') }}?ref_id={{ entity.id }}" style="width:340px" readonly="readonly" onclick="this.select()"/>
+<a href="#" onclick="shareit('twitter')"><img src="{{ asset( 'bundles/applicationanuncios/images/big_twitter.png' ) }}"></a> &nbsp; 
+<a href="#" onclick="shareit('google')"><img src="{{ asset( 'bundles/applicationanuncios/images/big_google.png' ) }}"></a> &nbsp; 
+<a href="#" onclick="shareit('linkedin')"><img src="{{ asset( 'bundles/applicationanuncios/images/big_linkedin.png' ) }}"></a> &nbsp; 
+<a href="#" onclick="shareit('facebook')"><img src="{{ asset( 'bundles/applicationanuncios/images/big_facebook.png' ) }}"></a> &nbsp; 
+
+<br/><br/>
+
+Comparte este enlace<br/>
+<input value="{{ url('user_welcome') }}?ref_id={{ entity.id }}" style="width:340px" readonly="readonly" onclick="this.select()"/>
 	
 <script>
 function shareit( op ){

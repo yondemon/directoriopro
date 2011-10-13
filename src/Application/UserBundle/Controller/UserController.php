@@ -397,7 +397,7 @@ class UserController extends Controller
 				$user = new \Application\UserBundle\Entity\User;
 				$user->setAdmin(0);
 				$user->setFacebookId($user_profile['id']);
-				$user->setCategoryId(1);
+				$user->setCategoryId(0);
 				$user->setEmail($user_profile['email']);
 				$user->setName($user_profile['name']);
 				$user->setLocation($user_profile['location']['name']);

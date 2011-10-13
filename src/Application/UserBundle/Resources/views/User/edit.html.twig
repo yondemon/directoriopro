@@ -75,9 +75,7 @@ TEXTAREA.xlarge{width:430px}
 			<div class="input">
 				<select id="application_userbundle_usertype_category_id" name="application_userbundle_usertype[category_id]">
 					{% for category in categories %}
-						{% if loop.index0 > 0 %}
-							<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
-						{% endif %}
+						<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
 					{% endfor %}
 				</select>
 			</div>
