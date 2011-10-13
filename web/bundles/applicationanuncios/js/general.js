@@ -318,3 +318,41 @@ function get_stackoverflow(){
 		
 	}
 }
+
+
+/* vimeo */
+
+
+var vimeo_load = false;
+
+function open_vimeo(id){
+	$('#vimeo_big').html('<iframe src="http://player.vimeo.com/video/' + id + '?title=0&amp;byline=0&amp;portrait=0&amp;color=8cc63f" width="377" height="214" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe>');
+	return false;
+}
+
+function get_vimeo(){
+	if( !vimeo_load ){
+		$('#loader').show();
+		vimeo_load = true;
+		$.ajax({
+			//data: options,
+			dataType: 'jsonp',
+			success: function(data){
+				$('#loader').hide();
+				
+				if( !data.error && data ){
+				    $.each(data, function(i,item){
+				      $('<li><a rel="twipsy" data-original-title="' + item.title + '" class="thumbnail quimby_search_image" href="' + item.url + '" onclick="return open_vimeo(\'' + item.id + '\')"><img src="' + item.thumbnail_small + '"/></a></li>').appendTo("#vimeo_list");
+				      if ( i == 4 ) return false;
+				    });
+					$('#vimeo_list A:first').click();
+
+				}else{
+					$('#vimeo').html('no se han encontrado videos');
+				}
+			},
+			type: 'GET',
+			url: 'http://vimeo.com/api/v2/' + vimeo_user + '/videos.json'
+		});
+	}
+}

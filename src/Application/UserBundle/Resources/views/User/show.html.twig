@@ -64,12 +64,39 @@
 
 <ul id="tabs" class="tabs">
 	<li class="active"><a href="#info">Información</a></li>
-	<li id="tab_dribbble" style="display:none"><a href="#dribbble" onclick="get_dribbble();">Dribbble</a></li>
-	<li id="tab_flickr" style="display:none"><a href="#flickr" onclick="get_flickr();">Flickr</a></li>
-	<li id="tab_github" style="display:none"><a href="#github" onclick="get_github();">Github</a></li>
-	<li id="tab_stackoverflow" style="display:none"><a href="#stackoverflow" onclick="get_stackoverflow();">Stackoverflow</a></li>
-	<li id="tab_youtube" style="display:none"><a href="#youtube" onclick="get_youtube();">Youtube</a></li>
+
+	{% if entity.dribbbleurl or entity.flickrurl %}
+		<li class="dropdown" data-dropdown="dropdown">
+			<a href="#" class="dropdown-toggle">Diseño</a>
+			<ul class="dropdown-menu">
+				<li id="tab_dribbble" style="display:none"><a href="#dribbble" onclick="get_dribbble();">Dribbble</a></li>
+				<li id="tab_flickr" style="display:none"><a href="#flickr" onclick="get_flickr();">Flickr</a></li>
+			</ul>
+		</li>
+	{% endif %}
+	
+	{% if entity.githuburl or entity.stackoverflowurl %}
+		<li class="dropdown" data-dropdown="dropdown">
+			<a href="#" class="dropdown-toggle">Programación</a>
+			<ul class="dropdown-menu">
+				<li id="tab_github" style="display:none"><a href="#github" onclick="get_github();">Github</a></li>
+				<li id="tab_stackoverflow" style="display:none"><a href="#stackoverflow" onclick="get_stackoverflow();">Stackoverflow</a></li>
+			</ul>
+		</li>
+	{% endif %}
+	
+	{% if entity.youtubeurl or entity.vimeourl %}
+		<li class="dropdown" data-dropdown="dropdown">
+			<a href="#" class="dropdown-toggle">Video</a>
+			<ul class="dropdown-menu">
+				<li id="tab_youtube" style="display:none"><a href="#youtube" onclick="get_youtube();">Youtube</a></li>
+				<li id="tab_vimeo" style="display:none"><a href="#vimeo" onclick="get_vimeo();">Vimeo</a></li>
+			</ul>
+		</li>
+	{% endif %}
+	
 	<li id="tab_twitter" style="display:none"><a href="#twitter" onclick="get_twitter();">Twitter</a></li>
+	
 </ul>
 
 <div id="loader"><img src="{{ asset('bundles/applicationanuncios/images/loader.gif') }}"/></div>
@@ -161,6 +188,20 @@
 	<script>
 	var youtube_user = '{{ entity.youtubeurl }}';
 	$('#tab_youtube').show();
+	</script>
+
+{% endif %}
+
+{% if entity.vimeourl %}
+	
+	<div id="vimeo">
+		<ul class="media-grid carrusel" id="vimeo_list"></ul>
+		<div id="vimeo_big"></div>
+	</div>
+
+	<script>
+	var vimeo_user = '{{ entity.vimeourl }}';
+	$('#tab_vimeo').show();
 	</script>
 
 {% endif %}
