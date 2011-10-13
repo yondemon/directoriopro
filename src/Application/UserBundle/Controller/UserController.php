@@ -191,11 +191,18 @@ class UserController extends Controller
         }
 
         $editForm = $this->createForm(new UserType(), $entity);
-        //$deleteForm = $this->createDeleteForm($id);
+
+
+		$query = "SELECT COUNT(u.id) AS total FROM User u WHERE u.ref_id = " . $id;
+		$db = $this->get('database_connection');
+		$result = $db->query($query)->fetch();
+		$total = $result['total'];
+		
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView()
+            'edit_form'   => $editForm->createView(),
+			'total'		  => $total
         );
     }
 
@@ -239,11 +246,16 @@ class UserController extends Controller
 
         }
 
+		$query = "SELECT COUNT(u.id) AS total FROM User u WHERE u.ref_id = " . $id;
+		$db = $this->get('database_connection');
+		$result = $db->query($query)->fetch();
+		$total = $result['total'];
+
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            //'delete_form' => $deleteForm->createView(),
-			'updated' => 1
+			'updated' 	  => 1,
+			'total' 	  => $total
         );
     }
 
@@ -466,7 +478,6 @@ class UserController extends Controller
 		$query = "SELECT COUNT(u.id) AS total FROM User u WHERE u.ref_id = " . $id;
 		$db = $this->get('database_connection');
 		$result = $db->query($query)->fetch();
-		//$total = $db->fetchAll($query);
 		$total = $result['total'];
 		
 		

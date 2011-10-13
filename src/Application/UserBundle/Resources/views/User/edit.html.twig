@@ -3,24 +3,44 @@
 
 {% block title "Editar perfil" %}
 
+{% block sidebar %}
+
+	<div class="alert-message block-message warning">
+		<b>Cosas por hacer</b>
+		<li {% if entity.categoryid != 0 %} style="text-decoration:line-through"{% endif %}>Seleccionar sector</li>
+		<li {% if entity.name != '' %} style="text-decoration:line-through"{% endif %}>Introducir nombre</li>
+		<li {% if entity.body != '' %} style="text-decoration:line-through"{% endif %}>Introducir descripción</li>
+		<li {% if entity.location != '' %} style="text-decoration:line-through"{% endif %}>Introducir ciudad</li>
+		<li {% if entity.url != '' %} style="text-decoration:line-through"{% endif %}>Introducir portafolio</li>
+		<li {% if entity.twitterurl != '' %} style="text-decoration:line-through"{% endif %}>Introducir twitter</li>
+		<li {% if total > 9 %} style="text-decoration:line-through"{% endif %}><a href="{{ path('user_invite') }}">Invita a {{ 10 - total }} amigos</a></li>
+	</div>
+
+
+{% endblock %}
+
+
 {% block content %}
 
 
+
+
 <style>
-TEXTAREA.xlarge{width:500px}
+TEXTAREA.xlarge{width:430px}
+.filters{border:0}
+.span3 a{padding-top:0;display:inline}
 </style>
 
 
 
 <h1>Editar perfil</h1>
 
+
+
 {% if updated is defined %}
 
 <div class="alert-message block-message success">
-	<b>Perfil editado con exito</b>
-	<div class="alert-actions">
-		<a class="btn small" href="{{ path('user_show', { 'id': entity.id }) }}">Visitar mi perfil</a>
-	</div>
+	<b>¡Perfil actualizado con éxito!</b> &nbsp; <a class="btn small" href="{{ path('user_show', { 'id': entity.id }) }}">Visitar mi perfil</a>
 </div>
 
 {% endif %}
