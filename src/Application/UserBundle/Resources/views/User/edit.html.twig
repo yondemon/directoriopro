@@ -36,19 +36,13 @@ TEXTAREA.xlarge{width:430px}
 </style>
 
 
-
-<h1>Editar perfil</h1>
-
-
-
 {% if updated is defined %}
-
-<div class="alert-message block-message success">
-	<b>¡Perfil actualizado con éxito!</b> &nbsp; <a class="btn small" href="{{ path('user_show', { 'id': entity.id }) }}">Visitar mi perfil</a>
-</div>
-
+	<div class="alert-message block-message success">
+		<b>¡Perfil actualizado con éxito!</b> &nbsp; <a class="btn small" href="{{ path('user_show', { 'id': entity.id }) }}">Visitar mi perfil</a>
+	</div>
 {% endif %}
 
+<h1>Editar perfil</h1>
 
 <ul id="tabs" class="tabs">
   <li class="active"><a href="#info">Información</a></li>
