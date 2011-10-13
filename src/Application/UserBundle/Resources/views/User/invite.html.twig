@@ -3,22 +3,49 @@
 {% block title "Invitar contactos" %}
 
 {% block sidebar %}
-	<div style="text-align:center;padding:20px 0;background:#FEE9CC">
-		Usuarios invitados<br/><br/>
-		<b style="font-size:60px">{{ total }}</b>
+	<div style="text-align:center;padding:15px 0;background:#FEE9CC">
+		Usuarios invitados
+		<b style="font-size:80px;display:block;text-align:center;line-height:80px">{{ total }}</b>
 	</div>
 {% endblock %}
 
 {% block content %}
 
 	<h1>Invitar contactos</h1>
-	
-	<textarea rows="2" id="status" class="xxlarge">Me he dado de alta en el directorio de betabeers {{ url('user_welcome') }}?ref_id={{ entity.id }}</textarea>
+
+	<a href="#" onclick="shareit('twitter')"><img src="{{ asset( 'bundles/applicationanuncios/images/big_twitter.png' ) }}"></a> &nbsp; 
+	<a href="#" onclick="shareit('google')"><img src="{{ asset( 'bundles/applicationanuncios/images/big_google.png' ) }}"></a> &nbsp; 
+	<a href="#" onclick="shareit('linkedin')"><img src="{{ asset( 'bundles/applicationanuncios/images/big_linkedin.png' ) }}"></a> &nbsp; 
+	<a href="#" onclick="shareit('facebook')"><img src="{{ asset( 'bundles/applicationanuncios/images/big_facebook.png' ) }}"></a> &nbsp; 
 	
 	<br/><br/>
+	
+	Comparte este enlace<br/>
+	<input value="{{ url('user_welcome') }}?ref_id={{ entity.id }}" style="width:340px" readonly="readonly" onclick="this.select()"/>
+	
+<script>
+function shareit( op ){
+	var status = 'Me he dado de alta en el directorio de betabeers';
+	var link = '{{ url('user_welcome') }}?ref_id={{ entity.id }}';
+	switch( op ){
+		case 'twitter':
+			url = 'http://twitter.com?status=' + encodeURIComponent( status + ' ' + link );
+			break;
 
-	<input onclick="window.open('http://twitter.com?status=' + encodeURIComponent( $('#status').val() ) );" type="button" class="btn" value="Compartir en Twitter"/> &nbsp; 	
-	<input onclick="window.open('http://facebook.com/sharer.php?u=' + encodeURIComponent( '{{ url('user_welcome') }}?ref_id={{ entity.id }}' ) );" type="button" class="btn" value="Compartir en Facebook"/>
+		case 'google':
+			url = 'https://m.google.com/app/plus/x/?v=compose&content=' + encodeURIComponent( link );
+			break;
 
+		case 'linkedin':
+			url = 'http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent( link );
+			break;
+			
+		case 'facebook':
+			url = 'http://facebook.com/sharer.php?u=' + encodeURIComponent( link );
+			break;
+	}
+	window.open( url );
+}
+</script>
 	
 {% endblock %}

@@ -1,4 +1,4 @@
-{% set css_id = 9 %}
+{% set css_id = 10 %}
 {% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros"] %}
 {% set analytics_id = "UA-16938408-8" %}
 {% set sitename = "Directorio Betabeers" %}
@@ -11,83 +11,15 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>{% block title %}{% endblock %} - {{sitename}}</title>
-	
-
-
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
-	
-	
-	
 
-
-
-   <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
     <!-- Le styles -->
     <link rel="stylesheet" href="{{ asset('bundles/applicationanuncios/bootstrap/bootstrap.min.css') }}" type="text/css" media="all" />
-    <style type="text/css">
-      /* Override some defaults */
-      html, body {
-        background-color: #eee;
-      }
-      body {
-        padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
-      }
-      .container > footer p {
-        text-align: center; /* center align it with the container */
-      }
-      .container {
-        width: 820px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
-      }
-
-      /* The white background content wrapper */
-      #content {
-        background-color: #fff;
-        padding: 20px;
-        margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
-        /*-webkit-border-radius: 0 0 6px 6px;
-           -moz-border-radius: 0 0 6px 6px;
-                border-radius: 0 0 6px 6px;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-                box-shadow: 0 1px 2px rgba(0,0,0,.15);
-		*/
-      }
-
-      /* Page header tweaks */
-      .page-header {
-        background-color: #f5f5f5;
-        padding: 20px 20px 10px;
-        margin: -20px -20px 20px;
-      }
-
-      /* Styles you shouldn't keep as they are for displaying this base example only */
-      .content .span10,
-      .content .span4 {
-        min-height: 500px;
-      }
-      /* Give a quick and non-cross-browser friendly divider */
-      .content .span4 {
-        margin-left: 0;
-        padding-left: 19px;
-        border-left: 1px solid #eee;
-      }
-
-      .topbar .btn {
-        border: 0;
-      }
-
-    </style>
-
-	<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-dropdown.js') }}"></script>
-	<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-modal.js') }}"></script>
-	<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-twipsy.js') }}"></script>
-	<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-tabs.js') }}"></script>
-	<script src="{{ asset('bundles/applicationanuncios/js/general.js') }}?v=2"></script>
-
 	<link rel="stylesheet" href="{{ asset('bundles/applicationanuncios/css/main.css') }}?v={{ css_id }}" type="text/css" media="all" />
 	
 	<link rel="alternate" type="application/rss+xml" title="Betabeers jobs" href="http://feeds.feedburner.com/betabeersjobs" />
@@ -96,115 +28,92 @@
 	
 	
 <div class="topbar" id="topbar">
-  <div class="fill">
-    <div class="container">
-      <a class="brand" href="{{ path('post') }}">{{sitename}}</a>
-      <ul class="nav">
-        <li {% if nav_post is defined %}class="active"{% endif %}><a href="{{ path('post') }}">Anuncios</a></li>
-        <li {% if nav_user is defined %}class="active"{% endif %}><a href="{{ path('user') }}">Profesionales</a></li>
-
-
-
-      </ul>
-
-		{% if nav_user is defined %}
-			<form class="pull-left" action="{{ path('user') }}search">
-		{% else %}
-			<form class="pull-left" action="{{ path('post') }}search">
-		{% endif %}
-            <input name="q" type="text" placeholder="Buscar" class="medium">
-			<input type="hidden" name="c" value="{{ form_category }}"/>
-        </form>
-
-	  <ul class="nav secondary-nav">
-		<li class="dropdown">
-		
-		
-		{% if app.session.get('name') %}
-		
-		<a class="dropdown-toggle" href="#">{{ app.session.get('name') }}</a>
-
-        <ul class="dropdown-menu">
-			<li><a href="{{ path('user_show', { 'id': app.session.get('id') }) }}">Perfil</a></li>
-          <li><a href="{{ path('user_edit') }}">Cuenta</a></li>
-		  <li><a href="{{ path('user_invite') }}">Invitar contactos</a></li>
-		  <li class="divider"></li>
-          <li><a href="{{ path('user_logout') }}">Salir</a></li>
-        </ul>
-
-			
-		{% else %}
-			<!--<a href="{{ path('user_login') }}"><img src="{{ asset( 'bundles/applicationanuncios/images/fbconnect.gif' ) }}"/></a>-->
-			<a href="{{ path('user_welcome') }}">Iniciar sesión</a>
-		{% endif %}
-		
-
-		            </li>
-	  </ul>
-
-		
-
-    </div>
-  </div>
+	<div class="fill">
+		<div class="container">
+			<a class="brand" href="{{ path('post') }}">{{sitename}}</a>
+			<ul class="nav">
+				<li {% if nav_post is defined %}class="active"{% endif %}><a href="{{ path('post') }}">Anuncios</a></li>
+				<li {% if nav_user is defined %}class="active"{% endif %}><a href="{{ path('user') }}">Profesionales</a></li>
+			</ul>
+			{% if nav_user is defined %}
+				<form class="pull-left" action="{{ path('user') }}search">
+			{% else %}
+				<form class="pull-left" action="{{ path('post') }}search">
+			{% endif %}
+	            <input name="q" type="text" placeholder="Buscar" class="medium">
+				<input type="hidden" name="c" value="{{ form_category }}"/>
+	        </form>
+			<ul class="nav secondary-nav">
+				<li class="dropdown">
+				{% if app.session.get('name') %}
+					<a class="dropdown-toggle" href="#">{{ app.session.get('name') }}</a>
+        			<ul class="dropdown-menu">
+						<li><a href="{{ path('user_show', { 'id': app.session.get('id') }) }}">Perfil</a></li>
+						<li><a href="{{ path('user_edit') }}">Editar perfil</a></li>
+						<li><a href="{{ path('user_invite') }}">Invitar contactos</a></li>
+						<li class="divider"></li>
+						<li><a href="{{ path('user_logout') }}">Salir</a></li>
+					</ul>
+				{% else %}
+					<a href="{{ path('user_welcome') }}">Iniciar sesión</a>
+				{% endif %}
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>
-	
 
 <div class="container">
-<div id="content">
-	
-
-
-
-	<div class="filters">
-		{% block sidebar %}{% endblock %}
+	<div id="content">
+		<div class="row">
+			<div class="span10">
+				{% block content %}{% endblock %}
+			</div>
+			<div class="span3 filters">
+				{% block sidebar %}{% endblock %}
+			</div>
+		</div>
 	</div>
-	
-	
-	
-	<div style="float:left;width:550px">	
-		{% block content %}{% endblock %}
-	</div>
-
-<br class="clear"/>
-
-
-</div>
-<div class="footer">
-	<a href="http://twitter.com/betabeers" target="_blank">Sigue @betabeers en twitter</a>
-	
-	<div class="pull-right">
-		<a href="{{ path('post_about') }}">¿Qué es esto?</a> &nbsp;&nbsp; 
-		<a href="{{ path('post_how') }}">¿Cómo está hecho?</a> &nbsp;&nbsp; 
-		<a href="{{ path('user_contact', { 'id': 9 }) }}">Contactar</a> &nbsp;&nbsp; 
-		<a href="https://docs.google.com/document/d/1LC9maDhkk7E_xjLKlrRxrMtXH8Ugiqj9_RoPQXuf1Ro/edit?hl=en_US">Tareas</a> &nbsp;&nbsp; 
-		&copy; 2011 betabeers
+	<div class="footer">
+		<a href="http://twitter.com/betabeers" target="_blank">Sigue @betabeers en twitter</a>
+		<div class="pull-right">
+			<a href="{{ path('post_about') }}">¿Qué es esto?</a> &nbsp;&nbsp; 
+			<a href="{{ path('post_how') }}">¿Cómo está hecho?</a> &nbsp;&nbsp; 
+			<a href="{{ path('user_contact', { 'id': 9 }) }}">Contactar</a> &nbsp;&nbsp; 
+			<a href="https://docs.google.com/document/d/1LC9maDhkk7E_xjLKlrRxrMtXH8Ugiqj9_RoPQXuf1Ro/edit?hl=en_US">Tareas</a> &nbsp;&nbsp; 
+			&copy; 2011 betabeers
+		</div>
 	</div>
 </div>
-</div>
 
 
-
-<script>
+<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-dropdown.js') }}"></script>
+<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-modal.js') }}"></script>
+<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-twipsy.js') }}"></script>
+<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-popover.js') }}"></script>
+<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-tabs.js') }}"></script>
+<script src="{{ asset('bundles/applicationanuncios/js/general.js') }}?v=2"></script>	
+{% block load_src %}{% endblock %}
+<script type="text/javascript">
+/* onload */
 $().ready(function(){
 	$('#topbar').dropdown();
 	$("a[rel=twipsy]").twipsy({live: true});
+	{% block script_load %}{% endblock %}
 });
+
+/* analytics */
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '{{ analytics_id }}']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
 </script>
 
-
-
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '{{ analytics_id }}']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
 
 </body>
 </html>

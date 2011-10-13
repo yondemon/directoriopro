@@ -61,11 +61,10 @@ TEXTAREA.xlarge{width:500px}
 
 </form>
 
+{% endblock %}
 
+{% block script_load %}
 
-<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-popover.js') }}"></script>
-<script>
-$(function () {
 	$('#application_anunciosbundle_posttype_location')
 		.attr('rel','popover')
 		.attr('data-original-title','¿Es presencial?')
@@ -81,9 +80,5 @@ $(function () {
 		.click(function(e) {
 			e.preventDefault()
 		});
-});
-</script>
-
-
 
 {% endblock %}

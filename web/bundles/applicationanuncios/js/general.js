@@ -171,18 +171,12 @@ function get_youtube(){
 				    $.each(data.feed.entry, function(i,item){
 					  
 					  id = item.id.$t.split('/')[5];
-					
-
+				
 				      $('<li><a rel="twipsy" data-original-title="' + item.title.$t + '" class="thumbnail quimby_search_image" href="' + item.link[0].href + '" onclick="return open_youtube(\'' + id + '\')"><img src="http://img.youtube.com/vi/' + id + '/1.jpg"/></a></li>').appendTo("#youtube_list");
 				      if ( i == 4 ) return false;
 				    });
 					$('#youtube_list A:first').click();
-					
-					$('#youtube_list').twipsy()
 
-					$("a[rel=twipsy]").twipsy({live: true});
-					
-					
 				}else{
 					$('#youtube').html('no se han encontrado videos');
 				}
@@ -214,7 +208,7 @@ function get_twitter(){
 
 				    });
 
-					//$('<li><a href="http://twitter.com/' + twitter_user + '/lists/memberships" style="font-weight:bold" target="_blank">Ver todas las listas</a></li>').appendTo("#twitter_list");
+					$('<a href="http://twitter.com/' + twitter_user + '/lists/memberships" target="_blank"><b>Ver más listas</b></a>').appendTo("#twitter_list");
 
 					
 				}else{
