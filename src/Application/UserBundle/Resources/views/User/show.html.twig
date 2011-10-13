@@ -67,6 +67,7 @@
 	<li id="tab_dribbble" style="display:none"><a href="#dribbble" onclick="get_dribbble();">Dribbble</a></li>
 	<li id="tab_flickr" style="display:none"><a href="#flickr" onclick="get_flickr();">Flickr</a></li>
 	<li id="tab_github" style="display:none"><a href="#github" onclick="get_github();">Github</a></li>
+	<li id="tab_stackoverflow" style="display:none"><a href="#stackoverflow" onclick="get_stackoverflow();">Stackoverflow</a></li>
 	<li id="tab_youtube" style="display:none"><a href="#youtube" onclick="get_youtube();">Youtube</a></li>
 	<li id="tab_twitter" style="display:none"><a href="#twitter" onclick="get_twitter();">Twitter</a></li>
 </ul>
@@ -132,6 +133,19 @@
 	<script>
 	var github_user = '{{ entity.githuburl }}';
 	$('#tab_github').show();
+	</script>
+
+{% endif %}
+
+{% if entity.stackoverflowurl %}
+
+	<div id="stackoverflow">
+		<ul id="stackoverflow_list" class="list"></ul>
+	</div>
+
+	<script>
+	var stackoverflow_user = '{{ entity.stackoverflowurl }}';
+	$('#tab_stackoverflow').show();
 	</script>
 
 {% endif %}
