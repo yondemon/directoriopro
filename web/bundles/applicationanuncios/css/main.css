@@ -96,7 +96,7 @@ A.android{background:url('../images/android.png') no-repeat left center;padding-
 
 /* twitter list */
 
-#twitter_list A{
+#twitter A{
 overflow-x:hidden;
 height:55px;
 width:150px;
@@ -108,7 +108,7 @@ margin:0 10px 10px 0;
 color:#195F91;
 }
 
-#twitter_list B{
+#twitter B{
 font-size:16px;
 display:block;
 }

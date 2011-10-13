@@ -201,14 +201,16 @@ function get_twitter(){
 			success: function(data){
 				$('#loader').hide();
 				
+				$('#twitter').html("Una forma de saber que hace una persona es ver en que listas lo han añadido en twitter<br/><br/>");
+
 				if( data.lists.length ){
 				    $.each(data.lists, function(i,item){
 					
-				      $('<a href="http://twitter.com' + item.uri + '" target="_blank"><b>' + item.name + '</b>@' + item.user.screen_name + '</a>').appendTo("#twitter_list");
+				      $('<a href="http://twitter.com' + item.uri + '" target="_blank"><b>' + item.name + '</b>@' + item.user.screen_name + '</a>').appendTo("#twitter");
 
 				    });
 
-					$('<a href="http://twitter.com/' + twitter_user + '/lists/memberships" target="_blank"><b>Ver más listas</b></a>').appendTo("#twitter_list");
+					$('<a href="http://twitter.com/' + twitter_user + '/lists/memberships" target="_blank"><b>Ver más listas</b></a>').appendTo("#twitter");
 
 					
 				}else{
