@@ -232,6 +232,7 @@ var stackoverflow_load = false;
 var stackoverflow_html = '';
 var stackoverflow_reputation = false;
 var stackoverflow_tags = [];
+var stackoverflow_error = false;
 
 function get_stackoverflow(){
 	if( !stackoverflow_load ){
@@ -245,6 +246,7 @@ function get_stackoverflow(){
 				
 				
 				if( data.error ){
+					stackoverflow_error = true;
 					$('#stackoverflow').html('el usuario no existe');
 					return false;
 				}
@@ -265,54 +267,53 @@ function get_stackoverflow(){
 					
 				}else{
 					stackoverflow_html += 'todavía no ha hecho preguntas<br/><br/>';
-				}
-				
-				
-				$.ajax({
-					dataType: 'jsonp',
-					jsonp: 'jsonp',
-					success: function(data){
-
-
-						stackoverflow_html += '<b>Ha respondido</b><br/>'
-						if( data.answers.length ){
-							stackoverflow_html += '<ul>';
-						    $.each(data.answers	, function(i,item){
-
-							  if( !stackoverflow_reputation ) stackoverflow_reputation = item.owner.reputation;
-
-						      stackoverflow_html += '<li><a href="http://stackoverflow.com' + item.answer_comments_url + '" target="_blank">' + item.title.replace(/\</g,'&lt;').replace(/\>/g,'&gt;') + '</a></li>';
-							  if( i == 4 ) return false;
-						    });
-							stackoverflow_html += '</ul>';
-
-						}else{
-							stackoverflow_html += 'todavía no ha respondido preguntas';
-						}
-						
-
-
-						if( !stackoverflow_reputation ) stackoverflow_reputation = 1;
-						
-						stackoverflow_html_aux = '<b>Reputación</b><br/><span style="font-size:30px">' + stackoverflow_reputation + '</span><br/><br/>';
-
-						
-						if( stackoverflow_tags.length ){
-							stackoverflow_html_aux += '<b>Tags</b><br/>' + stackoverflow_tags.join(', ') + '<br/><br/>';
-						}
-
-						$('#loader').hide();
-						$('#stackoverflow').html(stackoverflow_html_aux+stackoverflow_html);
-
-					},
-					type: 'GET',
-					url: 'http://api.stackoverflow.com/1.1/users/' + stackoverflow_user + '/answers'
-				});
-				
+				}				
 				
 			},
 			type: 'GET',
 			url: 'http://api.stackoverflow.com/1.1/users/' + stackoverflow_user + '/questions'
+		});
+		
+		
+		$.ajax({
+			dataType: 'jsonp',
+			jsonp: 'jsonp',
+			success: function(data){
+
+				if( !stackoverflow_error ){
+					stackoverflow_html += '<b>Ha respondido</b><br/>'
+					if( data.answers.length ){
+						stackoverflow_html += '<ul>';
+					    $.each(data.answers	, function(i,item){
+
+						  if( !stackoverflow_reputation ) stackoverflow_reputation = item.owner.reputation;
+
+					      stackoverflow_html += '<li><a href="http://stackoverflow.com' + item.answer_comments_url + '" target="_blank">' + item.title.replace(/\</g,'&lt;').replace(/\>/g,'&gt;') + '</a></li>';
+						  if( i == 4 ) return false;
+					    });
+						stackoverflow_html += '</ul>';
+
+					}else{
+						stackoverflow_html += 'todavía no ha respondido preguntas';
+					}
+				
+
+
+					if( !stackoverflow_reputation ) stackoverflow_reputation = 1;
+				
+					stackoverflow_html_aux = '<b>Reputación</b><br/><span style="font-size:30px">' + stackoverflow_reputation + '</span><br/><br/>';
+
+				
+					if( stackoverflow_tags.length ){
+						stackoverflow_html_aux += '<b>Tags</b><br/>' + stackoverflow_tags.join(', ') + '<br/><br/>';
+					}
+
+					$('#loader').hide();
+					$('#stackoverflow').html(stackoverflow_html_aux+stackoverflow_html);
+				}
+			},
+			type: 'GET',
+			url: 'http://api.stackoverflow.com/1.1/users/' + stackoverflow_user + '/answers'
 		});
 		
 	}
