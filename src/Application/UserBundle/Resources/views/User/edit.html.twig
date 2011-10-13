@@ -13,7 +13,11 @@
 		<li {% if entity.location != '' %} style="text-decoration:line-through"{% endif %}>Introducir ciudad</li>
 		<li {% if entity.url != '' %} style="text-decoration:line-through"{% endif %}>Introducir portafolio</li>
 		<li {% if entity.twitterurl != '' %} style="text-decoration:line-through"{% endif %}>Introducir twitter</li>
-		<li {% if total > 9 %} style="text-decoration:line-through"{% endif %}><a href="{{ path('user_invite') }}">Invita a {{ 10 - total }} amigos</a></li>
+		{% if total > 9 %}
+			<li><a href="{{ path('user_invite') }}">Invita a {{ 10 - total }} amigos</a></li>
+		{% else %}
+			<li style="text-decoration:line-through"><a href="{{ path('user_invite') }}">Invita a 10 amigos</a></li>
+		{% endif %}
 	</div>
 
 
