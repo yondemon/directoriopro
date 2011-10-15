@@ -302,11 +302,31 @@ class UserController extends Controller
         $editForm = $this->createForm(new UserType(), $entity);
 
 
+		$old_email = $entity->getEmail();
+
 		$updated = false;
 
 		$request = $this->getRequest();
 		if ($request->getMethod() == 'POST') {
 	        $editForm->bindRequest($request);
+	
+			// el mail esta registrado?
+			$post = $editForm->getData();
+			$post_email = $post->getEmail();
+
+
+
+			if( $old_email != $post_email ){
+				$user = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('email' => $post_email));
+
+				if( $user ){
+		            $error_text = "El email ya esta registrado";
+		            $editForm['email']->addError( new SymfonyForm\FormError( $error_text ));
+				}
+
+
+			}
+			
 
 	        if ($editForm->isValid()) {
 		
