@@ -3,7 +3,6 @@
 namespace Application\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 define('AVATAR_GRAVATAR',0);
 define('AVATAR_TWITTER',1);
@@ -58,8 +57,6 @@ class User
      * @var string $pass
      *
      * @ORM\Column(name="pass", type="string", length=255, nullable=true)
-     * @Assert\NotBlank
-     * @Assert\MaxLength(6)
      */
     private $pass;
 
