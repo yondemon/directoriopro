@@ -1,0 +1,48 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Iniciar sesión" %}
+
+{% block sidebar %}
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<h1>Iniciar sesión</h1>
+
+
+
+<form id="tabs_content" action="{{ path('user_login') }}" method="post" {{ form_enctype(form) }}>
+
+
+
+
+	{{ form_errors(form) }}
+	
+
+
+
+
+
+	{{ form_row(form.email, { 'label': 'Email' }) }}
+	{{ form_row(form.pass, { 'label': 'Contraseña' }) }}
+
+
+
+
+    <div class="actions">
+        <button type="submit" class="btn primary">Iniciar sesión</button> &nbsp;
+		<a href="{{ path('user_register') }}" class="btn">Registrarme</a>
+    </div>
+
+
+	{{ form_row(form._token) }}
+	
+
+</form>
+
+{% endblock %}

@@ -1,4 +1,4 @@
-{% set static_id = 14 %}
+{% set static_id = 16 %}
 {% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros"] %}
 {% set analytics_id = "UA-16938408-8" %}
 {% set sitename = "Directorio Betabeers" %}
@@ -97,9 +97,11 @@
 <script type="text/javascript">
 /* onload */
 $().ready(function(){
-	$('#topbar').dropdown();
-	$("a[rel=twipsy]").twipsy({live: true});
+
 	{% block script_load %}{% endblock %}
+
+	$('#topbar').dropdown();
+	$("*[rel=twipsy]").twipsy({live: true});
 });
 
 /* analytics */

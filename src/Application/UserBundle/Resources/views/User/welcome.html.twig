@@ -61,22 +61,22 @@
 </div>
 
 <br/>
-
-
 	
-<div style="float:left;padding:0 20px 0 60px;">
+<div style="float:left;padding:0 35px 0 60px;">
 	<br/>
-	<a href="{{ path('user_login') }}" class="btn large primary">Iniciar sesión con facebook</a>
+	<a href="{{ path('user_register') }}" class="btn primary">Registrarme</a> &nbsp;<a href="{{ path('user_login') }}" class="btn">Iniciar sesión</a>
+	<br/><br/>
+	<a href="{{ path('user_fblogin') }}" style="background:url('{{ asset('bundles/applicationanuncios/images/facebook.png') }}') no-repeat left center;padding-left:21px;">Iniciar sesión con facebook</a>
 </div>
 
-<div style="float:left;color:#666">
+<div style="float:left;color:#666;width:225px;">
 	Ya están registrados...<br/>
 	{% for user in users %}
-		<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="{{ user.getName() }} - {{ categories[ user.getCategoryId() ] }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar(38) }}" width="38" height="38"/></a>
+		<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="{{ user.getName() }} - {{ categories[ user.getCategoryId() ] }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('mini') }}" width="38" height="38"/></a>
 	{% endfor %}
 </div>
 
-<br class="clear"/>
+<br class="clear"/><br/>
 
 
 

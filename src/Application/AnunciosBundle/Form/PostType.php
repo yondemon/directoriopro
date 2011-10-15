@@ -14,7 +14,7 @@ class PostType extends AbstractType
             ->add('category_id')
             ->add('title')
             ->add('body')
-            ->add('email')
+            ->add('email','email')
 			->add('price')
 			->add('location')
             //->add('featured')

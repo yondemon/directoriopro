@@ -356,3 +356,86 @@ function get_vimeo(){
 		});
 	}
 }
+
+/* user edit preview avatar */
+
+var gravatar_id, twitter_id, facebook_id;
+
+function userAvatar(type){
+	var rand = Math.floor(Math.random()*11);
+	switch( parseInt( type ) ){
+		case 0: //gravatar
+			url = 'http://www.gravatar.com/avatar/' + gravatar_id + '?s=50&d=http://dir.betabeers.com/bundles/applicationanuncios/images/default_avatar.png';
+			break;
+			
+		case 1: // twitter
+			url = 'http://api.twitter.com/1/users/profile_image/' + twitter_id + '.json?size=normal';
+			break;
+			
+		case 2: // facebook
+			url = 'http://graph.facebook.com/' + facebook_id + '/picture?type=square';
+			break;
+	
+	}
+	url += '&rand=' + rand;
+	$('#user_avatar').attr('src', url);
+}
+
+/* tooltips user networks edit */
+
+function networks_tooltip(){
+	$('#networks input').each(function(index) {
+		tooltip = false;
+		id = $(this).attr('id');
+		
+		switch( true ){
+			case ( id.indexOf('usertype_url') > -1 ):
+				tooltip = 'http://tudominio.com';
+				break;
+			case ( id.indexOf('twitter') > -1 ):
+				tooltip = 'http://twitter.com/USUARIO';
+				break;		
+			case ( id.indexOf('linkedin') > -1 ):
+				tooltip = 'http://es.linkedin.com/in/USUARIO';
+				break;
+			case ( id.indexOf('forrst') > -1 ):
+				tooltip = 'http://forrst.com/people/USUARIO';
+				break;
+			case ( id.indexOf('github') > -1 ):
+				tooltip = 'http://github.com/USUARIO';
+				break;
+			case ( id.indexOf('dribbble') > -1 ):
+				tooltip = 'http://dribbble.com/USUARIO';
+				break;
+			case ( id.indexOf('flickr') > -1 ):
+				tooltip = 'http://flickr.com/photos/USUARIO';
+				break;
+			case ( id.indexOf('youtube') > -1 ):
+				tooltip = 'http://www.youtube.com/user/USUARIO';
+				break;
+			case ( id.indexOf('stackoverflow') > -1 ):
+				tooltip = 'http://stackoverflow.com/users/ID';
+				break;
+			case ( id.indexOf('vimeo') > -1 ):
+				tooltip = 'http://vimeo.com/USUARIO';
+				break;
+			case ( id.indexOf('delicious') > -1 ):
+				tooltip = 'http://delicious.com/USUARIO';
+				break;
+			case ( id.indexOf('pinboard') > -1 ):
+				tooltip = 'http://pinboard.in/u:USUARIO';
+				break;
+			case ( id.indexOf('itunes') > -1 ):
+				tooltip = 'http://itunes.apple.com/es/artist/USUARIO';
+				break;
+			case ( id.indexOf('android') > -1 ):
+				tooltip = 'https://market.android.com/developer?pub=USUARIO';
+				break;
+		}
+		
+		if( tooltip ){
+			$(this).attr('data-original-title',tooltip);
+			$(this).attr('rel','twipsy');
+		}
+	});
+}

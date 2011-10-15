@@ -10,12 +10,17 @@ use Application\UserBundle\Entity\User;
 use Application\UserBundle\Entity\Contact;
 use Application\UserBundle\Form\UserType;
 use Application\UserBundle\Form\ContactType;
+use Application\UserBundle\Form\RegisterType;
+use Application\UserBundle\Form\LoginType;
+use Symfony\Component\Form as SymfonyForm;
 use Symfony\Component\HttpFoundation\Request;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\View\DefaultView;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
+
+
 
 /**
  * User controller.
@@ -118,12 +123,12 @@ class UserController extends Controller
 			);
     }
 
-    /**
+    /*
      * Displays a form to create a new User entity.
      *
      * @Route("/new", name="user_new")
      * @Template()
-     */
+
     public function newAction()
     {
         $entity = new User();
@@ -133,30 +138,133 @@ class UserController extends Controller
             'entity' => $entity,
             'form'   => $form->createView()
         );
-    }
+    }*/
+
+
+
+    /**
+     * User login
+     *
+     * @Route("/login", name="user_login")
+     * @Template()
+     */
+    public function loginAction()
+    {
+	
+        $entity  = new User();
+        $form    = $this->createForm(new LoginType(), $entity);
+	
+        $request = $this->getRequest();
+		if ($request->getMethod() == 'POST') {
+			
+			$form->bindRequest($request);
+			
+			// existe usuario?
+			$em = $this->getDoctrine()->getEntityManager();
+			$post = $form->getData();
+			$user = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('email' => $post->getEmail()));
+			
+			$pass = $post->getPass();
+
+			if( !$user ){
+	            $error_text = "El email no es valido";
+	            $form->addError( new SymfonyForm\FormError( $error_text ));
+			}else if( $pass && $user->getPass() != md5( $pass ) ){
+	            $error_text = "La contraseña no es correcta";
+	            $form->addError( new SymfonyForm\FormError( $error_text ));
+			}
+	
+	        if ($form->isValid()) {
+	
+				// guardar ultimo login
+				$user->setDateLogin( new \DateTime("now") );
+
+				// guardar ip
+				$user->setIp();
+
+				// guardar total logins
+				$total_logins = (int)$user->getTotalLogins() + 1;
+				$user->setTotalLogins( $total_logins );
+
+				$em = $this->get('doctrine.orm.entity_manager');
+				$em->persist($user);
+				$em->flush();
+
+				// autologin?
+				$session = $this->getRequest()->getSession();
+				$session->set('id', $user->getId());
+				$session->set('name', $user->getName());
+				$session->set('admin', $user->getAdmin());
+	            return $this->redirect($this->generateUrl('user_show', array('id' => $user->getId())));
+	        }
+		}
+	
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
+	}
 
     /**
      * Creates a new User entity.
      *
-     * @Route("/create", name="user_create")
-     * @Method("post")
-     * @Template("ApplicationUserBundle:User:new.html.twig")
+     * @Route("/register", name="user_register")
+     * @Template("ApplicationUserBundle:User:register.html.twig")
      */
-    public function createAction()
+    public function registerAction()
     {
+	
         $entity  = new User();
+        $form    = $this->createForm(new RegisterType(), $entity);
+        
+	
         $request = $this->getRequest();
-        $form    = $this->createForm(new UserType(), $entity);
-        $form->bindRequest($request);
+		if ($request->getMethod() == 'POST') {
+			
+			$form->bindRequest($request);
+			
+			// existe usuario?
+			$em = $this->getDoctrine()->getEntityManager();
+			$post = $form->getData();
+			$user = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('email' => $post->getEmail()));
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
+			if( $user ){
+	            $error_text = "El email ya esta registrado";
+	            $form->addError( new SymfonyForm\FormError( $error_text ));
+			}else if( strlen( $post->getPass() ) < 6 ){
+	            $error_text = "El password tiene que tener como minimo 6 caracteres";
+	            $form->addError( new SymfonyForm\FormError( $error_text ));
+			}
+	
+	        if ($form->isValid()) {
+		
+				// usuario referido existe?
+				$session = $this->getRequest()->getSession();
+				$ref_id = $session->get('ref_id');
+				if( $ref_id ){
+					$user_ref = $em->getRepository('ApplicationUserBundle:User')->find($ref_id);
+					if( !$user_ref ) $ref_id = null;
+				}
+				if( !$ref_id ) $ref_id = null;
+				
+				$entity->setRefId($ref_id);
+				$entity->setDate( new \DateTime("now") );
+				$entity->setDateLogin( new \DateTime("now") );
+				$entity->setPass( md5( $post->getPass() ) );
+				$entity->setTotalLogins( 1 );
+				$entity->setCanContact( 1 );
+				$entity->setIp();
+				
+	            $em->persist($entity);
+	            $em->flush();
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getId())));
-            
-        }
+				// autologin?
+				$session->set('id', $entity->getId());
+				$session->set('name', $entity->getName());
+				$session->set('admin', $entity->getAdmin());
+	            return $this->redirect($this->generateUrl('user_edit', array('id' => $entity->getId())));
+	        }
+		}
 
         return array(
             'entity' => $entity,
@@ -172,7 +280,8 @@ class UserController extends Controller
      */
     public function editAction()
     {
-	
+		
+		
 		// esta logueado?
 		$session = $this->getRequest()->getSession();
 		$id = $session->get('id');
@@ -193,69 +302,47 @@ class UserController extends Controller
         $editForm = $this->createForm(new UserType(), $entity);
 
 
-		$query = "SELECT COUNT(u.id) AS total FROM User u WHERE u.ref_id = " . $id;
-		$db = $this->get('database_connection');
-		$result = $db->query($query)->fetch();
-		$total = $result['total'];
+		$updated = false;
+
+		$request = $this->getRequest();
+		if ($request->getMethod() == 'POST') {
+	        $editForm->bindRequest($request);
+
+	        if ($editForm->isValid()) {
 		
+				if( $entity->getAvatarType() == AVATAR_TWITTER && !$entity->getTwitterURL() ){
+					$entity->setAvatarType( AVATAR_GRAVATAR );	
+				}
+				
+				// gravatar fix
+				$entity->setEmail( strtolower( trim( $entity->getEmail() ) ) );
+				
+	            $em->persist($entity);
+	            $em->flush();
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-			'total'		  => $total
-        );
-    }
-
-    /**
-     * Edits an existing User entity.
-     *
-     * @Route("/update", name="user_update")
-     * @Method("post")
-     * @Template("ApplicationUserBundle:User:edit.html.twig")
-     */
-    public function updateAction()
-    {
-	
-
-		// esta logueado?
-		$session = $this->getRequest()->getSession();
-		$id = $session->get('id');
-		if( !$id ){
-			return $this->redirect('/');
+				$session->set('name',$entity->getName());
+				$updated = true;
+	        }
 		}
-	
-        $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
-
-        $editForm   = $this->createForm(new UserType(), $entity);
-        //$deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {
-		
-            $em->persist($entity);
-            $em->flush();
-
-        }
-
+		// usuarios invitados
 		$query = "SELECT COUNT(u.id) AS total FROM User u WHERE u.ref_id = " . $id;
 		$db = $this->get('database_connection');
 		$result = $db->query($query)->fetch();
 		$total = $result['total'];
+		
+		
+		$avatars[AVATAR_GRAVATAR] = 'Gravatar';
+		if( $entity->getTwitterUrl() ) $avatars[AVATAR_TWITTER] = "Twitter";
+		if( $entity->getFacebookId() ) $avatars[AVATAR_FACEBOOK] = "Facebook";
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-			'updated' 	  => 1,
-			'total' 	  => $total
+			'total'		  => $total,
+			'avatars'     => $avatars,
+			'updated' 	  => $updated
         );
     }
 
@@ -273,7 +360,7 @@ class UserController extends Controller
 		
 		$query = "SELECT p FROM ApplicationUserBundle:User p WHERE 1 = 1";
 		
-		if( $search ) $query .= " AND p.body LIKE '%".$search."%'";
+		if( $search ) $query .= " AND ( p.body LIKE '%".$search."%' OR p.name LIKE '%".$search."%' )";
 		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
 		
 		$query .= " ORDER BY p.id DESC";
@@ -362,10 +449,10 @@ class UserController extends Controller
     /**
      * Facebook connect login
      *
-     * @Route("/login", name="user_login")
+     * @Route("/fblogin", name="user_fblogin")
      * @Template()
      */
-    public function loginAction()
+    public function fbloginAction()
     {
 
 		require __DIR__ . '/../../../../vendor/facebook/examples/example.php';
@@ -390,28 +477,27 @@ class UserController extends Controller
 				if( !isset( $user_profile['location']['name'] ) ) $user_profile['location']['name'] = '';
 				if( !isset( $user_profile['website'] ) ) $user_profile['website'] = '';
 				
-				// usuario referido
+				// usuario referido existe?
 				$ref_id = $session->get('ref_id');
-				if( !$ref_id ) $ref_id = 0;
+				if( $ref_id ){
+					$user_ref = $em->getRepository('ApplicationUserBundle:User')->find($ref_id);
+					if( !$user_ref ) $ref_id = null;
+				}
+				if( !$ref_id ) $ref_id = null;
 				
 				$user = new \Application\UserBundle\Entity\User;
-				$user->setAdmin(0);
 				$user->setFacebookId($user_profile['id']);
 				$user->setCategoryId(0);
 				$user->setEmail($user_profile['email']);
 				$user->setName($user_profile['name']);
 				$user->setLocation($user_profile['location']['name']);
 				$user->setDate( new \DateTime("now") );
+				$user->setUrl( $user_profile['website'] );
+				$user->setRefId($ref_id);
+				$user->setCanContact(1);
 				$user->setVotes(0);
 				$user->setVisits(0);
-				$user->setUrl( $user_profile['website'] );
-				$user->setFreelance(0);
-				$user->setCanContact(1);
-				$user->setRefId($ref_id);
-
-				$em = $this->get('doctrine.orm.entity_manager');
-				$em->persist($user);
-				$em->flush();
+				$user->setAvatarType(AVATAR_FACEBOOK);
 				
 				$url = $this->generateUrl('user_edit');
 				
@@ -420,13 +506,33 @@ class UserController extends Controller
 				$url = $this->generateUrl('user_show', array('id' => $user->getId()));
 			}
 			
-			//$session = $this->getRequest()->getSession();
+			
+			// guardar ultimo login
+			$user->setDateLogin( new \DateTime("now") );
+			
+			// guardar facebook id
+			if( isset( $user_profile['id'] ) &&  !$user->getFacebookId() ){
+				$user->setFacebookId( $user_profile['id'] );
+			}
+
+			// guardar ip
+			$user->setIp();
+			
+			// guardar total logins
+			$total_logins = (int)$user->getTotalLogins() + 1;
+			$user->setTotalLogins( $total_logins );
+			
+
+			$em = $this->get('doctrine.orm.entity_manager');
+			$em->persist($user);
+			$em->flush();
+			
+			
+
 			$session->set('id', $user->getId());
-			$session->set('facebook_id', $user->getFacebookId());
 			$session->set('name', $user->getName());
 			$session->set('admin', $user->getAdmin());
 			
-			// redirigir al perfil
 			
 		}else{
 			$url = $loginUrl;
@@ -446,7 +552,7 @@ class UserController extends Controller
     {
 		$session = $this->getRequest()->getSession();
 		$session->set('id',null);
-		$session->set('facebook_id',null);
+		//$session->set('facebook_id',null);
 		$session->set('name',null);
 		$session->set('admin',null);
 		return $this->redirect( $this->generateUrl('post') );

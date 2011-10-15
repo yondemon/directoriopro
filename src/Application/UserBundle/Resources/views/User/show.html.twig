@@ -22,7 +22,7 @@
 	{% if entity.forrsturl %}<a rel="nofollow,noindex" target="_blank" class="forrst" href="http://forrst.com/people/{{ entity.forrsturl }}">Forrst</a>{% endif %}
 	{% if entity.githuburl %}<a rel="nofollow,noindex" target="_blank" class="github" href="http://github.com/{{ entity.githuburl }}">Github</a>{% endif %}
 	{% if entity.dribbbleurl %}<a rel="nofollow,noindex" target="_blank" class="dribbble" href="http://dribbble.com/{{ entity.dribbbleurl }}">Dribbble</a>{% endif %}
-	{% if entity.flickrurl %}<a rel="nofollow,noindex" target="_blank" class="flickr" href="http://flickr.com/{{ entity.flickrurl }}">Flickr</a>{% endif %}
+	{% if entity.flickrurl %}<a rel="nofollow,noindex" target="_blank" class="flickr" href="http://flickr.com/photos/{{ entity.flickrurl }}">Flickr</a>{% endif %}
 	{% if entity.youtubeurl %}<a rel="nofollow,noindex" target="_blank" class="youtube" href="http://www.youtube.com/user/{{ entity.youtubeurl }}">Youtube</a>{% endif %}
 	
 	{% if entity.stackoverflowurl %}<a rel="nofollow,noindex" target="_blank" class="stackoverflow" href="http://stackoverflow.com/users/{{ entity.stackoverflowurl }}">Stackoverflow</a>{% endif %}
@@ -48,7 +48,7 @@
 
 
 
-<img src="{{ entity.getAvatar(100) }}" width="100" height="100" style="float:left;margin-right:10px"/>
+<img src="{{ entity.getAvatar('bigger') }}" width="100" height="100" style="float:left;margin-right:10px"/>
 
 <h1 style="margin-bottom:0">{{ entity.name }}</h1>
 <b>{{ categories[ entity.categoryid ] }}</b> 
@@ -69,8 +69,8 @@
 		<li class="dropdown" data-dropdown="dropdown">
 			<a href="#" class="dropdown-toggle">Diseño</a>
 			<ul class="dropdown-menu">
-				<li id="tab_dribbble" style="display:none"><a href="#dribbble" onclick="get_dribbble();">Dribbble</a></li>
 				<li id="tab_flickr" style="display:none"><a href="#flickr" onclick="get_flickr();">Flickr</a></li>
+				<li id="tab_dribbble" style="display:none"><a href="#dribbble" onclick="get_dribbble();">Dribbble</a></li>
 			</ul>
 		</li>
 	{% endif %}

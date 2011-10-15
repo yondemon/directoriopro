@@ -47,7 +47,7 @@ TEXTAREA.xlarge{width:430px}
 
 
 
-<form id="tabs_content" action="{{ path('user_update') }}" method="post" {{ form_enctype(edit_form) }}>
+<form id="tabs_content" action="{{ path('user_edit') }}" method="post" {{ form_enctype(edit_form) }}>
 
 
 
@@ -72,7 +72,23 @@ TEXTAREA.xlarge{width:430px}
 		{{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
 		{{ form_row(edit_form.location, { 'label': 'Localización' }) }}
 		{{ form_row(edit_form.email, { 'label': 'Email' }) }}
+
+		<div class="clearfix">
+			<label for="application_userbundle_usertype_avatar_type">Avatar</label>
+			<div class="input">
+				<select id="application_userbundle_usertype_avatar_type" name="application_userbundle_usertype[avatar_type]">
+					{% for key, value in avatars %}
+						<option value="{{key}}" {% if key == entity.getAvatarType() %}selected="selected"{% endif %} >{{value}}</a>
+					{% endfor %}
+				</select> 
+				<img src="" id="user_avatar" width="45" height="45" style="position:absolute;margin:-10px 0 0 10px"/>
+			</div>
+		</div>
+
 	</div>
+	
+	
+
 	
 	<div id="networks">
 		{{ form_row(edit_form.url, { 'label': 'Portafolio' }) }}
@@ -114,17 +130,18 @@ TEXTAREA.xlarge{width:430px}
 
     <div class="actions">
         <button type="submit" class="btn primary">Guardar cambios</button> &nbsp;
-		<a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn">Cancelar</a>
+
+		{% if updated == 1 %}
+			<a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn success">¡Actualizado! Visitar mi perfil</a>
+		{% else %}
+			<a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn">Visitar mi perfil</a>
+		{% endif %}
     </div>
 
 
 	{{ form_row(edit_form._token) }}
 	
-	{% if updated is defined %}
-		<div class="alert-message block-message success">
-			<b>¡Perfil actualizado con éxito!</b> &nbsp; <a class="btn small" href="{{ path('user_show', { 'id': entity.id }) }}">Visitar mi perfil</a>
-		</div>
-	{% endif %}
+
 
 </form>
 
@@ -133,4 +150,19 @@ TEXTAREA.xlarge{width:430px}
 
 {% block script_load %}
 	$('.tabs').tabs();
+	
+	
+	// avatar preview
+	gravatar_id = '{{ entity.getGravatarId() }}';
+	twitter_id = '{{ entity.getTwitterUrl() }}';
+	facebook_id = '{{ entity.getFacebookId() }}';
+		
+	userAvatar( $('#application_userbundle_usertype_avatar_type').val() );
+	
+	$('#application_userbundle_usertype_avatar_type').change(function(){
+		userAvatar( $(this).val() );
+	});
+	
+	networks_tooltip();
+	
 {% endblock %}

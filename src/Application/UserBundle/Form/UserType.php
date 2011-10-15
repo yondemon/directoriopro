@@ -10,16 +10,11 @@ class UserType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            //->add('admin')
-            //->add('facebook_id')
             ->add('category_id')
-            ->add('email')
+            ->add('email','email')
             ->add('name')
             ->add('body')
             ->add('location')
-            //->add('date')
-            //->add('votes')
-            //->add('visits')
             ->add('freelance')
             ->add('url')
             ->add('linkedin_url')
@@ -36,6 +31,7 @@ class UserType extends AbstractType
             ->add('itunes_url')
             ->add('android_url')
 			->add('can_contact')
+			->add('avatar_type')
         ;
     }
 

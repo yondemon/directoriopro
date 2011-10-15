@@ -3,6 +3,11 @@
 namespace Application\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+define('AVATAR_GRAVATAR',0);
+define('AVATAR_TWITTER',1);
+define('AVATAR_FACEBOOK',2);
 
 /**  
  * Application\UserBundle\Entity\User
@@ -31,7 +36,7 @@ class User
     /**
      * @var bigint $facebook_id
      *
-     * @ORM\Column(name="facebook_id", type="bigint")
+     * @ORM\Column(name="facebook_id", type="bigint", nullable=true)
      */
     private $facebook_id;
 
@@ -50,6 +55,15 @@ class User
     private $email;
 
     /**
+     * @var string $pass
+     *
+     * @ORM\Column(name="pass", type="string", length=255, nullable=true)
+     * @Assert\NotBlank
+     * @Assert\MaxLength(6)
+     */
+    private $pass;
+
+    /**
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -59,14 +73,14 @@ class User
     /**
      * @var text $body
      *
-     * @ORM\Column(name="body", type="text")
+     * @ORM\Column(name="body", type="text", nullable=true)
      */
     private $body;
 
     /**
      * @var string $location
      *
-     * @ORM\Column(name="location", type="string", length=255)
+     * @ORM\Column(name="location", type="string", length=255, nullable=true)
      */
     private $location;
 
@@ -78,23 +92,30 @@ class User
     private $date;
 
     /**
+     * @var datetime $date_login
+     *
+     * @ORM\Column(name="date_login", type="datetime")
+     */
+    private $date_login;
+
+    /**
      * @var integer $votes
      *
-     * @ORM\Column(name="votes", type="integer")
+     * @ORM\Column(name="votes", type="integer", nullable=true)
      */
     private $votes;
 
     /**
      * @var integer $visits
      *
-     * @ORM\Column(name="visits", type="integer")
+     * @ORM\Column(name="visits", type="integer", nullable=true)
      */
     private $visits;
 
     /**
      * @var integer $freelance
      *
-     * @ORM\Column(name="freelance", type="integer")
+     * @ORM\Column(name="freelance", type="integer", nullable=true)
      */
     private $freelance;
 
@@ -199,16 +220,38 @@ class User
     /**
      * @var string $can_contact
      *
-     * @ORM\Column(name="can_contact", type="integer")
+     * @ORM\Column(name="can_contact", type="integer", nullable=true)
      */
     private $can_contact;
 
     /**
      * @var string $ref_id
      *
-     * @ORM\Column(name="ref_id", type="integer")
+     * @ORM\Column(name="ref_id", type="integer", nullable=true)
      */
     private $ref_id;
+
+    /**
+     * @var string $total_logins
+     *
+     * @ORM\Column(name="total_logins", type="integer")
+     */
+    private $total_logins;
+
+    /**
+     * @var string $avatar_type
+     *
+     * @ORM\Column(name="avatar_type", type="integer", nullable=true)
+     */
+    private $avatar_type;
+
+    /**
+     * @var string $ip
+     *
+     * @ORM\Column(name="ip", type="string", length=100)
+     */
+    private $ip;
+
 
     /**
      * Get id
@@ -301,6 +344,26 @@ class User
     }
 
     /**
+     * Set pass
+     *
+     * @param string $pass
+     */
+    public function setPass($pass)
+    {
+        $this->pass = $pass;
+    }
+
+    /**
+     * Get pass
+     *
+     * @return string 
+     */
+    public function getPass()
+    {
+        return $this->pass;
+    }
+
+    /**
      * Set name
      *
      * @param string $name
@@ -378,6 +441,26 @@ class User
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set date_login
+     *
+     * @param datetime $dateLogin
+     */
+    public function setDateLogin($dateLogin)
+    {
+        $this->date_login = $dateLogin;
+    }
+
+    /**
+     * Get date_login
+     *
+     * @return datetime 
+     */
+    public function getDateLogin()
+    {
+        return $this->date_login;
     }
 
     /**
@@ -761,13 +844,125 @@ class User
     }
 
     /**
+     * Set total_logins
+     *
+     * @param integer $totalLogins
+     */
+    public function setTotalLogins($totalLogins)
+    {
+        $this->total_logins = $totalLogins;
+    }
+
+    /**
+     * Get total_logins
+     *
+     * @return integer 
+     */
+    public function getTotalLogins()
+    {
+        return $this->total_logins;
+    }
+
+    /**
+     * Set avatar_type
+     *
+     * @param integer $avatarType
+     */
+    public function setAvatarType($avatarType)
+    {
+        $this->avatar_type = $avatarType;
+    }
+
+    /**
+     * Get avatar_type
+     *
+     * @return integer 
+     */
+    public function getAvatarType()
+    {
+        return $this->avatar_type;
+    }
+
+    /**
+     * Set ip
+     */
+    public function setIp()
+    {
+		// http://roshanbh.com.np/2007/12/getting-real-ip-address-in-php.html
+	    if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
+	    {
+	      $ip=$_SERVER['HTTP_CLIENT_IP'];
+	    }
+	    elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
+	    {
+	      $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
+	    }
+	    else
+	    {
+	      $ip=$_SERVER['REMOTE_ADDR'];
+	    }
+	
+        $this->ip = $ip;
+    }
+
+    /**
+     * Get ip
+     *
+     * @return integer 
+     */
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * Get gravatar id
+     *
+     * @return string 
+     */
+	public function getGravatarId(){
+		return md5( $this->getEmail() );
+	}
+
+    /**
      * Get avatar from gravatar
      *
      * @return string 
      */
-    public function getAvatar($size = 50)
+    public function getAvatar($size = 'normal')
     {
-        return "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->email ) ) ) . "?s=" . $size;
+		switch( $size ){
+			case 'mini':
+				$size_int = 24;
+				$size_fb = 'small';
+				break;
+				
+			case 'normal':
+				$size_int = 48;
+				$size_fb = 'square';
+				break;
+				
+			case 'bigger':
+				$size_int = 80;
+				$size_fb = 'normal';
+				break;
+		}
+
+		switch( $this->getAvatarType() ){
+			case AVATAR_TWITTER:
+				$url = 'http://api.twitter.com/1/users/profile_image/' . $this->getTwitterUrl() . '.json?size=' . $size;
+				break;
+				
+			case AVATAR_FACEBOOK:
+				$url = 'http://graph.facebook.com/' . $this->getFacebookId() . '/picture?type=' . $size_fb;
+				break;
+				
+			default:
+				$url = "http://www.gravatar.com/avatar/" . $this->getGravatarId() . "?s=" . $size_int . '&d=http://dir.betabeers.com/bundles/applicationanuncios/images/default_avatar.png';
+				break;
+		}
+	
+        return $url;
     }
 
 }

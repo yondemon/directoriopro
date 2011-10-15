@@ -33,7 +33,7 @@
 	        <li>
 
 			
-				<img src="{{ entity.getAvatar(50) }}" width="35" height="35" style="float:left;margin-right:13px"/>
+				<img src="{{ entity.getAvatar('mini') }}" width="35" height="35" style="float:left;margin-right:13px"/>
 				<div style="float:left;width:425px">
 	            <a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.name }}</a> 
 				{% if entity.freelance %}

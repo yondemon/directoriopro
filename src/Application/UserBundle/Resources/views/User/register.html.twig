@@ -1,0 +1,59 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Registrarme" %}
+
+{% block sidebar %}
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<h1>Registrarme</h1>
+
+
+
+<form id="tabs_content" action="{{ path('user_register') }}" method="post" {{ form_enctype(form) }}>
+
+
+
+
+	{{ form_errors(form) }}
+	
+
+
+	<div class="clearfix">
+		<label>Categoría</label>
+		<div class="input">
+			<select id="register_category_id" name="register[category_id]">
+				{% for category in categories %}
+					{% if loop.index0 > 0 %}
+						<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+
+	{{ form_row(form.email, { 'label': 'Email' }) }}
+	{{ form_row(form.pass, { 'label': 'Contraseña' }) }}
+	{{ form_row(form.name, { 'label': 'Nombre y apellidos' }) }}
+
+
+
+    <div class="actions">
+        <button type="submit" class="btn primary">Crear cuenta</button> &nbsp;
+		<a href="{{ path('user_login') }}" class="btn">Ya estoy registrado</a>
+    </div>
+
+
+	{{ form_row(form._token) }}
+	
+
+</form>
+
+{% endblock %}
