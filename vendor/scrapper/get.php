@@ -13,7 +13,8 @@ $data = array();
 $urls = array(
 	'chrome' => 'https://chrome.google.com/webstore/search?q=',
 	'android' => 'https://market.android.com/developer?pub=',
-	'masterbranch' => 'https://www.masterbranch.com/developer/'
+	'masterbranch' => 'https://www.masterbranch.com/developer/',
+	'itunes' => 'http://www.appannie.com/company/'
 );
 
 
@@ -72,6 +73,20 @@ if( $html ){
 					'beers_url' => $url . '/beers',
 					'projects' => $projects
 				);
+			}
+			break;
+
+		case 'itunes':
+			$items = $html->find('div[class=tracked_app]');
+			if( $items ){
+				foreach( $items as $item ){
+					$link = $item->find('a',0);
+					$data[] = array(
+						'url' => 'http://www.appannie.com' . $link->attr['href'],
+						'title' => $item->find('h3 a',0)->innertext,
+						'icon' => $link->find('img',0)->attr['src']
+						);
+				}
 			}
 			break;
 	}

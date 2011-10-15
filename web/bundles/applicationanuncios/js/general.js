@@ -426,7 +426,7 @@ function networks_tooltip(){
 				tooltip = 'pinboard.in/u:USUARIO';
 				break;
 			case ( id.indexOf('itunes') > -1 ):
-				tooltip = 'itunes.apple.com/es/artist/USUARIO';
+				tooltip = 'appannie.com/company/USUARIO';
 				break;
 			case ( id.indexOf('android') > -1 ):
 				tooltip = 'market.android.com/developer?pub=USUARIO';
@@ -534,3 +534,31 @@ function get_masterbranch(){
 		});
 	}
 }
+
+/* itunes */
+
+var itunes_load = false;
+
+function get_itunes(){
+	if( !itunes_load ){
+		$('#loader').show();
+		itunes_load = true;
+		$.ajax({
+			dataType: 'jsonp',
+			success: function(data){
+				$('#loader').hide();
+				if( data.length ){
+				    $.each(data, function(i,item){
+				      $('<div style="float:left;width:250px;padding:0 20px 20px 0"><a href="' + item.url + '" target="_blank"><img src="' + item.icon + '" width="50" height="50" align="middle" style="margin-right:10px"/> ' + item.title + '</a></div>').appendTo("#itunes_list");
+				    });
+
+				}else{
+					$('#itunes').html('no se han encontrado aplicaciones');
+				}
+			},
+			type: 'GET',
+			url: '/user/scrapper?id=' + itunes_user + '&type=itunes'
+		});
+	}
+}
+
