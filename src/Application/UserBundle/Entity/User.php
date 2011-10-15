@@ -1002,7 +1002,7 @@ class User
 
 		switch( $this->getAvatarType() ){
 			case AVATAR_TWITTER:
-				$url = 'http://api.twitter.com/1/users/profile_image/' . $this->getTwitterUrl() . '.json?size=' . $size;
+				$url = 'http://api.twitter.com/1/users/profile_image/' . $this->getTwitterUrl() . '?size=' . $size;
 				break;
 				
 			case AVATAR_FACEBOOK:
