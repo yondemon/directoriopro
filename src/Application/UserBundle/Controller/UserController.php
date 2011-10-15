@@ -648,4 +648,17 @@ class UserController extends Controller
         return array('categories_aux' => $categories, 'users' => $users);
     }
 
+
+    /**
+     * User scrapper
+     *
+     * @Route("/scrapper", name="user_scrapper")
+     * @Template()
+     */
+    public function scrapperAction()
+    {
+		require __DIR__ . '/../../../../vendor/scrapper/get.php';
+		die($result);
+	}
+
 }

@@ -30,6 +30,8 @@ class UserType extends AbstractType
             ->add('pinboard_url')
             ->add('itunes_url')
             ->add('android_url')
+            ->add('chrome_url')
+            ->add('masterbranch_url')
 			->add('can_contact')
 			->add('avatar_type')
         ;

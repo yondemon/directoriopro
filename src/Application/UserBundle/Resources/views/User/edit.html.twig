@@ -92,10 +92,14 @@ TEXTAREA.xlarge{width:430px}
 	
 	<div id="networks">
 		{{ form_row(edit_form.url, { 'label': 'Portafolio' }) }}
+		
+		<div style="color:red;font-weight:bold" class="clearfix">¡Importante! Introduce el USUARIO de cada perfil no toda la url</div>
+		
 		{{ form_row(edit_form.linkedin_url, { 'label': 'Usuario linkedin' }) }}
 		{{ form_row(edit_form.twitter_url, { 'label': 'Usuario twitter' }) }}
 		{{ form_row(edit_form.forrst_url, { 'label': 'Usuario forrst' }) }}
 		{{ form_row(edit_form.github_url, { 'label': 'Usuario github' }) }}
+		{{ form_row(edit_form.masterbranch_url, { 'label': 'Usuario masterbranch' }) }}
 		{{ form_row(edit_form.dribbble_url, { 'label': 'Usuario dribbble' }) }}
 		{{ form_row(edit_form.flickr_url, { 'label': 'Usuario flickr' }) }}
 		{{ form_row(edit_form.youtube_url, { 'label': 'Usuario youtube' }) }}
@@ -105,6 +109,7 @@ TEXTAREA.xlarge{width:430px}
 		{{ form_row(edit_form.pinboard_url, { 'label': 'Usuario pinboard' }) }}
 		{{ form_row(edit_form.itunes_url, { 'label': 'Usuario itunes' }) }}
 		{{ form_row(edit_form.android_url, { 'label': 'Usuario android' }) }}
+		{{ form_row(edit_form.chrome_url, { 'label': 'Usuario chrome dev' }) }}
 	</div>
 
 	<div id="options">	

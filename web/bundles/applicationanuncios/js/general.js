@@ -229,7 +229,6 @@ function get_twitter(){
 /* stackoverflow */
 
 var stackoverflow_load = false;
-var stackoverflow_html = '';
 var stackoverflow_reputation = false;
 var stackoverflow_tags = [];
 var stackoverflow_error = false;
@@ -238,6 +237,7 @@ function get_stackoverflow(){
 	if( !stackoverflow_load ){
 		$('#loader').show();
 		stackoverflow_load = true;
+		html = '';
 
 		$.ajax({
 			dataType: 'jsonp',
@@ -251,22 +251,22 @@ function get_stackoverflow(){
 					return false;
 				}
 				
-				stackoverflow_html += '<b>Ha preguntado</b><br/>'
+				html += '<b>Ha preguntado</b><br/>'
 				if( data.questions.length ){
-					stackoverflow_html += '<ul>';
+					html += '<ul>';
 				    $.each(data.questions, function(i,item){
 					  
 					  if( !stackoverflow_reputation ) stackoverflow_reputation = item.owner.reputation;
 					
 					  stackoverflow_tags = stackoverflow_tags.concat(item.tags);
 					
-				      stackoverflow_html += '<li><a href="http://stackoverflow.com' + item.question_answers_url + '" target="_blank">' + item.title.replace(/\</g,'&lt;').replace(/\>/g,'&gt;') + '</a></li>';
+				      html += '<li><a href="http://stackoverflow.com' + item.question_answers_url + '" target="_blank">' + item.title.replace(/\</g,'&lt;').replace(/\>/g,'&gt;') + '</a></li>';
 					  if( i == 4 ) return false;
 				    });
-					stackoverflow_html += '</ul>';
+					html += '</ul>';
 					
 				}else{
-					stackoverflow_html += 'todavía no ha hecho preguntas<br/><br/>';
+					html += 'todavía no ha hecho preguntas<br/><br/>';
 				}				
 				
 			},
@@ -281,35 +281,35 @@ function get_stackoverflow(){
 			success: function(data){
 
 				if( !stackoverflow_error ){
-					stackoverflow_html += '<b>Ha respondido</b><br/>'
+					html += '<b>Ha respondido</b><br/>'
 					if( data.answers.length ){
-						stackoverflow_html += '<ul>';
+						html += '<ul>';
 					    $.each(data.answers	, function(i,item){
 
 						  if( !stackoverflow_reputation ) stackoverflow_reputation = item.owner.reputation;
 
-					      stackoverflow_html += '<li><a href="http://stackoverflow.com' + item.answer_comments_url + '" target="_blank">' + item.title.replace(/\</g,'&lt;').replace(/\>/g,'&gt;') + '</a></li>';
+					      html += '<li><a href="http://stackoverflow.com' + item.answer_comments_url + '" target="_blank">' + item.title.replace(/\</g,'&lt;').replace(/\>/g,'&gt;') + '</a></li>';
 						  if( i == 4 ) return false;
 					    });
-						stackoverflow_html += '</ul>';
+						html += '</ul>';
 
 					}else{
-						stackoverflow_html += 'todavía no ha respondido preguntas';
+						html += 'todavía no ha respondido preguntas';
 					}
 				
 
 
 					if( !stackoverflow_reputation ) stackoverflow_reputation = 1;
 				
-					stackoverflow_html_aux = '<b>Reputación</b><br/><span style="font-size:30px">' + stackoverflow_reputation + '</span><br/><br/>';
+					html_aux = '<b>Reputación</b><br/><span style="font-size:30px">' + stackoverflow_reputation + '</span><br/><br/>';
 
 				
 					if( stackoverflow_tags.length ){
-						stackoverflow_html_aux += '<b>Tags</b><br/>' + stackoverflow_tags.join(', ') + '<br/><br/>';
+						html_aux += '<b>Tags</b><br/>' + stackoverflow_tags.join(', ') + '<br/><br/>';
 					}
 
 					$('#loader').hide();
-					$('#stackoverflow').html(stackoverflow_html_aux+stackoverflow_html);
+					$('#stackoverflow').html(html_aux+html);
 				}
 			},
 			type: 'GET',
@@ -393,43 +393,49 @@ function networks_tooltip(){
 				tooltip = 'http://tudominio.com';
 				break;
 			case ( id.indexOf('twitter') > -1 ):
-				tooltip = 'http://twitter.com/USUARIO';
+				tooltip = 'twitter.com/USUARIO';
 				break;		
 			case ( id.indexOf('linkedin') > -1 ):
-				tooltip = 'http://es.linkedin.com/in/USUARIO';
+				tooltip = 'es.linkedin.com/in/USUARIO';
 				break;
 			case ( id.indexOf('forrst') > -1 ):
-				tooltip = 'http://forrst.com/people/USUARIO';
+				tooltip = 'forrst.com/people/USUARIO';
 				break;
 			case ( id.indexOf('github') > -1 ):
-				tooltip = 'http://github.com/USUARIO';
+				tooltip = 'github.com/USUARIO';
 				break;
 			case ( id.indexOf('dribbble') > -1 ):
-				tooltip = 'http://dribbble.com/USUARIO';
+				tooltip = 'dribbble.com/USUARIO';
 				break;
 			case ( id.indexOf('flickr') > -1 ):
-				tooltip = 'http://flickr.com/photos/USUARIO';
+				tooltip = 'flickr.com/photos/USUARIO';
 				break;
 			case ( id.indexOf('youtube') > -1 ):
-				tooltip = 'http://www.youtube.com/user/USUARIO';
+				tooltip = 'youtube.com/user/USUARIO';
 				break;
 			case ( id.indexOf('stackoverflow') > -1 ):
-				tooltip = 'http://stackoverflow.com/users/ID';
+				tooltip = 'stackoverflow.com/users/ID';
 				break;
 			case ( id.indexOf('vimeo') > -1 ):
-				tooltip = 'http://vimeo.com/USUARIO';
+				tooltip = 'vimeo.com/USUARIO';
 				break;
 			case ( id.indexOf('delicious') > -1 ):
-				tooltip = 'http://delicious.com/USUARIO';
+				tooltip = 'delicious.com/USUARIO';
 				break;
 			case ( id.indexOf('pinboard') > -1 ):
-				tooltip = 'http://pinboard.in/u:USUARIO';
+				tooltip = 'pinboard.in/u:USUARIO';
 				break;
 			case ( id.indexOf('itunes') > -1 ):
-				tooltip = 'http://itunes.apple.com/es/artist/USUARIO';
+				tooltip = 'itunes.apple.com/es/artist/USUARIO';
 				break;
 			case ( id.indexOf('android') > -1 ):
-				tooltip = 'https://market.android.com/developer?pub=USUARIO';
+				tooltip = 'market.android.com/developer?pub=USUARIO';
+				break;
+			case ( id.indexOf('chrome') > -1 ):
+				tooltip = 'chrome.google.com/webstore/search?q=USUARIO';
+				break;
+			case ( id.indexOf('masterbranch') > -1 ):
+				tooltip = 'masterbranch.com/developer/USUARIO';
 				break;
 		}
 		
@@ -438,4 +444,93 @@ function networks_tooltip(){
 			$(this).attr('rel','twipsy');
 		}
 	});
+}
+
+/* chrome */
+
+var chrome_load = false;
+
+function get_chrome(){
+	if( !chrome_load ){
+		$('#loader').show();
+		chrome_load = true;
+		$.ajax({
+			dataType: 'jsonp',
+			success: function(data){
+				$('#loader').hide();
+				if( data.length ){
+				    $.each(data, function(i,item){
+				      $('<div style="float:left;width:250px;padding:0 20px 20px 0"><a href="' + item.url + '" target="_blank"><img src="' + item.icon + '" width="50" height="50" align="middle" style="float:left;margin-right:10px"/> ' + item.title + '</a><br/>' + item.text + '</div>').appendTo("#chrome_list");
+				    });
+
+				}else{
+					$('#chrome').html('no se han encontrado extensiones');
+				}
+			},
+			type: 'GET',
+			url: '/user/scrapper?id=' + chrome_user + '&type=chrome'
+		});
+	}
+}
+
+
+/* android */
+
+var android_load = false;
+
+function get_android(){
+	if( !android_load ){
+		$('#loader').show();
+		android_load = true;
+		$.ajax({
+			dataType: 'jsonp',
+			success: function(data){
+				$('#loader').hide();
+				if( data.length ){
+				    $.each(data, function(i,item){
+				      $('<div style="float:left;width:250px;padding:0 20px 20px 0"><a href="' + item.url + '" target="_blank"><img src="' + item.icon + '" width="50" height="50" align="middle" style="float:left;margin-right:10px"/> ' + item.title + '</a><br/>' + item.text + '</div>').appendTo("#android_list");
+				    });
+
+				}else{
+					$('#android').html('no se han encontrado aplicaciones');
+				}
+			},
+			type: 'GET',
+			url: '/user/scrapper?id=' + android_user + '&type=android'
+		});
+	}
+}
+
+
+
+/* masterbranch */
+
+var masterbranch_load = false;
+
+function get_masterbranch(){
+	if( !masterbranch_load ){
+		$('#loader').show();
+		masterbranch_load = true;
+		$.ajax({
+			dataType: 'jsonp',
+			success: function(data){
+				$('#loader').hide();
+				html = '';
+				if( data.score ){
+					html += '<div style="float:left;padding-right:40px"><b>Devscore</b><br/><span style="font-size:30px">' + data.score + '</span></div>';
+					if( data.beers ) html += '<div style="float:left;padding-right:40px"><b>Beers</b><br/><a href="' + data.beers_url + '" target="_blank" style="font-size:30px">' + data.beers + '</a></div>';
+					html += '<br class="clear"/><br/><br/><b>Proyectos</b><br/><ul>';
+				    $.each(data.projects, function(i,item){
+				      html += '<li><a href="' + item.url + '" target="_blank">' + item.title + '</a></li>';
+				    });
+					html += '</ul>';
+				}else{
+					html = 'no se han encontrado proyectos';
+				}
+				$('#masterbranch').html(html);
+			},
+			type: 'GET',
+			url: '/user/scrapper?id=' + masterbranch_user + '&type=masterbranch'
+		});
+	}
 }

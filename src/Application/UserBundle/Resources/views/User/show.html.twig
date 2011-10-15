@@ -16,21 +16,22 @@
 	
 	
 	
-	{% if entity.url %}<a rel="nofollow,noindex" target="_blank" class="portafolio" href="{{ entity.url }}">Portafolio</a>{% endif %}
-	{% if entity.twitterurl %}<a rel="nofollow,noindex" target="_blank" class="twitter" href="http://twitter.com/{{ entity.twitterurl }}">Twitter</a>{% endif %}
-	{% if entity.linkedinurl %}<a rel="nofollow,noindex" target="_blank" class="linkedin" href="http://es.linkedin.com/in/{{ entity.linkedinurl }}">Linkedin</a>{% endif %}
-	{% if entity.forrsturl %}<a rel="nofollow,noindex" target="_blank" class="forrst" href="http://forrst.com/people/{{ entity.forrsturl }}">Forrst</a>{% endif %}
-	{% if entity.githuburl %}<a rel="nofollow,noindex" target="_blank" class="github" href="http://github.com/{{ entity.githuburl }}">Github</a>{% endif %}
-	{% if entity.dribbbleurl %}<a rel="nofollow,noindex" target="_blank" class="dribbble" href="http://dribbble.com/{{ entity.dribbbleurl }}">Dribbble</a>{% endif %}
-	{% if entity.flickrurl %}<a rel="nofollow,noindex" target="_blank" class="flickr" href="http://flickr.com/photos/{{ entity.flickrurl }}">Flickr</a>{% endif %}
-	{% if entity.youtubeurl %}<a rel="nofollow,noindex" target="_blank" class="youtube" href="http://www.youtube.com/user/{{ entity.youtubeurl }}">Youtube</a>{% endif %}
-	
-	{% if entity.stackoverflowurl %}<a rel="nofollow,noindex" target="_blank" class="stackoverflow" href="http://stackoverflow.com/users/{{ entity.stackoverflowurl }}">Stackoverflow</a>{% endif %}
-	{% if entity.vimeourl %}<a rel="nofollow,noindex" target="_blank" class="vimeo" href="http://vimeo.com/{{ entity.vimeourl }}">Vimeo</a>{% endif %}
-	{% if entity.deliciousurl %}<a rel="nofollow,noindex" target="_blank" class="delicious" href="http://delicious.com/{{ entity.deliciousurl }}">Delicious</a>{% endif %}
-	{% if entity.pinboardurl %}<a rel="nofollow,noindex" target="_blank" class="pinboard" href="https://pinboard.in/u:{{ entity.pinboardurl }}">Pinboard</a>{% endif %}
-	{% if entity.itunesurl %}<a rel="nofollow,noindex" target="_blank" class="itunes" href="http://itunes.apple.com/es/artist/{{ entity.itunesurl }}">Aplicaciones iOS</a>{% endif %}
-	{% if entity.androidurl %}<a rel="nofollow,noindex" target="_blank" class="android" href="https://market.android.com/developer?pub={{ entity.androidurl }}">Aplicaciones Android</a>{% endif %}
+	{% if entity.url %}<a rel="nofollow,noindex" target="_blank" class="ico portafolio" href="{{ entity.url }}">Portafolio</a>{% endif %}
+	{% if entity.twitterurl %}<a rel="nofollow,noindex" target="_blank" class="ico twitter" href="http://twitter.com/{{ entity.twitterurl }}">Twitter</a>{% endif %}
+	{% if entity.linkedinurl %}<a rel="nofollow,noindex" target="_blank" class="ico linkedin" href="http://es.linkedin.com/in/{{ entity.linkedinurl }}">Linkedin</a>{% endif %}
+	{% if entity.forrsturl %}<a rel="nofollow,noindex" target="_blank" class="ico forrst" href="http://forrst.com/people/{{ entity.forrsturl }}">Forrst</a>{% endif %}
+	{% if entity.githuburl %}<a rel="nofollow,noindex" target="_blank" class="ico github" href="http://github.com/{{ entity.githuburl }}">Github</a>{% endif %}
+	{% if entity.stackoverflowurl %}<a rel="nofollow,noindex" target="_blank" class="ico stackoverflow" href="http://stackoverflow.com/users/{{ entity.stackoverflowurl }}">Stackoverflow</a>{% endif %}
+	{% if entity.masterbranchurl %}<a rel="nofollow,noindex" target="_blank" class="ico masterbranch" href="https://www.masterbranch.com/developer/{{ entity.masterbranchurl }}">Masterbranch</a>{% endif %}
+	{% if entity.dribbbleurl %}<a rel="nofollow,noindex" target="_blank" class="ico dribbble" href="http://dribbble.com/{{ entity.dribbbleurl }}">Dribbble</a>{% endif %}
+	{% if entity.flickrurl %}<a rel="nofollow,noindex" target="_blank" class="ico flickr" href="http://flickr.com/photos/{{ entity.flickrurl }}">Flickr</a>{% endif %}
+	{% if entity.youtubeurl %}<a rel="nofollow,noindex" target="_blank" class="ico youtube" href="http://www.youtube.com/user/{{ entity.youtubeurl }}">Youtube</a>{% endif %}
+	{% if entity.vimeourl %}<a rel="nofollow,noindex" target="_blank" class="ico vimeo" href="http://vimeo.com/{{ entity.vimeourl }}">Vimeo</a>{% endif %}
+	{% if entity.deliciousurl %}<a rel="nofollow,noindex" target="_blank" class="ico delicious" href="http://delicious.com/{{ entity.deliciousurl }}">Delicious</a>{% endif %}
+	{% if entity.pinboardurl %}<a rel="nofollow,noindex" target="_blank" class="ico pinboard" href="https://pinboard.in/u:{{ entity.pinboardurl }}">Pinboard</a>{% endif %}
+	{% if entity.itunesurl %}<a rel="nofollow,noindex" target="_blank" class="ico itunes" href="http://itunes.apple.com/es/artist/{{ entity.itunesurl }}">Aplicaciones iOS</a>{% endif %}
+	{% if entity.androidurl %}<a rel="nofollow,noindex" target="_blank" class="ico android" href="https://market.android.com/developer?pub={{ entity.androidurl }}">Aplicaciones Android</a>{% endif %}
+	{% if entity.chromeurl %}<a rel="nofollow,noindex" target="_blank" class="ico chrome" href="https://chrome.google.com/webstore/search?q={{ entity.chromeurl }}">Extensiones chrome</a>{% endif %}
 	
 {% endblock %}
 
@@ -75,12 +76,13 @@
 		</li>
 	{% endif %}
 	
-	{% if entity.githuburl or entity.stackoverflowurl %}
+	{% if entity.githuburl or entity.stackoverflowurl or entity.masterbranchurl %}
 		<li class="dropdown" data-dropdown="dropdown">
 			<a href="#" class="dropdown-toggle">Programación</a>
 			<ul class="dropdown-menu">
 				<li id="tab_github" style="display:none"><a href="#github" onclick="get_github();">Github</a></li>
 				<li id="tab_stackoverflow" style="display:none"><a href="#stackoverflow" onclick="get_stackoverflow();">Stackoverflow</a></li>
+				<li id="tab_masterbranch" style="display:none"><a href="#masterbranch" onclick="get_masterbranch();">Masterbranch</a></li>
 			</ul>
 		</li>
 	{% endif %}
@@ -91,6 +93,16 @@
 			<ul class="dropdown-menu">
 				<li id="tab_youtube" style="display:none"><a href="#youtube" onclick="get_youtube();">Youtube</a></li>
 				<li id="tab_vimeo" style="display:none"><a href="#vimeo" onclick="get_vimeo();">Vimeo</a></li>
+			</ul>
+		</li>
+	{% endif %}
+	
+	{% if entity.chromeurl or entity.androidurl %}
+		<li class="dropdown" data-dropdown="dropdown">
+			<a href="#" class="dropdown-toggle">Apps</a>
+			<ul class="dropdown-menu">
+				<li id="tab_android" style="display:none"><a href="#android" onclick="get_android();">Android</a></li>
+				<li id="tab_chrome" style="display:none"><a href="#chrome" onclick="get_chrome();">Chrome</a></li>
 			</ul>
 		</li>
 	{% endif %}
@@ -178,6 +190,18 @@
 {% endif %}
 
 
+{% if entity.masterbranchurl %}
+
+	<div id="masterbranch"></div>
+
+	<script>
+	var masterbranch_user = '{{ entity.masterbranchurl }}';
+	$('#tab_masterbranch').show();
+	</script>
+
+{% endif %}
+
+
 {% if entity.youtubeurl %}
 	
 	<div id="youtube">
@@ -202,6 +226,34 @@
 	<script>
 	var vimeo_user = '{{ entity.vimeourl }}';
 	$('#tab_vimeo').show();
+	</script>
+
+{% endif %}
+
+
+{% if entity.androidurl %}
+	
+	<div id="android">
+		<ul id="android_list"></ul>
+	</div>
+
+	<script>
+	var android_user = '{{ entity.androidurl }}';
+	$('#tab_android').show();
+	</script>
+
+{% endif %}
+
+
+{% if entity.chromeurl %}
+	
+	<div id="chrome">
+		<ul id="chrome_list"></ul>
+	</div>
+
+	<script>
+	var chrome_user = '{{ entity.chromeurl }}';
+	$('#tab_chrome').show();
 	</script>
 
 {% endif %}

@@ -26,7 +26,7 @@ class User
     private $id;
 
     /**
-     * @var smallint $admin
+     * @var tinyint $admin
      *
      * @ORM\Column(name="admin", type="smallint")
      */
@@ -110,7 +110,7 @@ class User
     private $visits;
 
     /**
-     * @var integer $freelance
+     * @var tinyint $freelance
      *
      * @ORM\Column(name="freelance", type="integer", nullable=true)
      */
@@ -215,28 +215,42 @@ class User
     private $android_url;
 
     /**
-     * @var string $can_contact
+     * @var string $chrome_url
+     *
+     * @ORM\Column(name="chrome_url", type="string", length=255, nullable=true)
+     */
+    private $chrome_url;
+
+    /**
+     * @var string $masterbranch_url
+     *
+     * @ORM\Column(name="masterbranch_url", type="string", length=255, nullable=true)
+     */
+    private $masterbranch_url;
+
+    /**
+     * @var tinyint $can_contact
      *
      * @ORM\Column(name="can_contact", type="integer", nullable=true)
      */
     private $can_contact;
 
     /**
-     * @var string $ref_id
+     * @var integer $ref_id
      *
      * @ORM\Column(name="ref_id", type="integer", nullable=true)
      */
     private $ref_id;
 
     /**
-     * @var string $total_logins
+     * @var integer $total_logins
      *
      * @ORM\Column(name="total_logins", type="integer")
      */
     private $total_logins;
 
     /**
-     * @var string $avatar_type
+     * @var tinyint $avatar_type
      *
      * @ORM\Column(name="avatar_type", type="integer", nullable=true)
      */
@@ -801,6 +815,47 @@ class User
     }
 
     /**
+     * Set chrome_url
+     *
+     * @param string $chromeUrl
+     */
+    public function setChromeUrl($chromeUrl)
+    {
+        $this->chrome_url = $chromeUrl;
+    }
+
+    /**
+     * Get chrome_url
+     *
+     * @return string 
+     */
+    public function getChromeUrl()
+    {
+        return $this->chrome_url;
+    }
+
+
+    /**
+     * Set masterbranch_url
+     *
+     * @param string $masterbranchUrl
+     */
+    public function setMasterbranchUrl($masterbranchUrl)
+    {
+        $this->masterbranch_url = $masterbranchUrl;
+    }
+
+    /**
+     * Get masterbranch_url
+     *
+     * @return string 
+     */
+    public function getMasterbranchUrl()
+    {
+        return $this->masterbranch_url;
+    }
+
+    /**
      * Set can_contact
      *
      * @param string $canContact
@@ -930,12 +985,12 @@ class User
     {
 		switch( $size ){
 			case 'mini':
-				$size_int = 24;
+				$size_int = 38;
 				$size_fb = 'small';
 				break;
 				
 			case 'normal':
-				$size_int = 48;
+				$size_int = 50;
 				$size_fb = 'square';
 				break;
 				
