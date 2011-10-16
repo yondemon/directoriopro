@@ -289,7 +289,7 @@ class UserController extends Controller
 			return $this->redirect('/');
 		}
 		
-		
+
 	
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -304,7 +304,7 @@ class UserController extends Controller
 
 		$old_email = $entity->getEmail();
 
-		$updated = false;
+
 
 		$request = $this->getRequest();
 		if ($request->getMethod() == 'POST') {
@@ -337,11 +337,18 @@ class UserController extends Controller
 				// gravatar fix
 				$entity->setEmail( strtolower( trim( $entity->getEmail() ) ) );
 				
+				// appannie fix
+				$entity->setItunesUrl( str_replace(' ','-', strtolower( trim( $entity->getItunesUrl() ) ) ) );
+				
+				
 	            $em->persist($entity);
 	            $em->flush();
 
 				$session->set('name',$entity->getName());
-				$updated = true;
+
+				
+				
+				return $this->redirect($this->generateUrl('user_edit') . '?updated');
 	        }
 		}
 
@@ -356,13 +363,16 @@ class UserController extends Controller
 		$avatars[AVATAR_GRAVATAR] = 'Gravatar';
 		if( $entity->getTwitterUrl() ) $avatars[AVATAR_TWITTER] = "Twitter";
 		if( $entity->getFacebookId() ) $avatars[AVATAR_FACEBOOK] = "Facebook";
+		
+
+
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
 			'total'		  => $total,
 			'avatars'     => $avatars,
-			'updated' 	  => $updated
+			'updated' 	  => isset($_GET['updated'])
         );
     }
 
