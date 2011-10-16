@@ -281,6 +281,7 @@ function get_stackoverflow(){
 				
 				
 				if( data.error ){
+					$('#loader').hide();
 					stackoverflow_error = true;
 					$('#stackoverflow').html('el usuario no existe');
 					return false;

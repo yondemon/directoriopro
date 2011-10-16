@@ -1,0 +1,32 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Recomendar" %}
+
+{% block content %}
+	<h1>Recomendar a {{ user.name }}</h1>
+	
+
+	<form action="{{ path('user_recommend', { 'id': user.id }) }}" method="post">
+
+
+		{{ form_errors(form) }}
+
+
+		{{ form_row(form._token) }}
+        {{ form_row(form.body, { 'label': 'Comentario' }) }}
+        {{ form_row(form.type, { 'label': 'Tipo' }) }}
+
+
+
+
+
+		<div class="actions">
+			<button type="submit" class="btn primary">Guardar recomendación</button> &nbsp;
+			<a href="{{ path('user_show', { 'id': user.id }) }}" class="btn">Volver al perfil</a>
+		</div>
+
+
+	</form>
+	
+{% endblock %}

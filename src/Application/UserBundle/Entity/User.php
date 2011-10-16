@@ -28,7 +28,7 @@ class User
     /**
      * @var tinyint $admin
      *
-     * @ORM\Column(name="admin", type="smallint")
+     * @ORM\Column(name="admin", type="smallint", nullable=true)
      */
     private $admin;
 

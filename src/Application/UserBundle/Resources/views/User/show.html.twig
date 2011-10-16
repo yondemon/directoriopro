@@ -8,12 +8,26 @@
 	{% if app.session.get('id') != entity.id %}
 		{% include "ApplicationAnunciosBundle:Form:contact.html.twig" %}
 		<br/>
+		
+		{% if app.session.get('id') %}
+			<br/><a href="{{ path('user_recommend', { 'id': entity.id }) }}" class="btn large">Recomendar</a>
+		{% endif %}
+		
 	{% else %}
 		<a href="{{ path('user_invite') }}" class="btn large primary">Invitar contactos</a>
 	{% endif %}
 	<br/>
 	
-
+	{% if comments %}
+		<b style="display:block;margin-bottom:7px">Recomendaciones</b>
+		
+		{% for item in comments %}
+			<a href="{{ path('user_comment', { 'user_id': item.user_id, 'comment_id': item.comment_id }) }}" style="display:inline" data-original-title="<b>{{ item.name }}</b><br>{{ categories[item.category_id] }}" rel="twipsy"><img src="{{ item.user.getAvatar('normal') }}" width="40" height="40" /></a>
+		{% endfor %}
+	
+		<br/><a href="{{ path('user_comments', { 'id': entity.id }) }}">Ver todas</a>
+	{% endif %}
+	
 {% endblock %}
 
 

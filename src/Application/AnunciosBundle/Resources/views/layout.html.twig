@@ -51,6 +51,7 @@
 						<li><a href="{{ path('user_show', { 'id': app.session.get('id') }) }}">Perfil</a></li>
 						<li><a href="{{ path('user_edit') }}">Editar perfil</a></li>
 						<li><a href="{{ path('user_invite') }}">Invitar contactos</a></li>
+						<li><a href="{{ path('user_comments', { 'id': app.session.get('id') }) }}">Recomendaciones</a></li>
 						<li class="divider"></li>
 						<li><a href="{{ path('user_logout') }}">Salir</a></li>
 					</ul>
@@ -100,7 +101,7 @@ $().ready(function(){
 	{% block script_load %}{% endblock %}
 
 	$('#topbar').dropdown();
-	$("*[rel=twipsy]").twipsy({live: true});
+	$("*[rel=twipsy]").twipsy({live: true, html: true});
 });
 
 /* analytics */

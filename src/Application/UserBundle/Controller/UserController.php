@@ -8,7 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\UserBundle\Entity\User;
 use Application\UserBundle\Entity\Contact;
+use Application\UserBundle\Entity\Comment;
 use Application\UserBundle\Form\UserType;
+use Application\UserBundle\Form\CommentType;
 use Application\UserBundle\Form\ContactType;
 use Application\UserBundle\Form\RegisterType;
 use Application\UserBundle\Form\LoginType;
@@ -102,9 +104,9 @@ class UserController extends Controller
 		if( $entity->getCanContact() ){
 			$session = $this->getRequest()->getSession();
 			$contact = new \Application\UserBundle\Entity\Contact;
-			$id = $session->get('id');
+			$session_id = $session->get('id');
 			if( $id ){
-				$user_login = $em->getRepository('ApplicationUserBundle:User')->find($id);
+				$user_login = $em->getRepository('ApplicationUserBundle:User')->find($session_id);
 				$contact->setName( $user_login->getName() );
 				$contact->setEmail( $user_login->getEmail() );
 			}
@@ -112,35 +114,32 @@ class UserController extends Controller
 			$contact_form = $this->createForm(new ContactType(), $contact);
 			$contact_form_html = $contact_form->createView();
 		}
-		
 
+		// comentarios a la persona
+		$query = $em->createQuery("SELECT c.id as comment_id, u.id as user_id, u.name, u.category_id, u.avatar_type, u.twitter_url, u.facebook_id, u.email FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.from_id AND c.to_id = :id ORDER BY c.id DESC");
+		$query->setParameter('id', $id);
+		$query->setMaxResults(12);
+		$comments = $query->getResult();
 		
-
+		// ñapa para poder usar el modelo de usuario
+		if( $comments ){
+			$total = count( $comments );
+			for( $i = 0; $i < $total; $i++ ){
+				$user_comment = new User();
+				$user_comment->setAvatarType( $comments[$i]['avatar_type'] );
+				$user_comment->setTwitterUrl( $comments[$i]['twitter_url'] );
+				$user_comment->setEmail( $comments[$i]['email'] );
+ 				$user_comment->setFacebookId( $comments[$i]['facebook_id'] );
+				$comments[$i]['user'] = $user_comment;
+			}
+		}
 
         return array(
-            'entity'      => $entity,
+            'entity'       => $entity,
 			'contact_form' => $contact_form_html,
+			'comments'     => $comments
 			);
     }
-
-    /*
-     * Displays a form to create a new User entity.
-     *
-     * @Route("/new", name="user_new")
-     * @Template()
-
-    public function newAction()
-    {
-        $entity = new User();
-        $form   = $this->createForm(new UserType(), $entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
-    }*/
-
-
 
     /**
      * User login
@@ -669,6 +668,151 @@ class UserController extends Controller
     {
 		require __DIR__ . '/../../../../vendor/scrapper/get.php';
 		die($result);
+	}
+	
+
+    /**
+     * Recomend form
+     *
+     * @Route("/{id}/recommend", name="user_recommend")
+     * @Template()
+     */
+    public function recommendAction($id)
+    {
+
+		// esta logueado?
+		$session = $this->getRequest()->getSession();
+		$session_id = $session->get('id');
+		if( !$session_id ){
+			return $this->redirect('/');
+		}
+		
+		// me quiero votar a mi mismo?
+		if( $session_id == $id ){
+			return $this->redirect($this->generateUrl('user_show', array('id' => $id)));
+		}
+
+		// existe usuario?
+        $em = $this->getDoctrine()->getEntityManager();
+		$user = $em->getRepository('ApplicationUserBundle:User')->find($id);
+        if (!$user) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+
+		// setear comentario si ya he escrito anteriormente
+		$query = $em->createQuery('SELECT c FROM ApplicationUserBundle:Comment c WHERE c.from_id = :from_id AND c.to_id = :to_id');
+		$query->setMaxResults(1);
+		$query->setParameters(array(
+		    'from_id' => $session_id,
+		    'to_id' => $id
+		));
+		$entity = current( $query->getResult() );
+		
+		if( !$entity ){
+			$entity = new Comment();
+		}
+
+		$form = $this->createForm(new CommentType(), $entity);
+
+		$request = $this->getRequest();
+		if ($request->getMethod() == 'POST') {
+	        $form->bindRequest($request);
+
+	        if ($form->isValid()) {
+		
+		
+
+				
+				$entity->setFromId( $session_id );
+				$entity->setToId( $user->getId() );
+				$entity->setDate( new \DateTime("now") );
+				$em->persist($entity);
+				$em->flush();
+				
+				// guardar total recomendaciones
+				$query = $em->createQuery("SELECT COUNT(c) as total FROM ApplicationUserBundle:Comment c WHERE c.to_id = :id");
+				$query->setParameter('id', $id);
+				$votes = current($query->getResult());
+
+				$user->setVotes( $votes['total'] );
+				$em->persist($user);
+				$em->flush();
+				
+				
+				//return $this->redirect($this->generateUrl('user_comments'));
+				$url = $this->generateUrl('user_comment', array('user_id' => $id, 'comment_id' => $entity->getId() ));
+				return $this->redirect($url);
+				
+	        }
+	    }
+
+		return array(
+			'form' => $form->createView(),
+			'user' => $user
+			);
+
+    }
+
+
+
+    /**
+     * User recommendations
+     *
+     * @Route("/{id}/comments", name="user_comments")
+     * @Template()
+     */
+    public function commentsAction($id)
+    {
+		// existe usuario?
+        $em = $this->getDoctrine()->getEntityManager();
+		$user = $em->getRepository('ApplicationUserBundle:User')->find($id);
+        if (!$user) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+	
+		$query = $em->createQuery("SELECT u.name, u.category_id, c.id, c.from_id, c.body, c.type, c.date FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.from_id AND c.to_id = :id ORDER BY c.id DESC");
+		$query->setParameter('id', $id);
+		$comments = $query->getResult();
+
+	
+		return array(
+			'user' => $user,
+			'comments' => $comments
+			);
+	}
+	
+
+    /**
+     * User recommendation
+     *
+     * @Route("/{user_id}/comments/{comment_id}", name="user_comment")
+     * @Template("ApplicationUserBundle:User:comments.html.twig")
+     */
+    public function commentAction($user_id, $comment_id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+		// existe usuario?
+		$user = $em->getRepository('ApplicationUserBundle:User')->find($user_id);
+        if (!$user) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+
+		// existe comentario?
+		$query = $em->createQuery("SELECT u.name, u.category_id, c.id, c.from_id, c.body, c.type, c.date FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.from_id AND c.to_id = :to_id AND c.id = :id ORDER BY c.id DESC");
+		$query->setParameters(array(
+			'id' => $comment_id,
+			'to_id' => $user_id
+		));
+		$comments = $query->getResult();
+        if (!$comments) {
+            throw $this->createNotFoundException('Unable to find Comment entity.');
+        }
+	
+		return array(
+			'user' => $user,
+			'comments' => $comments
+			);
 	}
 
 }

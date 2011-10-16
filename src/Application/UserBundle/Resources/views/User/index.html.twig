@@ -38,7 +38,11 @@
 				<span class="freelance">&#149; freelance</span>
 			{% endif %}
 				
-			<br/><b>{{ categories[ entity.categoryid ] }}</b><br/>
+			<br/><b>{{ categories[ entity.categoryid ] }}</b> 
+			{% if entity.votes %}
+				<span class="votes">{{ entity.votes }}</span>
+			{% endif %}
+			<br/>
 
 			{% if entity.body %}
 				{{ entity.body|truncate(200) }}<br/>

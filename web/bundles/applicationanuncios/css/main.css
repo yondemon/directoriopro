@@ -55,7 +55,7 @@ html, body {background:#fff}
 .content{-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none}
 
 PRE{background:white;border:0;padding:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;}
-.filters .primary{width:179px;text-align:center;padding-left:0;padding-right:0}
+.filters .btn{width:179px;text-align:center;padding-left:0;padding-right:0}
 
 
 /* other */
@@ -70,8 +70,9 @@ PRE{background:white;border:0;padding:0;font-family:"Helvetica Neue",Helvetica,A
 
 
 A.title{font-size:20px}
-SPAN.date{color:#ccc}
-SPAN.freelance{color:#33CC00;padding-left:10px}
+.date{color:#ccc}
+.freelance{color:#33CC00;padding-left:10px}
+.votes{background:url('../images/thumbsup.png') no-repeat left center;padding-left:20px;font-weight:bold;color:orange;margin-left:10px}
 
 .filters{padding-left:20px;border-left:1px #efefef solid;width:190px}
 	.filters A{display:block;padding-top:10px}
