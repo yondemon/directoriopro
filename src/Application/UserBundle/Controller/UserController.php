@@ -105,7 +105,7 @@ class UserController extends Controller
 			$session = $this->getRequest()->getSession();
 			$contact = new \Application\UserBundle\Entity\Contact;
 			$session_id = $session->get('id');
-			if( $session_id ){
+			if( $session_id && $session_id != $id ){
 				$user_login = $em->getRepository('ApplicationUserBundle:User')->find($session_id);
 				$contact->setName( $user_login->getName() );
 				$contact->setEmail( $user_login->getEmail() );
