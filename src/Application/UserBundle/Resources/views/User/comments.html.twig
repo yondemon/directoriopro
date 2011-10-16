@@ -11,8 +11,10 @@
 	</div>
 		
 
-	{% if app.session.get('id') and app.session.get('id') != user.id %}
+	{% if app.session.get('id') != user.id %}
+	
 		<a href="{{ path('user_recommend', { 'id': user.id }) }}" class="btn primary large">Recomendar</a>
+				
 	{% endif %}
 {% endblock %}
 

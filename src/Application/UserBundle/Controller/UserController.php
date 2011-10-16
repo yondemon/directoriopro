@@ -194,7 +194,17 @@ class UserController extends Controller
 				$session->set('id', $user->getId());
 				$session->set('name', $user->getName());
 				$session->set('admin', $user->getAdmin());
-	            return $this->redirect($this->generateUrl('user_show', array('id' => $user->getId())));
+				
+
+				$back = $session->get('back');
+				if( $back ){
+					$url = $back;
+					$session->set('back','');
+				}else{
+					$url = $this->generateUrl('user_show', array('id' => $user->getId()));
+				}
+				
+	            return $this->redirect($url);
 	        }
 		}
 	
@@ -531,8 +541,14 @@ class UserController extends Controller
 				$url = $this->generateUrl('user_edit');
 				
 			}else{
-				
-				$url = $this->generateUrl('user_show', array('id' => $user->getId()));
+			
+				$back = $session->get('back');
+				if( $back ){
+					$url = $back;
+					$session->set('back','');
+				}else{
+					$url = $this->generateUrl('user_show', array('id' => $user->getId()));
+				}
 			}
 			
 			
@@ -631,6 +647,7 @@ class UserController extends Controller
     {
 		$request = Request::createFromGlobals();
 		$ref_id = $request->query->get('ref_id');
+		$back = $request->query->get('back');
 		if( $ref_id ){
 			
 	        $em = $this->getDoctrine()->getEntityManager();
@@ -640,6 +657,10 @@ class UserController extends Controller
 				$session = $this->getRequest()->getSession();
 				$session->set('ref_id', $ref_id);
 			}
+		}
+		if( $back ){
+			$session = $this->getRequest()->getSession();
+			$session->set('back', $back);
 		}
 		
 		// estadisticas de usuarios
@@ -679,12 +700,11 @@ class UserController extends Controller
      */
     public function recommendAction($id)
     {
-
 		// esta logueado?
 		$session = $this->getRequest()->getSession();
 		$session_id = $session->get('id');
 		if( !$session_id ){
-			return $this->redirect('/');
+			return $this->redirect($this->generateUrl('user_welcome', array('back' => $_SERVER['REQUEST_URI'])));
 		}
 		
 		// me quiero votar a mi mismo?

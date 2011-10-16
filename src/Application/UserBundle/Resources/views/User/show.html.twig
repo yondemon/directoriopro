@@ -7,11 +7,16 @@
 
 	{% if app.session.get('id') != entity.id %}
 		{% include "ApplicationAnunciosBundle:Form:contact.html.twig" %}
-		<br/>
+		<br/><br/>
 		
-		{% if app.session.get('id') %}
-			<br/><a href="{{ path('user_recommend', { 'id': entity.id }) }}" class="btn large">Recomendar</a>
-		{% endif %}
+		
+		
+		<a href="{{ path('user_recommend', { 'id': entity.id }) }}" class="btn large">Recomendar</a>
+
+		
+		
+
+		
 		
 	{% else %}
 		<a href="{{ path('user_invite') }}" class="btn large primary">Invitar contactos</a>
