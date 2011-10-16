@@ -14,7 +14,8 @@ $urls = array(
 	'chrome' => 'https://chrome.google.com/webstore/search?q=',
 	'android' => 'https://market.android.com/developer?pub=',
 	'masterbranch' => 'https://www.masterbranch.com/developer/',
-	'itunes' => 'http://www.appannie.com/company/'
+	'itunes' => 'http://www.appannie.com/company/',
+	'linkedin' => 'http://es.linkedin.com/in/'
 );
 
 
@@ -88,6 +89,15 @@ if( $html ){
 						);
 				}
 			}
+			break;
+			
+		case 'linkedin':
+			$experience = $html->find('div[id=profile-experience]',0)->innertext;
+			$education = $html->find('div[id=profile-education]',0)->innertext;
+			
+			if( $experience ) $experience = str_replace('href="/company','target="_blank" href="http://linkedin.com/company',$experience);
+			
+			die( $experience . $education );
 			break;
 	}
 	

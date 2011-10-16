@@ -224,7 +224,42 @@ function get_twitter(){
 }
 
 
+/* twitterstatus */
 
+var twitterstatus_load = false;
+
+function get_twitterstatus(){
+	if( !twitterstatus_load ){
+		$('#loader').show();
+		twitterstatus_load = true;
+		$.ajax({
+			dataType: 'jsonp',
+			success: function(data){
+				
+				$('#loader').hide();
+				if( data ){
+					
+					html = '<div style="float:left;padding-right:40px"><b>Tweets</b><br/><span style="font-size:30px">' + data[0].user.statuses_count + '</span></div>';
+					html += '<div style="float:left;padding-right:40px"><b>Seguidores</b><br/><span style="font-size:30px">' + data[0].user.followers_count + '</span></div>';
+					html += '<div style="float:left;padding-right:40px"><b>Amigos</b><br/><span style="font-size:30px">' + data[0].user.friends_count + '</span></div>';
+					html += '<div style="float:left;padding-right:40px"><b>Favoritos</b><br/><span style="font-size:30px">' + data[0].user.favourites_count + '</span></div>';
+					html += '<br class="clear"/><br/><br/><b>Ultimos estados</b><br/><br/>';
+					$("#twitterstatus_info").html(html);
+					
+				    $.each(data, function(i,item){
+				      $('<li>' + item.text + '<br/><br/></li>').appendTo("#twitterstatus_list"); //<span class="date">' + item.created_at + '</span>
+				    });
+
+				}else{
+					$('#twitterstatus').html('no se han encontrado tweets');
+				}
+				
+			},
+			type: 'GET',
+			url: 'https://api.twitter.com/1/statuses/user_timeline.json?include_entities=false&include_rts=false&count=10&screen_name=' + twitter_user
+		});
+	}
+}
 
 /* stackoverflow */
 
@@ -562,3 +597,118 @@ function get_itunes(){
 	}
 }
 
+
+/* linkedin */
+
+var linkedin_load = false;
+
+function get_linkedin(){
+	if( !linkedin_load ){
+		$('#loader').show();
+		linkedin_load = true;
+		$.ajax({
+			dataType: 'html',
+			success: function(data){
+				$('#loader').hide();
+				if( data ){
+					$('#linkedin').html(data);
+
+				}else{
+					$('#linkedin').html('no se han encontrado información');
+				}
+			},
+			type: 'GET',
+			url: '/user/scrapper?id=' + linkedin_user + '&type=linkedin'
+		});
+	}
+}
+
+/* forrst */
+
+
+var forrst_load = false;
+
+function get_forrst(){
+	if( !forrst_load ){
+		$('#loader').show();
+		forrst_load = true;
+		$.ajax({
+			dataType: 'jsonp',
+			success: function(data){
+				$('#loader').hide();
+				
+				if( !data.resp.error ){
+				    $.each(data.resp.posts, function(i,item){
+					  image = item.snaps ? '<img src="' + item.snaps.large_url + '" width="60" height="60" class="pull-right"/>' : false;
+				      $('<li><a href="' + item.post_url + '" target="_blank">' + image + item.title + '</a><br/>' + item.description + '<br class="clear"/><br/></li>').appendTo("#forrst_list");
+				    });
+
+				}else{
+					$('#forrst').html('no se han encontrado entradas');
+				}
+			},
+			type: 'GET',
+			url: 'https://forrst.com/api/v2/user/posts?username=' + forrst_user
+		});
+	}
+}
+
+
+/* delicious */
+
+var delicious_load = false;
+
+function get_delicious(){
+	if( !delicious_load ){
+		$('#loader').show();
+		delicious_load = true;
+		$.ajax({
+			dataType: 'jsonp',
+			success: function(data){
+				
+				$('#loader').hide();
+				if( data ){
+				    $.each(data, function(i,item){
+				      $('<li><a href="' + item.u + '" target="_blank">' + decodeURIComponent( escape( item.d ) ) + '</a></li>').appendTo("#delicious_list");
+				    });
+
+				}else{
+					$('#delicious').html('no se han encontrado enlaces');
+				}
+				
+			},
+			type: 'GET',
+			url: 'http://delicious.com/v2/json/' + delicious_user + '?count=20'
+		});
+	}
+}
+
+
+/* pinboard */
+
+var pinboard_load = false;
+
+function get_pinboard(){
+	if( !pinboard_load ){
+		$('#loader').show();
+		pinboard_load = true;
+		$.ajax({
+			dataType: 'jsonp',
+			//success: function(data){},
+			type: 'GET',
+			url: 'http://feeds.pinboard.in/json/v1/u:' + pinboard_user + '/?cb=pinboardNS_show_bmarks&count=20'
+		});
+	}
+}
+
+function pinboardNS_show_bmarks(data){
+	$('#loader').hide();
+	if( data ){
+	    $.each(data, function(i,item){
+	      $('<li><a href="' + item.u + '" target="_blank">' + item.d + '</a></li>').appendTo("#pinboard_list");
+	    });
+
+	}else{
+		$('#pinboard').html('no se han encontrado enlaces');
+	}
+}

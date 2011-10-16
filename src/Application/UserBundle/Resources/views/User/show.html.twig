@@ -12,34 +12,16 @@
 	{% endif %}
 	<br/>
 	
-	
-	
-	
-	
-	{% if entity.url %}<a rel="nofollow,noindex" target="_blank" class="ico portafolio" href="{{ entity.url }}">Portafolio</a>{% endif %}
-	{% if entity.twitterurl %}<a rel="nofollow,noindex" target="_blank" class="ico twitter" href="http://twitter.com/{{ entity.twitterurl }}">Twitter</a>{% endif %}
-	{% if entity.linkedinurl %}<a rel="nofollow,noindex" target="_blank" class="ico linkedin" href="http://es.linkedin.com/in/{{ entity.linkedinurl }}">Linkedin</a>{% endif %}
-	{% if entity.forrsturl %}<a rel="nofollow,noindex" target="_blank" class="ico forrst" href="http://forrst.com/people/{{ entity.forrsturl }}">Forrst</a>{% endif %}
-	{% if entity.githuburl %}<a rel="nofollow,noindex" target="_blank" class="ico github" href="http://github.com/{{ entity.githuburl }}">Github</a>{% endif %}
-	{% if entity.stackoverflowurl %}<a rel="nofollow,noindex" target="_blank" class="ico stackoverflow" href="http://stackoverflow.com/users/{{ entity.stackoverflowurl }}">Stackoverflow</a>{% endif %}
-	{% if entity.masterbranchurl %}<a rel="nofollow,noindex" target="_blank" class="ico masterbranch" href="https://www.masterbranch.com/developer/{{ entity.masterbranchurl }}">Masterbranch</a>{% endif %}
-	{% if entity.dribbbleurl %}<a rel="nofollow,noindex" target="_blank" class="ico dribbble" href="http://dribbble.com/{{ entity.dribbbleurl }}">Dribbble</a>{% endif %}
-	{% if entity.flickrurl %}<a rel="nofollow,noindex" target="_blank" class="ico flickr" href="http://flickr.com/photos/{{ entity.flickrurl }}">Flickr</a>{% endif %}
-	{% if entity.youtubeurl %}<a rel="nofollow,noindex" target="_blank" class="ico youtube" href="http://www.youtube.com/user/{{ entity.youtubeurl }}">Youtube</a>{% endif %}
-	{% if entity.vimeourl %}<a rel="nofollow,noindex" target="_blank" class="ico vimeo" href="http://vimeo.com/{{ entity.vimeourl }}">Vimeo</a>{% endif %}
-	{% if entity.deliciousurl %}<a rel="nofollow,noindex" target="_blank" class="ico delicious" href="http://delicious.com/{{ entity.deliciousurl }}">Delicious</a>{% endif %}
-	{% if entity.pinboardurl %}<a rel="nofollow,noindex" target="_blank" class="ico pinboard" href="https://pinboard.in/u:{{ entity.pinboardurl }}">Pinboard</a>{% endif %}
-	{% if entity.itunesurl %}<a rel="nofollow,noindex" target="_blank" class="ico itunes" href="http://www.appannie.com/company/{{ entity.itunesurl }}">Aplicaciones iOS</a>{% endif %}
-	{% if entity.androidurl %}<a rel="nofollow,noindex" target="_blank" class="ico android" href="https://market.android.com/developer?pub={{ entity.androidurl }}">Aplicaciones Android</a>{% endif %}
-	{% if entity.chromeurl %}<a rel="nofollow,noindex" target="_blank" class="ico chrome" href="https://chrome.google.com/webstore/search?q={{ entity.chromeurl }}">Extensiones chrome</a>{% endif %}
-	
+
 {% endblock %}
 
 
 {% block content %}
 
 
-
+<style>
+.tabs > li > a{padding:0 10px}
+</style>
 
 <ul class="breadcrumb">
   <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
@@ -64,25 +46,37 @@
 
 
 <ul id="tabs" class="tabs">
-	<li class="active"><a href="#info">Información</a></li>
 
-	{% if entity.dribbbleurl or entity.flickrurl %}
+
+	<li class="dropdown" data-dropdown="dropdown">
+		<a href="#" class="dropdown-toggle">Perfil</a>
+		<ul class="dropdown-menu">
+			<li class="active"><a href="#info"><img src="/bundles/applicationanuncios/images/portafolio.png" align="absmiddle"> Descripción</a></li>
+			<li id="tab_linkedin" style="display:none"><a href="#linkedin" onclick="get_linkedin();"><img src="/bundles/applicationanuncios/images/linkedin.png" align="absmiddle"> CV en linkedin</a></li>
+		</ul>
+	</li>
+
+
+
+
+	{% if entity.dribbbleurl or entity.forrsturl or entity.flickrurl %}
 		<li class="dropdown" data-dropdown="dropdown">
-			<a href="#" class="dropdown-toggle">Diseño</a>
+			<a href="#" class="dropdown-toggle">Diseña</a>
 			<ul class="dropdown-menu">
-				<li id="tab_flickr" style="display:none"><a href="#flickr" onclick="get_flickr();">Flickr</a></li>
-				<li id="tab_dribbble" style="display:none"><a href="#dribbble" onclick="get_dribbble();">Dribbble</a></li>
+				<li id="tab_flickr" style="display:none"><a href="#flickr" onclick="get_flickr();"><img src="/bundles/applicationanuncios/images/flickr.png" align="absmiddle"> Flickr</a></li>
+				<li id="tab_dribbble" style="display:none"><a href="#dribbble" onclick="get_dribbble();"><img src="/bundles/applicationanuncios/images/dribbble.png" align="absmiddle"> Dribbble</a></li>
+				<li id="tab_forrst" style="display:none"><a href="#forrst" onclick="get_forrst();"><img src="/bundles/applicationanuncios/images/forrst.png" align="absmiddle"> Forrst</a></li>
 			</ul>
 		</li>
 	{% endif %}
 	
 	{% if entity.githuburl or entity.stackoverflowurl or entity.masterbranchurl %}
 		<li class="dropdown" data-dropdown="dropdown">
-			<a href="#" class="dropdown-toggle">Programación</a>
+			<a href="#" class="dropdown-toggle">Programa</a>
 			<ul class="dropdown-menu">
-				<li id="tab_github" style="display:none"><a href="#github" onclick="get_github();">Github</a></li>
-				<li id="tab_stackoverflow" style="display:none"><a href="#stackoverflow" onclick="get_stackoverflow();">Stackoverflow</a></li>
-				<li id="tab_masterbranch" style="display:none"><a href="#masterbranch" onclick="get_masterbranch();">Masterbranch</a></li>
+				<li id="tab_github" style="display:none"><a href="#github" onclick="get_github();"><img src="/bundles/applicationanuncios/images/github.png" align="absmiddle"> Github</a></li>
+				<li id="tab_stackoverflow" style="display:none"><a href="#stackoverflow" onclick="get_stackoverflow();"><img src="/bundles/applicationanuncios/images/stackoverflow.png" align="absmiddle"> Stackoverflow</a></li>
+				<li id="tab_masterbranch" style="display:none"><a href="#masterbranch" onclick="get_masterbranch();"><img src="/bundles/applicationanuncios/images/masterbranch.png" align="absmiddle"> Masterbranch</a></li>
 			</ul>
 		</li>
 	{% endif %}
@@ -91,8 +85,8 @@
 		<li class="dropdown" data-dropdown="dropdown">
 			<a href="#" class="dropdown-toggle">Video</a>
 			<ul class="dropdown-menu">
-				<li id="tab_youtube" style="display:none"><a href="#youtube" onclick="get_youtube();">Youtube</a></li>
-				<li id="tab_vimeo" style="display:none"><a href="#vimeo" onclick="get_vimeo();">Vimeo</a></li>
+				<li id="tab_youtube" style="display:none"><a href="#youtube" onclick="get_youtube();"><img src="/bundles/applicationanuncios/images/youtube.png" align="absmiddle"> Youtube</a></li>
+				<li id="tab_vimeo" style="display:none"><a href="#vimeo" onclick="get_vimeo();"><img src="/bundles/applicationanuncios/images/vimeo.png" align="absmiddle"> Vimeo</a></li>
 			</ul>
 		</li>
 	{% endif %}
@@ -101,14 +95,36 @@
 		<li class="dropdown" data-dropdown="dropdown">
 			<a href="#" class="dropdown-toggle">Apps</a>
 			<ul class="dropdown-menu">
-				<li id="tab_android" style="display:none"><a href="#android" onclick="get_android();">Android</a></li>
-				<li id="tab_chrome" style="display:none"><a href="#chrome" onclick="get_chrome();">Chrome</a></li>
-				<li id="tab_itunes" style="display:none"><a href="#itunes" onclick="get_itunes();">iTunes</a></li>
+				<li id="tab_android" style="display:none"><a href="#android" onclick="get_android();"><img src="/bundles/applicationanuncios/images/android.png" align="absmiddle"> Android</a></li>
+				<li id="tab_itunes" style="display:none"><a href="#itunes" onclick="get_itunes();"><img src="/bundles/applicationanuncios/images/itunes.png" align="absmiddle"> iPhone / iPad</a></li>
+				<li id="tab_chrome" style="display:none"><a href="#chrome" onclick="get_chrome();"><img src="/bundles/applicationanuncios/images/chrome.png" align="absmiddle"> Chrome</a></li>
 			</ul>
 		</li>
 	{% endif %}
 	
-	<li id="tab_twitter" style="display:none"><a href="#twitter" onclick="get_twitter();">Twitter</a></li>
+	{% if entity.pinboardurl or entity.deliciousurl %}
+		<li class="dropdown" data-dropdown="dropdown">
+			<a href="#" class="dropdown-toggle">Favs</a>
+			<ul class="dropdown-menu">
+				<li id="tab_delicious" style="display:none"><a href="#delicious" onclick="get_delicious();"><img src="/bundles/applicationanuncios/images/delicious.png" align="absmiddle"> delicious</a></li>
+				<li id="tab_pinboard" style="display:none"><a href="#pinboard" onclick="get_pinboard();"><img src="/bundles/applicationanuncios/images/pinboard.png" align="absmiddle"> pinboard</a></li>
+			</ul>
+		</li>
+	{% endif %}
+	
+	{% if entity.twitterurl %}
+		<li class="dropdown" data-dropdown="dropdown">
+			<a href="#" class="dropdown-toggle">Twitter</a>
+			<ul class="dropdown-menu">
+				<li id="tab_twitterstatus"><a href="#twitterstatus" onclick="get_twitterstatus();">Estados</a></li>
+				<li id="tab_twitter"><a href="#twitter" onclick="get_twitter();">Listas</a></li>
+			</ul>
+		</li>
+	{% endif %}
+	
+	
+	
+
 	
 </ul>
 
@@ -127,10 +143,18 @@
 	{% else %}
 		<pre>El usuario todavía no ha completado su descripción</pre>
 	{% endif %}
+	
+	{% if entity.url %}<a rel="nofollow,noindex" target="_blank" class="ico portafolio" href="{{ entity.url }}">Visitar Portafolio</a>{% endif %}
 </div>
 
 
-
+{% if entity.linkedinurl %}
+	<div id="linkedin"></div>
+	<script>
+	var linkedin_user = '{{ entity.linkedinurl }}';
+	$('#tab_linkedin').show();
+	</script>
+{% endif %}
 
 
 {% if entity.dribbbleurl %}
@@ -173,6 +197,19 @@
 	<script>
 	var github_user = '{{ entity.githuburl }}';
 	$('#tab_github').show();
+	</script>
+
+{% endif %}
+
+{% if entity.forrsturl %}
+
+	<div id="forrst">
+		<ul id="forrst_list" class="unstyled"></ul>
+	</div>
+
+	<script>
+	var forrst_user = '{{ entity.forrsturl }}';
+	$('#tab_forrst').show();
 	</script>
 
 {% endif %}
@@ -276,16 +313,44 @@
 
 {% if entity.twitterurl %}
 
+	<div id="twitterstatus">
+		<div id="twitterstatus_info" class="clear"></div>
+		<ul id="twitterstatus_list"></ul>
+	</div>
 	<div id="twitter"></div>
-	<br style="clear:both"/>
+	<br class="clear"/>
 
 	<script>
 	var twitter_user = '{{ entity.twitterurl }}';
-	$('#tab_twitter').show();
 	</script>
 
 {% endif %}
 
+{% if entity.deliciousurl %}
+
+	<div id="delicious">
+		<ul id="delicious_list" class="clear"></ul>
+	</div>
+
+	<script>
+	var delicious_user = '{{ entity.deliciousurl }}';
+	$('#tab_delicious').show();
+	</script>
+
+{% endif %}
+
+{% if entity.pinboardurl %}
+
+	<div id="pinboard">
+		<ul id="pinboard_list" class="clar"></ul>
+	</div>
+
+	<script>
+	var pinboard_user = '{{ entity.pinboardurl }}';
+	$('#tab_pinboard').show();
+	</script>
+
+{% endif %}
 
 </div>
 
