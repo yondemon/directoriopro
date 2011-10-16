@@ -353,7 +353,7 @@ class UserController extends Controller
 	            $em->persist($entity);
 	            $em->flush();
 
-				$session->set('name',$entity->getName());
+				//$session->set('name',$entity->getName());
 
 				
 				

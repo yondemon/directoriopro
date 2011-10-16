@@ -12,7 +12,7 @@ class UserType extends AbstractType
         $builder
             ->add('category_id')
             ->add('email','email')
-            ->add('name')
+            //->add('name')
             ->add('body')
             ->add('location')
             ->add('freelance')
