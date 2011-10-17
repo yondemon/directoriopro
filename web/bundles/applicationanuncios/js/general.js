@@ -415,6 +415,10 @@ function userAvatar(type){
 	}
 	url += '&rand=' + rand;
 	$('#user_avatar').attr('src', url);
+	$('#user_avatar').load(function(){
+		$('#user_avatar').fadeIn('slow');
+	});
+	
 }
 
 /* tooltips user networks edit */

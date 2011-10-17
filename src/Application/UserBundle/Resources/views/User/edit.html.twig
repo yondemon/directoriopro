@@ -5,19 +5,25 @@
 
 {% block sidebar %}
 
-	<div class="alert-message block-message warning">
-		<b>Cosas por hacer</b>
-		<li {% if entity.categoryid != 0 %} style="text-decoration:line-through"{% endif %}>Seleccionar sector</li>
-		<li {% if entity.name != '' %} style="text-decoration:line-through"{% endif %}>Introducir nombre</li>
-		<li {% if entity.body != '' %} style="text-decoration:line-through"{% endif %}>Introducir descripción</li>
-		<li {% if entity.location != '' %} style="text-decoration:line-through"{% endif %}>Introducir ciudad</li>
-		<li {% if entity.url != '' %} style="text-decoration:line-through"{% endif %}>Introducir portafolio</li>
-		<li {% if entity.twitterurl != '' %} style="text-decoration:line-through"{% endif %}>Introducir twitter</li>
-		{% if total > 9 %}
-			<li style="text-decoration:line-through"><a href="{{ path('user_invite') }}">Invitar a 10 amigos</a></li>
+	<div id="todo" class="alert-message block-message warning">
+		<b>Completa tu perfil</b><br/>
+		<span id="percent_value" style="position:absolute;font-size:11px;margin:3px 0 0 4px;color:white">5%</span>
+		<div style="background:#ccc;margin-bottom:10px;">
+			<div id="percent" style="height:15px;background:#66CC66">&nbsp;</div>
+		</div>
+		<ul style="margin-left:15px">
+		<li>Seleccionar sector</li>
+		<li>Introducir nombre</li>
+		<li>Introducir descripción</li>
+		<li>Introducir ciudad</li>
+		<li>Introducir portafolio</li>
+		<li>Introducir twitter</li>
+		{% if total > 19 %}
+			<li style="text-decoration:line-through"><a href="{{ path('user_invite') }}">Invitar a 20 amigos</a></li>
 		{% else %}
-			<li><a href="{{ path('user_invite') }}">Invitar a {{ 10 - total }} amigos</a></li>
+			<li><a href="{{ path('user_invite') }}">Invitar a {{ 20 - total }} amigos</a></li>
 		{% endif %}
+		</ul>
 	</div>
 
 
@@ -33,10 +39,15 @@
 TEXTAREA.xlarge{width:430px}
 .filters{border:0}
 .span3 a{padding-top:0;display:inline}
+input.xlarge{width:230px}
 </style>
 
 
 <h1>Editar perfil</h1>
+
+<span class="help_arrow" id="help_arrow" style="display:none">Mejora tu perfil, rellenando tus perfiles en la red</span>
+
+
 
 <ul id="tabs" class="tabs">
   <li class="active"><a href="#info">Información</a></li>
@@ -45,7 +56,7 @@ TEXTAREA.xlarge{width:430px}
 </ul>
 
 
-
+<br class="clear"/>
 
 <form id="tabs_content" action="{{ path('user_edit') }}" method="post" {{ form_enctype(edit_form) }}>
 
@@ -58,6 +69,21 @@ TEXTAREA.xlarge{width:430px}
 	<div class="pill-content">
 
 	<div id="info" class="active">
+	
+		{{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
+		
+		<div class="clearfix">
+			<label for="application_userbundle_usertype_avatar_type">Avatar</label>
+			<div class="input">
+				<select id="application_userbundle_usertype_avatar_type" name="application_userbundle_usertype[avatar_type]">
+					{% for key, value in avatars %}
+						<option value="{{key}}" {% if key == entity.getAvatarType() %}selected="selected"{% endif %} >{{value}}</a>
+					{% endfor %}
+				</select> 
+				<img src="" id="user_avatar" width="45" height="45" style="display:none;position:absolute;margin:-10px 0 0 10px"/>
+			</div>
+		</div>
+		
 		<div class="clearfix">
 			<label>Categoría</label>
 			<div class="input">
@@ -69,47 +95,60 @@ TEXTAREA.xlarge{width:430px}
 			</div>
 		</div>
 		{{ form_row(edit_form.name, { 'label': 'Nombre y apellidos' }) }}
-		{{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
 		{{ form_row(edit_form.location, { 'label': 'Localización' }) }}
 		{{ form_row(edit_form.email, { 'label': 'Email' }) }}
 
-		<div class="clearfix">
-			<label for="application_userbundle_usertype_avatar_type">Avatar</label>
-			<div class="input">
-				<select id="application_userbundle_usertype_avatar_type" name="application_userbundle_usertype[avatar_type]">
-					{% for key, value in avatars %}
-						<option value="{{key}}" {% if key == entity.getAvatarType() %}selected="selected"{% endif %} >{{value}}</a>
-					{% endfor %}
-				</select> 
-				<img src="" id="user_avatar" width="45" height="45" style="position:absolute;margin:-10px 0 0 10px"/>
-			</div>
-		</div>
+
 
 	</div>
-	
-	
 
 	
 	<div id="networks">
+
+		<div class="group_edit">Comunicación</div>
+		<span class="help_edit">Ejemplo: miquelcamps</span>
+		{{ form_row(edit_form.twitter_url, { 'label': 'Twitter' }) }}
+		<span class="help_edit">Ej: http://miquelcamps.com</span>
 		{{ form_row(edit_form.url, { 'label': 'Portafolio' }) }}
+		<span class="help_edit">Ejemplo: miquelcamps</span>
+		{{ form_row(edit_form.linkedin_url, { 'label': 'Linkedin' }) }}
+		<span class="help_edit">Ejemplo: viciao2k3</span>
+		{{ form_row(edit_form.youtube_url, { 'label': 'Youtube' }) }}
+		<span class="help_edit">Ejemplo: user820547</span>
+		{{ form_row(edit_form.vimeo_url, { 'label': 'Vimeo' }) }}
 		
-		<div style="color:red;font-weight:bold" class="clearfix">¡Importante! Introduce el USUARIO de cada perfil no toda la url</div>
-		
-		{{ form_row(edit_form.linkedin_url, { 'label': 'Usuario linkedin' }) }}
-		{{ form_row(edit_form.twitter_url, { 'label': 'Usuario twitter' }) }}
-		{{ form_row(edit_form.forrst_url, { 'label': 'Usuario forrst' }) }}
-		{{ form_row(edit_form.github_url, { 'label': 'Usuario github' }) }}
-		{{ form_row(edit_form.masterbranch_url, { 'label': 'Usuario masterbranch' }) }}
-		{{ form_row(edit_form.dribbble_url, { 'label': 'Usuario dribbble' }) }}
-		{{ form_row(edit_form.flickr_url, { 'label': 'Usuario flickr' }) }}
-		{{ form_row(edit_form.youtube_url, { 'label': 'Usuario youtube' }) }}
+		<div class="group_edit">Programador</div>
+
+		<span class="help_edit">Ejemplo: miquelcamps</span>
+		{{ form_row(edit_form.github_url, { 'label': 'Github' }) }}
+		<span class="help_edit">Ejemplo: 543644</span>
 		{{ form_row(edit_form.stackoverflow_url, { 'label': 'Id stackoverflow' }) }}
-		{{ form_row(edit_form.vimeo_url, { 'label': 'Usuario vimeo' }) }}
-		{{ form_row(edit_form.delicious_url, { 'label': 'Usuario delicious' }) }}
-		{{ form_row(edit_form.pinboard_url, { 'label': 'Usuario pinboard' }) }}
-		{{ form_row(edit_form.itunes_url, { 'label': 'Usuario appannie' }) }}
-		{{ form_row(edit_form.android_url, { 'label': 'Usuario android' }) }}
-		{{ form_row(edit_form.chrome_url, { 'label': 'Usuario chrome dev' }) }}
+		<span class="help_edit">Ejemplo: miquel.camps-orteza</span>
+		{{ form_row(edit_form.masterbranch_url, { 'label': 'Masterbranch' }) }}
+		<a href="http://dirbeta.tumblr.com/post/11547225386/desarrollas-extensiones-de-chrome-muestra-tus" target="_blank" class="help_a">¿Cómo saber tu usuario?</a>
+		{{ form_row(edit_form.chrome_url, { 'label': 'Chrome web store' }) }}
+		
+		<div class="group_edit">Programador apps móvil</div>
+		
+		<a href="http://dirbeta.tumblr.com/post/11528134993/eres-desarrollador-de-android-muestra-tus-apps-en-tu" target="_blank" class="help_a">¿Cómo saber tu usuario?</a>
+		{{ form_row(edit_form.android_url, { 'label': 'Android market' }) }}
+		
+		<a href="http://dirbeta.tumblr.com/post/11506524530/eres-desarrollador-de-ios-muestra-tus-apps-en-tu" target="_blank" class="help_a">¿Cómo saber tu usuario?</a>
+		{{ form_row(edit_form.itunes_url, { 'label': 'Appstore iOS' }) }}
+		
+		<div class="group_edit">Diseñador</div>
+		<span class="help_edit">Ejemplo: ftp2nuke</span>
+		{{ form_row(edit_form.flickr_url, { 'label': 'Flickr' }) }}
+		<span class="help_edit">Ejemplo: miquelcamps</span>
+		{{ form_row(edit_form.dribbble_url, { 'label': 'Dribbble' }) }}
+		<span class="help_edit">Ejemplo: miquelcamps</span>
+		{{ form_row(edit_form.forrst_url, { 'label': 'Forrst' }) }}
+
+		<div class="group_edit">Favoritos</div>
+		<span class="help_edit">Ejemplo: miquelcamps</span>
+		{{ form_row(edit_form.delicious_url, { 'label': 'Delicious' }) }}
+		<span class="help_edit">Ejemplo: miquelcamps</span>
+		{{ form_row(edit_form.pinboard_url, { 'label': 'Pinboard' }) }}
 	</div>
 
 	<div id="options">	
@@ -169,5 +208,22 @@ TEXTAREA.xlarge{width:430px}
 	});
 	
 	networks_tooltip();
+	
+	
+	var percent = 0;
+	{% if entity.categoryid != 0 %}percent+=14;$('#todo li:eq(0)').css('text-decoration','line-through');{% endif %}
+	{% if entity.name != '' %}percent+=14;$('#todo li:eq(1)').css('text-decoration','line-through');{% endif %}
+	{% if entity.body != '' %}percent+=14;$('#todo li:eq(2)').css('text-decoration','line-through');{% endif %}
+	{% if entity.location != '' %}percent+=14;$('#todo li:eq(3)').css('text-decoration','line-through');{% endif %}
+	{% if entity.url != '' %}percent+=14;$('#todo li:eq(4)').css('text-decoration','line-through');{% endif %}
+	{% if entity.twitterurl != '' %}percent+=14;$('#todo li:eq(5)').css('text-decoration','line-through');{% endif %}
+	{% if total > 19 %}percent+=14;{% endif %}
+	
+	if( percent == 98 ) percent = 100;
+	$('#percent').css('width',percent+'%');
+	$('#percent_value').html(percent+'%');
+	
+	
+	$('#help_arrow').fadeIn('slow');
 	
 {% endblock %}

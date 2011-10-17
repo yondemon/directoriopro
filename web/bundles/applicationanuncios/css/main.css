@@ -123,3 +123,9 @@ H1{font-size:24px;margin-bottom:10px}
 UL.list LI{clear:both;margin-bottom:10px}
 #github_graph{text-align:center}
 #loader{display:none;clear:both;text-align:center;padding:10px}
+
+/* user edit */
+.group_edit{font-weight:bold;padding:10px;background:#efefef;border-bottom:1px #ccc solid;margin-bottom:10px}
+.help_edit{float:right;margin-top:10px;color:#AAA}
+.help_a{float:right;margin-top:10px}
+.help_arrow{position:absolute;background:url('../images/arrow.png') no-repeat left bottom;font-size:12px;color:red;margin-left:150px;padding:0 0 10px 30px;margin-top:-25px}
