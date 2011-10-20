@@ -191,26 +191,26 @@ ul.nav li.open{background-color:#191919}
 
 /* fix buscador (placeholder) */
 :-moz-placeholder {
-  color: #ccc;
+  color: #aaa;
 }
 ::-webkit-input-placeholder {
-  color: #ccc;
+  color: #aaa;
 }
 .topbar input:-moz-placeholder {
-  color: #ccc;
+  color: #aaa;
 }
 .topbar input::-webkit-input-placeholder {
-  color: #ccc;
+  color: #aaa;
 }
 :-moz-placeholder {
-  color: #ccc;
+  color: #aaa;
 }
 ::-webkit-input-placeholder {
-  color: #ccc;
+  color: #aaa;
 }
 .topbar input:-moz-placeholder {
-  color: #ccc;
+  color: #aaa;
 }
 .topbar input::-webkit-input-placeholder {
-  color: #ccc;
+  color: #aaa;
 }
