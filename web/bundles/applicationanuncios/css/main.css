@@ -129,3 +129,28 @@ UL.list LI{clear:both;margin-bottom:10px}
 .help_edit{float:right;margin-top:10px;color:#AAA}
 .help_a{float:right;margin-top:10px}
 .help_arrow{position:absolute;background:url('../images/arrow.png') no-repeat left bottom;font-size:12px;color:red;margin-left:150px;padding:0 0 10px 30px;margin-top:-25px}
+
+
+
+/* redesign topbar */
+body{padding-top:0}
+.topbar{position:relative}
+.topbar-inner, .topbar .fill{background-image:-webkit-linear-gradient(top, #fff, #f5f5f5);-webkit-box-shadow:none;border-bottom:1px #ccc solid}
+.topbar h3 a, .topbar .brand{color:#F30;font-weight:bold;padding-right:10px}
+	.topbar .brand:hover{text-decoration:none}
+.topbar a{text-shadow:none}
+.nav a{color:#000}
+.topbar input {border: 1px solid #CCC;background-color:#fff;color:#000}
+.topbar div > ul a:hover, .nav a:hover {color:#000}
+.topbar div > ul li.active > a, .nav li.active > a{color:black;background-color:#efefef;}
+
+ul.nav li.open{background-color:#191919}
+.topbar div > ul a, .nav a{padding:10px 10px 11px 11px;}
+
+
+.breadcrumb{background:none;padding:0;border:0}
+
+
+#topbar a.config{font-size:0;background:url('../images/config.png') no-repeat center center;}
+#topbar li.open a.config{background-image:url('../images/config2.png')}
+#topbar a.config::after{opacity:0}

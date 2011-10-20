@@ -10,7 +10,7 @@ use Application\AnunciosBundle\Entity\Post;
 use Application\UserBundle\Entity\Contact;
 use Application\AnunciosBundle\Form\PostType;
 use Application\UserBundle\Form\ContactType;
-use Symfony\Component\HttpFoundation\Request;
+//use Symfony\Component\HttpFoundation\Request;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -33,14 +33,14 @@ class PostController extends Controller
      */
     public function indexAction()
     {
-		$request = Request::createFromGlobals();
+		$request = $this->getRequest();
 		$page = $request->query->get('page');
 		if( !$page ) $page = 1;
 	
         $em = $this->getDoctrine()->getEntityManager();
         //$entities = $em->getRepository('ApplicationAnunciosBundle:Post')->findAll();
 
-		$dql = "SELECT p FROM ApplicationAnunciosBundle:Post p ORDER BY p.id DESC";
+		$dql = "SELECT p FROM ApplicationAnunciosBundle:Post p WHERE p.type IS NOT NULL ORDER BY p.id DESC";
         $query = $em->createQuery($dql);
         $adapter = new DoctrineORMAdapter($query);
 
@@ -117,12 +117,34 @@ class PostController extends Controller
      */
     public function newAction()
     {
+	
+		$session = $this->getRequest()->getSession();
+		$id = $session->get('id');
+		if( !$id ){
+			return $this->redirect('/');
+		}
+		
+		//si no es post
+		$request = $this->getRequest();
+		
+		if ($request->getMethod() != 'POST') {
+        	$em = $this->getDoctrine()->getEntityManager();
+			$user = $em->getRepository('ApplicationUserBundle:User')->find($id);
+			$email = $user->getEmail();
+		}
+	
+		$type = $request->query->get('type') ? 1 : 0;
+		
+	
         $entity = new Post();
+        $entity->setType($type);
+		$entity->setEmail( $email );
         $form   = $this->createForm(new PostType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form'   => $form->createView(),
+			'type'   => $type
         );
     }
 
@@ -287,31 +309,6 @@ class PostController extends Controller
 			
 		}
 		return $this->redirect($url);
-	
-    
-		/*
-	
-	
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('ApplicationAnunciosBundle:Post')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Post entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('post'));
-
-		*/
     }
 
     /**
@@ -322,21 +319,23 @@ class PostController extends Controller
      */
     public function searchAction()
     {
-		$request = Request::createFromGlobals();
+		$request = $this->getRequest();
 		$search = $request->query->get('q');
 		$category_id = $request->query->get('c');
+		$type = $request->query->get('t') ? 1 : 0;
 		$location = $request->query->get('location');
-		$freelance = $request->query->get('freelance');
+		//$freelance = $request->query->get('freelance');
 		
 		$query = "SELECT p FROM ApplicationAnunciosBundle:Post p WHERE 1 = 1";
 		
-		if( $search ) $query .= " AND p.body LIKE '%".$search."%' OR p.title LIKE '%".$search."%'";
+		if( $search ) $query .= " AND ( p.body LIKE '%".$search."%' OR p.title LIKE '%".$search."%' )";
 		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
 		if( $location ) $query .= " AND p.location = '" . $location . "'";
-		if( $freelance ) $query .= " AND p.location IS NULL AND p.price IS NOT NULL";
+		//if( $freelance ) $query .= " AND p.location IS NULL AND p.price IS NOT NULL";
+		if( $type ) $query .= " AND p.type = " . $type;
 
 		$query .= " ORDER BY p.id DESC";
-		
+
 
 		$entities = $this->get('doctrine')->getEntityManager()
 		            ->createQuery($query)
@@ -345,7 +344,7 @@ class PostController extends Controller
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
-        return array('entities' => $entities, 'form_category' =>$category_id);
+        return array('entities' => $entities, 'form_category' =>$category_id, 'form_type' => $type);
     }
 
     /**
@@ -357,15 +356,17 @@ class PostController extends Controller
     public function feedAction()
     {
 
-		$request = Request::createFromGlobals();
+		$request = $this->getRequest();
 		$category_id = $request->query->get('c');
+		$type = $request->query->get('t') ? 1 : 0;
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		$query = "SELECT p FROM ApplicationAnunciosBundle:Post p WHERE 1 = 1";
 		
 		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
-
+		if( $type ) $query .= " AND p.type = " . $type;
+		
 		$query .= " ORDER BY p.id DESC";
 
 		$entities = $this->get('doctrine')->getEntityManager()
@@ -408,7 +409,6 @@ class PostController extends Controller
 
 				
 				$values = $form->getData();
-				//var_dump($values);
 				
 				$toEmail = $entity->getEmail();// 'gafeman@gmail.com';
 				
@@ -433,18 +433,7 @@ class PostController extends Controller
 				
 				
 				
-				
-				
-				
-				
-				//return $this->renderView('BloggerBlogBundle:Page:contactEmail.txt.twig', array('result' => $enquiry));
-				
-				
-				//echo '<pre>';
-				//print_r($request);
-				//echo '</pre>';
-				
-	            //return $this->redirect($this->generateUrl('BloggerBlogBundle_contact'));
+
 	
 	        }
 	    }
@@ -481,7 +470,7 @@ class PostController extends Controller
 		}
 	
 	
-		$request = Request::createFromGlobals();
+		$request = $this->getRequest();
 		$page = $request->query->get('page');
 		if( !$page ) $page = 1;
 	

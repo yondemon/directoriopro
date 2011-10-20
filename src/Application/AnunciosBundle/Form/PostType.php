@@ -12,6 +12,15 @@ class PostType extends AbstractType
         $builder
             //->add('user_id')
             ->add('category_id')
+
+
+			->add('type', 'choice', array(
+			  	'expanded' => true,
+			    'choices'   => array('Empleo', 'Colaboración')
+			))
+
+
+
             ->add('title')
             ->add('body')
             ->add('email','email')

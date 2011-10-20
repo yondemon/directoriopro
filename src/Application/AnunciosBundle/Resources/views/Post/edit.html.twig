@@ -7,6 +7,7 @@
 
 <style>
 TEXTAREA.xlarge{width:430px}
+#application_anunciosbundle_posttype_type label{float:none;margin:0 20px 0 5px}
 </style>
 
 <ul class="breadcrumb">
@@ -22,6 +23,8 @@ TEXTAREA.xlarge{width:430px}
 
 
 	{{ form_errors(edit_form) }}
+	
+	{{ form_row(edit_form.type, { 'label': 'Tipo' }) }}
 	
 	<div class="clearfix">
 		<label>Categoría</label>
@@ -42,9 +45,22 @@ TEXTAREA.xlarge{width:430px}
 	
 	{{ form_row(edit_form.email, { 'label': 'Email' }) }}
 	
-	{{ form_row(edit_form.location, { 'label': 'Localización' }) }}
+	<div id="price" {% if entity.type == 1 %}style="display:none"{% endif %}>
+		{{ form_row(edit_form.price, { 'label': 'Sueldo' }) }}
+	</div>
 
-	{{ form_row(edit_form.price, { 'label': 'Precio' }) }}
+	<div id="nolocation" class="clearfix">
+		<label></label>
+		<div class="input">
+			<input type="checkbox" id="chk_location"/> <label for="chk_location" style="float:none">¿Es un trabajo presencial?</label>
+		</div>
+	</div>
+	<div id="location">
+		{{ form_row(edit_form.location, { 'label': 'Localización' }) }}
+	</div>
+
+
+
 	
 	<div class="actions">
 
@@ -65,20 +81,33 @@ TEXTAREA.xlarge{width:430px}
 
 {% block script_load %}
 
-	$('#application_anunciosbundle_posttype_location')
-		.attr('rel','popover')
-		.attr('data-original-title','¿Es presencial?')
-		.attr('data-content','Si es un empleo que requiera asistir introduce la ciudad, si es un trabajo freelance que no importa de donde es la persona no hace falta rellenar este campo');
-
-		$('#application_anunciosbundle_posttype_price')
-			.attr('rel','popover')
-			.attr('data-original-title','¿Es un trabajo freelance?')
-			.attr('data-content','Introduce un precio, puedes poner un valor fijo o un rango de precios');
-
-	$("*[rel=popover]")
-		.popover({offset: 10})
-		.click(function(e) {
-			e.preventDefault()
-		});
-
+		
+	// post type
+	$('#application_anunciosbundle_posttype_type input:eq(0)').click(function(){
+		$('#price').show();
+	});
+	$('#application_anunciosbundle_posttype_type input:eq(1)').click(function(){
+		$('#price').hide();
+		$('#price input:first').val('');
+	});
+	
+	
+	
+	// need location?
+	$('#chk_location').click(function(){
+		if( $(this).attr('checked') ){
+			$('#location').show();
+			$('#location input:first').focus();
+		}else{
+			$('#location').hide();
+			$('#location input:first').val('');
+		}
+	});
+	{% if entity.location == '' %}
+		$('#location').hide();
+	{% else %}
+		$('#chk_location').attr('checked','checked');
+	{% endif %}
+	
+	
 {% endblock %}

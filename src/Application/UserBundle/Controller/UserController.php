@@ -15,7 +15,7 @@ use Application\UserBundle\Form\ContactType;
 use Application\UserBundle\Form\RegisterType;
 use Application\UserBundle\Form\LoginType;
 use Symfony\Component\Form as SymfonyForm;
-use Symfony\Component\HttpFoundation\Request;
+//use Symfony\Component\HttpFoundation\Request;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -39,7 +39,7 @@ class UserController extends Controller
      */
     public function indexAction()
     {
-		$request = Request::createFromGlobals();
+		$request = $this->getRequest();
 		$page = $request->query->get('page');
 		if( !$page ) $page = 1;
 	
@@ -354,7 +354,8 @@ class UserController extends Controller
 	            $em->persist($entity);
 	            $em->flush();
 
-				$session->set('name',$entity->getName());
+				$session->set('name', current(explode(' ', $entity->getName())));
+				
 
 				
 				
@@ -394,7 +395,7 @@ class UserController extends Controller
      */
     public function searchAction()
     {
-		$request = Request::createFromGlobals();
+		$request = $this->getRequest();
 		$search = $request->query->get('q');
 		$category_id = $request->query->get('c');
 		
@@ -527,7 +528,7 @@ class UserController extends Controller
 				
 				$user = new \Application\UserBundle\Entity\User;
 				$user->setFacebookId($user_profile['id']);
-				$user->setCategoryId(0);
+				$user->setCategoryId(13);
 				$user->setEmail($user_profile['email']);
 				$user->setName($user_profile['name']);
 				$user->setLocation($user_profile['location']['name']);
@@ -535,8 +536,8 @@ class UserController extends Controller
 				$user->setUrl( $user_profile['website'] );
 				$user->setRefId($ref_id);
 				$user->setCanContact(1);
-				$user->setVotes(0);
-				$user->setVisits(0);
+				//$user->setVotes(0);
+				//$user->setVisits(0);
 				$user->setAvatarType(AVATAR_FACEBOOK);
 				
 				$url = $this->generateUrl('user_edit');
@@ -576,7 +577,7 @@ class UserController extends Controller
 			
 
 			$session->set('id', $user->getId());
-			$session->set('name', $user->getName());
+			$session->set('name', current(explode(' ', $user->getName())));
 			$session->set('admin', $user->getAdmin());
 			
 			
@@ -646,7 +647,7 @@ class UserController extends Controller
      */
     public function welcomeAction()
     {
-		$request = Request::createFromGlobals();
+		$request = $this->getRequest();
 		$ref_id = $request->query->get('ref_id');
 		$back = $request->query->get('back');
 		if( $ref_id ){
@@ -795,10 +796,12 @@ class UserController extends Controller
 		$query->setParameter('id', $id);
 		$comments = $query->getResult();
 
+		$total = count($comments);
 	
 		return array(
 			'user' => $user,
-			'comments' => $comments
+			'comments' => $comments,
+			'total' => $total
 			);
 	}
 	
@@ -830,9 +833,15 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to find Comment entity.');
         }
 	
+		$query = "SELECT COUNT(c.id) AS total FROM Comment c WHERE c.to_id = " . $id;
+		$db = $this->get('database_connection');
+		$result = $db->query($query)->fetch();
+		$total = $result['total'];
+	
 		return array(
 			'user' => $user,
-			'comments' => $comments
+			'comments' => $comments,
+			'total' => $total
 			);
 	}
 

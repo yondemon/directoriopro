@@ -1,11 +1,13 @@
-{% set static_id = 21 %}
+{% set static_id = 22 %}
 {% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros"] %}
 {% set analytics_id = "UA-16938408-8" %}
-{% set sitename = "Directorio Betabeers" %}
+{% set sitename = "Betabeers" %}
 {% if form_category is not defined %}
 	{% set form_category = "0" %}
 {% endif %}
-
+{% if form_type is not defined %}
+	{% set form_type = "0" %}
+{% endif %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,36 +27,49 @@
 	<link rel="alternate" type="application/rss+xml" title="Betabeers jobs" href="http://feeds.feedburner.com/betabeersjobs" />
 </head>
 <body>
-	
+
+<style>
+#menu_options{position:absolute;background:#efefef;color:white;width:210px;display:none}
+	#menu_options a{color:#666;display:block;padding:10px;border-bottom:1px #ccc solid}
+		#menu_options a:hover{background:#ccc;text-decoration:none}
+</style>
 	
 <div class="topbar" id="topbar">
 	<div class="fill">
 		<div class="container">
 			<a class="brand" href="{{ path('post') }}">{{sitename}}</a>
 			<ul class="nav">
-				<li {% if nav_post is defined %}class="active"{% endif %}><a href="{{ path('post') }}">Anuncios</a></li>
+				<li {% if nav_post is defined %}class="active"{% endif %}><a href="{{ path('post') }}">Empleo</a></li>
+				<li {% if nav_colaboration is defined %}class="active"{% endif %}><a href="{{ path('post_search') }}?t=1">Colaboraciones</a></li>
 				<li {% if nav_user is defined %}class="active"{% endif %}><a href="{{ path('user') }}">Profesionales</a></li>
 			</ul>
 			{% if nav_user is defined %}
-				<form class="pull-left" action="{{ path('user') }}search">
+				<form id="form_search" class="pull-left" action="{{ path('user') }}search">
 			{% else %}
-				<form class="pull-left" action="{{ path('post') }}search">
+				<form id="form_search" class="pull-left" action="{{ path('post') }}search">
 			{% endif %}
-	            <input name="q" type="text" placeholder="Buscar" class="medium">
+	            <input name="q" id="query" type="text" placeholder="Buscar" autocomplete="off" class="medium">
 				<input type="hidden" name="c" value="{{ form_category }}"/>
+				<input type="hidden" name="t" id="input_type" value="{{ form_type }}"/>
+				
+				<div id="menu_options">
+					<a href="#" onclick="$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Empleos</a>
+					<a href="#" onclick="$('#input_type').val(1);$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Colaboraciones</a>
+					<a href="#" onclick="$('#form_search').attr('action','{{ path('user') }}search').submit()">Buscar Profesionales</a>
+				</div>
 	        </form>
 			<ul class="nav secondary-nav">
-				<li class="dropdown">
 				{% if app.session.get('name') %}
-					<a class="dropdown-toggle" href="#">{{ app.session.get('name') }}</a>
-        			<ul class="dropdown-menu">
-						<li><a href="{{ path('user_show', { 'id': app.session.get('id') }) }}">Perfil</a></li>
-						<li><a href="{{ path('user_edit') }}">Editar perfil</a></li>
-						<li><a href="{{ path('user_invite') }}">Invitar contactos</a></li>
-						<li><a href="{{ path('user_comments', { 'id': app.session.get('id') }) }}">Recomendaciones</a></li>
-						<li class="divider"></li>
-						<li><a href="{{ path('user_logout') }}">Salir</a></li>
-					</ul>
+					<li><a href="{{ path('user_invite') }}" class="label warning" style="line-height:10px;margin-top:10px;padding:5px 10px;background:#efefef;font-weight:normal;color:#000">Invitar</a></li>
+					<li><a href="{{ path('user_show', { 'id': app.session.get('id') }) }}">{{ app.session.get('name') }}</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle config">&nbsp;</a>
+        				<ul class="dropdown-menu">
+							<li><a href="{{ path('user_edit') }}">Editar perfil</a></li>
+							<li><a href="{{ path('user_comments', { 'id': app.session.get('id') }) }}">Recomendaciones</a></li>
+							<li class="divider"></li>
+							<li><a href="{{ path('user_logout') }}">Salir</a></li>
+							</ul>
 				{% else %}
 					<a href="{{ path('user_welcome') }}">Iniciar sesión</a>
 				{% endif %}
@@ -102,6 +117,18 @@ $().ready(function(){
 
 	$('#topbar').dropdown();
 	$("*[rel=twipsy]").twipsy({live: true, html: true});
+	
+	
+	$('#query').focus(function(){
+		$('#menu_options').show();
+	});
+	$('#query').blur(function(){
+		setTimeout(function(){
+			$('#menu_options').hide();
+		},100);
+	});
+
+	
 });
 
 /* analytics */

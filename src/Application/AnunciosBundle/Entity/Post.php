@@ -29,6 +29,13 @@ class Post
     private $user_id;
 
     /**
+     * @var integer $type
+     *
+     * @ORM\Column(name="type", type="integer")
+     */
+    private $type;
+
+    /**
      * @var integer $category_id
      *
      * @ORM\Column(name="category_id", type="integer")
@@ -116,6 +123,26 @@ class Post
     public function getUserId()
     {
         return $this->user_id;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**

@@ -5,25 +5,36 @@
 
 {% block sidebar %}
 
-	<div id="todo" class="alert-message block-message warning">
-		<b>Completa tu perfil</b><br/>
-		<span id="percent_value" style="position:absolute;font-size:11px;margin:3px 0 0 4px;color:white">5%</span>
-		<div style="background:#ccc;margin-bottom:10px;">
-			<div id="percent" style="height:15px;background:#66CC66">&nbsp;</div>
+	<div class="alert-message block-message warning">
+		<div id="todo" style="margin:0;line-height:normal">
+			<b>Completa tu perfil</b><br/>
+			<span id="percent_value" style="position:absolute;font-size:11px;margin:6px 0 0 4px;color:white">5%</span>
+			<div style="background:#ccc;margin-bottom:10px;">
+				<div id="percent" style="height:15px;background:#66CC66">&nbsp;</div>
+			</div>
+			<ul style="margin:0 0 0 15px">
+			<li>Seleccionar sector</li>
+			<li>Introducir nombre</li>
+			<li>Introducir descripción</li>
+			<li>Introducir ciudad</li>
+			<li>Introducir portafolio</li>
+			<li>Introducir twitter</li>
+			{% if total > 19 %}
+				<li style="text-decoration:line-through"><a href="{{ path('user_invite') }}">Invitar a 20 amigos</a></li>
+			{% else %}
+				<li><a href="{{ path('user_invite') }}">Invitar a {{ 20 - total }} amigos</a></li>
+			{% endif %}
+			</ul>
 		</div>
-		<ul style="margin:0 0 0 15px">
-		<li>Seleccionar sector</li>
-		<li>Introducir nombre</li>
-		<li>Introducir descripción</li>
-		<li>Introducir ciudad</li>
-		<li>Introducir portafolio</li>
-		<li>Introducir twitter</li>
-		{% if total > 19 %}
-			<li style="text-decoration:line-through"><a href="{{ path('user_invite') }}">Invitar a 20 amigos</a></li>
-		{% else %}
-			<li><a href="{{ path('user_invite') }}">Invitar a {{ 20 - total }} amigos</a></li>
-		{% endif %}
-		</ul>
+		<div id="todo_complete" style="display:none;margin:0;line-height:normal">
+			<b>Perfil completado</b><br/><br/>
+			<ul style="margin:0 0 0 15px">
+				<li><a href="{{ path('post_new') }}?t=1">Publicar colaboración</a></li>
+				<li><a href="{{ path('post_new') }}?">Publicar anuncio</a></li>
+				<li>Recomendar personas</li>
+				<li><a href="{{ path('user_invite') }}">Invitar a más amigos</a></li>
+			</ul>
+		</div>
 	</div>
 
 
@@ -89,7 +100,9 @@ input.xlarge{width:230px}
 			<div class="input">
 				<select id="application_userbundle_usertype_category_id" name="application_userbundle_usertype[category_id]">
 					{% for category in categories %}
-						<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
+						{% if loop.index0 > 0 %}
+							<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
+						{% endif %}
 					{% endfor %}
 				</select>
 			</div>
@@ -218,10 +231,15 @@ input.xlarge{width:230px}
 	{% if entity.url != '' %}percent+=14;$('#todo li:eq(4)').css('text-decoration','line-through');{% endif %}
 	{% if entity.twitterurl != '' %}percent+=14;$('#todo li:eq(5)').css('text-decoration','line-through');{% endif %}
 	{% if total > 19 %}percent+=14;{% endif %}
-	
-	if( percent == 98 ) percent = 100;
 	$('#percent').css('width',percent+'%');
 	$('#percent_value').html(percent+'%');
+	percent = 98;
+	if( percent == 98 ){
+	
+		$('#todo').hide();
+		$('#todo_complete').show();
+	}
+
 	
 	
 	$('#help_arrow').fadeIn('slow');

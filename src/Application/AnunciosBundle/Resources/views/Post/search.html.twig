@@ -1,16 +1,21 @@
-{% set nav_post = 1 %}
+{% if form_type == 1 %}
+	{% set nav_colaboration = 1 %}
+{% else %}
+	{% set nav_post = 1 %}
+{% endif %}
+
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 
 {% block title "Buscar anuncios" %}
 
 {% block sidebar %}
-	<a href="{{ path('post_new') }}" class="btn large primary">Publicar anuncio</a>
+	<a href="{{ path('post_new') }}{% if form_type == 1 %}?type=1{% endif %}" class="btn large primary">Publicar anuncio</a>
 	<br/>
 
 	<b>Filtrar por categoría</b><br/>
 	{% for category in categories %}
-		<a href="{{ path('post_feed') }}?c={{loop.index0}}" class="rss"><img src="{{ asset( 'bundles/applicationanuncios/images/rss.png' ) }}" width="12" height="12"/></a>
-		<a href="{{ path('post_search') }}?c={{loop.index0}}">{{category}}</a>
+		<a href="{{ path('post_feed') }}?c={{loop.index0}}&t={{ form_type }}" class="rss"><img src="{{ asset( 'bundles/applicationanuncios/images/rss.png' ) }}" width="12" height="12"/></a>
+		<a href="{{ path('post_search') }}?c={{loop.index0}}&t={{ form_type }}">{{category}}</a>
 	{% endfor %}
 	
 	<br/>
