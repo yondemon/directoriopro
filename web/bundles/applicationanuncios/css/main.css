@@ -57,7 +57,7 @@ html, body {background:#fff}
 PRE{background:white;border:0;padding:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;}
 .filters a.btn, .filters button.btn{width:179px;text-align:center;padding-left:0;padding-right:0}
 
-
+.fixed{position:fixed}
 /* other */
 
 .footer{padding:15px 0 15px 0;margin-top:5px;border-top:1px #efefef solid;}
@@ -148,6 +148,7 @@ ul.nav li.open{background-color:#191919}
 .topbar div > ul a, .nav a{padding:10px 10px 11px 11px;}
 
 
+
 .breadcrumb{background:none;padding:0;border:0}
 
 
@@ -155,4 +156,9 @@ ul.nav li.open{background-color:#191919}
 #topbar li.open a.config{background-image:url('../images/config2.png')}
 #topbar a.config::after{opacity:0}
 
-.fixed{position:fixed}
+
+
+
+/* redesign primary */
+.btn.primary{background-color:#6B9A00;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #D2E235), color-stop(100%, #8ECD00))}
+.btn:hover{background-position: 0 -40px;}
