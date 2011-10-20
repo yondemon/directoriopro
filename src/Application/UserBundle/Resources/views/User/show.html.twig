@@ -27,7 +27,7 @@
 		<b style="display:block;margin-bottom:7px">Recomendaciones</b>
 		
 		{% for item in comments %}
-			<a href="{{ path('user_comment', { 'user_id': entity.id, 'comment_id': item.comment_id }) }}" style="float:left;margin-right:5px;padding-top:0;display:inline" data-original-title="<b>{{ item.name }}</b><br>{{ categories[item.category_id] }}" rel="twipsy"><img src="{{ item.user.getAvatar('normal') }}" width="40" height="40" /></a>
+			<a href="{{ path('user_comment', { 'user_id': entity.id, 'comment_id': item.comment_id }) }}" style="float:left;margin-right:5px;padding-top:0;display:inline" data-original-title="<b>{{ categories[item.category_id] }}</b><br/>{{ item.name }}" rel="twipsy"><img src="{{ item.user.getAvatar('normal') }}" width="40" height="40" /></a>
 		{% endfor %}
 	
 		<br class="clear"/><a href="{{ path('user_comments', { 'id': entity.id }) }}">Ver todas</a>

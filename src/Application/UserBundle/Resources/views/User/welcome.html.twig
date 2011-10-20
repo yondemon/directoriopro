@@ -9,9 +9,9 @@
 	<b>Red de profesionales</b><br/>
 	
 	{% for category in categories_aux %}
-
-		<a href="{{ path('user_search') }}?c={{ category.category_id }}"><b>{{ category.total }}</b> &nbsp;{{ categories[ category.category_id ] }}</a>
-
+		{% if category.category_id != 0 and category.category_id != 13 %}
+			<a href="{{ path('user_search') }}?c={{ category.category_id }}"><b>{{ category.total }}</b> &nbsp;{{ categories[ category.category_id ] }}</a>
+		{% endif %}
 	{% endfor %}
 
 
@@ -72,7 +72,7 @@
 <div style="float:left;color:#666;width:225px;">
 	Ya están registrados...<br/>
 	{% for user in users %}
-		<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="{{ user.getName() }} - {{ categories[ user.getCategoryId() ] }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('mini') }}" width="38" height="38"/></a>
+		<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('mini') }}" width="38" height="38"/></a>
 	{% endfor %}
 </div>
 

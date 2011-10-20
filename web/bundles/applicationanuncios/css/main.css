@@ -154,3 +154,5 @@ ul.nav li.open{background-color:#191919}
 #topbar a.config{font-size:0;background:url('../images/config.png') no-repeat center center;}
 #topbar li.open a.config{background-image:url('../images/config2.png')}
 #topbar a.config::after{opacity:0}
+
+.fixed{position:fixed}
