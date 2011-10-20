@@ -53,9 +53,9 @@
 				<input type="hidden" name="t" id="input_type" value="{{ form_type }}"/>
 				
 				<div id="menu_options">
-					<a href="#" onclick="$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Empleos</a>
+					<a href="#" onclick="$('#input_type').val('');$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Empleos</a>
 					<a href="#" onclick="$('#input_type').val(1);$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Colaboraciones</a>
-					<a href="#" onclick="$('#form_search').attr('action','{{ path('user') }}search').submit()">Buscar Profesionales</a>
+					<a href="#" onclick="$('#input_type').val('');$('#form_search').attr('action','{{ path('user') }}search').submit()">Buscar Profesionales</a>
 				</div>
 	        </form>
 			<ul class="nav secondary-nav">
