@@ -119,9 +119,9 @@ class PostController extends Controller
     {
 	
 		$session = $this->getRequest()->getSession();
-		$id = $session->get('id');
-		if( !$id ){
-			return $this->redirect('/');
+		$session_id = $session->get('id');
+		if( !$session_id ){
+			return $this->redirect($this->generateUrl('user_welcome', array('back' => $_SERVER['REQUEST_URI'])));
 		}
 		
 		//si no es post
@@ -129,7 +129,7 @@ class PostController extends Controller
 		
 		if ($request->getMethod() != 'POST') {
         	$em = $this->getDoctrine()->getEntityManager();
-			$user = $em->getRepository('ApplicationUserBundle:User')->find($id);
+			$user = $em->getRepository('ApplicationUserBundle:User')->find($session_id);
 			$email = $user->getEmail();
 		}
 	
