@@ -833,7 +833,7 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to find Comment entity.');
         }
 	
-		$query = "SELECT COUNT(c.id) AS total FROM Comment c WHERE c.to_id = " . $id;
+		$query = "SELECT COUNT(c.id) AS total FROM Comment c WHERE c.to_id = " . $user_id;
 		$db = $this->get('database_connection');
 		$result = $db->query($query)->fetch();
 		$total = $result['total'];
