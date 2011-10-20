@@ -642,7 +642,7 @@ function get_forrst(){
 			success: function(data){
 				$('#loader').hide();
 				
-				if( !data.resp.error ){
+				if( data.resp.posts ){
 				    $.each(data.resp.posts, function(i,item){
 					  image = item.snaps ? '<img src="' + item.snaps.large_url + '" width="60" height="60" class="pull-right"/>' : false;
 				      $('<li><a href="' + item.post_url + '" target="_blank">' + image + item.title + '</a><br/>' + item.description + '<br class="clear"/><br/></li>').appendTo("#forrst_list");
