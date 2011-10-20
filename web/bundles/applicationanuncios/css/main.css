@@ -187,7 +187,8 @@ ul.nav li.open{background-color:#191919}
   background-image: linear-gradient(top, #D2E235, #8ECD00);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D2E235', endColorstr='#8ECD00', GradientType=0);
 }
-.btn:hover{background:8ECD00;/*background-position: 0 -40px;*/}
+.btn.primary:hover{background:8ECD00;}
+.btn:hover{background-position: 0 -40px;}
 
 /* fix buscador (placeholder) */
 :-moz-placeholder {
