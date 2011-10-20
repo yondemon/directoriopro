@@ -49,12 +49,14 @@
 				<form id="form_search" class="pull-left" action="{{ path('post') }}search">
 			{% endif %}
 	            <input name="q" id="query" type="text" placeholder="Buscar" autocomplete="off" class="medium">
+				<!--
 				<input type="hidden" name="c" value="{{ form_category }}"/>
 				<input type="hidden" name="t" id="input_type" value="{{ form_type }}"/>
+				-->
 				
 				<div id="menu_options">
 					<a href="#" onclick="$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Empleos</a>
-					<a href="#" onclick="$('#input_type').val(1);$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Colaboraciones</a>
+					<a href="#" onclick="$('#form_search').attr('action','{{ path('post') }}search?t=1').submit()">Buscar Colaboraciones</a>
 					<a href="#" onclick="$('#form_search').attr('action','{{ path('user') }}search').submit()">Buscar Profesionales</a>
 				</div>
 	        </form>
