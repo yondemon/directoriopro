@@ -135,13 +135,29 @@ UL.list LI{clear:both;margin-bottom:10px}
 /* redesign topbar */
 body{padding-top:0}
 .topbar{position:relative}
-.topbar-inner, .topbar .fill{background-image:-webkit-linear-gradient(top, #fff, #f5f5f5);-webkit-box-shadow:none;border-bottom:1px #ccc solid}
+.topbar-inner, .topbar .fill{
+  background-color: #fff;
+  background-color: #fff;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#fff), to(#f5f5f5));
+  background-image: -moz-linear-gradient(top, #fff, #f5f5f5);
+  background-image: -ms-linear-gradient(top, #fff, #f5f5f5);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #f5f5f5));
+  background-image: -webkit-linear-gradient(top, #fff, #f5f5f5);
+  background-image: -o-linear-gradient(top, #fff, #f5f5f5);
+  background-image: linear-gradient(top, #fff, #f5f5f5);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#f5f5f5', GradientType=0);
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-bottom:1px #ccc solid;
+}
 .topbar h3 a, .topbar .brand{color:#F30;font-weight:bold;padding-right:10px}
 	.topbar .brand:hover{text-decoration:none}
 .topbar a{text-shadow:none}
 .nav a{color:#000}
 .topbar input {border: 1px solid #CCC;background-color:#fff;color:#000}
-.topbar div > ul a:hover, .nav a:hover {color:#000}
+.topbar div > ul a:hover, .nav a:hover {color:#000;background-color:#F7F7F7;}
 .topbar div > ul li.active > a, .nav li.active > a{color:black;background-color:#efefef;}
 
 ul.nav li.open{background-color:#191919}
@@ -160,5 +176,41 @@ ul.nav li.open{background-color:#191919}
 
 
 /* redesign primary */
-.btn.primary{background-color:#6B9A00;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #D2E235), color-stop(100%, #8ECD00))}
+.btn.primary{
+  background-color: #6B9A00;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#D2E235), to(#8ECD00));
+  background-image: -moz-linear-gradient(top, #D2E235, #8ECD00);
+  background-image: -ms-linear-gradient(top, #D2E235, #8ECD00);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #D2E235), color-stop(100%, #8ECD00));
+  background-image: -webkit-linear-gradient(top, #D2E235, #8ECD00);
+  background-image: -o-linear-gradient(top, #D2E235, #8ECD00);
+  background-image: linear-gradient(top, #D2E235, #8ECD00);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D2E235', endColorstr='#8ECD00', GradientType=0);
+}
 .btn:hover{background-position: 0 -40px;}
+
+/* fix buscador (placeholder) */
+:-moz-placeholder {
+  color: #ccc;
+}
+::-webkit-input-placeholder {
+  color: #ccc;
+}
+.topbar input:-moz-placeholder {
+  color: #ccc;
+}
+.topbar input::-webkit-input-placeholder {
+  color: #ccc;
+}
+:-moz-placeholder {
+  color: #ccc;
+}
+::-webkit-input-placeholder {
+  color: #ccc;
+}
+.topbar input:-moz-placeholder {
+  color: #ccc;
+}
+.topbar input::-webkit-input-placeholder {
+  color: #ccc;
+}
