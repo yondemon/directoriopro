@@ -10,7 +10,7 @@
 	
 	{% for category in categories_aux %}
 		{% if category.category_id != 0 and category.category_id != 13 %}
-			<a href="{{ path('user_search') }}?c={{ category.category_id }}"><b>{{ category.total }}</b> &nbsp;{{ categories[ category.category_id ] }}</a>
+			<a href="{{ path('user') }}?c={{ category.category_id }}"><b>{{ category.total }}</b> &nbsp;{{ categories[ category.category_id ] }}</a>
 		{% endif %}
 	{% endfor %}
 
