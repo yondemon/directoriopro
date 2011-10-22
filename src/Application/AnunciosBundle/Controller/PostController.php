@@ -17,6 +17,7 @@ use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\View\DefaultView;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 
+define('CAT_OTHER',9);
 
 /**
  * Post controller.
@@ -97,24 +98,20 @@ class PostController extends Controller
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
 
-        //$deleteForm = $this->createDeleteForm($id);
-
 		$user = $em->getRepository('ApplicationUserBundle:User')->find($entity->getUserId());
 
 
-
-
-			$session = $this->getRequest()->getSession();
-			$contact = new \Application\UserBundle\Entity\Contact;
-			$id = $session->get('id');
-			if( $id ){
-				$user_login = $em->getRepository('ApplicationUserBundle:User')->find($id);
-				$contact->setName( $user_login->getName() );
-				$contact->setEmail( $user_login->getEmail() );
-			}
-			$contact->setSubject( "RE: " . $entity->getTitle() );
-			$contact_form = $this->createForm(new ContactType(), $contact);
-			$contact_form_html = $contact_form->createView();
+		$session = $this->getRequest()->getSession();
+		$contact = new \Application\UserBundle\Entity\Contact;
+		$id = $session->get('id');
+		if( $id ){
+			$user_login = $em->getRepository('ApplicationUserBundle:User')->find($id);
+			$contact->setName( $user_login->getName() );
+			$contact->setEmail( $user_login->getEmail() );
+		}
+		$contact->setSubject( "RE: " . $entity->getTitle() );
+		$contact_form = $this->createForm(new ContactType(), $contact);
+		$contact_form_html = $contact_form->createView();
 
 
 
@@ -548,5 +545,87 @@ class PostController extends Controller
     public function howAction()
     {
         return array();
+    }
+
+    /**
+     * Lists recommend Post entities.
+     *
+     * @Route("/recommend", name="post_recommend")
+     * @Template()
+     */
+    public function recommendAction()
+    {
+	
+		// esta logueado?
+		$session = $this->getRequest()->getSession();
+		$id = $session->get('id');
+		if( !$id ){
+			return $this->redirect('/');
+		}
+		
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+		
+		
+		
+	
+		$request = $this->getRequest();
+		$page = $request->query->get('page');
+		if( !$page ) $page = 1;
+	
+        $em = $this->getDoctrine()->getEntityManager();
+
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'p')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('orderBy', 'p.date DESC');
+		
+		// categoria?
+		$category_id = $entity->getCategoryId();
+		if( $category_id != CAT_OTHER ){
+		   $query->andWhere('p.category_id = :category_id')->setParameter('category_id', $category_id);
+		}
+		
+		// descripción
+		$body = $entity->getBody();
+		if( $body ){
+			// fulltext?
+		}
+		
+		// location
+		$location = $entity->getLocation();
+		if( $location ){
+			// ciudad, pais?
+		}
+		
+        $adapter = new DoctrineORMAdapter($query);
+
+		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setMaxPerPage(10); // 10 by default
+		$maxPerPage = $pagerfanta->getMaxPerPage();
+
+		$pagerfanta->setCurrentPage($page); // 1 by default
+		$entities = $pagerfanta->getCurrentPageResults();
+		$routeGenerator = function($page, $category_id) {
+			$url = '?page='.$page;
+			if( $category_id ) $url .= '&c=' . $category_id;
+		    return $url;
+		};
+
+		$view = new DefaultView();
+		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
+		
+
+
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+
+        return array('pager' => $html, 'entities' => $entities );
     }
 }

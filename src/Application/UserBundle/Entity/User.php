@@ -26,7 +26,7 @@ class User
     private $id;
 
     /**
-     * @var tinyint $admin
+     * @var smallint $admin
      *
      * @ORM\Column(name="admin", type="smallint", nullable=true)
      */
@@ -262,6 +262,13 @@ class User
      * @ORM\Column(name="ip", type="string", length=100)
      */
     private $ip;
+
+    /**
+     * @var smallint $unemployed
+     *
+     * @ORM\Column(name="unemployed", type="smallint", nullable=true)
+     */
+    private $unemployed;
 
 
     /**
@@ -965,6 +972,26 @@ class User
     public function getIp()
     {
         return $this->ip;
+    }
+
+    /**
+     * Set unemployed
+     *
+     * @param smallint $categoryId
+     */
+    public function setUnemployed($unemployed)
+    {
+        $this->unemployed = $unemployed;
+    }
+
+    /**
+     * Get unemployed
+     *
+     * @return smallint 
+     */
+    public function getUnemployed()
+    {
+        return $this->unemployed;
     }
 
     /**

@@ -109,7 +109,7 @@ class UserController extends Controller
 		// categoria?
 		$category_id = $request->query->get('c');
 		if( $category_id ){
-		   $query->andWhere('u.category_id = :category_id')->setParameter('category_id', $category_id);
+		   $query->addWhere('u.category_id = :category_id')->setParameter('category_id', $category_id);
 
 		}
 

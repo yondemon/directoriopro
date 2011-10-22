@@ -67,6 +67,7 @@
         				<ul class="dropdown-menu">
 							<li><a href="{{ path('user_edit') }}">Editar perfil</a></li>
 							<li><a href="{{ path('user_comments', { 'id': app.session.get('id') }) }}">Recomendaciones</a></li>
+							<li><a href="{{ path('post_recommend') }}">¿Buscas trabajo?</a></li>
 							<li class="divider"></li>
 							<li><a href="{{ path('user_logout') }}">Salir</a></li>
 							</ul>

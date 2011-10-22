@@ -34,6 +34,7 @@ class UserType extends AbstractType
             ->add('masterbranch_url')
 			->add('can_contact')
 			->add('avatar_type')
+			->add('unemployed')
         ;
     }
 
