@@ -47,9 +47,21 @@ class UserController extends Controller
 	
         $em = $this->getDoctrine()->getEntityManager();
 
-        //$entities = $em->getRepository('ApplicationUserBundle:User')->findAll();
-		$dql = "SELECT u FROM ApplicationUserBundle:User u ORDER BY u.id DESC";
-        $query = $em->createQuery($dql);
+
+
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'u')
+		   ->add('from', 'ApplicationUserBundle:User u')
+		   ->add('orderBy', 'u.id DESC');
+		
+		// categoria?
+		$category_id = $request->query->get('c');
+		if( $category_id ){
+		   $query->add('where', 'u.category_id = :category_id')->setParameter('category_id', $category_id);
+
+		}
+		
+		
         $adapter = new DoctrineORMAdapter($query);
 
 		$pagerfanta = new Pagerfanta($adapter);
@@ -58,11 +70,64 @@ class UserController extends Controller
 
 		$pagerfanta->setCurrentPage($page); // 1 by default
 		$entities = $pagerfanta->getCurrentPageResults();
-		$routeGenerator = function($page) {
-		    return '?page='.$page;
+		$routeGenerator = function($page, $category_id) {
+			$url = '?page='.$page;
+			if( $category_id ) $url .= '&c=' . $category_id;
+		    return $url;
 		};
 		$view = new DefaultView();
-		$html = $view->render($pagerfanta, $routeGenerator);
+		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
+
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+
+        return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1);
+    }
+
+    /**
+     * Lists all freelancers.
+     *
+     * @Route("/freelance", name="user_freelance")
+     * @Template("ApplicationUserBundle:User:index_freelance.html.twig")
+     */
+    public function freelanceAction()
+    {
+		$request = $this->getRequest();
+		$page = $request->query->get('page');
+		if( !$page ) $page = 1;
+	
+        $em = $this->getDoctrine()->getEntityManager();
+
+
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'u')
+		   ->add('from', 'ApplicationUserBundle:User u')
+		   ->add('where', 'u.freelance = 1')
+		   ->add('orderBy', 'u.id DESC');
+		
+		// categoria?
+		$category_id = $request->query->get('c');
+		if( $category_id ){
+		   $query->andWhere('u.category_id = :category_id')->setParameter('category_id', $category_id);
+
+		}
+
+        $adapter = new DoctrineORMAdapter($query);
+
+		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setMaxPerPage(10); // 10 by default
+		$maxPerPage = $pagerfanta->getMaxPerPage();
+
+		$pagerfanta->setCurrentPage($page); // 1 by default
+		$entities = $pagerfanta->getCurrentPageResults();
+		$routeGenerator = function($page, $category_id) {
+		    $url = '?page='.$page;
+			if( $category_id ) $url .= '&c=' . $category_id;
+			return $url;
+		};
+		$view = new DefaultView();
+		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
 
 
 	 	$twig = $this->container->get('twig'); 
@@ -404,23 +469,22 @@ class UserController extends Controller
     {
 		$request = $this->getRequest();
 		$search = $request->query->get('q');
-		$category_id = $request->query->get('c');
-		
-		$query = "SELECT p FROM ApplicationUserBundle:User p WHERE 1 = 1";
-		
-		if( $search ) $query .= " AND ( p.body LIKE '%".$search."%' OR p.name LIKE '%".$search."%' )";
-		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
-		
-		$query .= " ORDER BY p.id DESC";
+			
+        $em = $this->getDoctrine()->getEntityManager();
 
-		$entities = $this->get('doctrine')->getEntityManager()
-		            ->createQuery($query)
-		            ->getResult();
+		$qb = $em->createQueryBuilder()
+		   ->add('select', 'u')
+		   ->add('from', 'ApplicationUserBundle:User u')
+		   ->add('where', "u.name like '%".$search."%' or u.body like '%".$search."%'")
+		   ->add('orderBy', 'u.id DESC');
+
+		$query = $qb->getQuery();
+		$entities = $query->getResult();
 		
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
-        return array('entities' => $entities, 'form_category' =>$category_id);
+        return array('entities' => $entities);
     }
 
 
@@ -783,6 +847,52 @@ class UserController extends Controller
     }
 
 
+    /**
+     * User all recommendations
+     *
+     * @Route("/comments", name="user_comments_all")
+     * @Template("ApplicationUserBundle:User:comments_all.html.twig")
+     */
+    public function commentsallAction()
+    {
+		$request = $this->getRequest();
+		$page = $request->query->get('page');
+		if( !$page ) $page = 1;
+	
+        $em = $this->getDoctrine()->getEntityManager();
+
+
+		$category_id = $request->query->get('c');
+		if( $category_id ){
+			$query = $em->createQuery("SELECT c.id as comment_id, c.body, c.date, u.id as user_id, u.name, u.category_id, u.avatar_type, u.twitter_url, u.facebook_id, u.email FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.to_id AND u.category_id = :category_id ORDER BY c.id DESC")
+						->setParameter('category_id', $category_id);
+		}else{
+			$query = $em->createQuery("SELECT c.id as comment_id, c.body, c.date, u.id as user_id, u.name, u.category_id, u.avatar_type, u.twitter_url, u.facebook_id, u.email FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.to_id ORDER BY c.id DESC");
+		}
+		
+
+
+        $adapter = new DoctrineORMAdapter($query);
+
+		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setMaxPerPage(10); // 10 by default
+		$maxPerPage = $pagerfanta->getMaxPerPage();
+
+		$pagerfanta->setCurrentPage($page); // 1 by default
+		$entities = $pagerfanta->getCurrentPageResults();
+		$routeGenerator = function($page) {
+			$url = '?page='.$page;
+		    return $url;
+		};
+		$view = new DefaultView();
+		$html = $view->render($pagerfanta, $routeGenerator);
+
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+
+        return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1);
+	}
 
     /**
      * User recommendations

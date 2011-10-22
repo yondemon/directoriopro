@@ -9,7 +9,7 @@
 
 	<b>Filtrar por categoría</b><br/>
 	{% for category in categories %}
-		<a href="{{ path('user') }}?c={{loop.index0}}">{{category}}</a>
+		<a href="{{ path('user_freelance') }}?c={{loop.index0}}">{{category}}</a>
 	{% endfor %}
 {% endblock %}
 
@@ -23,13 +23,13 @@
 </ul>
 
 
-<h1>Profesionales</h1>
+<h1>Profesionales freelance</h1>
 
 
 <ul id="tabs" class="tabs">
-  <li class="active"><a href="{{ path('user') }}">Últimos</a></li>
+  <li><a href="{{ path('user') }}">Últimos</a></li>
   <li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
-  <li><a href="{{ path('user_freelance') }}">Freelance</a></li>
+  <li class="active"><a href="{{ path('user_freelance') }}">Freelance</a></li>
 </ul>
 
 <ul style="list-style-type:none;margin:0;padding:0;width:480px">
@@ -40,9 +40,6 @@
 			<img src="{{ entity.getAvatar('mini') }}" width="35" height="35" style="float:left;margin-right:13px"/>
 			<div style="float:left;width:425px">
             <a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.name }}</a> 
-			{% if entity.freelance %}
-				<span class="freelance">&#149; freelance</span>
-			{% endif %}
 				
 			<br/><b>{{ categories[ entity.categoryid ] }}</b> 
 			{% if entity.votes %}

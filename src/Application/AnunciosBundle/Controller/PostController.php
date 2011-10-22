@@ -38,10 +38,23 @@ class PostController extends Controller
 		if( !$page ) $page = 1;
 	
         $em = $this->getDoctrine()->getEntityManager();
-        //$entities = $em->getRepository('ApplicationAnunciosBundle:Post')->findAll();
 
-		$dql = "SELECT p FROM ApplicationAnunciosBundle:Post p WHERE p.type IS NOT NULL ORDER BY p.id DESC";
-        $query = $em->createQuery($dql);
+
+
+
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'p')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('orderBy', 'p.id DESC');
+		
+		// categoria?
+		$category_id = $request->query->get('c');
+		if( $category_id ){
+		   $query->add('where', 'p.category_id = :category_id')->setParameter('category_id', $category_id);
+
+		}
+		
+		
         $adapter = new DoctrineORMAdapter($query);
 
 		$pagerfanta = new Pagerfanta($adapter);
@@ -50,9 +63,12 @@ class PostController extends Controller
 
 		$pagerfanta->setCurrentPage($page); // 1 by default
 		$entities = $pagerfanta->getCurrentPageResults();
-		$routeGenerator = function($page) {
-		    return '?page='.$page;
+		$routeGenerator = function($page, $category_id) {
+			$url = '?page='.$page;
+			if( $category_id ) $url .= '&c=' . $category_id;
+		    return $url;
 		};
+
 		$view = new DefaultView();
 		$html = $view->render($pagerfanta, $routeGenerator);
 		
@@ -357,22 +373,32 @@ class PostController extends Controller
     {
 
 		$request = $this->getRequest();
-		$category_id = $request->query->get('c');
-		$type = $request->query->get('t') ? 1 : 0;
+
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		
-		$query = "SELECT p FROM ApplicationAnunciosBundle:Post p WHERE 1 = 1";
-		
-		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
-		if( $type ) $query .= " AND p.type = " . $type;
-		
-		$query .= " ORDER BY p.id DESC";
 
-		$entities = $this->get('doctrine')->getEntityManager()
-		            ->createQuery($query)
-		            ->setMaxResults(10)
-		            ->getResult();
+		$qb = $em->createQueryBuilder()
+		   ->add('select', 'p')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('orderBy', 'p.id DESC')
+		   ->setMaxResults(10);
+		
+		// categoria?
+		$category_id = $request->query->get('c');
+		if( $category_id ){
+		   $qb->andWhere('p.category_id = :category_id')->setParameter('category_id', $category_id);
+		}
+		
+		// tipo?
+		$type = $request->query->get('t') ? 1 : 0;
+		if( $type ){
+		   $qb->andWhere('p.type = :type')->setParameter('type', $type);
+		}
+
+		$query = $qb->getQuery();
+		$entities = $query->getResult();
+
+		
 		
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);

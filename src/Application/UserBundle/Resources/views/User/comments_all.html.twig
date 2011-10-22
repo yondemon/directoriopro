@@ -1,0 +1,69 @@
+{% set nav_user = 1 %}
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Profesionales" %}
+
+{% block sidebar %}
+	<a href="{{ path('post_new') }}" class="btn large primary">Publicar anuncio</a>
+	<br/>
+
+	<b>Filtrar por categoría</b><br/>
+	{% for category in categories %}
+		<a href="{{ path('user_comments_all') }}?c={{loop.index0}}">{{category}}</a>
+	{% endfor %}
+{% endblock %}
+
+{% block content %}
+
+
+
+<ul class="breadcrumb">
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li class="active"><a href="{{ path('user') }}">Profesionales</a></li>
+</ul>
+
+
+<h1>Profesionales</h1>
+
+
+<ul id="tabs" class="tabs">
+  <li><a href="{{ path('user') }}">Últimos</a></li>
+  <li class="active"><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
+  <li><a href="{{ path('user_freelance') }}">Freelance</a></li>
+</ul>
+
+<ul style="list-style-type:none;margin:0;padding:0;width:480px">
+    {% for entity in entities %}
+        <li>
+
+			<img src="
+			{% if entity.avatar_type == 1 %}
+				http://api.twitter.com/1/users/profile_image/{{ entity.twitter_url }}?size=normal
+			{% elseif( entity.avatar_type == 2 ) %}
+				http://graph.facebook.com/{{ entity.facebook_id }}/picture?type=square
+			{% else %}
+				http://www.gravatar.com/avatar/{{ entity.email|md5 }}?s=50&d=http://dir.betabeers.com/bundles/applicationanuncios/images/default_avatar.png
+			{% endif %}
+			" width="35" height="35" style="float:left;margin-right:13px"/>
+
+			<div style="float:left;width:425px">
+            <a href="{{ path('user_comment', { 'user_id': entity.user_id, 'comment_id': entity.comment_id }) }}">{{ entity.name }}</a> 
+			<br/><b>{{ categories[ entity.category_id ] }}</b><br/>
+
+			{{ entity.body|truncate(200) }}<br/>
+			<span class="date">{{ entity.date|date('d/m/Y') }}</span>
+
+
+			</div>
+
+			<br class="clear"/><br/>
+			
+			
+        </li>
+    {% endfor %}
+</ul>
+
+{{ pager|raw }}
+
+{% endblock %}
+
