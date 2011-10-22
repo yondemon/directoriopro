@@ -1017,4 +1017,15 @@ class User
         return $url;
     }
 
+
+    /**
+     * Get short name
+     *
+     * @return string 
+     */
+    public function getShortName()
+    {
+		return current(explode(' ', $this->getName()));
+	}
+
 }

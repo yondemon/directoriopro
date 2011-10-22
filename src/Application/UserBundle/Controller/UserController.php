@@ -12,6 +12,8 @@ use Application\UserBundle\Entity\Comment;
 use Application\UserBundle\Form\UserType;
 use Application\UserBundle\Form\CommentType;
 use Application\UserBundle\Form\ContactType;
+use Application\UserBundle\Form\ForgotPassType;
+use Application\UserBundle\Form\ForgotEmailType;
 use Application\UserBundle\Form\RegisterType;
 use Application\UserBundle\Form\LoginType;
 use Symfony\Component\Form as SymfonyForm;
@@ -192,7 +194,7 @@ class UserController extends Controller
 				// autologin?
 				$session = $this->getRequest()->getSession();
 				$session->set('id', $user->getId());
-				$session->set('name', $user->getName());
+				$session->set('name', $user->getShortName());
 				$session->set('admin', $user->getAdmin());
 				
 
@@ -354,7 +356,7 @@ class UserController extends Controller
 	            $em->persist($entity);
 	            $em->flush();
 
-				$session->set('name', current(explode(' ', $entity->getName())));
+				$session->set('name', $entity->getShortName());
 				
 
 				
@@ -448,7 +450,7 @@ class UserController extends Controller
 				$values = $form->getData();
 				//var_dump($values);
 				
-				$toEmail = $entity->getEmail();// 'gafeman@gmail.com';
+				$toEmail = $entity->getEmail();
 				
 				extract( $values );
 
@@ -457,8 +459,8 @@ class UserController extends Controller
 				$header .= "Mime-Version: 1.0 \r\n";
 				$header .= "Content-Type: text/plain";
 
-				$mensaje = "Este mensaje fue enviado por " . $name . ". \r\n";
-				$mensaje .= "Su e-mail es: " . $email . "\r\n";
+				$mensaje = "Este mensaje fue enviado por " . $name . " \r\n";
+				$mensaje .= "Su e-mail es: " . $email . " \r\n";
 				$mensaje .= "Mensaje: " . $body . " \r\n";
 				$mensaje .= "Enviado el " . date('d/m/Y', time());
 
@@ -577,7 +579,7 @@ class UserController extends Controller
 			
 
 			$session->set('id', $user->getId());
-			$session->set('name', current(explode(' ', $user->getName())));
+			$session->set('name', $user->getShortName());
 			$session->set('admin', $user->getAdmin());
 			
 			
@@ -844,5 +846,136 @@ class UserController extends Controller
 			'total' => $total
 			);
 	}
+	
+	
+	
+    /**
+     * Forgot pass form
+     *
+     * @Route("/forgotpass/{token}/{id}", name="user_forgotpass")
+     * @Template()
+     */
+    public function forgotpassAction($token,$id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+		$entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
+
+		// existe usuario?
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+
+		// pass coincide?
+		if( $entity->getPass() != $token ){
+            throw $this->createNotFoundException('Unable to find User entity.');
+		}
+
+		// constuir formulario
+		$form = $this->createForm(new ForgotPassType());
+		
+		$request = $this->getRequest();
+		if ($request->getMethod() == 'POST') {
+	        $form->bindRequest($request);
+	
+	
+			$post = $form->getData();
+			
+			if( strlen( $post->getPass() ) < 6 ){
+	            $error_text = "El password tiene que tener como minimo 6 caracteres";
+	            $form->addError( new SymfonyForm\FormError( $error_text ));
+			}
+	
+	        if ($form->isValid()) {
+
+				// cambiar contraseña
+				$entity->setPass( md5( $post->getPass() ) );
+	            $em->persist($entity);
+	            $em->flush();
+				
+				// autologin
+				$session = $this->getRequest()->getSession();
+				if( !$session->get('id') ){
+					$session->set('id', $entity->getId());
+					$session->set('name', $entity->getShortName());
+					$session->set('admin', $entity->getAdmin());
+				}
+				
+				// redirigir perfil
+				$url = $this->generateUrl('user_show', array('id' => $entity->getId()));
+				return $this->redirect($url);
+	        }
+	    }
+		
+        return array(
+			'form' 		  => $form->createView(),
+            'entity'      => $entity
+			);
+
+
+    }
+
+
+    /**
+     * Forgot email form
+     *
+     * @Route("/forgotemail", name="user_forgotemail")
+     * @Template()
+     */
+    public function forgotemailAction()
+    {
+		$result = 0;
+
+		// constuir formulario
+		$form = $this->createForm(new ForgotEmailType());
+		
+		$request = $this->getRequest();
+		if ($request->getMethod() == 'POST') {
+	        $form->bindRequest($request);
+			$post = $form->getData();
+	
+			// existe usuario?
+	        $em = $this->getDoctrine()->getEntityManager();
+			$entity = $em->getRepository('ApplicationUserBundle:User')->findOneBy(array('email' => $post->getEmail()));
+	
+	        if (!$entity) {
+	            $error_text = "El email no esta registrado";
+	            $form->addError( new SymfonyForm\FormError( $error_text ));
+	        }
+	
+
+	        if ($form->isValid()) {
+
+				// enviar enlace por email
+				$toEmail = $entity->getEmail();
+				$email = 'noreply@betabeers.com';
+
+				$header = 'From: ' . $email . " \r\n";
+				$header .= "X-Mailer: PHP/" . phpversion() . " \r\n";
+				$header .= "Mime-Version: 1.0 \r\n";
+				$header .= "Content-Type: text/html; charset=utf-8";
+				
+				
+				$url = $this->generateUrl('user_forgotpass', array('token' => $entity->getPass(), 'id' => $entity->getId()),true);
+				$mensaje = "Haz clic en el suigiente enlace para cambiar tu contraseña<br/>" . " \r\n";
+				$mensaje .= '<a href="' . $url . '" target="_blank">' . $url . '</a>';
+				
+				$subject = "Cambiar contraseña";
+
+
+
+				$result = @mail($toEmail, $subject, $mensaje, $header);
+				
+
+	        }
+	    }
+		
+        return array(
+			'form' 		  => $form->createView(),
+            'result'	  => $result
+			);
+
+
+    }
+
 
 }

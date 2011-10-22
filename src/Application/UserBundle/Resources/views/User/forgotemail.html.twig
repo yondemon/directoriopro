@@ -1,0 +1,44 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Recuperar contraseña" %}
+
+
+
+{% block content %}
+
+<h1>Recuperar contraseña</h1>
+
+{% if result == 0 %}
+
+
+	<form action="{{ path('user_forgotemail') }}" method="post">
+
+	
+	  {{ form_errors(form) }}
+
+
+		
+		{{ form_row(form._token) }}
+		{{ form_row(form.email, { 'label': 'Email' }) }}
+
+
+		<div class="actions">
+			<button type="submit" class="btn primary">Recuperar contraseña</button>
+		</div>
+
+	
+	</form>
+
+{% else %}
+	
+	<div class="alert-message block-message success">
+		Te hemos enviado un mail con un enlace para cambiar tu contraseña
+	</div>
+	
+	
+	<p><span class="label important">Importante</span> Si no has recibido el correo, comprueba la carpeta de spam o correo no deseado.</p>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Cambiar contraseña" %}
+
+
+
+{% block content %}
+
+<h1>Cambiar contraseña</h1>
+
+
+<form action="{{ path('user_forgotpass', { 'token': entity.pass, 'id': entity.id }) }}" method="post">
+
+	
+  {{ form_errors(form) }}
+
+
+		
+	{{ form_row(form._token) }}
+	{{ form_row(form.pass, { 'label': 'Contraseña' }) }}
+
+
+	<div class="actions">
+		<button type="submit" class="btn primary">Cambiar contraseña</button>
+	</div>
+
+	
+</form>
+
+
+
+
+{% endblock %}
