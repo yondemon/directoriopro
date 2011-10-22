@@ -70,7 +70,7 @@ class PostController extends Controller
 		};
 
 		$view = new DefaultView();
-		$html = $view->render($pagerfanta, $routeGenerator);
+		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
 		
 
 
