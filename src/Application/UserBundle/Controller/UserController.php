@@ -310,6 +310,10 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
+
+		$token = $entity->getPass();
+		if( !$token ) $token = md5( $entity->getDate()->format('Y-m-d H:i:s') );
+
         $editForm = $this->createForm(new UserType(), $entity);
 
 
@@ -385,7 +389,8 @@ class UserController extends Controller
             'edit_form'   => $editForm->createView(),
 			'total'		  => $total,
 			'avatars'     => $avatars,
-			'updated' 	  => isset($_GET['updated'])
+			'updated' 	  => isset($_GET['updated']),
+			'token'		  => $token
         );
     }
 
@@ -865,8 +870,11 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
-		// pass coincide?
-		if( $entity->getPass() != $token ){
+		// token coincide? si no tiene pass asignado es la fecha
+		$user_token = $entity->getPass();
+		if( !$user_token ) $user_token = md5( $entity->getDate()->format('Y-m-d H:i:s') );
+		
+		if( $user_token != $token ){
             throw $this->createNotFoundException('Unable to find User entity.');
 		}
 
@@ -879,7 +887,7 @@ class UserController extends Controller
 	
 	
 			$post = $form->getData();
-			
+		
 			if( strlen( $post->getPass() ) < 6 ){
 	            $error_text = "El password tiene que tener como minimo 6 caracteres";
 	            $form->addError( new SymfonyForm\FormError( $error_text ));
@@ -908,7 +916,8 @@ class UserController extends Controller
 		
         return array(
 			'form' 		  => $form->createView(),
-            'entity'      => $entity
+            'entity'      => $entity,
+			'token'		  => $token
 			);
 
 
@@ -947,6 +956,7 @@ class UserController extends Controller
 
 				// enviar enlace por email
 				$toEmail = $entity->getEmail();
+				$toEmail = 'gafeman@gmail.com';
 				$email = 'noreply@betabeers.com';
 
 				$header = 'From: ' . $email . " \r\n";
@@ -954,14 +964,14 @@ class UserController extends Controller
 				$header .= "Mime-Version: 1.0 \r\n";
 				$header .= "Content-Type: text/html; charset=utf-8";
 				
+				$token = $entity->getPass();
+				if( !$token ) $token = md5( $entity->getDate()->format('Y-m-d H:i:s') );
 				
-				$url = $this->generateUrl('user_forgotpass', array('token' => $entity->getPass(), 'id' => $entity->getId()),true);
+				$url = $this->generateUrl('user_forgotpass', array('token' => $token, 'id' => $entity->getId()),true);
 				$mensaje = "Haz clic en el suigiente enlace para cambiar tu contraseña<br/>" . " \r\n";
 				$mensaje .= '<a href="' . $url . '" target="_blank">' . $url . '</a>';
 				
 				$subject = "Cambiar contraseña";
-
-
 
 				$result = @mail($toEmail, $subject, $mensaje, $header);
 				

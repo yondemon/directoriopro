@@ -10,7 +10,7 @@
 <h1>Cambiar contraseña</h1>
 
 
-<form action="{{ path('user_forgotpass', { 'token': entity.pass, 'id': entity.id }) }}" method="post">
+<form action="{{ path('user_forgotpass', { 'token': token, 'id': entity.id }) }}" method="post">
 
 	
   {{ form_errors(form) }}
