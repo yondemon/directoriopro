@@ -956,7 +956,6 @@ class UserController extends Controller
 
 				// enviar enlace por email
 				$toEmail = $entity->getEmail();
-				$toEmail = 'gafeman@gmail.com';
 				$email = 'noreply@betabeers.com';
 
 				$header = 'From: ' . $email . " \r\n";
