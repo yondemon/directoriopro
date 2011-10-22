@@ -14,6 +14,5 @@
 /vendor/swiftmailer
 /vendor/symfony
 /vendor/twig
-/vendor/twig-extensions
 /app/config/parameters.ini
 .DS_Store
