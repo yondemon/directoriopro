@@ -50,8 +50,8 @@
             <a href="{{ path('user_show', { 'id': entity.user_id }) }}">{{ entity.name }}</a> 
 			<br/><b>{{ categories[ entity.category_id ] }}</b><br/>
 
-			{{ entity.body|truncate(200) }}<br/>
-			<a href="{{ path('user_comment', { 'user_id': entity.user_id, 'comment_id': entity.comment_id }) }}" style="color:gray;font-weight:bold">Leer más</a>
+			{{ entity.body|truncate(200) }} 
+			<a href="{{ path('user_comment', { 'user_id': entity.user_id, 'comment_id': entity.comment_id }) }}" style="color:gray;">Leer más</a>
 			<br/>
 			<span class="date">{{ entity.date|date('d/m/Y') }}</span>
 
