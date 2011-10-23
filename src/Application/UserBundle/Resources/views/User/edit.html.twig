@@ -96,7 +96,7 @@ input.xlarge{width:230px}
 		</div>
 		
 		<div class="clearfix">
-			<label>Categoría</label>
+			<label>Sector</label>
 			<div class="input">
 				<select id="application_userbundle_usertype_category_id" name="application_userbundle_usertype[category_id]">
 					{% for category in categories %}
@@ -168,15 +168,15 @@ input.xlarge{width:230px}
 		<div class="input">
 		    <ul class="inputs-list">
 	        <li>
-	          <label for="application_userbundle_usertype_freelance" class=" required">
-	            <input type="checkbox" {% if entity.getFreelance() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_freelance" name="application_userbundle_usertype[freelance]" value="1">
-	            <span>¿Eres freelance?</span>
+	          <label for="application_userbundle_usertype_unemployed" class=" required">
+	            <input type="checkbox" {% if entity.getUnemployed() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_unemployed" name="application_userbundle_usertype[unemployed]" value="1">
+	            <span>¿Estás buscando trabajo en una empresa?</span>
 	          </label><br/>
 	        </li>
 	        <li>
-	          <label for="application_userbundle_usertype_unemployed" class=" required">
-	            <input type="checkbox" {% if entity.getUnemployed() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_unemployed" name="application_userbundle_usertype[unemployed]" value="1">
-	            <span>¿Estás buscando trabajo?</span>
+	          <label for="application_userbundle_usertype_freelance" class=" required">
+	            <input type="checkbox" {% if entity.getFreelance() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_freelance" name="application_userbundle_usertype[freelance]" value="1">
+	            <span>¿Eres freelance?</span>
 	          </label><br/>
 	        </li>
 	        <li>

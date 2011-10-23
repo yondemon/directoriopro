@@ -19,9 +19,9 @@ class RegisterType extends AbstractType
 				           'second_name' => 'confirm',
 				           'type' => 'password',
 							'invalid_message' => 'Las contraseñas tienen que coincidir',
-				        ));
-        		//->add('location')
-        		//->add('body', 'textarea');
+				        ))
+				->add('unemployed')		
+				->add('freelance');
     }
 
     public function getDefaultOptions(array $options)
