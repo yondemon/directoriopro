@@ -377,7 +377,7 @@ class PostController extends Controller
 		$request = $this->getRequest();
 		$search = $request->query->get('q');
 		$category_id = $request->query->get('c');
-		$type = $request->query->get('t') ? 1 : 0;
+		$type = (int)$request->query->get('t');
 		$location = $request->query->get('location');
 		//$freelance = $request->query->get('freelance');
 		
@@ -429,7 +429,7 @@ class PostController extends Controller
 		}
 		
 		// tipo?
-		$type = $request->query->get('t') ? 1 : 0;
+		$type = (int)$request->query->get('t');
 		if( $type ){
 		   $qb->andWhere('p.type = :type')->setParameter('type', $type);
 		}
