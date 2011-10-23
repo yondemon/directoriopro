@@ -47,6 +47,7 @@ class PostController extends Controller
 		$query = $em->createQueryBuilder();
 		$query->add('select', 'p')
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('where', 'p.type = 0')
 		   ->add('orderBy', 'p.id DESC');
 		
 		// categoria?
@@ -119,10 +120,8 @@ class PostController extends Controller
 		$entities = false;
 		$users = false;
 
-
+		// ofertas relacionadas
 		if( $entity->getType() == 0 ){
-			
-			// ofertas relacionadas
 			$query = $em->createQueryBuilder();
 			$query->add('select', 'p')
 			   ->add('from', 'ApplicationAnunciosBundle:Post p')
@@ -132,18 +131,33 @@ class PostController extends Controller
 			   ->setMaxResults(5);
 			$entities = $query->getQuery()->getResult();
 			
+		}
 
-			// usuarios relacionados
+		// usuarios relacionados
+		if( $entity->getType() != 2 ){
+		
 			$query = $em->createQueryBuilder();
 			$query->add('select', 'u')
 			   ->add('from', 'ApplicationUserBundle:User u')
 			   ->andWhere('u.category_id = :category_id')->setParameter('category_id', $entity->getCategoryId())
 			   ->andWhere('u.body IS NOT NULL')
-			   ->andWhere('u.unemployed = 1')
 			   ->add('orderBy', 'u.votes DESC, u.id DESC')
 			   ->setMaxResults(12);
+			
+			// empleo
+			if( $entity->getType() == 0 ){
+				$query->andWhere('u.unemployed = 1');
+			
+			// freelance
+			}else if( $entity->getType() == 1 ){
+				$query->andWhere('u.freelance = 1');
+			}
+
 			$users = $query->getQuery()->getResult();
 		}
+
+
+		
 
 
 		// es diferente usuario, visitas + 1
