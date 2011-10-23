@@ -41,7 +41,7 @@ TEXTAREA.xlarge{width:430px}
 	
 	{{ form_row(form.email, { 'label': 'Email' }) }}
 	
-	<div id="price" {% if entity.type == 1 %}style="display:none"{% endif %}>
+	<div id="price" {% if entity.type == 2 %}style="display:none"{% endif %}>
 		{{ form_row(form.price, { 'label': 'Sueldo' }) }}
 	</div>
 	

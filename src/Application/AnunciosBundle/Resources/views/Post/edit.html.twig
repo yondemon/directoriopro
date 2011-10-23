@@ -45,7 +45,7 @@ TEXTAREA.xlarge{width:430px}
 	
 	{{ form_row(edit_form.email, { 'label': 'Email' }) }}
 	
-	<div id="price" {% if entity.type == 1 %}style="display:none"{% endif %}>
+	<div id="price" {% if entity.type == 2 %}style="display:none"{% endif %}>
 		{{ form_row(edit_form.price, { 'label': 'Sueldo' }) }}
 	</div>
 
@@ -93,8 +93,6 @@ TEXTAREA.xlarge{width:430px}
 		$('#price').hide();
 		$('#price input:first').val('');
 	});
-	
-	
 	
 	// need location?
 	$('#chk_location').click(function(){
