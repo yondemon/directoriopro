@@ -1056,7 +1056,7 @@ class UserController extends Controller
 	
 	        if (!$entity) {
 	            $error_text = "El email no esta registrado";
-	            $form->addError( new SymfonyForm\FormError( $error_text ));
+	            $form['email']->addError( new SymfonyForm\FormError( $error_text ));
 	        }
 	
 

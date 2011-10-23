@@ -217,3 +217,7 @@ a.menu:after,.dropdown-toggle:after{width:0;height:0;display:inline-block;conten
 .topbar input::-webkit-input-placeholder {
   color: #aaa;
 }
+
+/* form error fix */
+div.error ul{list-style-type:none;display:inline;float:auto}
+	div.error ul li{padding-top: 5px;color:#9D261D}
