@@ -11,25 +11,13 @@
 	{% form_theme contact_form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
 	<form action="{{ form_url }}" method="post">
   <div class="modal-body">
-    <!--<textarea style="width:98%" rows="5"></textarea>-->
-
-	
 
 
-			
-			{{ form_row(contact_form._token) }}
-			{{ form_row(contact_form.name, { 'label': 'Nombre' }) }}
-	        {{ form_row(contact_form.email, { 'label': 'Email' }) }}
-	        {{ form_row(contact_form.subject, { 'label': 'Asunto' }) }}
-	        {{ form_row(contact_form.body, { 'label': 'Mensaje' }) }}
-
-
-
-
-
-
-	
-
+	{{ form_row(contact_form._token) }}
+	{{ form_row(contact_form.name, { 'label': 'Nombre' }) }}
+       {{ form_row(contact_form.email, { 'label': 'Email' }) }}
+       {{ form_row(contact_form.subject, { 'label': 'Asunto' }) }}
+       {{ form_row(contact_form.body, { 'label': 'Mensaje' }) }}
 
   </div>
   <div class="modal-footer">

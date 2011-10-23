@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\AnunciosBundle\Entity\Post;
+use Application\UserBundle\Entity\User;
 use Application\UserBundle\Entity\Contact;
 use Application\AnunciosBundle\Form\PostType;
 use Application\UserBundle\Form\ContactType;
@@ -114,26 +115,52 @@ class PostController extends Controller
 		$contact_form_html = $contact_form->createView();
 
 
-
-		// ofertas relacionadas
+		
 		$entities = false;
+		$users = false;
+
+
 		if( $entity->getType() == 0 ){
+			
+			// ofertas relacionadas
 			$query = $em->createQueryBuilder();
 			$query->add('select', 'p')
 			   ->add('from', 'ApplicationAnunciosBundle:Post p')
 			   ->add('where', 'p.category_id = :category_id')->setParameter('category_id', $entity->getCategoryId())
 			   ->andWhere('p.id != :id')->setParameter('id', $entity->getId())
-			   ->add('orderBy', 'p.date DESC')
+			   ->add('orderBy', 'p.id DESC')
 			   ->setMaxResults(5);
 			$entities = $query->getQuery()->getResult();
+			
+
+			// usuarios relacionados
+			$query = $em->createQueryBuilder();
+			$query->add('select', 'u')
+			   ->add('from', 'ApplicationUserBundle:User u')
+			   ->andWhere('u.category_id = :category_id')->setParameter('category_id', $entity->getCategoryId())
+			   ->andWhere('u.body IS NOT NULL')
+			   ->andWhere('u.unemployed = 1')
+			   ->add('orderBy', 'u.votes DESC, u.id DESC')
+			   ->setMaxResults(12);
+			$users = $query->getQuery()->getResult();
 		}
 
 
+		// es diferente usuario, visitas + 1
+		$session = $this->getRequest()->getSession();
+		$session_id = $session->get('id');
+		if( $session_id != $entity->getUserId() ){
+			$entity->setVisits($entity->getVisits() + 1 );
+			$em->persist($entity);
+			$em->flush();
+		}
+
         return array(
-            'entity'      => $entity,
-            'user'      => $user,
+            'entity'       => $entity,
+            'user'         => $user,
 			'contact_form' => $contact_form_html,
-			'entities'    => $entities,
+			'entities'     => $entities,
+			'users'        => $users
 			);
     }
 

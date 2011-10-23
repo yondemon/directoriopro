@@ -155,23 +155,21 @@ class UserController extends Controller
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 	
-		/*
+	
+
 		// es diferencia usuario, visitas + 1
 		$session = $this->getRequest()->getSession();
-		$id = $session->get('id');
-		if( $id != $entity->getId() ){
+		$session_id = $session->get('id');
+	
+		if( $session_id != $entity->getId() ){
 			$entity->setVisits($entity->getVisits() + 1 );
-			$em = $this->get('doctrine.orm.entity_manager');
 			$em->persist($entity);
 			$em->flush();
 		}
-		*/	
 		
 		$contact_form_html = false;
 		if( $entity->getCanContact() ){
-			$session = $this->getRequest()->getSession();
 			$contact = new \Application\UserBundle\Entity\Contact;
-			$session_id = $session->get('id');
 			if( $session_id && $session_id != $id ){
 				$user_login = $em->getRepository('ApplicationUserBundle:User')->find($session_id);
 				$contact->setName( $user_login->getName() );

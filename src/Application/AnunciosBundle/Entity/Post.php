@@ -96,6 +96,14 @@ class Post
 
 
     /**
+     * @var integer $visits
+     *
+     * @ORM\Column(name="visits", type="integer", nullable=true)
+     */
+    private $visits;
+
+
+    /**
      * Get id
      *
      * @return integer 
@@ -303,5 +311,26 @@ class Post
     public function getLocation()
     {
         return $this->location;
+    }
+
+
+    /**
+     * Set visits
+     *
+     * @param integer $visits
+     */
+    public function setVisits($visits)
+    {
+        $this->visits = $visits;
+    }
+
+    /**
+     * Get visits
+     *
+     * @return integer 
+     */
+    public function getVisits()
+    {
+        return $this->visits;
     }
 }
