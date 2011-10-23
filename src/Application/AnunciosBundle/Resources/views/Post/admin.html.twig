@@ -5,15 +5,15 @@
 
 {% block sidebar %}
 
+	<a href="{{ path('post_new') }}" class="btn large primary">Publicar anuncio</a>
+	<br/>
+
 	<b>Filtrar anuncios</b><br/>
 
-	<!--<a href="#">Aprobados</a>
-	<a href="#">Sin aprobar</a>-->
-	<a href="#">Destacados</a>
-	<a href="#">Sin destacar</a>
+	<a href="{{ path('post_admin') }}?featured=1">Destacados</a>
 
 
-	<br/><br/>
+	<br/>
 
 	<b>Filtrar por categoría</b><br/>
 	{% for category in categories %}
@@ -31,34 +31,40 @@
 
 
 
+{% if entities %}
 
-<table class="zebra-striped">
-	<thead>
-		<tr>
-			<th>Anuncio</th>
-			<th>Visitas</th>
-			<th>&nbsp;</th>
-		</tr>
-	</thead>
-	<tbody>
-    {% for entity in entities %}
-        <tr>
-			<td>
-				<a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}</a>
-				<br/><span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
-			</td>
-			<td>{{ entity.visits }}</td>
-			<td><a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn">editar</a><!-- <a href="#" class="btn">aprobar</a> | <a href="#" class="btn">destacar</a>--></td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+	<table class="zebra-striped">
+		<thead>
+			<tr>
+				<th>Anuncio</th>
+				<th>Visitas</th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+	    {% for entity in entities %}
 
+			{% if entity.featured == 1 %}
+				{% set featured = 'NULL' %}
+			{% else %}
+				{% set featured = 1 %}
+			{% endif %}
 
-
-
-
-{{ pager|raw }}
+	        <tr>
+				<td>
+					<a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}</a>
+					<br/><span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
+				</td>
+				<td>{{ entity.visits }}</td>
+				<td nowrap="nowrap"><a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn">editar</a> <a href="{{ path('post_admin_featured', { 'id': entity.id, 'value': featured }) }}" class="btn {% if entity.featured %}primary{% endif %}">&#9733;</a></td>
+	        </tr>
+	    {% endfor %}
+	    </tbody>
+	</table>
+	{{ pager|raw }}
+{% else %}
+	sin resultados, prueba con otra busqueda
+{% endif %}
 
 
 

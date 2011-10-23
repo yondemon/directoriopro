@@ -48,7 +48,7 @@ class PostController extends Controller
 		$query->add('select', 'p')
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
 		   ->add('where', 'p.type = 0')
-		   ->add('orderBy', 'p.id DESC');
+		   ->add('orderBy', 'p.featured DESC, p.id DESC');
 		
 		// categoria?
 		$category_id = $request->query->get('c');
@@ -393,22 +393,20 @@ class PostController extends Controller
 		$category_id = $request->query->get('c');
 		$type = (int)$request->query->get('t');
 		$location = $request->query->get('location');
-		//$freelance = $request->query->get('freelance');
 		
-		$query = "SELECT p FROM ApplicationAnunciosBundle:Post p WHERE 1 = 1";
+
+		$em = $this->getDoctrine()->getEntityManager();
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'p')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('orderBy', 'p.featured DESC, p.id DESC');
 		
-		if( $search ) $query .= " AND ( p.body LIKE '%".$search."%' OR p.title LIKE '%".$search."%' )";
-		if( $category_id ) $query .= " AND p.category_id = " . $category_id;
-		if( $location ) $query .= " AND p.location = '" . $location . "'";
-		//if( $freelance ) $query .= " AND p.location IS NULL AND p.price IS NOT NULL";
-		if( $type ) $query .= " AND p.type = " . $type;
+		if( $search ) $qb->andWhere("( p.body LIKE '%".$search."%' OR p.title LIKE '%".$search."%' )");
+		if( $category_id ) $qb->andWhere('p.category_id = :category_id')->setParameter('category_id', $category_id);
+		if( $location ) $qb->andWhere("p.location = :location")->setParameter('location', $location);
+		if( $type ) $qb->andWhere('p.type = :type')->setParameter('type', $type);
 
-		$query .= " ORDER BY p.id DESC";
-
-
-		$entities = $this->get('doctrine')->getEntityManager()
-		            ->createQuery($query)
-		            ->getResult();
+		$entities = $qb->getQuery()->getResult();
 		
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
@@ -554,13 +552,31 @@ class PostController extends Controller
 		if( !$page ) $page = 1;
 	
         $em = $this->getDoctrine()->getEntityManager();
-        //$entities = $em->getRepository('ApplicationAnunciosBundle:Post')->findAll();
 
-		$dql = "SELECT p FROM ApplicationAnunciosBundle:Post p ORDER BY p.id DESC";
-        $query = $em->createQuery($dql);
+
+
+
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'p')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('where', 'p.type = 0')
+		   ->add('orderBy', 'p.featured DESC, p.id DESC');
+		
+		// categoria?
+		$category_id = $request->query->get('c');
+		if( $category_id ){
+		   $query->add('where', 'p.category_id = :category_id')->setParameter('category_id', $category_id);
+		}
+
+		// destacados?
+		$featured = $request->query->get('featured');
+		if( $featured ){
+			$query->andWhere('p.featured = 1');
+		}
+		
+		
         $adapter = new DoctrineORMAdapter($query);
-
-		$pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta = new Pagerfanta($adapter);
 		$pagerfanta->setMaxPerPage(20); // 10 by default
 		$maxPerPage = $pagerfanta->getMaxPerPage();
 
@@ -579,6 +595,35 @@ class PostController extends Controller
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('pager' => $html, 'entities' => $entities );
+    }
+
+    /**
+     * Feature Post entities.
+     *
+     * @Route("/admin/featured/{id}/{value}", name="post_admin_featured")
+     * @Template()
+     */
+    public function featuredAction($id,$value)
+    {
+	
+		$session = $this->getRequest()->getSession();
+		if( !$session->get('admin') ){
+			return $this->redirect('/');
+		}
+	
+		// existe post?
+		$em = $this->getDoctrine()->getEntityManager();
+        $entity = $em->getRepository('ApplicationAnunciosBundle:Post')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+        
+        $entity->setFeatured($value);
+        $em->persist($entity);
+		$em->flush();
+
+		return $this->redirect( $_SERVER['HTTP_REFERER'] );
     }
 
     /**
