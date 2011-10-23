@@ -1,4 +1,4 @@
-{% set static_id = 26 %}
+{% set static_id = 27 %}
 {% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros"] %}
 {% set analytics_id = "UA-16938408-8" %}
 {% set sitename = "Betabeers" %}
@@ -39,9 +39,27 @@
 		<div class="container">
 			<a class="brand" href="{{ path('post') }}">{{sitename}}</a>
 			<ul class="nav">
-				<li {% if nav_post is defined %}class="active"{% endif %}><a href="{{ path('post') }}">Empleo</a></li>
-				<li {% if nav_colaboration is defined %}class="active"{% endif %}><a href="{{ path('post_search') }}?t=1">Colaboraciones</a></li>
-				<li {% if nav_user is defined %}class="active"{% endif %}><a href="{{ path('user') }}">Profesionales</a></li>
+
+
+				
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">Anuncios</a>
+    				<ul class="dropdown-menu">
+						<li><a href="{{ path('post') }}">Empleo</a></li>
+						<li><a href="{{ path('post_search') }}?t=1">Colaboraciones</a></li>
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">Profesionales</a>
+    				<ul class="dropdown-menu">
+						<li><a href="{{ path('user') }}">Listado</a></li>
+						<li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
+						<li><a href="{{ path('user_freelance') }}">Freelance</a></li>
+					</ul>
+				</li>
+				
+				
 			</ul>
 			{% if nav_user is defined %}
 				<form id="form_search" class="pull-left" action="{{ path('user') }}search">
@@ -70,7 +88,7 @@
 							<li><a href="{{ path('post_recommend') }}">¿Buscas trabajo?</a></li>
 							<li class="divider"></li>
 							<li><a href="{{ path('user_logout') }}">Salir</a></li>
-							</ul>
+						</ul>
 				{% else %}
 					<a href="{{ path('user_welcome') }}">Iniciar sesión</a>
 				{% endif %}
@@ -103,7 +121,7 @@
 </div>
 
 
-<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-dropdown.js') }}"></script>
+<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-dropdown.js') }}?v=2"></script>
 <script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-modal.js') }}"></script>
 <script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-twipsy.js') }}"></script>
 <script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-popover.js') }}"></script>

@@ -27,45 +27,49 @@
 
 
 <ul id="tabs" class="tabs">
-  <li><a href="{{ path('user') }}">Últimos</a></li>
+  <li><a href="{{ path('user') }}">Listado</a></li>
   <li class="active"><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
   <li><a href="{{ path('user_freelance') }}">Freelance</a></li>
 </ul>
 
-<ul style="list-style-type:none;margin:0;padding:0;width:480px">
-    {% for entity in entities %}
-        <li>
+{% if entities %}
+	<ul style="list-style-type:none;margin:0;padding:0;width:480px">
+	    {% for entity in entities %}
+	        <li>
 
-			<img src="
-			{% if entity.avatar_type == 1 %}
-				http://api.twitter.com/1/users/profile_image/{{ entity.twitter_url }}?size=normal
-			{% elseif( entity.avatar_type == 2 ) %}
-				http://graph.facebook.com/{{ entity.facebook_id }}/picture?type=square
-			{% else %}
-				http://www.gravatar.com/avatar/{{ entity.email|md5 }}?s=50&d=http://dir.betabeers.com/bundles/applicationanuncios/images/default_avatar.png
-			{% endif %}
-			" width="35" height="35" style="float:left;margin-right:13px"/>
+				<img src="
+				{% if entity.avatar_type == 1 %}
+					http://api.twitter.com/1/users/profile_image/{{ entity.twitter_url }}?size=normal
+				{% elseif( entity.avatar_type == 2 ) %}
+					http://graph.facebook.com/{{ entity.facebook_id }}/picture?type=square
+				{% else %}
+					http://www.gravatar.com/avatar/{{ entity.email|md5 }}?s=50&d=http://dir.betabeers.com/bundles/applicationanuncios/images/default_avatar.png
+				{% endif %}
+				" width="35" height="35" style="float:left;margin-right:13px"/>
 
-			<div style="float:left;width:425px">
-            <a href="{{ path('user_show', { 'id': entity.user_id }) }}">{{ entity.name }}</a> 
-			<br/><b>{{ categories[ entity.category_id ] }}</b><br/>
+				<div style="float:left;width:425px">
+	            <a href="{{ path('user_show', { 'id': entity.user_id }) }}">{{ entity.name }}</a> 
+				<br/><b>{{ categories[ entity.category_id ] }}</b><br/>
 
-			{{ entity.body|truncate(180) }} 
-			<a href="{{ path('user_comment', { 'user_id': entity.user_id, 'comment_id': entity.comment_id }) }}" style="color:gray;">Leer más</a>
-			<br/>
-			<span class="date">{{ entity.date|date('d/m/Y') }}</span>
+				{{ entity.body|truncate(180) }} 
+				<a href="{{ path('user_comment', { 'user_id': entity.user_id, 'comment_id': entity.comment_id }) }}" style="color:gray;">Leer más</a>
+				<br/>
+				<span class="date">{{ entity.date|date('d/m/Y') }}</span>
 
 
-			</div>
+				</div>
 
-			<br class="clear"/><br/>
+				<br class="clear"/><br/>
 			
 			
-        </li>
-    {% endfor %}
-</ul>
+	        </li>
+	    {% endfor %}
+	</ul>
 
-{{ pager|raw }}
+	{{ pager|raw }}
+{% else %}
+	No se han encontrado recomendaciones en esta categoría.
+{% endif %}
 
 {% endblock %}
 

@@ -27,46 +27,51 @@
 
 
 <ul id="tabs" class="tabs">
-  <li class="active"><a href="{{ path('user') }}">Últimos</a></li>
+  <li class="active"><a href="{{ path('user') }}">Listado</a></li>
   <li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
   <li><a href="{{ path('user_freelance') }}">Freelance</a></li>
 </ul>
 
-<ul style="list-style-type:none;margin:0;padding:0;width:480px">
-    {% for entity in entities %}
-        <li>
+{% if entities %}
+	<ul style="list-style-type:none;margin:0;padding:0;width:480px">
+	    {% for entity in entities %}
+	        <li>
 
 			
-			<img src="{{ entity.getAvatar('mini') }}" width="35" height="35" style="float:left;margin-right:13px"/>
-			<div style="float:left;width:425px">
-            <a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.name }}</a> 
-			{% if entity.freelance %}
-				<span class="freelance">&#149; freelance</span>
-			{% endif %}
+				<img src="{{ entity.getAvatar('mini') }}" width="35" height="35" style="float:left;margin-right:13px"/>
+				<div style="float:left;width:425px">
+	            <a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.name }}</a> 
+				{% if entity.freelance %}
+					<span class="freelance">&#149; freelance</span>
+				{% endif %}
 				
-			<br/><b>{{ categories[ entity.categoryid ] }}</b> 
-			{% if entity.votes %}
-				<span class="votes">{{ entity.votes }}</span>
-			{% endif %}
-			<br/>
+				<br/><b>{{ categories[ entity.categoryid ] }}</b> 
+				{% if entity.votes %}
+					<span class="votes">{{ entity.votes }}</span>
+				{% endif %}
+				<br/>
 
-			{% if entity.body %}
-				{{ entity.body|truncate(200) }}<br/>
-			{% endif %}
+				{% if entity.body %}
+					{{ entity.body|truncate(200) }}<br/>
+				{% endif %}
 			
-			<span class="date">{{ entity.location }}</span>
+				<span class="date">{{ entity.location }}</span>
 
 
-			</div>
+				</div>
 
-			<br class="clear"/><br/>
+				<br class="clear"/><br/>
 			
 			
-        </li>
-    {% endfor %}
-</ul>
+	        </li>
+	    {% endfor %}
+	</ul>
 
-{{ pager|raw }}
+
+	{{ pager|raw }}
+{% else %}
+	No se han encontrado profesionales en esta categoría.
+{% endif %}
 
 {% endblock %}
 

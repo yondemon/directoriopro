@@ -17,6 +17,7 @@
  * limitations under the License.
  * ============================================================ */
 
+var timer_menu = false;
 
 (function( $ ){
 
@@ -36,6 +37,20 @@
 
   $.fn.dropdown = function ( selector ) {
     return this.each(function () {
+      $(this).delegate(selector || d, 'mouseover', function (e) {
+		if( timer_menu ) clearTimeout( timer_menu );
+		clearMenus();
+        var li = $(this).parent('li').addClass('open');
+        return false
+      });
+
+      $(this).delegate(selector || d, 'mouseout', function (e) {
+		timer_menu = setTimeout(function(){
+			clearMenus();
+		},2000);
+        return false
+      });
+	
       $(this).delegate(selector || d, 'click', function (e) {
         var li = $(this).parent('li')
           , isActive = li.hasClass('open')
@@ -43,7 +58,8 @@
         clearMenus()
         !isActive && li.toggleClass('open')
         return false
-      })
+      });
+
     })
   }
 
