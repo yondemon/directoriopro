@@ -1,5 +1,14 @@
-Instalar directoriopro
-======================
+Instalación de directoriopro
+============================
+
+Configurar servidor local
+-------------------------
+
+* [Primeros pasos con symfony2 usando MAMP en mac](http://miquelcamps.com/symfony/primeros-pasos-con-symfony2-usando-mamp-en-mac/)
+* [Subiendo symfony2 a producción](http://miquelcamps.com/symfony/subiendo-symfony2-a-produccion/)
+
+Instalación
+-----------
 
 ### Copia la ultima copia del repositorio
 
@@ -29,7 +38,7 @@ http://localhost/dir/web/app_dev.php
 
 
 Actualizar a la última copia
---------------------------------
+----------------------------
 
 	git pull
 	php app/console cache:clear
