@@ -5,12 +5,20 @@
 
 {% block sidebar %}
 
-<b>Filtrar anuncios</b><br/>
+	<b>Filtrar anuncios</b><br/>
 
-<!--<a href="#">Aprobados</a>
-<a href="#">Sin aprobar</a>-->
-<a href="#">Destacados</a>
-<a href="#">Sin destacar</a>
+	<!--<a href="#">Aprobados</a>
+	<a href="#">Sin aprobar</a>-->
+	<a href="#">Destacados</a>
+	<a href="#">Sin destacar</a>
+
+
+	<br/><br/>
+
+	<b>Filtrar por categoría</b><br/>
+	{% for category in categories %}
+		<a href="{{ path('post_admin') }}?c={{loop.index0}}">{{category}}</a>
+	{% endfor %}
 
 {% endblock %}
 
