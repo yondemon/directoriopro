@@ -49,7 +49,7 @@
 	           <b>{{ categories[ entity.getCategoryId() ] }}</b><br/>
 	           <a href="{{ path('post_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
 	           {{ entity.body|truncate(200) }}<br/>
-	           <span class="date">{{ entity.date|date('d/m/Y') }}</span>
+	           <span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
 			<br/><br/>
 	       </li>
 	   {% endfor %}

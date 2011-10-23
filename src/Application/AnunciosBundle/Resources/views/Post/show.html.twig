@@ -91,7 +91,7 @@
 			{% for entity in entities %}
 				<li>
 					<a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}</a><br/>
-					<span class="date">{{ entity.date|date('d/m/Y') }}</span>
+					<span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
 				</li>
 	    	{% endfor %}
 			</ul>
