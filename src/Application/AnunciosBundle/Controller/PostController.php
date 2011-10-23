@@ -115,10 +115,25 @@ class PostController extends Controller
 
 
 
+		// ofertas relacionadas
+		$entities = false;
+		if( $entity->getType() == 0 ){
+			$query = $em->createQueryBuilder();
+			$query->add('select', 'p')
+			   ->add('from', 'ApplicationAnunciosBundle:Post p')
+			   ->add('where', 'p.category_id = :category_id')->setParameter('category_id', $entity->getCategoryId())
+			   ->andWhere('p.id != :id')->setParameter('id', $entity->getId())
+			   ->add('orderBy', 'p.date DESC')
+			   ->setMaxResults(5);
+			$entities = $query->getQuery()->getResult();
+		}
+
+
         return array(
             'entity'      => $entity,
             'user'      => $user,
 			'contact_form' => $contact_form_html,
+			'entities'    => $entities,
 			);
     }
 

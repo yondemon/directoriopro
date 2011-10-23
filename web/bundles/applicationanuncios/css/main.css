@@ -133,8 +133,8 @@ UL.list LI{clear:both;margin-bottom:10px}
 
 
 /* redesign topbar */
-body{padding-top:0}
-.topbar{position:relative}
+/*body{padding-top:0}
+.topbar{position:relative}*/
 .topbar-inner, .topbar .fill{
   background-color: #fff;
   background-color: #fff;

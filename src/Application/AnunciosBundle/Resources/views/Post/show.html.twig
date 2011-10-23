@@ -14,6 +14,13 @@
 {% block sidebar %}
 	{% include "ApplicationAnunciosBundle:Form:contact.html.twig" %}
 	
+	
+	{% if user.id == app.session.get('id') or app.session.get('admin') == 1 %}
+		<br/><br/>
+		<a class="btn" href="{{ path('post_edit', { 'id': entity.id }) }}">Editar anuncio</a>
+	{% endif %}
+	
+	
 	<br/><br/>
 	
 	<b>Compartir</b>
@@ -23,6 +30,11 @@
 	<a target="_blank" rel="nofollow,noindex" class="ico twitter" href="http://twitter.com/?status={{ entity.title }} {{ share_url }} #betajobs" target="_blank">twitter</a>
 	<a target="_blank" rel="nofollow,noindex" class="ico facebook" href="http://facebook.com/sharer.php?u={{ share_url }}&t={{ entity.title }}" target="_blank">facebook</a>
 	<a target="_blank" rel="nofollow,noindex" class="ico linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url={{ share_url }}&title={{ entity.title }}" target="_blank">linkedin</a>
+	
+	
+	
+	
+	
 	
 {% endblock %}
 
@@ -57,15 +69,25 @@
 
 	<pre>{{ entity.body }}</pre>
 
-	Publicado por <a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }}
+	<p>Publicado por <a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }}</p>
 
 
-<br/><br/>
+	{% if entities %}
+		<div style="border-top:1px #efefef solid;padding-top:15px;margin-top:25px">
+			<b>Ofertas relacionadas</b><br/><br/>
+			<ul>
+			{% for entity in entities %}
+				<li>
+					<a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}</a><br/>
+					<span class="date">{{ entity.date|date('d/m/Y') }}</span>
+				</li>
+	    	{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
 
-{% if user.id == app.session.get('id') or app.session.get('admin') == 1 %}
-	<a class="btn" href="{{ path('post_edit', { 'id': entity.id }) }}">Editar anuncio</a>
 
-{% endif %}
+
 
 
 

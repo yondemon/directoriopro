@@ -174,15 +174,15 @@ input.xlarge{width:230px}
 	          </label><br/>
 	        </li>
 	        <li>
-	          <label for="application_userbundle_usertype_can_contact" class=" required">
-	            <input type="checkbox" {% if entity.getCanContact() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_can_contact" name="application_userbundle_usertype[can_contact]" value="1">
-	            <span>Permitir que contacten conmigo</span>
-	          </label><br/>
-	        </li>
-	        <li>
 	          <label for="application_userbundle_usertype_unemployed" class=" required">
 	            <input type="checkbox" {% if entity.getUnemployed() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_unemployed" name="application_userbundle_usertype[unemployed]" value="1">
 	            <span>¿Estás buscando trabajo?</span>
+	          </label><br/>
+	        </li>
+	        <li>
+	          <label for="application_userbundle_usertype_can_contact" class=" required">
+	            <input type="checkbox" {% if entity.getCanContact() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_can_contact" name="application_userbundle_usertype[can_contact]" value="1">
+	            <span>Permitir que contacten conmigo</span>
 	          </label>
 	        </li>
 	      </ul>
