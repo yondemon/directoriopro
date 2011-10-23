@@ -528,7 +528,7 @@ function get_android(){
 				$('#loader').hide();
 				if( data.length ){
 				    $.each(data, function(i,item){
-				      $('<div style="float:left;width:250px;padding:0 20px 20px 0"><a href="' + item.url + '" target="_blank"><img src="' + item.icon + '" width="50" height="50" align="middle" style="float:left;margin-right:10px"/> ' + item.title + '</a><br/>' + item.text + '</div>').appendTo("#android_list");
+				      $('<div style="float:left;width:250px;padding-right:20px;height:70px"><a href="' + item.url + '" target="_blank"><img src="' + item.icon + '" width="50" height="50" align="middle" style="float:left;margin-right:10px"/> ' + item.title + '</a><br/>' + item.text + '</div>').appendTo("#android_list");
 				    });
 
 				}else{
