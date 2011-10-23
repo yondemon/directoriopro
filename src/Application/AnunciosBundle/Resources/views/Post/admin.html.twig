@@ -7,9 +7,10 @@
 
 <b>Filtrar anuncios</b><br/>
 
-<a href="#">Aprobados</a>
-<a href="#">Sin aprobar</a>
+<!--<a href="#">Aprobados</a>
+<a href="#">Sin aprobar</a>-->
 <a href="#">Destacados</a>
+<a href="#">Sin destacar</a>
 
 {% endblock %}
 
@@ -24,12 +25,25 @@
 
 
 <table class="zebra-striped">
+	<thead>
+		<tr>
+			<th>Anuncio</th>
+			<th>Visitas</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
     {% for entity in entities %}
         <tr>
-			<td>{{ entity.date|date('d/m/Y') }}<br/><a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}</a></td>
+			<td>
+				<a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}</a>
+				<br/><span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
+			</td>
+			<td>{{ entity.visits }}</td>
 			<td><a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn">editar</a><!-- <a href="#" class="btn">aprobar</a> | <a href="#" class="btn">destacar</a>--></td>
         </tr>
     {% endfor %}
+    </tbody>
 </table>
 
 
