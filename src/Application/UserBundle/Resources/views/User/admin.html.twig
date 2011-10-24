@@ -39,18 +39,24 @@
 				<th>Usuario</th>
 				<th>Visitas</th>
 				<th>Logins</th>
+				<th>Ref</th>
 			</tr>
 		</thead>
 		<tbody>
 	    {% for entity in entities %}
 	        <tr>
 				<td>
-					<a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.name }}</a><br/>
-					{{ categories[ entity.getCategoryId() ] }}<br/>
-					<span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
+					<img src="{{ entity.getAvatar('mini') }}" width="35" height="35" style="float:left;margin-right:13px"/>
+					<div class="pull-left">
+						<a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.name }}</a><br/>
+						{{ categories[ entity.getCategoryId() ] }}<br/>
+						<span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
+					</div>
+					<br class="clear"/>
 				</td>
 				<td>{{ entity.visits }}</td>
 				<td>{{ entity.getTotalLogins() }}</td>
+				<td>{% if entity.getRefId() %}<a href="{{ path('user_show', { 'id': entity.getRefId() }) }}">{{ entity.getRefId() }}</a>{% endif %}</td>
 	        </tr>
 	    {% endfor %}
 	    </tbody>
