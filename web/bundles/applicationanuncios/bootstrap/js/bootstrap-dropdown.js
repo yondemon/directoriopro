@@ -26,7 +26,7 @@ var is_mobile = ( navigator.userAgent.match(/Android/i) || navigator.userAgent.m
   
   // si no es movil mostrar opciones menu ocultas
   if( is_mobile ){
-  	$('.dropdown .hide_op').show();
+  	$('.dropdown .hide_op').css('display','block');
   	$('.dropdown .dropdown-toggle').attr('href','#');
   }
 
