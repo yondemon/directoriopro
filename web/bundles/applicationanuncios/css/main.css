@@ -221,3 +221,8 @@ a.menu:after,.dropdown-toggle:after{width:0;height:0;display:inline-block;conten
 /* form error fix */
 div.error ul{list-style-type:none;display:inline;float:auto}
 	div.error ul li{padding-top: 5px;color:#9D261D}
+
+
+/* anuncios destacados */
+LI.featured{background:#FEFBF3}
+  LI.featured A.title{color:#FF9933}

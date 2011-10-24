@@ -32,7 +32,7 @@
 
 <ul>
     {% for entity in entities %}
-        <li style="margin-bottom:20px;{% if entity.featured == 1 %}background:#FEFBF3{% endif %}">
+        <li style="margin-bottom:20px;" {% if entity.featured == 1 %}class="featured"{% endif %}">
 			<b>{{ categories[ entity.getCategoryId() ] }}</b><br/>
             <a href="{{ path('post_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
             {{ entity.body|truncate(200) }}<br/>
