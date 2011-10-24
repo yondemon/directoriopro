@@ -1147,7 +1147,7 @@ class UserController extends Controller
 		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
 		
 		// estadisticas de anuncios
-		$query = "SELECT COUNT(p.id) AS total, p.category_id FROM Post p GROUP BY p.category_id ORDER BY total DESC";
+		$query = "SELECT COUNT(u.id) AS total, u.category_id FROM User u GROUP BY u.category_id ORDER BY total DESC";
 		$db = $this->get('database_connection');
         $categories = $db->fetchAll($query);
 
