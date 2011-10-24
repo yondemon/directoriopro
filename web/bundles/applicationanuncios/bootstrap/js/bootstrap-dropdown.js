@@ -24,9 +24,10 @@ var is_mobile = ( navigator.userAgent.match(/Android/i) || navigator.userAgent.m
 
   var d = 'a.menu, .dropdown-toggle'
   
-  // si no es movil mostrar opciones menu ocultas	
+  // si no es movil mostrar opciones menu ocultas
   if( is_mobile ){
   	$('.dropdown .hide').show();
+  	$('.dropdown .dropdown-toggle').attr('href','#');
   }
 
   function clearMenus() {
