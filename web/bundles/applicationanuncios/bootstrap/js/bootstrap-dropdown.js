@@ -18,10 +18,16 @@
  * ============================================================ */
 
 var timer_menu = false;
+var is_mobile = ( navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/iPad/i) );
 
 (function( $ ){
 
   var d = 'a.menu, .dropdown-toggle'
+  
+  // si no es movil mostrar opciones menu ocultas	
+  if( is_mobile ){
+  	$('.dropdown .hide').show();
+  }
 
   function clearMenus() {
     $(d).parent('li').removeClass('open')
@@ -50,17 +56,20 @@ var timer_menu = false;
 		},2000);
         return false
       });
+      
+      
+      // solo activar click si es dispositivo movil
+      if( is_mobile ){
+	      $(this).delegate(selector || d, 'click', function (e) {
+	        var li = $(this).parent('li')
+	          , isActive = li.hasClass('open')
 	
-      /*
-      $(this).delegate(selector || d, 'click', function (e) {
-        var li = $(this).parent('li')
-          , isActive = li.hasClass('open')
-
-        clearMenus()
-        !isActive && li.toggleClass('open')
-        return false
-      });
-      */
+	        clearMenus()
+	        !isActive && li.toggleClass('open')
+	        return false
+	      });
+      }
+      
 
     })
   }
