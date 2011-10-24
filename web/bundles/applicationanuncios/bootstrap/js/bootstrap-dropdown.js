@@ -44,19 +44,7 @@ var is_mobile = ( navigator.userAgent.match(/Android/i) || navigator.userAgent.m
 
   $.fn.dropdown = function ( selector ) {
     return this.each(function () {
-      $(this).delegate(selector || d, 'mouseover', function (e) {
-		if( timer_menu ) clearTimeout( timer_menu );
-		clearMenus();
-        var li = $(this).parent('li').addClass('open');
-        return false
-      });
 
-      $(this).delegate(selector || d, 'mouseout', function (e) {
-		timer_menu = setTimeout(function(){
-			clearMenus();
-		},2000);
-        return false
-      });
       
       
       // solo activar click si es dispositivo movil
@@ -69,6 +57,23 @@ var is_mobile = ( navigator.userAgent.match(/Android/i) || navigator.userAgent.m
 	        !isActive && li.toggleClass('open')
 	        return false
 	      });
+      }else{
+      	
+	      $(this).delegate(selector || d, 'mouseover', function (e) {
+			if( timer_menu ) clearTimeout( timer_menu );
+			clearMenus();
+	        var li = $(this).parent('li').addClass('open');
+	        return false
+	      });
+	
+	      $(this).delegate(selector || d, 'mouseout', function (e) {
+			timer_menu = setTimeout(function(){
+				clearMenus();
+			},2000);
+	        return false
+	      });
+      	
+      	
       }
       
 
