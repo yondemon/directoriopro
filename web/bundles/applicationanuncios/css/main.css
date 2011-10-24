@@ -156,7 +156,7 @@ UL.list LI{clear:both;margin-bottom:10px}
 	.topbar .brand:hover{text-decoration:none}
 .topbar a{text-shadow:none}
 .nav a{color:#000}
-.topbar input {margin-top:1px;border: 1px solid #CCC;background:#fff url('../images/icon_search.png') no-repeat 10px center;color:#000;-webkit-border-radius:14px;border-radius:14px}
+.topbar input {margin-top:1px;border: 1px solid #CCC;background:#fff url('../images/icon_search.png') no-repeat 10px center;color:#000;-webkit-border-radius:14px;border-radius:14px;padding-left:30px;width:135px}
 .topbar div > ul a:hover, .nav a:hover {color:#000;background-color:#F7F7F7;}
 .topbar div > ul li.active > a, .nav li.active > a{color:black;background-color:#efefef;}
 
