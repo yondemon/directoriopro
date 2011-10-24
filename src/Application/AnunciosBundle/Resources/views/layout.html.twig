@@ -1,4 +1,4 @@
-{% set static_id = 32 %}
+{% set static_id = 33 %}
 {% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros", "Maquetador"] %}
 {% set analytics_id = "UA-16938408-8" %}
 {% set sitename = "Betabeers" %}
@@ -45,7 +45,7 @@
 				<li class="dropdown">
 					<a href="{{ path('post') }}" class="dropdown-toggle">Empleo</a>
     				<ul class="dropdown-menu">
-    					<li class="hide"><a href="{{ path('post') }}">Empleo</a></li>
+    					<li class="hide_op"><a href="{{ path('post') }}">Empleo</a></li>
 						<li><a href="{{ path('post_search') }}?t=1">Freelance</a></li>
 						<li><a href="{{ path('post_search') }}?t=2">Colaboraciones</a></li>
 					</ul>
@@ -54,7 +54,7 @@
 				<li class="dropdown">
 					<a href="{{ path('user') }}" class="dropdown-toggle">Profesionales</a>
     				<ul class="dropdown-menu">
-    					<li class="hide"><a href="{{ path('user') }}">Profesionales</a></li>
+    					<li class="hide_op"><a href="{{ path('user') }}">Profesionales</a></li>
 						<li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
 						<li><a href="{{ path('user_freelance') }}">Freelance</a></li>
 					</ul>
