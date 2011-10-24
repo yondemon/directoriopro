@@ -1095,4 +1095,67 @@ class UserController extends Controller
     }
 
 
+    /**
+     * Admin User entities.
+     *
+     * @Route("/admin", name="user_admin")
+     * @Template()
+     */
+    public function adminAction()
+    {
+	
+		$session = $this->getRequest()->getSession();
+		if( !$session->get('admin') ){
+			return $this->redirect('/');
+		}
+	
+	
+		$request = $this->getRequest();
+		$page = $request->query->get('page');
+		if( !$page ) $page = 1;
+	
+        $em = $this->getDoctrine()->getEntityManager();
+
+
+
+
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'u')
+		   ->add('from', 'ApplicationUserBundle:User u')
+		   ->add('orderBy', 'u.id DESC');
+		
+		// categoria?
+		$category_id = $request->query->get('c');
+		if( $category_id ){
+		   $query->add('where', 'u.category_id = :category_id')->setParameter('category_id', $category_id);
+		}
+		
+		
+        $adapter = new DoctrineORMAdapter($query);
+        $pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setMaxPerPage(20); // 10 by default
+		$maxPerPage = $pagerfanta->getMaxPerPage();
+
+		$pagerfanta->setCurrentPage($page); // 1 by default
+		$entities = $pagerfanta->getCurrentPageResults();
+		$routeGenerator = function($page,$category_id) {
+			$url = '?page='.$page;
+			if( $category_id ) $url .= '&c=' . $category_id;
+		    return $url;
+		};
+		$view = new DefaultView();
+		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
+		
+		// estadisticas de anuncios
+		$query = "SELECT COUNT(p.id) AS total, p.category_id FROM Post p GROUP BY p.category_id ORDER BY total DESC";
+		$db = $this->get('database_connection');
+        $categories = $db->fetchAll($query);
+
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+
+        return array('categories_aux' => $categories, 'pager' => $html, 'entities' => $entities);
+    }
+
 }
