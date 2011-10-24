@@ -582,11 +582,13 @@ class PostController extends Controller
 
 		$pagerfanta->setCurrentPage($page); // 1 by default
 		$entities = $pagerfanta->getCurrentPageResults();
-		$routeGenerator = function($page) {
-		    return '?page='.$page;
+		$routeGenerator = function($page,$category_id) {
+			$url = '?page='.$page;
+			if( $category_id ) $url .= '&c=' . $category_id;
+		    return $url;
 		};
 		$view = new DefaultView();
-		$html = $view->render($pagerfanta, $routeGenerator);
+		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
 		
 
 
