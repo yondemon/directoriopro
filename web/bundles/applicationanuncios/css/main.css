@@ -163,6 +163,11 @@ UL.list LI{clear:both;margin-bottom:10px}
 ul.nav li.open{background-color:#191919}
 .topbar div > ul a, .nav a{padding:10px 10px 11px 11px;}
 
+/* buscador */
+#menu_options{position:absolute;background:#fff;color:white;width:210px;display:none;border:1px #AFAFAF solid;-webkit-box-shadow:1px 1px 4px #888;box-shadow:1px 1px 4px #888;-moz-box-shadow:1px 1px 4px #888}
+	#menu_options a{color:#0063DC;display:block;padding:10px;border-bottom:1px #ccc solid}
+		#menu_options a:hover{background:#C3DDFF;text-decoration:none}
+
 /* triangle menu dropdown */
 .dropdown li.hide_op{display:none;}
 a.menu:after,.dropdown-toggle:after{width:0;height:0;display:inline-block;content:"&darr;";text-indent:-99999px;vertical-align:top;margin-top:8px;margin-left:4px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid #000;filter:alpha(opacity=50);-khtml-opacity:0.5;-moz-opacity:0.5;opacity:0.5;}
