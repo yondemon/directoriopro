@@ -590,13 +590,16 @@ class PostController extends Controller
 		$view = new DefaultView();
 		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
 		
-
+		// estadisticas de anuncios
+		$query = "SELECT COUNT(p.id) AS total, p.category_id FROM Post p GROUP BY p.category_id ORDER BY total DESC";
+		$db = $this->get('database_connection');
+        $categories = $db->fetchAll($query);
 
 
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 
-        return array('pager' => $html, 'entities' => $entities );
+        return array('categories_aux' => $categories, 'pager' => $html, 'entities' => $entities);
     }
 
     /**
