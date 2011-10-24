@@ -51,6 +51,7 @@ var timer_menu = false;
         return false
       });
 	
+      /*
       $(this).delegate(selector || d, 'click', function (e) {
         var li = $(this).parent('li')
           , isActive = li.hasClass('open')
@@ -59,6 +60,7 @@ var timer_menu = false;
         !isActive && li.toggleClass('open')
         return false
       });
+      */
 
     })
   }
