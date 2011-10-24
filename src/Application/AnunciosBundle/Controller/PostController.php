@@ -756,7 +756,7 @@ class PostController extends Controller
 		$query = $em->createQueryBuilder();
 		$query->add('select', 'COUNT(u.id) AS total, u.date')
 		   ->add('from', 'ApplicationUserBundle:User u')
-		   ->andWhere("u.date BETWEEN '" . date('Y-m-d',strtotime("-1 month")) . "00:00:00' AND '" . date('Y-m-d') . "'")
+		   ->andWhere("u.date BETWEEN '" . date('Y-m-d',strtotime("-1 month")) . "00:00:00' AND '" . date('Y-m-d') . " 23:59:59'")
 		   ->groupBy('u.date');
 		$users_month_aux = $query->getQuery()->getResult();
 
