@@ -734,4 +734,94 @@ class PostController extends Controller
 
         return array('pager' => $html, 'entities' => $entities );
     }
+
+
+    /**
+     * Admin Stats
+     *
+     * @Route("/stats", name="post_stats")
+     * @Template()
+     */
+    public function statsAction()
+    {
+	
+		$session = $this->getRequest()->getSession();
+		if( !$session->get('admin') ){
+			return $this->redirect('/');
+		}
+	
+		$em = $this->getDoctrine()->getEntityManager();
+	
+		// usuarios registrados mes
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'COUNT(u.id) AS total, u.date')
+		   ->add('from', 'ApplicationUserBundle:User u')
+		   ->andWhere("u.date BETWEEN '" . date('Y-m-d',strtotime("-1 month")) . "00:00:00' AND '" . date('Y-m-d') . "'")
+		   ->groupBy('u.date');
+		$users_month_aux = $query->getQuery()->getResult();
+
+		$users_month = array();
+		if( $users_month_aux ){
+			foreach( $users_month_aux as $item ){
+				$k = (int)substr($item['date'],8,2);
+				if( !isset( $users_month[$k] ) ) $users_month[$k] = 1;
+				else $users_month[$k] += $item['total'];
+			}
+		}
+
+		$db = $this->get('database_connection');
+
+		// usuarios registrados
+		$query = "SELECT COUNT(u.id) AS total FROM User u";
+		$result = $db->query($query)->fetch();
+		$total_users = $result['total'];
+
+		// usuarios referidos
+		$query = "SELECT COUNT(u.id) AS total FROM User u WHERE u.ref_id IS NOT NULL";
+		$result = $db->query($query)->fetch();
+		$total_ref = $result['total'];
+
+		// usuarios facebook
+		$query = "SELECT COUNT(u.id) AS total FROM User u WHERE u.facebook_id IS NOT NULL";
+		$result = $db->query($query)->fetch();
+		$total_fb = $result['total'];
+
+		// buscan empleo
+		$query = "SELECT COUNT(u.id) AS total FROM User u WHERE u.unemployed = 1";
+		$result = $db->query($query)->fetch();
+		$total_unemployed = $result['total'];
+
+		// freelance
+		$query = "SELECT COUNT(u.id) AS total FROM User u WHERE u.freelance = 1";
+		$result = $db->query($query)->fetch();
+		$total_freelance = $result['total'];
+
+		// recomendados
+		$query = "SELECT COUNT(c.id) AS total FROM Comment c";
+		$result = $db->query($query)->fetch();
+		$total_comments = $result['total'];
+
+
+		// anuncios
+		$query = "SELECT COUNT(p.id) AS total FROM Post p";
+		$result = $db->query($query)->fetch();
+		$total_posts = $result['total'];
+
+		// freelance
+		$query = "SELECT COUNT(p.id) AS total FROM Post p WHERE p.type = 1";
+		$result = $db->query($query)->fetch();
+		$total_posts_freelance = $result['total'];
+
+		// colaboracion
+		$query = "SELECT COUNT(p.id) AS total FROM Post p WHERE p.type = 2";
+		$result = $db->query($query)->fetch();
+		$total_posts_colaboracion = $result['total'];
+
+
+
+        return array(
+        	'users_month' => $users_month, 'total_users' => $total_users, 'total_ref' => $total_ref, 'total_fb' => $total_fb, 'total_unemployed' => $total_unemployed,
+	        'total_freelance' => $total_freelance, 'total_comments' => $total_comments, 'total_posts' => $total_posts, 'total_posts_freelance' => $total_posts_freelance, 'total_posts_colaboracion' => $total_posts_colaboracion
+	    	);
+    }
 }
