@@ -164,7 +164,7 @@ ul.nav li.open{background-color:#191919}
 .topbar div > ul a, .nav a{padding:10px 10px 11px 11px;}
 
 /* triangle menu dropdown */
-.hide{display:none}
+.menu-dropdown li.hide{display:none;}
 a.menu:after,.dropdown-toggle:after{width:0;height:0;display:inline-block;content:"&darr;";text-indent:-99999px;vertical-align:top;margin-top:8px;margin-left:4px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid #000;filter:alpha(opacity=50);-khtml-opacity:0.5;-moz-opacity:0.5;opacity:0.5;}
 .open a.dropdown-toggle:after{border-top:4px solid #fff}
 
