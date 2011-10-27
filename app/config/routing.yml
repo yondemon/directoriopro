@@ -1,3 +1,8 @@
+ApplicationProjectBundle:
+    resource: "@ApplicationProjectBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 _welcome:
     pattern:  /
     defaults: { _controller: ApplicationAnunciosBundle:Post:index }

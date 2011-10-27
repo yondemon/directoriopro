@@ -104,7 +104,8 @@ class DefaultView implements ViewInterface
                 $pagesHtml .= $page;
             } else {
 				if( !isset( $options['category_id'] ) ) $options['category_id'] = false;
-                $pagesHtml .= '<li><a href="'.$routeGenerator($page[0],$options['category_id']).'">'.$page[1].'</a></li>';
+				if( !isset( $options['type'] ) ) $options['type'] = false;
+                $pagesHtml .= '<li><a href="'.$routeGenerator($page[0],$options['category_id'],$options['type']).'">'.$page[1].'</a></li>';
             }
         }
 

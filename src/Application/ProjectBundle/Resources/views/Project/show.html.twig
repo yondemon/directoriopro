@@ -1,0 +1,51 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% block title entity.title %}
+
+{% block sidebar %}
+	{% if entity.url %}<a href="{{ entity.url }}" target="_blank" class="btn primary">Visitar Web</a><br/>{% endif %}
+
+	<a class="btn" href="{{ path('project_comments_new', { 'id': entity.id }) }}">Enviar sugerencia</a><br/>
+
+    {% if user.id == app.session.get('id') or app.session.get('admin') == 1 %}
+        <a class="btn" href="{{ path('project_edit', { 'id': entity.id }) }}">Editar proyecto</a><br/>
+    {% endif %}
+
+
+	<a href="{{ path('project_comments', { 'id': entity.id }) }}" style="text-decoration:none;color:black;padding:10px;background:#FDF5D9;text-align:center">
+		<span style="display:block;margin-bottom:10px">Sugerencias</span>
+		<b>{{ total_ideas }}</b> <img src="{{ asset('bundles/applicationanuncios/images/talent.png') }}" width="24" height="24" align="absmiddle" data-original-title="Ideas" rel="twipsy"/> &nbsp;&nbsp; 
+		<b>{{ total_bugs }}</b> <img src="{{ asset('bundles/applicationanuncios/images/bug.png') }}" width="24" height="24" align="absmiddle" data-original-title="Bugs" rel="twipsy"/>
+	</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<ul class="breadcrumb">
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  {% if entity.type == 0 %}
+  	<li><a href="{{ path('project') }}">Ideas</a> <span class="divider">/</span></li>
+  {% elseif entity.type == 1 %}
+    <li><a href="{{ path('project') }}?t=1">Beta</a> <span class="divider">/</span></li>
+  {% elseif entity.type == 2 %}
+    <li><a href="{{ path('project') }}?t=2">Startup</a> <span class="divider">/</span></li>
+  {% endif %}
+  <li><a href="{{ path('project_show', { 'id': entity.id }) }}">{{ entity.title }}</a></li>
+</ul>
+
+<h1>{{ entity.title }}</h1>
+
+<pre>{{ entity.body }}</pre>
+
+{% if youtube_id %}
+	<p><iframe width="350" height="208" src="http://www.youtube.com/embed/{{ youtube_id }}" frameborder="0" allowfullscreen></iframe></p>
+{% endif %}
+
+
+
+<p>Publicado por <a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas</p>
+
+
+
+{% endblock %}

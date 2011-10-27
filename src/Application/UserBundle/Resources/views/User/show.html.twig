@@ -23,15 +23,12 @@
 	{% endif %}
 	<br/>
 	
-	{% if comments %}
-		<b style="display:block;margin-bottom:7px">Recomendaciones</b>
-		
-		{% for item in comments %}
-			<a href="{{ path('user_comment', { 'user_id': entity.id, 'comment_id': item.comment_id }) }}" style="float:left;margin-right:5px;padding-top:0;display:inline" data-original-title="<b>{{ categories[item.category_id] }}</b><br/>{{ item.name }}" rel="twipsy"><img src="{{ item.user.getAvatar('normal') }}" width="40" height="40" /></a>
-		{% endfor %}
-	
-		<br class="clear"/><a href="{{ path('user_comments', { 'id': entity.id }) }}">Ver todas</a>
-	{% endif %}
+	<a href="{{ path('user_comments', { 'id': entity.id }) }}" style="text-decoration:none;color:black;padding:10px;background:#FDF5D9;text-align:center">
+		<span style="display:block;margin-bottom:10px">Recomendaciones</span>
+		<b>{{ total_wannawork }}</b> <img src="{{ asset('bundles/applicationanuncios/images/star.png') }}" width="24" height="24" align="absmiddle" data-original-title="Quiero trabajar con esta persona" rel="twipsy"/> &nbsp;&nbsp; 
+		<b>{{ total_like }}</b> <img src="{{ asset('bundles/applicationanuncios/images/wannawork.png') }}" width="24" height="24" align="absmiddle" data-original-title="Me gusta lo que hace" rel="twipsy"/> &nbsp;&nbsp; 
+		<b>{{ total_work }}</b> <img src="{{ asset('bundles/applicationanuncios/images/weworked.png') }}" width="24" height="24" align="absmiddle" data-original-title="He trabajdo con esta persona" rel="twipsy"/>
+	</a>
 	
 {% endblock %}
 
@@ -156,6 +153,10 @@
 
 
 
+<style>
+.links A{color:#666;background:#F3F3F3;width:90px;padding:5px 0;float:left;text-align:center;margin:0 10px 10px 0}
+</style>
+
 
 
 <div class="active" id="info">
@@ -164,8 +165,32 @@
 	{% else %}
 		<pre>El usuario todavía no ha completado su descripción</pre>
 	{% endif %}
-	
-	{% if entity.url %}<a rel="nofollow,noindex" target="_blank" class="ico portafolio" href="{{ entity.url }}">Visitar Portafolio</a>{% endif %}
+
+
+
+
+
+
+	<div class="links">
+		{% if entity.url %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.url }}">Portafolio</a>{% endif %}
+		{% if entity.getTwitterUrl() %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.getTwitterUrl() }}">Twitter</a>{% endif %}
+		{% if entity.getLinkedinUrl() %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.getLinkedinUrl() }}">Linkedin</a>{% endif %}
+		
+		{% if entity.getFlickrUrl() %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.getFlickrUrl() }}">Flickr</a>{% endif %}
+		{% if entity.getDribbbleUrl() %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.getDribbbleUrl() }}">Dribbble</a>{% endif %}
+		{% if entity.getForrstUrl() %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.getForrstUrl() }}">Forrst</a>{% endif %}
+		
+		{% if entity.getGithubUrl() %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.getGithubUrl() }}">Github</a>{% endif %}
+		{% if entity.getStackoverflowUrl() %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.getStackoverflowUrl() }}">Stackoverflow</a>{% endif %}
+		{% if entity.getMasterbranchUrl() %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.getMasterbranchUrl() }}">Masterbranch</a>{% endif %}
+		
+		{% if entity.getYoutubeUrl() %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.getYoutubeUrl() }}">Youtube</a>{% endif %}
+		{% if entity.getVimeoUrl() %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.getVimeoUrl() }}">Vimeo</a>{% endif %}
+		
+		{% if entity.getDeliciousUrl() %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.getDeliciousUrl() }}">Delicious</a>{% endif %}
+		{% if entity.getPinboardUrl() %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.getPinboardUrl() }}">Pinboard</a>{% endif %}
+		<br class="clear"/>
+	</div>
 </div>
 
 

@@ -1,0 +1,60 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Publicar proyecto" %}
+
+{% block content %}
+
+<h1>Publicar proyecto</h1>
+
+<style>
+TEXTAREA.xlarge{width:430px}
+#application_projectbundle_projecttype_type label{float:none;margin:0 20px 0 5px}
+</style>
+
+
+
+<form action="{{ path('project_create') }}" method="post" {{ form_enctype(form) }}>
+
+	{{ form_errors(form) }}
+
+
+	{{ form_row(form.type, { 'label': 'Tipo' }) }}
+	
+	
+	<div class="clearfix ">
+		<label for="application_projectbundle_projecttype_category_id" class=" required">Categoría</label>
+		<div class="input">
+			<select id="application_projectbundle_projecttype_category_id" name="application_projectbundle_projecttype[category_id]" required="required" class="xlarge" rows="9">
+				{% for category in categories_project %}
+					{% if loop.index0 > 0 %}
+						<option value="{{loop.index0}}">{{category}}</a>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+	
+
+
+	{{ form_row(form.title, { 'label': 'Titulo' }) }}
+	
+	{{ form_row(form.body, { 'label': 'Descripción' }) }}
+	{{ form_row(form.url, { 'label': 'URL' }) }}
+	{{ form_row(form.youtube_url, { 'label': 'Youtube URL' }) }}
+	
+	
+
+
+
+	<div class="actions">
+        <button type="submit" class="btn primary">Publicar</button>
+	</div>
+
+	{{ form_row(form._token) }}
+
+</form>
+
+
+
+{% endblock %}

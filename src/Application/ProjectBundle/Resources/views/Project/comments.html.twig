@@ -1,0 +1,65 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+
+{% block title "Sugerencias" %}
+
+{% block sidebar %}
+
+	<div class="alert-message block-message warning" style="padding:14px 0;width:179px;text-align:center">
+		Sugerencias
+		<b style="font-size:80px;display:block;text-align:center;line-height:80px">{{ total }}</b>
+	</div>
+			
+	<a href="{{ path('project_comments_new', { 'id': project.id }) }}" class="btn primary large">Enviar sugerencia</a>
+
+{% endblock %}
+
+{% block content %}
+
+
+	<ul class="breadcrumb">
+	  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+
+	  {% if project.type == 0 %}
+	  	<li><a href="{{ path('project') }}">Ideas</a> <span class="divider">/</span></li>
+	  {% elseif project.type == 1 %}
+	    <li><a href="{{ path('project') }}?t=1">Beta</a> <span class="divider">/</span></li>
+	  {% elseif project.type == 2 %}
+	    <li><a href="{{ path('project') }}?t=2">Startup</a> <span class="divider">/</span></li>
+	  {% endif %}
+
+	  <li><a href="{{ path('project_show', { 'id': project.id }) }}">{{ project.title }}</a> <span class="divider">/</span></li>
+	  <li><a href="{{ path('project_comments', { 'id': project.id }) }}">Sugerencias</a></li>
+	</ul>
+
+
+	<h1>Sugerencias a {{ project.title }}</h1>
+	
+	{% if comments %}
+		{% for item in comments %}
+			<br/>
+			<div class="row">
+				<div class="span1">
+					{% if item.type == 0 %}					
+						<img src="{{ asset('bundles/applicationanuncios/images/talent.png') }}" width="48" height="48" data-original-title="Idea" rel="twipsy" />
+					{% elseif item.type == 1 %}					
+						<img src="{{ asset('bundles/applicationanuncios/images/bug.png') }}" width="48" height="48" data-original-title="Bug" rel="twipsy" />
+					{% endif %}
+				</div>
+				<div class="span3">
+					<a href="{{ path('user_show', { 'id': item.from_id }) }}">{{ item.name }}</a><br/>
+					{{ categories[item.category_id] }}<br/>
+					<a href="{{ path('project_comment_show', { 'project_id': project.id, 'comment_id': item.id }) }}" class="date">{{ item.date|date('d/m/Y') }}</a>
+				</div>
+				<div class="span6">
+					<pre>{{ item.body }}</pre>
+				</div>
+			</div>
+			<br/>
+		{% endfor %}
+	{% else %}
+		Todavia no ha recibido ninguna sugerencia
+	{% endif %}
+	
+	
+{% endblock %}

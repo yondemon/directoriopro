@@ -1,0 +1,37 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Enviar sugerencia" %}
+
+{% block content %}
+
+<style>
+TEXTAREA.xlarge{width:430px}
+</style>
+
+	<h1>Enviar sugerencia a {{ project.title }}</h1>
+	
+
+	<form action="{{ path('project_comments_new', { 'id': project.id }) }}" method="post">
+
+
+		{{ form_errors(form) }}
+
+
+		{{ form_row(form._token) }}
+        {{ form_row(form.body, { 'label': 'Comentario' }) }}
+        {{ form_row(form.type, { 'label': 'Tipo' }) }}
+
+
+
+
+
+		<div class="actions">
+			<button type="submit" class="btn primary">Enviar sugerencia</button> &nbsp;
+			<a href="{{ path('project_show', { 'id': project.id }) }}" class="btn">Volver</a>
+		</div>
+
+
+	</form>
+	
+{% endblock %}

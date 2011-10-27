@@ -1,5 +1,9 @@
 {% set static_id = 35 %}
+
 {% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros", "Maquetador"] %}
+
+{% set categories_project = ["Todos","Viajes","Productividad","Classificados","Educación","Fotografía","Juegos","Música","Red social","Deportes","Salud","Ocio","Otros"] %}
+
 {% set analytics_id = "UA-16938408-8" %}
 {% set sitename = "Betabeers" %}
 {% if form_category is not defined %}
@@ -53,6 +57,15 @@
     					<li class="hide_op"><a href="{{ path('user') }}">Profesionales</a></li>
 						<li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
 						<li><a href="{{ path('user_freelance') }}">Freelance</a></li>
+					</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="{{ path('project') }}" class="dropdown-toggle">Ideas</a>
+    				<ul class="dropdown-menu">
+    					<li class="hide_op"><a href="{{ path('project') }}">Ideas</a></li>
+						<li><a href="{{ path('project') }}?t=1">Beta</a></li>
+						<li><a href="{{ path('project') }}?t=2">Startup</a></li>
 					</ul>
 				</li>
 				

@@ -43,7 +43,6 @@ class PostController extends Controller
 
 
 
-
 		$query = $em->createQueryBuilder();
 		$query->add('select', 'p')
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
@@ -276,13 +275,11 @@ class PostController extends Controller
 		
 		if( ( $entity->getUserId() == $user_id ) || $admin ){
 
-	       $editForm = $this->createForm(new PostType(), $entity);
-	        $deleteForm = $this->createDeleteForm($id);
+			$editForm = $this->createForm(new PostType(), $entity);
 
 	        return array(
 	            'entity'      => $entity,
 	            'edit_form'   => $editForm->createView(),
-	            'delete_form' => $deleteForm->createView(),
 	        );
 	
 		}else{
@@ -320,7 +317,6 @@ class PostController extends Controller
 		if( ( $entity->getUserId() == $user_id ) || $admin ){
 
 	        $editForm   = $this->createForm(new PostType(), $entity);
-	        $deleteForm = $this->createDeleteForm($id);
 
 	        $request = $this->getRequest();
 
@@ -336,7 +332,6 @@ class PostController extends Controller
 	        return array(
 	            'entity'      => $entity,
 	            'edit_form'   => $editForm->createView(),
-	            'delete_form' => $deleteForm->createView(),
 	        );
 	
 		}else{
@@ -524,13 +519,7 @@ class PostController extends Controller
 
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
+    
 
     /**
      * Admin Post entities.

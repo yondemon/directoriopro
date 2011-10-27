@@ -180,6 +180,7 @@ class UserController extends Controller
 			$contact_form_html = $contact_form->createView();
 		}
 
+		/*
 		// comentarios a la persona
 		$query = $em->createQuery("SELECT c.id as comment_id, u.id as user_id, u.name, u.category_id, u.avatar_type, u.twitter_url, u.facebook_id, u.email FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.from_id AND c.to_id = :id ORDER BY c.id DESC");
 		$query->setParameter('id', $id);
@@ -198,11 +199,32 @@ class UserController extends Controller
 				$comments[$i]['user'] = $user_comment;
 			}
 		}
+		*/
+		
+		// contadores
+		$query = $em->createQuery("SELECT COUNT(c) as total FROM ApplicationUserBundle:Comment c WHERE c.to_id = :id AND c.type = 0");
+		$query->setParameter('id', $id);
+		$total = current($query->getResult());
+		$total_like = $total['total'];
+		
+		$query = $em->createQuery("SELECT COUNT(c) as total FROM ApplicationUserBundle:Comment c WHERE c.to_id = :id AND c.type = 1");
+		$query->setParameter('id', $id);
+		$total = current($query->getResult());
+		$total_wannawork = $total['total'];
+		
+		$query = $em->createQuery("SELECT COUNT(c) as total FROM ApplicationUserBundle:Comment c WHERE c.to_id = :id AND c.type = 2");
+		$query->setParameter('id', $id);
+		$total = current($query->getResult());
+		$total_work = $total['total'];
+		
 
         return array(
             'entity'       => $entity,
 			'contact_form' => $contact_form_html,
-			'comments'     => $comments
+			//'comments'     => $comments,
+			'total_work' => $total_work,
+			'total_wannawork' => $total_wannawork,
+			'total_like' => $total_like
 			);
     }
 

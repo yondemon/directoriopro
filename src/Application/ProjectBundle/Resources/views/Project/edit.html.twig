@@ -1,0 +1,65 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme edit_form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Editar idea" %}
+
+{% block content %}
+
+<h1>Editar idea</h1>
+
+<style>
+TEXTAREA.xlarge{width:430px}
+#application_projectbundle_projecttype_type label{float:none;margin:0 20px 0 5px}
+</style>
+
+
+
+<form action="{{ path('project_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+
+    {{ form_errors(edit_form) }}
+
+
+    {{ form_row(edit_form.type, { 'label': 'Tipo' }) }}
+
+
+    <div class="clearfix ">
+		<label for="application_projectbundle_projecttype_category_id" class=" required">Categoría</label>
+		<div class="input">
+			<select id="application_projectbundle_projecttype_category_id" name="application_projectbundle_projecttype[category_id]" required="required" class="xlarge" rows="9">
+				{% for category in categories_project %}
+					{% if loop.index0 > 0 %}
+						<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+
+    {{ form_row(edit_form.title, { 'label': 'Titulo' }) }}
+    
+    {{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
+    {{ form_row(edit_form.url, { 'label': 'URL' }) }}
+    {{ form_row(edit_form.youtube_url, { 'label': 'Youtube URL' }) }}
+    
+    
+
+
+
+    <div class="actions">
+        <button type="submit" class="btn primary">Guardar cambios</button> &nbsp;
+        <a href="{{ path('project_show', { 'id': entity.id }) }}" class="btn">Cancelar</a> &nbsp;
+
+        {% if app.session.get('admin') %}   
+            <a href="{{ path('project_delete', { 'id': entity.id }) }}" class="btn danger pull-right">Eliminar</a>
+        {% endif %}
+
+    </div>
+
+    {{ form_row(edit_form._token) }}
+
+</form>
+
+
+
+{% endblock %}

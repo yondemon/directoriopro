@@ -1,0 +1,49 @@
+{% set nav_project = 1 %}
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title page_title %}
+
+
+{% block sidebar %}
+    <a href="{{ path('project_new') }}?t={{ type }}" class="btn large primary">Publicar proyecto</a>
+    <br/>
+
+    
+    <b>Filtrar por categoría</b><br/>
+    {% for category in categories_project %}
+        <a href="{{ path('project') }}?c={{loop.index0}}&t={{ type }}">{{category}}</a>
+    {% endfor %}
+
+
+
+    
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<h1>{{ page_title }}</h1>
+
+
+
+{% if entities %}
+    <ul>
+        {% for entity in entities %}
+            <li style="margin-bottom:20px;">
+                <b>{{ categories_project[ entity.getCategoryId() ] }}</b><br/>
+                <a href="{{ path('project_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
+                {{ entity.body|truncate(200) }}<br/>
+                <span class="date">{{ entity.date|date('d/m/Y') }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+    {{ pager|raw }}
+{% else %}
+    sin resultados
+{% endif %}
+
+
+
+{% endblock %}
