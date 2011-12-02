@@ -726,7 +726,7 @@ function autoGeo(){
 	$('#geo input:first').autocomplete({
 		source: function( request, response ) {
 			$.ajax({
-				url: "http://directoriopro.com/user/getlocation",//"http://ws.geonames.org/searchJSON",
+				url: "/user/getlocation",//"http://ws.geonames.org/searchJSON",
 				dataType: "jsonp",
 				data: {
 					//featureClass: "P",
