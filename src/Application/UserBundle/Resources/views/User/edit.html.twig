@@ -108,7 +108,18 @@ input.xlarge{width:230px}
 			</div>
 		</div>
 		{{ form_row(edit_form.name, { 'label': 'Nombre y apellidos' }) }}
-		{{ form_row(edit_form.location, { 'label': 'Localización' }) }}
+		
+		
+		
+		<div id="geo">
+			{{ form_row(edit_form.location, { 'label': 'Localización' }) }}
+			<div class="hide">
+				{{ form_row(edit_form.country_id, { 'label': 'country' }) }}
+				{{ form_row(edit_form.city_id, { 'label': 'city' }) }}
+			</div>
+		</div>
+		
+		
 		{{ form_row(edit_form.email, { 'label': 'Email' }) }}
 
 
@@ -213,16 +224,50 @@ input.xlarge{width:230px}
     </div>
 
 
+
+	
+
 	{{ form_row(edit_form._token) }}
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 
 
-</form>
+
+
+
+
+
+
+
+
 
 {% endblock %}
 
 
 {% block script_load %}
+
+	autoGeo();
+
 	$('.tabs').tabs();
 	
 	

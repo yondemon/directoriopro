@@ -35,6 +35,9 @@
 
 {% block content %}
 
+<script>
+var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackoverflow_user, masterbranch_user, youtube_user, vimeo_user, android_user, itunes_user, chrome_user, twitter_user, delicious_user, pinboard_user;
+</script>
 
 <style>
 .tabs > li > a{padding:0 10px}
@@ -194,209 +197,58 @@
 </div>
 
 
-{% if entity.linkedinurl %}
-	<div id="linkedin"></div>
-	<script>
-	var linkedin_user = '{{ entity.linkedinurl }}';
-	$('#tab_linkedin').show();
-	</script>
-{% endif %}
+
+<div id="linkedin"></div>
+<div id="dribbble">
+	<ul class="media-grid carrusel" id="dribbble_images"></ul>
+	<ul class="media-grid" id="dribbble_big"><li></li></ul>
+</div>
+<div id="flickr">
+	<ul class="media-grid carrusel" id="flickr_images"></ul>
+	<ul class="media-grid" id="flickr_big"><li></li></ul>
+</div>
+<div id="github">
+	<div id="github_graph"></div>
+	<ul id="github_projects" class="list"></ul>
+</div>
+<div id="forrst">
+	<ul id="forrst_list" class="unstyled"></ul>
+</div>
+<div id="stackoverflow">
+	<ul id="stackoverflow_list" class="list"></ul>
+</div>
+<div id="masterbranch"></div>
+<div id="youtube">
+	<ul class="media-grid carrusel" id="youtube_list"></ul>
+	<div id="youtube_big"></div>
+</div>
+<div id="vimeo">
+	<ul class="media-grid carrusel" id="vimeo_list"></ul>
+	<div id="vimeo_big"></div>
+</div>
+<div id="android">
+	<ul id="android_list"></ul>
+</div>
+<div id="itunes">
+	<ul id="itunes_list"></ul>
+</div>
+<div id="chrome">
+	<ul id="chrome_list"></ul>
+</div>
+<div id="twitterstatus">
+	<div id="twitterstatus_info" class="clear"></div>
+	<ul id="twitterstatus_list"></ul>
+</div>
+<div id="twitter"></div>
+<div id="delicious">
+	<ul id="delicious_list" class="clear"></ul>
+</div>
+<div id="pinboard">
+	<ul id="pinboard_list" class="clear"></ul>
+</div>
 
 
-{% if entity.dribbbleurl %}
 
-	<div id="dribbble">
-		<ul class="media-grid carrusel" id="dribbble_images"></ul>
-		<ul class="media-grid" id="dribbble_big"><li></li></ul>
-	</div>
-
-	<script>
-	var dribbble_user = '{{ entity.dribbbleurl }}';
-	$('#tab_dribbble').show();
-	</script>
-
-{% endif %}
-
-
-{% if entity.flickrurl %}
-
-	<div id="flickr">
-		<ul class="media-grid carrusel" id="flickr_images"></ul>
-		<ul class="media-grid" id="flickr_big"><li></li></ul>
-	</div>
-
-	<script>
-	var flickr_user = '{{ entity.flickrurl }}';
-	$('#tab_flickr').show();
-	</script>
-
-{% endif %}
-
-
-{% if entity.githuburl %}
-
-	<div id="github">
-		<div id="github_graph"></div>
-		<ul id="github_projects" class="list"></ul>
-	</div>
-
-	<script>
-	var github_user = '{{ entity.githuburl }}';
-	$('#tab_github').show();
-	</script>
-
-{% endif %}
-
-{% if entity.forrsturl %}
-
-	<div id="forrst">
-		<ul id="forrst_list" class="unstyled"></ul>
-	</div>
-
-	<script>
-	var forrst_user = '{{ entity.forrsturl }}';
-	$('#tab_forrst').show();
-	</script>
-
-{% endif %}
-
-{% if entity.stackoverflowurl %}
-
-	<div id="stackoverflow">
-		<ul id="stackoverflow_list" class="list"></ul>
-	</div>
-
-	<script>
-	var stackoverflow_user = '{{ entity.stackoverflowurl }}';
-	$('#tab_stackoverflow').show();
-	</script>
-
-{% endif %}
-
-
-{% if entity.masterbranchurl %}
-
-	<div id="masterbranch"></div>
-
-	<script>
-	var masterbranch_user = '{{ entity.masterbranchurl }}';
-	$('#tab_masterbranch').show();
-	</script>
-
-{% endif %}
-
-
-{% if entity.youtubeurl %}
-	
-	<div id="youtube">
-		<ul class="media-grid carrusel" id="youtube_list"></ul>
-		<div id="youtube_big"></div>
-	</div>
-
-	<script>
-	var youtube_user = '{{ entity.youtubeurl }}';
-	$('#tab_youtube').show();
-	</script>
-
-{% endif %}
-
-{% if entity.vimeourl %}
-	
-	<div id="vimeo">
-		<ul class="media-grid carrusel" id="vimeo_list"></ul>
-		<div id="vimeo_big"></div>
-	</div>
-
-	<script>
-	var vimeo_user = '{{ entity.vimeourl }}';
-	$('#tab_vimeo').show();
-	</script>
-
-{% endif %}
-
-
-{% if entity.androidurl %}
-	
-	<div id="android">
-		<ul id="android_list"></ul>
-	</div>
-
-	<script>
-	var android_user = '{{ entity.androidurl }}';
-	$('#tab_android').show();
-	</script>
-
-{% endif %}
-
-
-{% if entity.itunesurl %}
-	
-	<div id="itunes">
-		<ul id="itunes_list"></ul>
-	</div>
-
-	<script>
-	var itunes_user = '{{ entity.itunesurl }}';
-	$('#tab_itunes').show();
-	</script>
-
-{% endif %}
-
-
-{% if entity.chromeurl %}
-	
-	<div id="chrome">
-		<ul id="chrome_list"></ul>
-	</div>
-
-	<script>
-	var chrome_user = '{{ entity.chromeurl }}';
-	$('#tab_chrome').show();
-	</script>
-
-{% endif %}
-
-
-{% if entity.twitterurl %}
-
-	<div id="twitterstatus">
-		<div id="twitterstatus_info" class="clear"></div>
-		<ul id="twitterstatus_list"></ul>
-	</div>
-	<div id="twitter"></div>
-	<br class="clear"/>
-
-	<script>
-	var twitter_user = '{{ entity.twitterurl }}';
-	</script>
-
-{% endif %}
-
-{% if entity.deliciousurl %}
-
-	<div id="delicious">
-		<ul id="delicious_list" class="clear"></ul>
-	</div>
-
-	<script>
-	var delicious_user = '{{ entity.deliciousurl }}';
-	$('#tab_delicious').show();
-	</script>
-
-{% endif %}
-
-{% if entity.pinboardurl %}
-
-	<div id="pinboard">
-		<ul id="pinboard_list" class="clear"></ul>
-	</div>
-
-	<script>
-	var pinboard_user = '{{ entity.pinboardurl }}';
-	$('#tab_pinboard').show();
-	</script>
-
-{% endif %}
 
 </div>
 
@@ -409,4 +261,89 @@
 
 {% block script_load %}
 	$('.tabs').tabs();
+	
+	
+
+	{% if entity.linkedinurl %}
+		linkedin_user = '{{ entity.linkedinurl }}';
+		$('#tab_linkedin').show();
+	{% endif %}
+
+
+	{% if entity.dribbbleurl %}
+		dribbble_user = '{{ entity.dribbbleurl }}';
+		$('#tab_dribbble').show();
+	{% endif %}
+
+
+	{% if entity.flickrurl %}
+		flickr_user = '{{ entity.flickrurl }}';
+		$('#tab_flickr').show();
+	{% endif %}
+
+
+	{% if entity.githuburl %}
+		github_user = '{{ entity.githuburl }}';
+		$('#tab_github').show();
+	{% endif %}
+
+	{% if entity.forrsturl %}
+		forrst_user = '{{ entity.forrsturl }}';
+		$('#tab_forrst').show();
+	{% endif %}
+
+	{% if entity.stackoverflowurl %}
+		stackoverflow_user = '{{ entity.stackoverflowurl }}';
+		$('#tab_stackoverflow').show();
+	{% endif %}
+
+
+	{% if entity.masterbranchurl %}
+		masterbranch_user = '{{ entity.masterbranchurl }}';
+		$('#tab_masterbranch').show();
+	{% endif %}
+
+
+	{% if entity.youtubeurl %}
+		youtube_user = '{{ entity.youtubeurl }}';
+		$('#tab_youtube').show();
+	{% endif %}
+
+	{% if entity.vimeourl %}
+		vimeo_user = '{{ entity.vimeourl }}';
+		$('#tab_vimeo').show();
+	{% endif %}
+
+
+	{% if entity.androidurl %}
+		android_user = '{{ entity.androidurl }}';
+		$('#tab_android').show();
+	{% endif %}
+
+
+	{% if entity.itunesurl %}
+		itunes_user = '{{ entity.itunesurl }}';
+		$('#tab_itunes').show();
+	{% endif %}
+
+
+	{% if entity.chromeurl %}
+		chrome_user = '{{ entity.chromeurl }}';
+		$('#tab_chrome').show();
+	{% endif %}
+
+
+	{% if entity.twitterurl %}
+		twitter_user = '{{ entity.twitterurl }}';
+	{% endif %}
+
+	{% if entity.deliciousurl %}
+		delicious_user = '{{ entity.deliciousurl }}';
+		$('#tab_delicious').show();
+	{% endif %}
+
+	{% if entity.pinboardurl %}
+		pinboard_user = '{{ entity.pinboardurl }}';
+		$('#tab_pinboard').show();
+	{% endif %}
 {% endblock %}

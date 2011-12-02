@@ -1,0 +1,5 @@
+{% if callback %}
+	{{ callback }}({{ result|raw }})
+{% else %}
+	{{ result|raw }}
+{% endif %}

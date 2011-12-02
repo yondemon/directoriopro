@@ -51,7 +51,7 @@ TEXTAREA.xlarge{width:430px}
 			<input type="checkbox" id="chk_location"/> <label for="chk_location" style="float:none">¿Es un trabajo presencial?</label>
 		</div>
 	</div>
-	<div id="location">
+	<div id="geo">
 		{{ form_row(edit_form.location, { 'label': 'Localización' }) }}
 	</div>
 
@@ -77,7 +77,8 @@ TEXTAREA.xlarge{width:430px}
 
 {% block script_load %}
 
-		
+	autoGeo();
+	
 	// post type
 	$('#application_anunciosbundle_posttype_type input:eq(0)').click(function(){
 		$('#price').show();
@@ -93,15 +94,15 @@ TEXTAREA.xlarge{width:430px}
 	// need location?
 	$('#chk_location').click(function(){
 		if( $(this).attr('checked') ){
-			$('#location').show();
-			$('#location input:first').focus();
+			$('#geo').show();
+			$('#geo input:first').focus();
 		}else{
-			$('#location').hide();
-			$('#location input:first').val('');
+			$('#geo').hide();
+			$('#geo input:first').val('');
 		}
 	});
 	{% if entity.location == '' %}
-		$('#location').hide();
+		$('#geo').hide();
 	{% else %}
 		$('#chk_location').attr('checked','checked');
 	{% endif %}

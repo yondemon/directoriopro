@@ -17,7 +17,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>{% block title %}{% endblock %} - {{sitename}}</title>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+
+
 
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -37,7 +38,7 @@
 <div class="topbar" id="topbar">
 	<div class="fill">
 		<div class="container">
-			<a class="brand" href="{{ path('post') }}">{{sitename}}</a>
+			<a class="brand" href="/">{{sitename}}</a>
 			<ul class="nav">
 
 
@@ -59,7 +60,8 @@
 						<li><a href="{{ path('user_freelance') }}">Freelance</a></li>
 					</ul>
 				</li>
-
+				
+				<!--
 				<li class="dropdown">
 					<a href="{{ path('project') }}" class="dropdown-toggle">Ideas</a>
     				<ul class="dropdown-menu">
@@ -67,6 +69,12 @@
 						<li><a href="{{ path('project') }}?t=1">Beta</a></li>
 						<li><a href="{{ path('project') }}?t=2">Startup</a></li>
 					</ul>
+				</li>
+				-->
+				
+
+				<li class="dropdown">
+					<a href="{{ path('event') }}">Eventos</a>
 				</li>
 				
 				
@@ -134,6 +142,12 @@
 	</div>
 </div>
 
+
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all" />
+<link rel="stylesheet" href="http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css" type="text/css" media="all" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
 
 <script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-dropdown.js') }}?v=5"></script>
 <script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-modal.js') }}"></script>

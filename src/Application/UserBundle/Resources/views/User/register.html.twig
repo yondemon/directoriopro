@@ -20,13 +20,13 @@
 
 <form id="tabs_content" action="{{ path('user_register') }}" method="post" {{ form_enctype(form) }}>
 
-
-
-
 	{{ form_errors(form) }}
+
+	{{ form_row(form.email, { 'label': 'Email' }) }}
+	{{ form_row(form.pass, { 'label': 'Contraseña' }) }}
 	
-
-
+	<br/>
+	
 	<div class="clearfix">
 		<label>Perfil</label>
 		<div class="input">
@@ -39,14 +39,18 @@
 			</select>
 		</div>
 	</div>
-
-
-	{{ form_row(form.email, { 'label': 'Email' }) }}
-	{{ form_row(form.pass, { 'label': 'Contraseña' }) }}
+	
 	{{ form_row(form.name, { 'label': 'Nombre y apellidos' }) }}
 
  
-
+	<div id="geo">
+		{{ form_row(form.location, { 'label': 'Localización' }) }}
+		<div class="hide">
+			{{ form_row(form.country_id, { 'label': 'country' }) }}
+			{{ form_row(form.city_id, { 'label': 'city' }) }}
+		</div>
+	</div>
+	
 
 	<div id="options">	
 		<div class="input">
@@ -79,4 +83,12 @@
 
 </form>
 
+{% endblock %}
+
+
+
+{% block script_load %}
+
+	autoGeo();
+	
 {% endblock %}

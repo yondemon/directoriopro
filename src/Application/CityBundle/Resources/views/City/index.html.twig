@@ -1,0 +1,15 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% block title "Ciudades" %}
+
+
+{% block content %}
+
+<h1>Ciuades</h1>
+
+<ul>
+{% for city in cities %}
+	<li><a href="{{ path('city_show', { 'id': city.id }) }}">{{ city.name }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}

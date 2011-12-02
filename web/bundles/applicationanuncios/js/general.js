@@ -717,3 +717,52 @@ function pinboardNS_show_bmarks(data){
 		$('#pinboard').html('no se han encontrado enlaces');
 	}
 }
+
+
+
+
+function autoGeo(){
+
+	$('#geo input:first').autocomplete({
+		source: function( request, response ) {
+			$.ajax({
+				url: "http://directoriopro.com/user/getlocation",//"http://ws.geonames.org/searchJSON",
+				dataType: "jsonp",
+				data: {
+					//featureClass: "P",
+					//style: "full",
+					//maxRows: 12,
+					city: request.term
+				},
+				success: function( data ) {
+					response( $.map( data.geonames, function( item ) {
+						city = item.city + ', ' + item.country;
+						return {
+							label: city,
+							value: city,
+							cit_id: item.cit_id,
+							cou_id: item.cou_id
+						}
+					}));
+				}
+			});
+		},
+		minLength: 2,
+		select: function( event, ui ) {
+	
+			$('#geo .hide input:eq(0)').val( ui.item.cou_id );
+			$('#geo .hide input:eq(1)').val( ui.item.cit_id );
+		
+			//$('#application_userbundle_usertype_country_id').val( ui.item.cou_id );
+			//$('#application_userbundle_usertype_city_id').val( ui.item.cit_id );
+		
+
+		},
+		open: function() {
+			$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+		},
+		close: function() {
+			$( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+		}
+	});
+}

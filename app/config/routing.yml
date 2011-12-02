@@ -1,3 +1,13 @@
+ApplicationEventBundle:
+    resource: "@ApplicationEventBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+ApplicationCityBundle:
+    resource: "@ApplicationCityBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 ApplicationProjectBundle:
     resource: "@ApplicationProjectBundle/Controller/"
     type:     annotation

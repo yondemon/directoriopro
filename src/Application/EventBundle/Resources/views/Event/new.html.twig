@@ -1,0 +1,77 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Publicar evento" %}
+
+{% block content %}
+
+<h1>Publicar evento</h1>
+
+<style>
+TEXTAREA.xlarge{width:430px}
+#application_anunciosbundle_posttype_type label{float:none;margin:0 20px 0 5px}
+
+.dates div.xlarge div{display:inline;padding-right:15px}
+	.dates div.xlarge select{width:65px}
+</style>
+
+{% if app.session.get('id') %}
+
+<form action="{{ path('event_create') }}" method="post" {{ form_enctype(form) }}>
+
+	{{ form_errors(form) }}
+
+
+
+
+	
+
+
+	{{ form_row(form.title, { 'label': 'Titulo' }) }}
+	
+	{{ form_row(form.body, { 'label': 'Descripción' }) }}
+	
+
+
+	
+
+	<div id="geo">
+		{{ form_row(form.location, { 'label': 'Localización' }) }}
+		<div class="hide">
+			{{ form_row(form.country_id, { 'label': 'country' }) }}
+			{{ form_row(form.city_id, { 'label': 'city' }) }}
+		</div>
+	</div>
+	
+	{{ form_row(form.url, { 'label': 'Web' }) }}
+	
+	<div class="dates">
+		{{ form_row(form.date_start, { 'label': 'Fecha inicio' }) }}
+		{{ form_row(form.date_end, { 'label': 'Fecha fin' }) }}
+	</div>
+
+	<div class="actions">
+        <button type="submit" class="btn primary">Publicar</button>
+	</div>
+
+	{{ form_row(form._token) }}
+
+</form>
+
+{% else %}
+	Area restringida, solo accesible para usuarios
+{% endif %}
+
+{% endblock %}
+
+{% block script_load %}
+	
+autoGeo();
+
+
+
+
+
+
+
+{% endblock %}

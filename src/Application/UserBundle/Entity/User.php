@@ -270,6 +270,19 @@ class User
      */
     private $unemployed;
 
+    /**
+     * @var tinyint $country_id
+     *
+     * @ORM\Column(name="country_id", type="integer", nullable=true)
+     */
+    private $country_id;
+
+    /**
+     * @var tinyint $city_id
+     *
+     * @ORM\Column(name="city_id", type="integer", nullable=true)
+     */
+    private $city_id;
 
     /**
      * Get id
@@ -992,6 +1005,46 @@ class User
     public function getUnemployed()
     {
         return $this->unemployed;
+    }
+
+    /**
+     * Set country_id
+     *
+     * @param integer $countryId
+     */
+    public function setCountryId($countryId)
+    {
+        $this->country_id = $countryId;
+    }
+
+    /**
+     * Get country_id
+     *
+     * @return integer 
+     */
+    public function getCountryId()
+    {
+        return $this->country_id;
+    }
+    
+    /**
+     * Set city_id
+     *
+     * @param integer $cityId
+     */
+    public function setCityId($cityId)
+    {
+        $this->city_id = $cityId;
+    }
+
+    /**
+     * Get city_id
+     *
+     * @return integer 
+     */
+    public function getCityId()
+    {
+        return $this->city_id;
     }
 
     /**

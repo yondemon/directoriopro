@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\UserBundle\Entity\User;
 use Application\UserBundle\Entity\Contact;
 use Application\UserBundle\Entity\Comment;
+use Application\CityBundle\Entity\Country;
+use Application\CityBundle\Entity\City;
 use Application\UserBundle\Form\UserType;
 use Application\UserBundle\Form\CommentType;
 use Application\UserBundle\Form\ContactType;
@@ -33,6 +35,44 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
  */
 class UserController extends Controller
 {
+	
+    /*
+     * Homepage
+     *
+     * @Route("/", name="home")
+     * @Template()
+     *
+    public function homeAction()
+    {
+		// esta logueado?
+		$session = $this->getRequest()->getSession();
+		$id = $session->get('id');
+		if( !$id ){
+			$url = $this->generateUrl('post');
+		}else{
+			$em = $this->getDoctrine()->getEntityManager();
+			$user = $em->getRepository('ApplicationUserBundle:User')->find($id);
+			$city_id = $user->getCityId();
+			
+
+			//if( $city_id ){
+			//	$url = $this->generateUrl('city_show', array('id' => $city_id));
+			//}else{
+			//	$url = $this->generateUrl('user_show', array('id' => $id));
+			//}
+			
+			
+			if( in_array($city_id, array(3117735,3128760,2509954)) ){ //mad,bcn,val
+				$url = $this->generateUrl('city_show', array('id' => $city_id));
+			}else{
+				$url = $this->generateUrl('user_show', array('id' => $id));
+			}
+			
+		}
+        return $this->redirect($url);	
+	}*/
+	
+	
     /**
      * Lists all User entities.
      *
@@ -254,10 +294,10 @@ class UserController extends Controller
 
 			if( !$user ){
 	            $error_text = "El email no es valido";
-	            $form->addError( new SymfonyForm\FormError( $error_text ));
+	            $form['email']->addError( new SymfonyForm\FormError( $error_text ));
 			}else if( $pass && $user->getPass() != md5( $pass ) ){
 	            $error_text = "La contraseña no es correcta";
-	            $form->addError( new SymfonyForm\FormError( $error_text ));
+	            $form['pass']->addError( new SymfonyForm\FormError( $error_text ));
 			}
 	
 	        if ($form->isValid()) {
@@ -1179,5 +1219,35 @@ class UserController extends Controller
 
         return array('categories_aux' => $categories, 'pager' => $html, 'entities' => $entities);
     }
+
+
+
+
+    /**
+     * Ajax get location
+     *
+     * @Route("/getlocation", name="getlocation")
+     * @Template()
+     */
+    public function getlocationAction()
+    {
+		$request = $this->getRequest();
+		$city = $request->query->get('city');
+		$callback = $request->query->get('callback');
+			
+        $em = $this->getDoctrine()->getEntityManager();
+
+		$query = $em->createQuery("SELECT c1.id AS cit_id, c2.id AS cou_id, c1.name AS city, c2.name AS country FROM ApplicationCityBundle:City c1, ApplicationCityBundle:Country c2 WHERE c1.code = c2.code AND c1.name LIKE '" . $city . "%' ORDER BY c1.name ASC, c1.population DESC");
+		//$query->setParameter('name', $city);
+		$query->setMaxResults(5);
+		$cities = $query->getResult();
+
+		return array('callback' => $callback, 'result' => json_encode(array('geonames' => $cities)));
+	}
+
+
+
+
+
 
 }

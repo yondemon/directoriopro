@@ -1,0 +1,41 @@
+{% set nav_event = 1 %}
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Eventos" %}
+
+
+{% block sidebar %}
+	<a href="{{ path('event_new') }}" class="btn large primary">Publicar evento</a>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<h1>Eventos</h1>
+
+
+
+
+<ul>
+    {% for entity in entities %}
+        <li style="margin-bottom:20px;" {% if entity.featured == 1 %}class="featured"{% endif %}">
+            <a href="{{ path('event_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
+            {{ entity.body|truncate(200) }}<br/>
+            <span class="date">{{ entity.datestart|date('Y-m-d H:i:s') }} - {{ entity.dateend|date('Y-m-d H:i:s') }} | {{ entity.location }}</span>
+        </li>
+    {% endfor %}
+</ul>
+
+
+
+
+
+{{ pager|raw }}
+
+
+
+
+{% endblock %}

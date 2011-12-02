@@ -35,6 +35,8 @@ class UserType extends AbstractType
 			->add('can_contact')
 			->add('avatar_type')
 			->add('unemployed')
+			->add('city_id')
+			->add('country_id')
         ;
     }
 

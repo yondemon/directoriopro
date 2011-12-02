@@ -1,0 +1,96 @@
+{% set nav_event = 1 %}
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% set share_url = url('event_show', { 'id': entity.id }) %}
+
+{% block title entity.title %}
+{% set location = entity.getLocation() %}
+
+
+{% block sidebar %}
+
+
+	{% if user.id == false %}
+		<a class="btn primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Voy a ir evento</a><br/>
+	{% else %}
+	
+		{% if apuntado == false %}
+			<a class="btn primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Voy a ir</a><br/>
+		{% else %}
+			<a class="btn danger" href="{{ path('event_go', { 'id': entity.id, 'value': 0 }) }}">No voy a ir</a><br/>
+		{% endif %}
+		
+	{% endif %}
+	
+	
+			
+	{% if user.id == app.session.get('id') or app.session.get('admin') == 1 %}
+		<a class="btn" href="{{ path('event_edit', { 'id': entity.id }) }}">Editar evento</a><br/>
+	{% endif %}
+	
+
+	
+	
+	<b>Compartir</b>
+	
+	<br/>
+	
+	<a target="_blank" rel="nofollow,noindex" class="ico twitter" href="http://twitter.com/?status={{ entity.title }} {{ share_url }} #betajobs" target="_blank">twitter</a>
+	<a target="_blank" rel="nofollow,noindex" class="ico facebook" href="http://facebook.com/sharer.php?u={{ share_url }}&t={{ entity.title }}" target="_blank">facebook</a>
+	<a target="_blank" rel="nofollow,noindex" class="ico linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url={{ share_url }}&title={{ entity.title }}" target="_blank">linkedin</a>
+	
+
+
+	
+	
+	
+{% endblock %}
+
+
+
+{% block content %}
+
+<style>
+#sidebar{position: fixed;top: 60px;}
+</style>
+
+
+<ul class="breadcrumb">
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('event') }}">Eventos</a><!-- <span class="divider">/</span>--></li>
+</ul>
+
+
+
+<h1>{{ entity.title }}</h1>
+
+
+	
+
+	Localización: {{ location }} &nbsp; &nbsp; {{ entity.datestart|date('Y-m-d H:i:s') }} - {{ entity.dateend|date('Y-m-d H:i:s') }}<br/><br/>
+
+
+
+	<pre>{{ entity.body }}</pre>
+
+	<p>Publicado por <a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas</p>
+
+	
+	{% if users %}
+		<br/>
+		<b>{{ users | length }} usuarios apuntados</b>
+		<br/><br/>
+		
+
+	
+		{% for user in users %}
+			<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('mini') }}" width="38" height="38"/></a>
+		{% endfor %}
+	
+	
+	
+	
+	{% endif %}
+
+
+{% endblock %}
+

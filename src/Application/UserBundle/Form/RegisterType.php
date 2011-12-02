@@ -21,7 +21,10 @@ class RegisterType extends AbstractType
 							'invalid_message' => 'Las contraseñas tienen que coincidir',
 				        ))
 				->add('unemployed')		
-				->add('freelance');
+				->add('freelance')
+				->add('location')
+				->add('city_id')
+				->add('country_id');
     }
 
     public function getDefaultOptions(array $options)
