@@ -35,6 +35,12 @@ class EventUser
      */
     private $user_id;
 
+    /**
+     * @var datetime $date
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
 
     /**
      * Get id
@@ -84,5 +90,25 @@ class EventUser
     public function getUserId()
     {
         return $this->user_id;
+    }
+
+    /**
+     * Set date
+     *
+     * @param datetime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * Get date
+     *
+     * @return datetime 
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }

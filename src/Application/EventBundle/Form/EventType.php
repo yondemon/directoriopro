@@ -17,6 +17,7 @@ class EventType extends AbstractType
             ->add('date_end')
             //->add('featured')
             ->add('url')
+            ->add('address')
             ->add('location')
             ->add('city_id')
             ->add('country_id')

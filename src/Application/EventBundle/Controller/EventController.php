@@ -342,6 +342,7 @@ class EventController extends Controller
 		        $entity = new EventUser();
 		        $entity->setEventId($id);
 				$entity->setUserId( $session_id );
+				$entity->setDate( new \DateTime("now") );
 				$em->persist($entity);
 		        $em->flush();
 			}

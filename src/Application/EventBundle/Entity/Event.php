@@ -43,6 +43,13 @@ class Event
     private $body;
 
     /**
+     * @var text $address
+     *
+     * @ORM\Column(name="address", type="string", length=255)
+     */
+    private $address;
+
+    /**
      * @var datetime $date_start
      *
      * @ORM\Column(name="date_start", type="datetime")
@@ -167,6 +174,26 @@ class Event
     public function getBody()
     {
         return $this->body;
+    }
+
+    /**
+     * Set address
+     *
+     * @param text $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * Get address
+     *
+     * @return text 
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 
     /**
