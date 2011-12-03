@@ -382,4 +382,17 @@ class Event
     {
         return $this->visits;
     }
+
+
+
+    /**
+     * Get pretty date
+     *
+     * @return string 
+     */
+    public function getPrettyDate( $format = '%A %e %B %Y' )
+    {
+        return strftime( $format, strtotime( $this->getDateStart()->format('Y-m-d H:i:s') ) );
+    }
+
 }

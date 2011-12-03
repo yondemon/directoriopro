@@ -34,7 +34,7 @@
 	
 	<br/>
 	
-	<a target="_blank" rel="nofollow,noindex" class="ico twitter" href="http://twitter.com/?status={{ entity.title }} {{ share_url }} #betajobs" target="_blank">twitter</a>
+	<a target="_blank" rel="nofollow,noindex" class="ico twitter" href="http://twitter.com/?status={{ entity.title }} {{ entity.datestart|date('d/m/Y') }} {{ share_url }} %23yovoy" target="_blank">twitter</a>
 	<a target="_blank" rel="nofollow,noindex" class="ico facebook" href="http://facebook.com/sharer.php?u={{ share_url }}&t={{ entity.title }}" target="_blank">facebook</a>
 	<a target="_blank" rel="nofollow,noindex" class="ico linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url={{ share_url }}&title={{ entity.title }}" target="_blank">linkedin</a>
 	
@@ -62,7 +62,7 @@
 
 
 
-<h1>{{ entity.title }} - {{ entity.datestart|date('j F') }}</h1>
+<h1>{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</h1>
 
 	{% set date_start = entity.datestart|date('d/m/Y') %}
 	{% set date_end = entity.dateend|date('d/m/Y') %}
@@ -78,7 +78,7 @@
 	<br/>
 	
 	
-	Dirección: {{ entity.address }}, {{ location }}<br/><br/>
+	Dirección: <a href="http://maps.google.es/maps?q={{ entity.address }}, {{ location }}" target="_blank">{{ entity.address }}, {{ location }}</a><br/><br/>
 
 	<pre>{{ entity.body }}</pre>
 
