@@ -64,7 +64,20 @@
 
 <h1>{{ entity.title }} - {{ entity.datestart|date('j F') }}</h1>
 
-	Fecha: {{ entity.datestart|date('d/m/Y H:i') }} - {{ entity.dateend|date('d/m/Y H:i') }}<br/>
+	{% set date_start = entity.datestart|date('d/m/Y') %}
+	{% set date_end = entity.dateend|date('d/m/Y') %}
+
+	
+	Fecha: {{ entity.datestart|date('d/m/Y H:i') }} - 
+	
+	{% if date_start == date_end %}
+		{{ entity.dateend|date('H:i') }}
+	{% else %}
+		{{ entity.dateend|date('d/m/Y H:i') }}
+	{% endif %}
+	<br/>
+	
+	
 	Dirección: {{ entity.address }}, {{ location }}<br/><br/>
 
 	<pre>{{ entity.body }}</pre>
