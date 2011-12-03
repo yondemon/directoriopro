@@ -73,7 +73,7 @@ class Event
     /**
      * @var string $url
      *
-     * @ORM\Column(name="url", type="string", length=255, nullable=true))
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     private $url;
 
@@ -87,21 +87,21 @@ class Event
     /**
      * @var integer $city_id
      *
-     * @ORM\Column(name="city_id", type="integer")
+     * @ORM\Column(name="city_id", type="integer", nullable=true)
      */
     private $city_id;
 
     /**
      * @var integer $country_id
      *
-     * @ORM\Column(name="country_id", type="integer")
+     * @ORM\Column(name="country_id", type="integer", nullable=true)
      */
     private $country_id;
 
     /**
      * @var integer $visits
      *
-     * @ORM\Column(name="visits", type="integer", nullable=true))
+     * @ORM\Column(name="visits", type="integer", nullable=true)
      */
     private $visits;
 

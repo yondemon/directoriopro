@@ -42,6 +42,7 @@ class EventController extends Controller
 		$query = $em->createQueryBuilder();
 		$query->add('select', 'e')
 		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
 		   ->add('orderBy', 'e.featured DESC, e.date_start ASC');
 		
 
@@ -55,7 +56,7 @@ class EventController extends Controller
 
 		$pagerfanta->setCurrentPage($page); // 1 by default
 		$entities = $pagerfanta->getCurrentPageResults();
-		$routeGenerator = function($page, $category_id) {
+		$routeGenerator = function($page) {//, $category_id
 			$url = '?page='.$page;
 			//if( $category_id ) $url .= '&c=' . $category_id;
 		    return $url;
@@ -154,7 +155,9 @@ class EventController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form'   => $form->createView(),
+			'hours'   => array('07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','00','01','02','03','04','05','06'),
+			'minutes'=> array('00','10','20','30','40','50')
         );
     }
 
@@ -180,6 +183,15 @@ class EventController extends Controller
 		$entity->setDate( new \DateTime("now") );
 		$entity->setFeatured( 0 );
 		
+		// corregir fecha
+		$h_start = $request->request->get('h_start');
+		$m_start = $request->request->get('m_start');
+		$h_end = $request->request->get('h_end');
+		$m_end = $request->request->get('m_end');
+		$date_start = $entity->getDateStart();
+		$date_end = $entity->getDateEnd();
+		$entity->setDateStart(  new \DateTime( $date_start->format('d/m/Y') . ' ' . $h_start . ":" . $m_start . ':00' ) );
+		$entity->setDateEnd(  new \DateTime( $date_end->format('d/m/Y') . ' ' . $h_end . ":" . $m_end . ':00' ) );
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -215,9 +227,19 @@ class EventController extends Controller
         $editForm = $this->createForm(new EventType(), $entity);
 
 
+		// fechas
+		$date_start = $entity->getDateStart();
+		$date_end = $entity->getDateEnd();
+
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView()
+            'edit_form'   => $editForm->createView(),
+			'h_start'     => $date_start->format('H'),
+			'm_start'     => $date_start->format('i'),
+			'h_end'       => $date_end->format('H'),
+			'm_end'       => $date_end->format('i'),
+			'hours'   => array('07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','00','01','02','03','04','05','06'),
+			'minutes'=> array('00','10','20','30','40','50')
         );
     }
 
@@ -252,6 +274,19 @@ class EventController extends Controller
 		        $request = $this->getRequest();
 
 		        $editForm->bindRequest($request);
+		
+
+				// corregir fecha
+				$h_start = $request->request->get('h_start');
+				$m_start = $request->request->get('m_start');
+				$h_end = $request->request->get('h_end');
+				$m_end = $request->request->get('m_end');
+				$date_start = $entity->getDateStart();
+				$date_end = $entity->getDateEnd();
+				$entity->setDateStart(  new \DateTime( $date_start->format('d/m/Y') . ' ' . $h_start . ":" . $m_start . ':00' ) );
+				$entity->setDateEnd(  new \DateTime( $date_end->format('d/m/Y') . ' ' . $h_end . ":" . $m_end . ':00' ) );
+
+
 
 		        if ($editForm->isValid()) {
 		            $em->persist($entity);

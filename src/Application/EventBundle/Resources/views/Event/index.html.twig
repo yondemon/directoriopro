@@ -22,9 +22,9 @@
 <ul>
     {% for entity in entities %}
         <li style="margin-bottom:20px;" {% if entity.featured == 1 %}class="featured"{% endif %}">
-            <a href="{{ path('event_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
+            <a href="{{ path('event_show', { 'id': entity.id }) }}" class="title">{{ entity.title }} {{ entity.datestart|date('j F') }}</a><br/>
             {{ entity.body|truncate(200) }}<br/>
-            <span class="date">{{ entity.datestart|date('Y-m-d H:i:s') }} - {{ entity.dateend|date('Y-m-d H:i:s') }} | {{ entity.location }}</span>
+            <span class="date">{{ entity.location }}</span>
         </li>
     {% endfor %}
 </ul>

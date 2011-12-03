@@ -750,12 +750,10 @@ function autoGeo(){
 		minLength: 2,
 		select: function( event, ui ) {
 	
-			$('#geo .hide input:eq(0)').val( ui.item.cou_id );
-			$('#geo .hide input:eq(1)').val( ui.item.cit_id );
-		
-			//$('#application_userbundle_usertype_country_id').val( ui.item.cou_id );
-			//$('#application_userbundle_usertype_city_id').val( ui.item.cit_id );
-		
+			if( $('#geo .hide input').size() ){
+				$('#geo .hide input:eq(0)').val( ui.item.cou_id );
+				$('#geo .hide input:eq(1)').val( ui.item.cit_id );
+			}
 
 		},
 		open: function() {
@@ -766,3 +764,25 @@ function autoGeo(){
 		}
 	});
 }
+
+
+$.datepicker.regional['es'] = {
+	                closeText: 'Cerrar',
+	                prevText: '&#x3c;Ant',
+	                nextText: 'Sig&#x3e;',
+	                currentText: 'Hoy',
+	                monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+	                'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+	                monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+	                'Jul','Ago','Sep','Oct','Nov','Dic'],
+	                dayNames: ['Domingo','Lunes','Martes','Mi&eacute;rcoles','Jueves','Viernes','S&aacute;bado'],
+	                dayNamesShort: ['Dom','Lun','Mar','Mi&eacute;','Juv','Vie','S&aacute;b'],
+	                dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','S&aacute;'],
+	                weekHeader: 'Sm',
+	                dateFormat: 'dd-mm-yy',
+	                firstDay: 1,
+	                isRTL: false,
+	                showMonthAfterYear: false,
+	                yearSuffix: ''};
+
+$.datepicker.setDefaults($.datepicker.regional['es']);

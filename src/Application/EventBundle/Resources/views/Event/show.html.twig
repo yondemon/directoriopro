@@ -10,11 +10,11 @@
 
 
 	{% if user.id == false %}
-		<a class="btn primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Voy a ir evento</a><br/>
+		<a class="btn primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a><br/>
 	{% else %}
 	
 		{% if apuntado == false %}
-			<a class="btn primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Voy a ir</a><br/>
+			<a class="btn primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a><br/>
 		{% else %}
 			<a class="btn danger" href="{{ path('event_go', { 'id': entity.id, 'value': 0 }) }}">No voy a ir</a><br/>
 		{% endif %}
@@ -62,14 +62,10 @@
 
 
 
-<h1>{{ entity.title }}</h1>
+<h1>{{ entity.title }} - {{ entity.datestart|date('j F') }}</h1>
 
-
-	
-
-	Localización: {{ location }} &nbsp; &nbsp; {{ entity.datestart|date('Y-m-d H:i:s') }} - {{ entity.dateend|date('Y-m-d H:i:s') }}<br/><br/>
-
-
+	Fecha: {{ entity.datestart|date('d/m/Y H:i') }} - {{ entity.dateend|date('d/m/Y H:i') }}<br/>
+	Dirección: {{ entity.address }}, {{ location }}<br/><br/>
 
 	<pre>{{ entity.body }}</pre>
 
@@ -84,7 +80,7 @@
 
 	
 		{% for user in users %}
-			<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('mini') }}" width="38" height="38"/></a>
+			<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="38" height="38"/></a>
 		{% endfor %}
 	
 	

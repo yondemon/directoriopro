@@ -11,8 +11,9 @@
 TEXTAREA.xlarge{width:430px}
 #application_anunciosbundle_posttype_type label{float:none;margin:0 20px 0 5px}
 
-.dates div.xlarge div{display:inline;padding-right:15px}
-	.dates div.xlarge select{width:65px}
+
+.dates input{width:80px}
+.dates select{width:60px}
 </style>
 
 {% if app.session.get('id') %}
@@ -45,10 +46,46 @@ TEXTAREA.xlarge{width:430px}
 	
 	{{ form_row(edit_form.url, { 'label': 'Web' }) }}
 	
+	
 	<div class="dates">
-		{{ form_row(edit_form.date_start, { 'label': 'Fecha inicio' }) }}
-		{{ form_row(edit_form.date_end, { 'label': 'Fecha fin' }) }}
+		<div class="clearfix ">
+			<label for="application_eventbundle_eventtype_date_start" class=" required">Fecha inicio</label>
+			<div class="input">
+			<input type="text" id="application_eventbundle_eventtype_date_start" name="application_eventbundle_eventtype[date_start]" required="required" class="xlarge " rows="9" value="{{ entity.getDateStart() | date('d-m-Y') }}"> &nbsp;
+			<select name="h_start">
+			{% for i in hours %}
+				<option value="{{ i }}" {% if i == h_start %}selected="selected"{% endif %} >{{ i }}</option>
+			{% endfor %}
+			</select>
+			:
+			<select name="m_start">
+			{% for i in minutes %}
+			  <option value="{{ i }}" {% if i == m_start %}selected="selected"{% endif %} >{{ i }}</option>
+			{% endfor %}
+			</select>
+			</div>
+		</div>
+		<div class="clearfix ">
+			<label for="application_eventbundle_eventtype_date_end" class=" required">Fecha fin</label>
+			<div class="input">
+			<input type="text" id="application_eventbundle_eventtype_date_end" name="application_eventbundle_eventtype[date_end]" required="required" class="xlarge " rows="9" value="{{ entity.getDateEnd() | date('d-m-Y') }}"> &nbsp;
+			<select name="h_end">
+			{% for i in hours %}
+			  <option value="{{ i }}" {% if i == h_end %}selected="selected"{% endif %} >{{ i }}</option>
+			{% endfor %}
+			</select>
+			:
+			<select name="m_end">
+			{% for i in minutes %}
+			  <option value="{{ i }}" {% if i == m_end %}selected="selected"{% endif %} >{{ i }}</option>
+			{% endfor %}
+			</select>
+			</div>
+		</div>
 	</div>
+
+	
+
 
 	<div class="actions">
 		<button type="submit" class="btn primary">Guardar cambios</button> &nbsp;
@@ -74,6 +111,7 @@ TEXTAREA.xlarge{width:430px}
 autoGeo();
 
 
+$( ".dates input" ).datepicker({ firstDay: 1 });
 
 
 

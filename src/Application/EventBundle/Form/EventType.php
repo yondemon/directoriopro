@@ -13,8 +13,16 @@ class EventType extends AbstractType
             //->add('user_id')
             ->add('title')
             ->add('body')
-            ->add('date_start')
-            ->add('date_end')
+            ->add('date_start','date', array( 
+			            //'attr' => array('class' => 'somedatefield'), 
+			            'widget' => 'single_text', 
+			            'format' => 'dd-MM-yyyy', 
+			))
+            ->add('date_end','date', array( 
+			            //'attr' => array('class' => 'somedatefield'), 
+			            'widget' => 'single_text', 
+			            'format' => 'dd-MM-yyyy', 
+			))
             //->add('featured')
             ->add('url')
             ->add('address')
@@ -22,6 +30,8 @@ class EventType extends AbstractType
             ->add('city_id')
             ->add('country_id')
             //->add('visits')
+
+
         ;
     }
 
