@@ -235,5 +235,5 @@ LI.featured{background:#FEFBF3}
   
 
 /* jquery ui */
-.ui-autocomplete-loading { background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat; }
+.ui-autocomplete-loading { background: white url('../images/ui-anim_basic_16x16.gif') right center no-repeat; }
 
