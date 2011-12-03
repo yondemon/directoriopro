@@ -22,7 +22,8 @@
 <ul>
     {% for entity in entities %}
         <li style="margin-bottom:20px;" {% if entity.featured == 1 %}class="featured"{% endif %}">
-            <a href="{{ path('event_show', { 'id': entity.id }) }}" class="title">{{ entity.title }} {{ entity.datestart|date('j F') }}</a><br/>
+			<b>{{ entity.datestart|date('j F Y') }}</b><br/>
+            <a href="{{ path('event_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
             {{ entity.body|truncate(200) }}<br/>
             <span class="date">{{ entity.location }}</span>
         </li>
