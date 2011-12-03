@@ -18,6 +18,10 @@ TEXTAREA.xlarge{width:430px}
 </style>
 
 
+{% if app.session.get('admin') != 1 %}
+	Area restringida, solo accesible para administradores
+{% else %}
+
 {% if app.session.get('id') %}
 
 <form action="{{ path('event_create') }}" method="post" {{ form_enctype(form) }}>
@@ -98,6 +102,8 @@ TEXTAREA.xlarge{width:430px}
 
 {% else %}
 	Area restringida, solo accesible para usuarios
+{% endif %}
+
 {% endif %}
 
 {% endblock %}
