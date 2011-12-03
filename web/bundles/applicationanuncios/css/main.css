@@ -73,6 +73,7 @@ A.title{font-size:20px}
 .date{color:#BDBDBD}
 .freelance{color:#33CC00;padding-left:10px}
 .votes{background:url('../images/thumbsup.png') no-repeat left center;padding-left:20px;font-weight:bold;color:orange;margin-left:10px}
+.users{background:url('../images/users.png') no-repeat left center;padding-left:20px;font-weight:bold;color:orange;margin-left:10px}
 
 .filters{padding-left:20px;border-left:1px #efefef solid;width:190px}
 	.filters A{display:block;padding-top:10px}

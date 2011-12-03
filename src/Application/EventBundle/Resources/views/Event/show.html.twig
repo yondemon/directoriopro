@@ -38,7 +38,7 @@
 	<a target="_blank" rel="nofollow,noindex" class="ico facebook" href="http://facebook.com/sharer.php?u={{ share_url }}&t={{ entity.title }}" target="_blank">facebook</a>
 	<a target="_blank" rel="nofollow,noindex" class="ico linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url={{ share_url }}&title={{ entity.title }}" target="_blank">linkedin</a>
 	
-
+	<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{ entity.title }}&dates={{ entity.getGDateStart() }}/{{ entity.getGDateEnd() }}&details=&location={{ entity.address }}, {{ location }}&trp=false&sprop=&sprop=name:" target="_blank"><img src="http://www.google.com/calendar/images/ext/gc_button1.gif" alt="0" border="0"></a>
 
 	<br/>
 	
@@ -49,11 +49,7 @@
 
 {% block content %}
 
-<!--
-<style>
-#sidebar{position: fixed;top: 60px;}
-</style>
--->
+
 
 <ul class="breadcrumb">
   <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>

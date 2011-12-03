@@ -107,6 +107,14 @@ class Event
 
 
     /**
+     * @var integer $users
+     *
+     * @ORM\Column(name="users", type="integer", nullable=true)
+     */
+    private $users;
+
+
+    /**
      * Get id
      *
      * @return integer 
@@ -383,6 +391,26 @@ class Event
         return $this->visits;
     }
 
+    /**
+     * Set users
+     *
+     * @param integer $users
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
+    }
+
+    /**
+     * Get users
+     *
+     * @return integer 
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
 
 
     /**
@@ -393,6 +421,26 @@ class Event
     public function getPrettyDate( $format = '%A %e %B %Y' )
     {
         return strftime( $format, strtotime( $this->getDateStart()->format('Y-m-d H:i:s') ) );
+    }
+
+    /**
+     * Get google calendar date start
+     *
+     * @return string 
+     */
+    public function getGDateStart()
+    {
+        return date( 'Ymd\THis\Z', ( strtotime( $this->getDateStart()->format('Y-m-d H:i:s') ) - 3600 ) );
+    }
+
+    /**
+     * Get google calendar date end
+     *
+     * @return string 
+     */
+    public function getGDateEnd()
+    {
+        return date( 'Ymd\THis\Z', ( strtotime( $this->getDateEnd()->format('Y-m-d H:i:s') ) - 3600 ) );
     }
 
 }

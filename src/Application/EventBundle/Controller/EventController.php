@@ -359,10 +359,18 @@ class EventController extends Controller
 		$session = $this->getRequest()->getSession();
 		$session_id = $session->get('id');
 		if( !$session_id ){
-			return $this->redirect($this->generateUrl('user_welcome', array('back' => $_SERVER['REQUEST_URI'])));
+			return $this->redirect($this->generateUrl('user_welcome', array('back' => $_SERVER['REQUEST_URI'])).'#alert');
 		}
 		
 		$em = $this->getDoctrine()->getEntityManager();
+		
+		$event = $em->getRepository('ApplicationEventBundle:Event')->find($id);
+		if (!$event) {
+            throw $this->createNotFoundException('Unable to find Post entity.');
+        }
+		
+		
+
 		
 		$db = $this->get('database_connection');
 		$query = "SELECT eu.id FROM EventUser eu WHERE eu.user_id = " . $session_id . " AND eu.event_id = " . (int)$id;
@@ -387,6 +395,23 @@ class EventController extends Controller
 			$em->remove($entity);
 			$em->flush();
 		}
+		
+		
+		
+		
+		// actualizar users
+		$query = $em->createQuery("SELECT COUNT(eu) as total FROM ApplicationEventBundle:EventUser eu WHERE eu.event_id = :id");
+		$query->setParameter('id', $id);
+		$total = current($query->getResult());
+		$total_users = $total['total'];
+		
+
+		$event->setUsers($total_users);
+		$em->persist($event);
+		$em->flush();
+		
+		
+		
 
 		$url = $this->generateUrl('event_show', array('id' => $id));
 		return $this->redirect($url);

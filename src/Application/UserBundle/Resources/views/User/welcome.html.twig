@@ -21,7 +21,7 @@
 
 {% block content %}
 
-
+<div class="alert-message warning" style="text-align:center;display:none" id="alert">Para seguir tienes que registrarte</div>
 
 <h1 style="font-size:40px;letter-spacing:-1px;line-height:40px;margin-bottom:30px">Amplia tu red de contactos, trabaja en la mejor startup</h1>
 
@@ -88,4 +88,12 @@
 
 
 
+{% endblock %}
+
+
+
+{% block script_load %}
+	if( document.location.href.indexOf('#alert') > -1 ){
+		$('#alert').fadeIn('slow');
+	}
 {% endblock %}
