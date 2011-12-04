@@ -190,8 +190,8 @@ class EventController extends Controller
 		$m_end = $request->request->get('m_end');
 		$date_start = $entity->getDateStart();
 		$date_end = $entity->getDateEnd();
-		$entity->setDateStart(  new \DateTime( $date_start->format('d/m/Y') . ' ' . $h_start . ":" . $m_start . ':00' ) );
-		$entity->setDateEnd(  new \DateTime( $date_end->format('d/m/Y') . ' ' . $h_end . ":" . $m_end . ':00' ) );
+		$entity->setDateStart(  new \DateTime( $date_start->format('Y-m-d') . ' ' . $h_start . ":" . $m_start . ':00' ) );
+		$entity->setDateEnd(  new \DateTime( $date_end->format('Y-m-d') . ' ' . $h_end . ":" . $m_end . ':00' ) );
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -283,8 +283,8 @@ class EventController extends Controller
 				$m_end = $request->request->get('m_end');
 				$date_start = $entity->getDateStart();
 				$date_end = $entity->getDateEnd();
-				$entity->setDateStart(  new \DateTime( $date_start->format('d/m/Y') . ' ' . $h_start . ":" . $m_start . ':00' ) );
-				$entity->setDateEnd(  new \DateTime( $date_end->format('d/m/Y') . ' ' . $h_end . ":" . $m_end . ':00' ) );
+				$entity->setDateStart(  new \DateTime( $date_start->format('Y-m-d') . ' ' . $h_start . ":" . $m_start . ':00' ) );
+				$entity->setDateEnd(  new \DateTime( $date_end->format('Y-m-d') . ' ' . $h_end . ":" . $m_end . ':00' ) );
 
 
 
