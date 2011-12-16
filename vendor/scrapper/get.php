@@ -47,12 +47,14 @@ if( $html ){
 			if( $items ){
 				foreach( $items as $item ){
 					$link = $item->find('a[class=title]',0);
-					$data[] = array(
-						'url' => 'https://market.android.com' . $link->attr['href'],
-						'title' => $link->innertext,
-						'text' => $item->find('p[class=snippet-content]',0)->innertext,
-						'icon' => $item->find('img',0)->attr['src']
-						);
+					if( $link ){
+						$data[] = array(
+							'url' => 'https://market.android.com' . $link->attr['href'],
+							'title' => $link->innertext,
+							'text' => $item->find('p[class=snippet-content]',0)->innertext,
+							'icon' => $item->find('img',0)->attr['src']
+							);
+					}
 				}
 			}
 			break;
