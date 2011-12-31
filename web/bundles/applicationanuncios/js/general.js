@@ -491,6 +491,10 @@ function networks_tooltip(){
 var chrome_load = false;
 
 function get_chrome(){
+	window.open("https://chrome.google.com/webstore/search?q=" + chrome_user);
+	
+	/*
+	
 	if( !chrome_load ){
 		$('#loader').show();
 		chrome_load = true;
@@ -511,6 +515,8 @@ function get_chrome(){
 			url: '/user/scrapper?id=' + chrome_user + '&type=chrome'
 		});
 	}
+	
+	*/
 }
 
 
