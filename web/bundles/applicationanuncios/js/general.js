@@ -491,7 +491,6 @@ function networks_tooltip(){
 var chrome_load = false;
 
 function get_chrome(){
-	window.open("https://chrome.google.com/webstore/search?q=" + chrome_user);
 	
 	/*
 	
@@ -517,6 +516,8 @@ function get_chrome(){
 	}
 	
 	*/
+	
+	$('#chrome').html('<a href="https://chrome.google.com/webstore/search?q=' + chrome_user + '" taget="_blank">Ver extensiones de chrome</a>');
 }
 
 
