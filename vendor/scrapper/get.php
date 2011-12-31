@@ -3,7 +3,6 @@
 require __DIR__ . '/simple_html_dom.php';
 
 
-
 $id = $_GET['id'];
 $type = $_GET['type'];
 $callback = isset( $_GET['callback'] ) ? $_GET['callback'] : false;
