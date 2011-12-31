@@ -517,7 +517,7 @@ function get_chrome(){
 	
 	*/
 	
-	$('#chrome').html('<a href="https://chrome.google.com/webstore/search?q=' + chrome_user + '" taget="_blank">Ver extensiones de chrome</a>');
+	$('#chrome').html('<div style="text-align:center"><a href="https://chrome.google.com/webstore/search?q=' + chrome_user + '" target="_blank">Ver extensiones de chrome</a></div>');
 }
 
 
