@@ -801,14 +801,16 @@ class UserController extends Controller
 		$db = $this->get('database_connection');
         $categories = $db->fetchAll($query);
 		
+		/*
 		// ultimos usuarios
 		$query = "SELECT u FROM ApplicationUserBundle:User u ORDER BY u.id DESC";
 		$users = $this->get('doctrine')->getEntityManager()
 		            ->createQuery($query)
 					->setMaxResults(5)
 		            ->getResult();
+		*/
 		
-        return array('categories_aux' => $categories, 'users' => $users);
+        return array('categories_aux' => $categories);//, 'users' => $users
     }
 
 

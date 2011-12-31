@@ -110,7 +110,17 @@
 							<li><a href="{{ path('user_logout') }}">Salir</a></li>
 						</ul>
 				{% else %}
-					<a href="{{ path('user_welcome') }}">Iniciar sesión</a>
+					
+					
+					<li class="dropdown">
+						<a href="{{ path('user_welcome') }}" class="dropdown-toggle">Iniciar sesión</a>
+	    				<ul class="dropdown-menu">
+							<li><a href="{{ path('user_fblogin') }}">Entra con facebook</a></li>
+							<li><a href="{{ path('user_register') }}">Registrate</a></li>
+						</ul>
+					</li>
+					
+					
 				{% endif %}
 				</li>
 			</ul>

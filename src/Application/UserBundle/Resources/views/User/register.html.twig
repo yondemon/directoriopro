@@ -5,9 +5,9 @@
 
 {% block sidebar %}
 
-	<b>Ayuda</b><br/>
-	<a href="{{ path('user_forgotemail') }}">¿Has olvidado la contraseña?</a>
-
+	<b>Registrate en 1 minuto</b><br/>
+	<a href="{{ path('user_fblogin') }}"><img src="{{ asset('bundles/applicationanuncios/images/fblogin.png') }}"/></a>
+	<iframe src="https://www.facebook.com/plugins/facepile.php?app_id=194718703877738&amp;max_rows=2" scrolling="no" frameborder="0" allowTransparency="true" style="border:none;overflow:hidden; width:190px; height:120px;"></iframe>
 
 {% endblock %}
 
