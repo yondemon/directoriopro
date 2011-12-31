@@ -29,13 +29,13 @@ if( $html ){
 
 	switch( $type ){
 		case 'chrome':
-			$items = $html->find('a[class=title-a]');
+			$items = $html->find('a[class=id-wide-tile-anchor]');
 			if( $items ){
 				foreach( $items as $item ){
 					$data[] = array(
 						'url' => 'https://chrome.google.com' . $item->attr['href'],
-						'title' => $item->find('div[class=mod-tiles-info] b',0)->innertext,
-						'text' => $item->find('div[class=mod-tiles-category]',0)->innertext,
+						'title' => $item->find('div[class=wall-search-tile-title]',0)->innertext,
+						'text' => $item->find('div[class=wall-search-tile-description]',0)->innertext,
 						'icon' => 'http:' . $item->find('img',0)->attr['src']
 						);
 				}
