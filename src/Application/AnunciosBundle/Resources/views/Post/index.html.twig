@@ -52,8 +52,14 @@
 <ul>
     {% for entity in entities %}
         <li style="margin-bottom:20px;" {% if entity.featured == 1 %}class="featured"{% endif %}">
-			<b>{{ categories[ entity.getCategoryId() ] }}</b><br/>
+
+			{% if entity.type == 0 %}
+				<span class="label success">Empleo</span>
+			{% else %}
+				<span class="label notice">Freelance</span>
+			{% endif %}
             <a href="{{ path('post_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
+			<b>{{ categories[ entity.getCategoryId() ] }}</b><br/>
             {{ entity.body|truncate(200) }}<br/>
             <span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
         </li>

@@ -46,7 +46,7 @@ class PostController extends Controller
 		$query = $em->createQueryBuilder();
 		$query->add('select', 'p')
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
-		   ->add('where', 'p.type = 0')
+		   ->add('where', 'p.type != 2')
 		   ->add('orderBy', 'p.featured DESC, p.id DESC');
 		
 		// categoria?
