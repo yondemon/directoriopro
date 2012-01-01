@@ -146,7 +146,7 @@ class UserController extends Controller
 		$query->add('select', 'u')
 		   ->add('from', 'ApplicationUserBundle:User u')
 		   ->add('where', 'u.freelance = 1')
-		   ->add('orderBy', 'u.id DESC');
+		   ->add('orderBy', 'u.votes DESC, u.date_login DESC');
 		
 		// categoria?
 		$category_id = $request->query->get('c');
