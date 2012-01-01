@@ -122,19 +122,8 @@ class UserController extends Controller
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 	
-		$users = false;
-		
-		if( $page == 1 ){
-			$qb = $em->createQueryBuilder();
-			$qb->add('select', 'u')
-			   ->add('from', 'ApplicationUserBundle:User u')
-			   ->add('where', 'u.freelance = 1')
-			   ->add('orderBy', 'RAND()');
-			
-			$query = $qb->getQuery();
-			$users = $query->getResult();
-		}
-        return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1, 'users' => $users);
+
+        return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1);
 
     }
 
