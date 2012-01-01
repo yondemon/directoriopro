@@ -121,8 +121,21 @@ class UserController extends Controller
 
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	
+		$users = false;
+		
+		if( $page == 1 ){
+			$qb = $em->createQueryBuilder();
+			$qb->add('select', 'u')
+			   ->add('from', 'ApplicationUserBundle:User u')
+			   ->add('where', 'u.freelance = 1')
+			   ->add('orderBy', 'RAND()');
+			
+			$query = $qb->getQuery();
+			$users = $query->getResult();
+		}
+        return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1, 'users' => $users);
 
-        return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1);
     }
 
     /**
@@ -150,7 +163,6 @@ class UserController extends Controller
 		$category_id = $request->query->get('c');
 		if( $category_id ){
 		   $query->andWhere('u.category_id = :category_id')->setParameter('category_id', $category_id);
-
 		}
 
         $adapter = new DoctrineORMAdapter($query);

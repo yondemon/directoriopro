@@ -75,12 +75,25 @@ class PostController extends Controller
 		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
 		
 
-
+		$users = false;
+		if( $page == 1 ){
+			$qb = $em->createQueryBuilder();
+			$qb->add('select', 'u')
+			   ->add('from', 'ApplicationUserBundle:User u')
+			   ->add('where', 'u.freelance = 1')
+			   ->add('orderBy', 'u.date_login DESC')
+			   ->setMaxResults(14);
+			
+			$query = $qb->getQuery();
+			$users = $query->getResult();
+			shuffle( $users );
+			$users = array_splice($users, 0, 7);
+		}
 
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 
-        return array('pager' => $html, 'entities' => $entities );
+        return array('pager' => $html, 'entities' => $entities, 'users' => $users );
     }
 
     /**
