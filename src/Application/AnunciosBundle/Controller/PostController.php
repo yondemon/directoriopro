@@ -145,28 +145,27 @@ class PostController extends Controller
 			
 		}
 
+		/*
 		// usuarios relacionados
-		if( $entity->getType() != 2 ){
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'u')
+		   ->add('from', 'ApplicationUserBundle:User u')
+		   ->andWhere('u.category_id = :category_id')->setParameter('category_id', $entity->getCategoryId())
+		   ->andWhere('u.body IS NOT NULL')
+		   ->add('orderBy', 'u.votes DESC, u.id DESC')
+		   ->setMaxResults(12);
 		
-			$query = $em->createQueryBuilder();
-			$query->add('select', 'u')
-			   ->add('from', 'ApplicationUserBundle:User u')
-			   ->andWhere('u.category_id = :category_id')->setParameter('category_id', $entity->getCategoryId())
-			   ->andWhere('u.body IS NOT NULL')
-			   ->add('orderBy', 'u.votes DESC, u.id DESC')
-			   ->setMaxResults(12);
-			
-			// empleo
-			if( $entity->getType() == 0 ){
-				$query->andWhere('u.unemployed = 1');
-			
-			// freelance
-			}else if( $entity->getType() == 1 ){
-				$query->andWhere('u.freelance = 1');
-			}
-
-			$users = $query->getQuery()->getResult();
+		// empleo
+		if( $entity->getType() == 0 ){
+			$query->andWhere('u.unemployed = 1');
+		
+		// freelance
+		}else if( $entity->getType() == 1 ){
+			$query->andWhere('u.freelance = 1');
 		}
+
+		$users = $query->getQuery()->getResult();
+		*/
 
 
 		
@@ -185,8 +184,8 @@ class PostController extends Controller
             'entity'       => $entity,
             'user'         => $user,
 			'contact_form' => $contact_form_html,
-			'entities'     => $entities,
-			'users'        => $users
+			'entities'     => $entities
+			//'users'        => $users
 			);
     }
 

@@ -34,15 +34,7 @@
 	
 	
 	
-	{% if users %}
-		<br/><b style="display:block;margin-bottom:7px">Recomendados</b>
-		
-		{% for item in users %}
-			<a href="{{ path('user_show', { 'id': item.id }) }}" style="float:left;margin-right:5px;padding-top:0;display:inline" data-original-title="{{ item.name }}" rel="twipsy"><img src="{{ item.getAvatar('normal') }}" width="40" height="40" /></a>
-		{% endfor %}
-	
 
-	{% endif %}
 
 
 	
