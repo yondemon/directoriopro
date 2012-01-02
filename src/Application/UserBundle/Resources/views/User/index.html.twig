@@ -17,6 +17,7 @@
 	<b>Top 10 referers</b>
 	{% for user in users_ref %}
 		<a href="{{ path('user_show', { 'id': user.id }) }}" title="{{ user.total }} invitados">{{ user.name }}</a>
+		{{ categories[ user.category_id ] }}
 	{% endfor %}
 {% endblock %}
 
