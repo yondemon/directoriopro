@@ -757,7 +757,7 @@ class UserController extends Controller
 		$session = $this->getRequest()->getSession();
 		$id = $session->get('id');
 		if( !$id ){
-			return $this->redirect('/');
+			return $this->redirect($this->generateUrl('user_welcome', array('back' => $_SERVER['REQUEST_URI'])));
 		}
 	
         $em = $this->getDoctrine()->getEntityManager();
