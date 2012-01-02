@@ -120,7 +120,7 @@ class UserController extends Controller
 
 
 
-		$query = "SELECT u.*, COUNT(u.id) AS total FROM User u ORDER BY total DESC LIMIT 10";
+		$query = "SELECT u.*, COUNT(u.ref_id) AS total FROM User u ORDER BY total DESC LIMIT 10";
 		$db = $this->get('database_connection');
         $users_ref = $db->fetchAll($query);
 
