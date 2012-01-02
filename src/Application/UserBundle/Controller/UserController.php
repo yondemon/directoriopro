@@ -119,11 +119,18 @@ class UserController extends Controller
 		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
 
 
+
+		$query = "SELECT u.*, COUNT(u.id) AS total FROM User u ORDER BY total DESC LIMIT 10";
+		$db = $this->get('database_connection');
+        $users_ref = $db->fetchAll($query);
+
+
+
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 	
 
-        return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1);
+        return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1, 'users_ref' => $users_ref);
 
     }
 
