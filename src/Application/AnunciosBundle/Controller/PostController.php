@@ -816,15 +816,15 @@ class PostController extends Controller
 		$total_posts_freelance = $result['total'];
 
 		// colaboracion
-		$query = "SELECT COUNT(p.id) AS total FROM Post p WHERE p.type = 2";
-		$result = $db->query($query)->fetch();
-		$total_posts_colaboracion = $result['total'];
+		//$query = "SELECT COUNT(p.id) AS total FROM Post p WHERE p.type = 2";
+		//$result = $db->query($query)->fetch();
+		//$total_posts_colaboracion = $result['total'];
 
 
 
         return array(
         	'users_month' => $users_month, 'total_users' => $total_users, 'total_ref' => $total_ref, 'total_fb' => $total_fb, 'total_unemployed' => $total_unemployed,
-	        'total_freelance' => $total_freelance, 'total_comments' => $total_comments, 'total_posts' => $total_posts, 'total_posts_freelance' => $total_posts_freelance, 'total_posts_colaboracion' => $total_posts_colaboracion
+	        'total_freelance' => $total_freelance, 'total_comments' => $total_comments, 'total_posts' => $total_posts, 'total_posts_freelance' => $total_posts_freelance
 	    	);
     }
 }
