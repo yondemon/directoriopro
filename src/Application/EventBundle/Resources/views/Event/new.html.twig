@@ -115,7 +115,16 @@ autoGeo();
 $( ".dates input" ).datepicker({ firstDay: 1 });
 
 
+date_start = $( "#application_eventbundle_eventtype_date_start" );
+date_end = $( "#application_eventbundle_eventtype_date_end" );
 
+date_start.change(function(){
+
+	if( date_end.val() == "" ){
+		date_end.val( date_start.val() );
+	}
+	
+});
 
 
 

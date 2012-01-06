@@ -26,6 +26,8 @@ class PostType extends AbstractType
             ->add('email','email')
 			->add('price')
 			->add('location')
+            ->add('city_id')
+            ->add('country_id')
             //->add('featured')
         ;
     }

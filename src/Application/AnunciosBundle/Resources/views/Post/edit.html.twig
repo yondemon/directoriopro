@@ -53,6 +53,10 @@ TEXTAREA.xlarge{width:430px}
 	</div>
 	<div id="geo">
 		{{ form_row(edit_form.location, { 'label': 'Localización' }) }}
+		<div class="hide">
+			{{ form_row(edit_form.country_id, { 'label': 'country' }) }}
+			{{ form_row(edit_form.city_id, { 'label': 'city' }) }}
+		</div>
 	</div>
 
 

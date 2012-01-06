@@ -77,6 +77,78 @@ class EventController extends Controller
         return array('pager' => $html, 'entities' => $entities);
     }
 
+
+    /**
+     * Lists all Event entities by city.
+     *
+     * @Route("/city/{id}", name="event_city")
+     * @Template()
+     */
+    public function cityAction($id)
+    {
+	
+		$request = $this->getRequest();
+		$page = $request->query->get('page');
+		if( !$page ) $page = 1;
+	
+        $em = $this->getDoctrine()->getEntityManager();
+
+		$city = $em->getRepository('ApplicationCityBundle:City')->find($id);
+		
+		if(!$city){
+			throw $this->createNotFoundException('Unable to find Post entity.');
+		}
+
+
+		
+		$query = $em->createQuery("SELECT c.name FROM ApplicationCityBundle:Country c WHERE c.code = :code");
+		$query->setParameters(array(
+			'code' => $city->getCode()
+		));
+		$country = current( $query->getResult() );
+		
+		
+		
+
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->andWhere('e.city_id = :city_id')->setParameter('city_id', $id)
+		   ->add('orderBy', 'e.featured DESC, e.date_start ASC');
+		
+
+		
+		
+        $adapter = new DoctrineORMAdapter($query);
+
+		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setMaxPerPage(10); // 10 by default
+		$maxPerPage = $pagerfanta->getMaxPerPage();
+
+		$pagerfanta->setCurrentPage($page); // 1 by default
+		$entities = $pagerfanta->getCurrentPageResults();
+		$routeGenerator = function($page) {//, $category_id
+			$url = '?page='.$page;
+			//if( $category_id ) $url .= '&c=' . $category_id;
+		    return $url;
+		};
+
+		$view = new DefaultView();
+		$html = $view->render($pagerfanta, $routeGenerator);//, array('category_id' => (int)$category_id)
+		
+		
+		
+	
+        //$em = $this->getDoctrine()->getEntityManager();
+        //$entities = $em->getRepository('ApplicationEventBundle:Event')->findAll();
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+
+        return array('city' => $city, 'country' => $country, 'pager' => $html, 'entities' => $entities);
+    }
+
     /**
      * Finds and displays a Event entity.
      *

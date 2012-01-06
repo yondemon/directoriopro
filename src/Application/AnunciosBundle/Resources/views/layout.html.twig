@@ -42,7 +42,7 @@
 			<ul class="nav">
 
 
-				
+				 
 				<li class="dropdown">
 					<a href="{{ path('post') }}">Empleo</a>
 					<!--
@@ -64,6 +64,7 @@
 				</li>
 				
 				
+				<!--
 				<li class="dropdown">
 					<a href="{{ path('project') }}" class="dropdown-toggle">Ideas</a>
     				<ul class="dropdown-menu">
@@ -72,7 +73,7 @@
 						<li><a href="{{ path('project') }}?t=2">Startup</a></li>
 					</ul>
 				</li>
-				
+				-->
 				
 
 				<li class="dropdown">
@@ -101,7 +102,7 @@
         				<ul class="dropdown-menu">
 							<li><a href="{{ path('user_edit') }}">Editar perfil</a></li>
 							<li><a href="{{ path('user_comments', { 'id': app.session.get('id') }) }}">Recomendaciones</a></li>
-							<li><a href="{{ path('post_recommend') }}">¿Buscas trabajo?</a></li>
+
 							{% if app.session.get('admin') %}
 								<li class="divider"></li>
 								<li><a href="{{ path('post_stats') }}">Estadísticas</a></li>

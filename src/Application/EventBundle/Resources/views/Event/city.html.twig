@@ -14,7 +14,7 @@
 {% block content %}
 
 
-<h1>Eventos</h1>
+<h1>Eventos en {{ city.name }}, {{ country.name }}</h1>
 
 
 
@@ -38,7 +38,7 @@
 				<br/>
 	            {{ entity.body|truncate(200) }}
 				<br/>
-				<a href="{{ path('event_city', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>
+				<a href="{{ path('city_show', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>
 
         </li>
     {% endfor %}

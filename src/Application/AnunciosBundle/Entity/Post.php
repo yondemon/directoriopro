@@ -94,6 +94,19 @@ class Post
      */
     private $location;
 
+    /**
+     * @var integer $city_id
+     *
+     * @ORM\Column(name="city_id", type="integer", nullable=true)
+     */
+    private $city_id;
+
+    /**
+     * @var integer $country_id
+     *
+     * @ORM\Column(name="country_id", type="integer", nullable=true)
+     */
+    private $country_id;
 
     /**
      * @var integer $visits
@@ -313,6 +326,45 @@ class Post
         return $this->location;
     }
 
+    /**
+     * Set city_id
+     *
+     * @param integer $cityId
+     */
+    public function setCityId($cityId)
+    {
+        $this->city_id = $cityId;
+    }
+
+    /**
+     * Get city_id
+     *
+     * @return integer 
+     */
+    public function getCityId()
+    {
+        return $this->city_id;
+    }
+
+    /**
+     * Set country_id
+     *
+     * @param integer $countryId
+     */
+    public function setCountryId($countryId)
+    {
+        $this->country_id = $countryId;
+    }
+
+    /**
+     * Get country_id
+     *
+     * @return integer 
+     */
+    public function getCountryId()
+    {
+        return $this->country_id;
+    }
 
     /**
      * Set visits
