@@ -84,13 +84,10 @@
 			</ul>
 			<form id="form_search" class="pull-left" action="{{ path('post') }}search">
 	            <input name="q" id="query" type="text" placeholder="Buscar" autocomplete="off" class="medium">
-				<input type="hidden" name="t" id="input_type" value="{{ form_type }}"/>
 				
 				<div id="menu_options">
-					<a href="#" onclick="$('#input_type').val('');$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Empleos</a>
-					<a href="#" onclick="$('#input_type').val(1);$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Anuncios Freelance</a>
-					<a href="#" onclick="$('#input_type').val(2);$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Colaboraciones</a>
-					<a href="#" onclick="$('#input_type').val('');$('#form_search').attr('action','{{ path('user') }}search').submit()">Buscar Profesionales</a>
+					<a href="#" onclick="$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Empleos</a>
+					<a href="#" onclick="$('#form_search').attr('action','{{ path('user') }}search').submit()">Buscar Profesionales</a>
 				</div>
 	        </form>
 			<ul class="nav secondary-nav">
