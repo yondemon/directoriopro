@@ -309,23 +309,37 @@ class EventController extends Controller
             throw $this->createNotFoundException('Unable to find Event entity.');
         }
 
-        $editForm = $this->createForm(new EventType(), $entity);
 
 
-		// fechas
-		$date_start = $entity->getDateStart();
-		$date_end = $entity->getDateEnd();
+		$session = $this->getRequest()->getSession();
+		$user_id = $session->get('id');
+		$admin = $session->get('admin');
+		
+		if( ( $entity->getUserId() == $user_id ) || $admin ){
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-			'h_start'     => $date_start->format('H'),
-			'm_start'     => $date_start->format('i'),
-			'h_end'       => $date_end->format('H'),
-			'm_end'       => $date_end->format('i'),
-			'hours'   => array('07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','00','01','02','03','04','05','06'),
-			'minutes'=> array('00','10','20','30','40','50')
-        );
+	        $editForm = $this->createForm(new EventType(), $entity);
+
+
+			// fechas
+			$date_start = $entity->getDateStart();
+			$date_end = $entity->getDateEnd();
+
+	        return array(
+	            'entity'      => $entity,
+	            'edit_form'   => $editForm->createView(),
+				'h_start'     => $date_start->format('H'),
+				'm_start'     => $date_start->format('i'),
+				'h_end'       => $date_end->format('H'),
+				'm_end'       => $date_end->format('i'),
+				'hours'   => array('07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','00','01','02','03','04','05','06'),
+				'minutes'=> array('00','10','20','30','40','50')
+	        );
+
+		}else{
+			$url = $this->generateUrl('event_show', array('id' => $entity->getId()));
+			return $this->redirect($url);
+		}
+
     }
 
     /**
