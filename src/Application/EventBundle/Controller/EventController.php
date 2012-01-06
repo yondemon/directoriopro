@@ -142,6 +142,7 @@ class EventController extends Controller
 			$qb = $em->createQueryBuilder();
 			$qb->add('select', 'u')
 			   ->add('from', 'ApplicationUserBundle:User u')
+			   ->andWhere('u.city_id = :id')->setParameter('id', $id)
 			   ->add('orderBy', 'u.date_login DESC')
 			   ->setMaxResults(10);
 			
