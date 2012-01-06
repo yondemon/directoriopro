@@ -29,10 +29,8 @@
 	            <a href="{{ path('event_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
 				<b>{{ entity.getPrettyDate() }}</b>
 				
-				<span class="users">3{{ entity.users }}</span>
-				
 				{% if entity.users %}
-					<span class="votes">{{ entity.users }}</span>
+					<span class="users">{{ entity.users }}</span>
 				{% endif %}
 				
 				<br/>
