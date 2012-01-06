@@ -448,10 +448,12 @@ class PostController extends Controller
 		}
 		
 		// tipo?
+		/*
 		$type = (int)$request->query->get('t');
 		if( $type ){
 		   $qb->andWhere('p.type = :type')->setParameter('type', $type);
 		}
+		*/
 
 		$query = $qb->getQuery();
 		$entities = $query->getResult();
@@ -741,9 +743,23 @@ class PostController extends Controller
 		//$total_posts_colaboracion = $result['total'];
 
 
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'p')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('orderBy', 'p.visits DESC')
+		   ->setMaxResults(10);
+		$top_posts = $query->getQuery()->getResult();
+
+
+		
+		$query = "SELECT COUNT(p.id) AS total, c.name FROM Post p, City c WHERE p.city_id = c.id GROUP BY c.id ORDER BY total DESC LIMIT 10";
+        $cities = $db->fetchAll($query);
+		
+		
+
 
         return array(
-        	'users_month' => $users_month, 'total_users' => $total_users, 'total_ref' => $total_ref, 'total_fb' => $total_fb, 'total_unemployed' => $total_unemployed,
+			'cities' => $cities, 'top_posts' => $top_posts, 'users_month' => $users_month, 'total_users' => $total_users, 'total_ref' => $total_ref, 'total_fb' => $total_fb, 'total_unemployed' => $total_unemployed,
 	        'total_freelance' => $total_freelance, 'total_comments' => $total_comments, 'total_posts' => $total_posts, 'total_posts_freelance' => $total_posts_freelance
 	    	);
     }

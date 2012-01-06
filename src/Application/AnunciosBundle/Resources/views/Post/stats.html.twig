@@ -51,4 +51,29 @@
 </script>
 <div id="chart_div"></div>
 
+
+<b>Top ofertas</b><br/>
+
+<ul>
+    {% for entity in top_posts %}
+		<li>
+			<a href="{{ path('post_show', { 'id': entity.id }) }}">
+			{% if entity.type == 0 %}Empleo{% else %}Freelance{% endif %}, 
+			{{ entity.title }}</a> ({{ entity.visits }} visitas)
+        </li>
+    {% endfor %}
+</ul>
+
+
+<b>Top ciudades</b><br/>
+
+<ul>
+    {% for city in cities %}
+		<li>
+			{{ city.name }} ({{ city.total }} ofertas)
+        </li>
+    {% endfor %}
+</ul>
+
+
 {% endblock %}
