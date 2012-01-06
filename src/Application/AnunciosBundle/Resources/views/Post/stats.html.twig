@@ -2,6 +2,21 @@
 
 {% block title "Estadísticas" %}
 
+
+{% block sidebar %}
+
+
+	<b>Top ciudades</b><br/><br/>
+
+    {% for city in cities %}
+
+		{{ city.name }} ({{ city.total }} ofertas)<br/><br/>
+
+    {% endfor %}
+
+	
+{% endblock %}
+
 {% block content %}
 
 <h1>Estadísticas</h1>
@@ -22,7 +37,7 @@
         <tr>
             <td><b class="pull-right">{{ total_ref }}</b>Referidos</td>
             <td><b class="pull-right">{{ total_comments }}</b>Recomendaciones</td>
-            <td><b class="pull-right">&nbsp;</td>
+            <td><b class="pull-right">{{ total_posts_internship }}</b>Practicas</td>
         </tr>
 </table>
 
@@ -33,6 +48,9 @@
   google.load("visualization", "1", {packages:["corechart"]});
   google.setOnLoadCallback(drawChart);
   function drawChart() {
+
+	// users
+
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Fecha');
     data.addColumn('number', 'Usuarios');
@@ -47,33 +65,39 @@
 
     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
     chart.draw(data, {width: 580, height: 240, title: 'Usuarios registrados 30 días'});
+
+	// posts
+
+    var data2 = new google.visualization.DataTable();
+    data2.addColumn('string', 'Fecha');
+    data2.addColumn('number', 'Anuncios');
+    data2.addRows({{ posts_month|length  }});
+
+
+    {% for key, value in posts_month %}
+       data2.setValue({{loop.index0}}, 0, '{{key}}');
+       data2.setValue({{loop.index0}}, 1, {{value}});
+    {% endfor %}
+
+
+    var chart2 = new google.visualization.LineChart(document.getElementById('chart_div2'));
+    chart2.draw(data2, {width: 580, height: 240, title: 'Ofertas publicadas 30 días', colors:['red'] });
+
   }
 </script>
 <div id="chart_div"></div>
+<div id="chart_div2"></div>
 
-
-<b>Top ofertas</b><br/>
+<b>Top ofertas</b><br/><br/>
 
 <ul>
     {% for entity in top_posts %}
 		<li>
 			<a href="{{ path('post_show', { 'id': entity.id }) }}">
-			{% if entity.type == 0 %}Empleo{% else %}Freelance{% endif %}, 
+			{% if entity.type == 0 %}Empleo{% elseif entity.type == 1 %}Freelance{% else %}Prácticas{% endif %}, 
 			{{ entity.title }}</a> ({{ entity.visits }} visitas)
         </li>
     {% endfor %}
 </ul>
-
-
-<b>Top ciudades</b><br/>
-
-<ul>
-    {% for city in cities %}
-		<li>
-			{{ city.name }} ({{ city.total }} ofertas)
-        </li>
-    {% endfor %}
-</ul>
-
 
 {% endblock %}

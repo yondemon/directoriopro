@@ -25,26 +25,9 @@
 {% block content %}
 
 
-{% if users %}
-	<div style="background:#FFFFCC;padding:10px;margin-bottom:10px">
-	<b style="display:block;margin-bottom:10px;font-weight:bold">¿Buscas un programador, diseñador, maquetador o blogger freelance?</b>
-	
-	<select style="float:right" onchange="if(this.value){document.location = '{{ path('user_freelance') }}?c=' + this.value;}">
-	<option value="">Buscar por categoria...</option>
-	{% for category in categories %}
-		<option value="{{loop.index0}}">{{category}}</option>
-	{% endfor %}
-	</select>
-	
-	{% for user in users %}
-		<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="38" height="38"/></a>
-	{% endfor %}
-	<br class="clear"/>
-	</div>
-{% endif %}
 
 
-<h1>Anuncios</h1>
+<h1>Anuncios en {{ city.name }}, {{ country.name }}</h1>
 
 
 
@@ -64,7 +47,7 @@
             <a href="{{ path('post_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
 			<b>{{ categories[ entity.getCategoryId() ] }}</b><br/>
             {{ entity.body|truncate(200) }}<br/>
-            <span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- <a href="{{ path('post_city', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>{% endif %}</span>
+            <span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
         </li>
     {% endfor %}
 </ul>

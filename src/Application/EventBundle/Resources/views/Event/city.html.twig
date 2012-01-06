@@ -14,6 +14,21 @@
 {% block content %}
 
 
+
+{% if users %}
+	<div style="background:#FFFFCC;padding:10px;margin-bottom:10px">
+	<b style="display:block;margin-bottom:10px;font-weight:bold">Gente por conocer</b>
+
+	<a href="{{ path('user_invite') }}" style="float:right;margin-top:10px;font-size:16px;">Invitar usuarios</a>
+	
+	{% for user in users %}
+		<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="38" height="38"/></a>
+	{% endfor %}
+	<br class="clear"/>
+	</div>
+{% endif %}
+
+
 <h1>Eventos en {{ city.name }}, {{ country.name }}</h1>
 
 

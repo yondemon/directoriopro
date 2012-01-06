@@ -12,13 +12,13 @@
 	{% for entity in entities %}
 
 		<item>
-			<title>{% if entity.type == 0 %}Empleo{% else %}Freelance{% endif %}, {{ entity.title }}</title>
+			<title>{% if entity.type == 0 %}Empleo{% elseif entity.type == 1 %}Freelance{% else %}Prácticas{% endif %}, {{ entity.title }}</title>
 			<link>{{ url('post_show', { 'id': entity.id }) }}</link>
 			<pubDate>{{ entity.date|date('D, d M Y H:i:s O') }}</pubDate>
 			<category><![CDATA[{{ categories[ entity.getCategoryId() ] }}]]></category>
 			<description><![CDATA[{{ entity.body|truncate(200) }}]]></description>
 		</item>
-
+Prácticas
 	{% endfor %}
 	
 	</channel>

@@ -46,7 +46,7 @@ class PostController extends Controller
 		$query = $em->createQueryBuilder();
 		$query->add('select', 'p')
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
-		   ->add('where', 'p.type != 2')
+		   //->add('where', 'p.type != 2')
 		   ->add('orderBy', 'p.featured DESC, p.id DESC');
 		
 		// categoria?
@@ -94,6 +94,75 @@ class PostController extends Controller
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('pager' => $html, 'entities' => $entities, 'users' => $users );
+    }
+
+    /**
+     * Lists all Posts entities by city.
+     *
+     * @Route("/city/{id}", name="post_city")
+     * @Template()
+     */
+    public function cityAction($id)
+    {
+		$request = $this->getRequest();
+		$page = $request->query->get('page');
+		if( !$page ) $page = 1;
+	
+        $em = $this->getDoctrine()->getEntityManager();
+
+		$city = $em->getRepository('ApplicationCityBundle:City')->find($id);
+		
+		if(!$city){
+			throw $this->createNotFoundException('Unable to find Post entity.');
+		}
+
+
+		
+		$query = $em->createQuery("SELECT c.name FROM ApplicationCityBundle:Country c WHERE c.code = :code");
+		$query->setParameters(array(
+			'code' => $city->getCode()
+		));
+		$country = current( $query->getResult() );
+
+
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'p')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->andWhere('p.city_id = :city_id')->setParameter('city_id', $id)
+		   ->add('orderBy', 'p.featured DESC, p.id DESC');
+		
+		// categoria?
+		$category_id = $request->query->get('c');
+		if( $category_id ){
+		   $query->add('where', 'p.category_id = :category_id')->setParameter('category_id', $category_id);
+
+		}
+		
+		
+        $adapter = new DoctrineORMAdapter($query);
+
+		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setMaxPerPage(10); // 10 by default
+		$maxPerPage = $pagerfanta->getMaxPerPage();
+
+		$pagerfanta->setCurrentPage($page); // 1 by default
+		$entities = $pagerfanta->getCurrentPageResults();
+		$routeGenerator = function($page, $category_id) {
+			$url = '?page='.$page;
+			if( $category_id ) $url .= '&c=' . $category_id;
+		    return $url;
+		};
+
+		$view = new DefaultView();
+		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
+		
+
+
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+
+        return array('city' => $city, 'country' => $country, 'pager' => $html, 'entities' => $entities );
     }
 
     /**
@@ -693,6 +762,23 @@ class PostController extends Controller
 				else $users_month[$k] += $item['total'];
 			}
 		}
+		
+		// ofertas publicadas mes
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'COUNT(p.id) AS total, p.date')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->andWhere("p.date BETWEEN '" . date('Y-m-d',strtotime("-1 month")) . "00:00:00' AND '" . date('Y-m-d') . " 23:59:59'")
+		   ->groupBy('p.date');
+		$posts_month_aux = $query->getQuery()->getResult();
+
+		$posts_month = array();
+		if( $posts_month_aux ){
+			foreach( $posts_month_aux as $item ){
+				$k = (int)substr($item['date'],8,2);
+				if( !isset( $posts_month[$k] ) ) $posts_month[$k] = 1;
+				else $posts_month[$k] += $item['total'];
+			}
+		}
 
 		$db = $this->get('database_connection');
 
@@ -737,10 +823,10 @@ class PostController extends Controller
 		$result = $db->query($query)->fetch();
 		$total_posts_freelance = $result['total'];
 
-		// colaboracion
-		//$query = "SELECT COUNT(p.id) AS total FROM Post p WHERE p.type = 2";
-		//$result = $db->query($query)->fetch();
-		//$total_posts_colaboracion = $result['total'];
+		// practicas
+		$query = "SELECT COUNT(p.id) AS total FROM Post p WHERE p.type = 2";
+		$result = $db->query($query)->fetch();
+		$total_posts_internship = $result['total'];
 
 
 		$query = $em->createQueryBuilder();
@@ -759,8 +845,8 @@ class PostController extends Controller
 
 
         return array(
-			'cities' => $cities, 'top_posts' => $top_posts, 'users_month' => $users_month, 'total_users' => $total_users, 'total_ref' => $total_ref, 'total_fb' => $total_fb, 'total_unemployed' => $total_unemployed,
-	        'total_freelance' => $total_freelance, 'total_comments' => $total_comments, 'total_posts' => $total_posts, 'total_posts_freelance' => $total_posts_freelance
+			'posts_month' => $posts_month, 'cities' => $cities, 'top_posts' => $top_posts, 'users_month' => $users_month, 'total_users' => $total_users, 'total_ref' => $total_ref, 'total_fb' => $total_fb, 'total_unemployed' => $total_unemployed,
+	        'total_freelance' => $total_freelance, 'total_comments' => $total_comments, 'total_posts' => $total_posts, 'total_posts_freelance' => $total_posts_freelance, 'total_posts_internship' => $total_posts_internship
 	    	);
     }
 }

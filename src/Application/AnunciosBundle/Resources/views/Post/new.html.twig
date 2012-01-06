@@ -41,7 +41,7 @@ TEXTAREA.xlarge{width:430px}
 	
 	{{ form_row(form.email, { 'label': 'Email' }) }}
 	
-	<div id="price" {% if entity.type == 2 %}style="display:none"{% endif %}>
+	<div id="price">
 		{{ form_row(form.price, { 'label': 'Sueldo' }) }}
 	</div>
 	
@@ -79,20 +79,7 @@ TEXTAREA.xlarge{width:430px}
 	
 autoGeo();
 
-// post type
-$('#application_anunciosbundle_posttype_type input:eq(0)').click(function(){
-	$('#price').show();
-});
-$('#application_anunciosbundle_posttype_type input:eq(1)').click(function(){
-	$('#price').show();
-});
-$('#application_anunciosbundle_posttype_type input:eq(2)').click(function(){
-	$('#price').hide();
-	$('#price input:first').val('');
-});
-{% if entity.type == 2 %}
-	$('#price').hide();
-{% endif %}
+
 
 
 // need location?

@@ -137,7 +137,19 @@ class EventController extends Controller
 		$view = new DefaultView();
 		$html = $view->render($pagerfanta, $routeGenerator);//, array('category_id' => (int)$category_id)
 		
-		
+		$users = false;
+		if( $page == 1 ){
+			$qb = $em->createQueryBuilder();
+			$qb->add('select', 'u')
+			   ->add('from', 'ApplicationUserBundle:User u')
+			   ->add('orderBy', 'u.date_login DESC')
+			   ->setMaxResults(10);
+			
+			$query = $qb->getQuery();
+			$users = $query->getResult();
+			//shuffle( $users );
+			//$users = array_splice($users, 0, 7);
+		}
 		
 	
         //$em = $this->getDoctrine()->getEntityManager();
@@ -146,7 +158,7 @@ class EventController extends Controller
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 
-        return array('city' => $city, 'country' => $country, 'pager' => $html, 'entities' => $entities);
+        return array('city' => $city, 'country' => $country, 'pager' => $html, 'entities' => $entities, 'users' => $users);
     }
 
     /**

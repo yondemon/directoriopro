@@ -75,8 +75,20 @@
 
 
 
-<h1>{{ entity.title }}</h1>
 
+
+{% if entity.type == 0 %}
+	<span class="label success">Empleo</span>
+{% elseif entity.type == 1 %}
+	<span class="label notice">Freelance</span>
+{% else %}
+	<span class="label warning">Prácticas</span>
+{% endif %}
+
+<br/>
+
+
+<h1>{{ entity.title }}</h1>
 
 	
 	{% if location %}
