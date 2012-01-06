@@ -42,7 +42,7 @@
 
 				
 	            <a href="{{ path('event_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
-				<b>{{ entity.date|date('d/m/Y H:i') }}</b>
+				<b>{{ entity.date_start|date('d/m/Y H:i') }}</b>
 				
 				{% if entity.users %}
 					<span class="users">{{ entity.users }}</span>
