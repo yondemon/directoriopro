@@ -910,6 +910,9 @@ class PostController extends Controller
 		$qb->add('select', 'u')
 		   ->add('from', 'ApplicationUserBundle:User u')
 		   ->andWhere("u.body != ''")
+		   ->andWhere("u.category_id != 13")
+		   ->andWhere("u.twitter_url != NULL")
+		   ->andWhere("u.url != NULL")
 		   ->add('orderBy', 'u.date_login DESC')
 		   ->setMaxResults(20);
 		
