@@ -922,7 +922,7 @@ class PostController extends Controller
 		
 		$users = $qb->getQuery()->getResult();
 		shuffle( $users );
-		$users = array_splice($users, 0, 5);
+		$users = array_splice($users, 0, 9);
 
 		// google group
 		$threads = simplexml_load_file('https://groups.google.com/group/beta-beers/feed/rss_v2_0_topics.xml');
