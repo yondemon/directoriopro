@@ -134,6 +134,81 @@ class UserController extends Controller
 
     }
 
+	
+    /**
+     * Lists all User entities from city.
+     *
+     * @Route("/city/{id}", name="user_city")
+     * @Template()
+     */
+    public function cityAction($id)
+    {
+		$request = $this->getRequest();
+		$page = $request->query->get('page');
+		if( !$page ) $page = 1;
+	
+        $em = $this->getDoctrine()->getEntityManager();
+
+		$city = $em->getRepository('ApplicationCityBundle:City')->find($id);
+		
+		if(!$city){
+			throw $this->createNotFoundException('Unable to find Post entity.');
+		}
+
+
+		
+		$query = $em->createQuery("SELECT c.name FROM ApplicationCityBundle:Country c WHERE c.code = :code");
+		$query->setParameters(array(
+			'code' => $city->getCode()
+		));
+		$country = current( $query->getResult() );
+		
+		
+
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'u')
+		   ->add('from', 'ApplicationUserBundle:User u')
+		   ->andWhere('u.city_id = :city_id')->setParameter('city_id', $id)
+		   ->add('orderBy', 'u.id DESC');
+		
+		// categoria?
+		$category_id = $request->query->get('c');
+		if( $category_id ){
+		   $query->andWhere('u.category_id = :category_id')->setParameter('category_id', $category_id);
+
+		}
+		
+		
+        $adapter = new DoctrineORMAdapter($query);
+
+		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setMaxPerPage(10); // 10 by default
+		$maxPerPage = $pagerfanta->getMaxPerPage();
+
+		$pagerfanta->setCurrentPage($page); // 1 by default
+		$entities = $pagerfanta->getCurrentPageResults();
+		$routeGenerator = function($page, $category_id) {
+			$url = '?page='.$page;
+			if( $category_id ) $url .= '&c=' . $category_id;
+		    return $url;
+		};
+		$view = new DefaultView();
+		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
+
+
+
+
+
+
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	
+
+        return array('city' => $city, 'country' => $country, 'entities' => $entities, 'pager' => $html);
+
+    }
+
     /**
      * Lists all freelancers.
      *

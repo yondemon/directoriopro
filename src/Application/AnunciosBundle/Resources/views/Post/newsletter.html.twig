@@ -1,0 +1,65 @@
+{% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros", "Maquetador"] %}
+{% set categories_project = ["Todos","Viajes","Productividad","Classificados","Educación","Fotografía","Juegos","Música","Red social","Deportes","Salud","Ocio","Otros"] %}
+
+<html>
+<body style="background:url('http://betabeers.com/wp-content/themes/mejorandola/images/bg.jpg');padding-bottom:50px">
+
+
+<table cellspacing="0" cellpadding="25" style="background:white;margin:auto;width:650px;font-family:arial;font-size:15px">
+<tr>
+	<td valign="top">
+	
+		<img src="http://betabeers.com/wp-content/themes/mejorandola/images/betabeers_logo_landing.png">
+
+		<br/><br/>
+
+		<b>Próximos eventos</b><br/><br/>
+
+	    {% for entity in events %}
+			<a href="{{ path('event_show', { 'id': entity.id }) }}" style="color:#267DD3;text-decoration:none;">{{ entity.title }}</a><br/><br/>
+	    {% endfor %}
+
+		<br/>
+
+		<b>Últimos temas</b><br/><br/>
+
+		{% for entity in threads %}
+			{% if loop.index < 6 %}
+				<a href="{{ entity.link }}" style="color:#267DD3;text-decoration:none;">{{ entity.title }}</a><br/><br/>
+			{% endif %}
+		{% endfor %}
+	
+	
+		<br/>
+
+		<b>¿Cansado de tu trabajo?</b><br/><br/>
+	    {% for entity in posts %}
+				<a href="{{ path('post_show', { 'id': entity.id }) }}" style="color:#267DD3;text-decoration:none;">{{ entity.title }}</a><br/><br/>
+	    {% endfor %}
+
+	
+	</td>
+	<td valign="top" style="width:220px;background:#D7F2FF;">
+		
+		<a href="http://dir.betabeers.com/user/freelance" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">¿Buscas freelance?</a>
+		<a href="http://betabeers.com/quieres-presentar-en-betabeers/" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Empleo</a>
+		<a href="http://dir.betabeers.com/event/" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Eventos</a>
+		<a href="http://groups.google.com/forum/#!forum/beta-beers" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Temas foro</a>
+		
+		<br/>
+
+		Gente por conocer<br/><br/>
+
+		{% for entity in users %}
+			<img src="{{ entity.getAvatar('normal') }}" alt="{{ entity.name }}" style="float:left;margin-right:10px" width="35" height="35"/>
+			<a href="{{ path('user_show', { 'id': entity.id }) }}" style="color:#267DD3;text-decoration:none;">{{ entity.name|truncate(21) }}</a><br/>
+			<span style="color:#999">{{ categories[ entity.getCategoryId() ] }}</span>
+			<br style="clear:both"/><br/>
+		{% endfor %}
+	</td>
+
+
+</div>
+
+</body>
+</html>

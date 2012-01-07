@@ -850,4 +850,86 @@ class PostController extends Controller
 	        'total_freelance' => $total_freelance, 'total_comments' => $total_comments, 'total_posts' => $total_posts, 'total_posts_freelance' => $total_posts_freelance, 'total_posts_internship' => $total_posts_internship
 	    	);
     }
+
+
+
+    /**
+     * Newsletter
+     *
+     * @Route("/newsletter", name="newsletter_show")
+     * @Template()
+     */
+    public function newsletterAction()
+    {
+
+		$request = $this->getRequest();
+		$id = $request->query->get('id');
+
+		$em = $this->getDoctrine()->getEntityManager();
+	
+		// ciudad y pais
+		$city = $country = false;
+		if( $id ){
+			$city = $em->getRepository('ApplicationCityBundle:City')->find($id);
+			$query = $em->createQuery("SELECT c.name FROM ApplicationCityBundle:Country c WHERE c.code = :code");
+			$query->setParameters(array(
+				'code' => $city->getCode()
+			));
+			$country = current( $query->getResult() );
+		}
+
+		// eventos
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->add('orderBy', 'e.featured DESC, e.date_start ASC')
+		   ->setMaxResults(5);
+		
+		if( $id ){
+			$qb->andWhere('e.city_id = :city_id')->setParameter('city_id', $id);
+		}
+		
+		$events = $qb->getQuery()->getResult();
+
+		// anuncios
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'p')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('orderBy', 'p.featured DESC, p.id DESC')
+		   ->setMaxResults(5);
+		
+		if( $id ){
+			$qb->andWhere('p.city_id = :city_id')->setParameter('city_id', $id);
+		}
+		
+		$posts = $qb->getQuery()->getResult();
+
+		// users
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'u')
+		   ->add('from', 'ApplicationUserBundle:User u')
+		   ->andWhere("u.body != ''")
+		   ->add('orderBy', 'u.date_login DESC')
+		   ->setMaxResults(20);
+		
+		if( $id ){
+			$qb->andWhere('u.city_id = :city_id')->setParameter('city_id', $id);
+		}
+		
+		$users = $qb->getQuery()->getResult();
+		shuffle( $users );
+		$users = array_splice($users, 0, 5);
+
+		// google group
+		$threads = simplexml_load_file('https://groups.google.com/group/beta-beers/feed/rss_v2_0_topics.xml');
+		$threads = $threads->channel->item;
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);		
+
+		return array('city' => $city, 'country' => $country, 'events' => $events, 'posts' => $posts, 'users' => $users, 'threads' => $threads );
+	}
+
+
 }

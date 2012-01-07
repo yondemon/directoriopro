@@ -9,11 +9,18 @@
 
 	<b>Filtrar por categoría</b><br/>
 	{% for category in categories %}
-		<a href="{{ path('user_freelance') }}?c={{loop.index0}}">{{category}}</a>
+		<a href="{{ path('user_city', { 'id': city.id }) }}?c={{loop.index0}}">{{category}}</a>
 	{% endfor %}
+
+	<br/><br/>
+
+
 {% endblock %}
 
 {% block content %}
+
+
+
 
 
 
@@ -22,15 +29,9 @@
   <li class="active"><a href="{{ path('user') }}">Profesionales</a></li>
 </ul>
 
+<h1>Profesionales en {{ city.name }}, {{ country.name }}</h1>
 
-<h1>Profesionales freelance</h1>
 
-
-<ul id="tabs" class="tabs">
-  <li><a href="{{ path('user') }}">Listado</a></li>
-  <li class="active"><a href="{{ path('user_freelance') }}">Freelance</a></li>
-  <li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
-</ul>
 
 {% if entities %}
 	<ul style="list-style-type:none;margin:0;padding:0;width:480px">
@@ -41,6 +42,9 @@
 				<img src="{{ entity.getAvatar('mini') }}" width="35" height="35" style="float:left;margin-right:13px"/>
 				<div style="float:left;width:425px">
 	            <a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.name }}</a> 
+				{% if entity.freelance %}
+					<span class="freelance">&#149; freelance</span>
+				{% endif %}
 				
 				<br/><b>{{ categories[ entity.categoryid ] }}</b> 
 				{% if entity.votes %}
@@ -52,7 +56,7 @@
 					{{ entity.body|truncate(200) }}<br/>
 				{% endif %}
 			
-				<a href="{{ path('user_city', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>
+				<span class="date">{{ entity.location }}</span>
 
 
 				</div>
@@ -63,13 +67,12 @@
 	        </li>
 	    {% endfor %}
 	</ul>
+
+
 	{{ pager|raw }}
 {% else %}
 	No se han encontrado profesionales en esta categoría.
 {% endif %}
-
-
-
 
 {% endblock %}
 
