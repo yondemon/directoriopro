@@ -81,7 +81,7 @@ class PostController extends Controller
 			$qb->add('select', 'u')
 			   ->add('from', 'ApplicationUserBundle:User u')
 			   ->add('where', 'u.freelance = 1')
-			   ->add('where', "u.body != ''")
+			   ->andWhere("u.body != ''")
 			   ->add('orderBy', 'u.date_login DESC')
 			   ->setMaxResults(14);
 			
