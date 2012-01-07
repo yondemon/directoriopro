@@ -26,21 +26,35 @@
 
 
 {% if users %}
-	<div style="background:#FFFFCC;padding:10px;margin-bottom:10px">
-	<b style="display:block;margin-bottom:10px;font-weight:bold">¿Buscas un programador, diseñador, maquetador o blogger freelance?</b>
-	
-	<select style="float:right" onchange="if(this.value){document.location = '{{ path('user_freelance') }}?c=' + this.value;}">
-	<option value="">Buscar por categoria...</option>
-	{% for category in categories %}
-		<option value="{{loop.index0}}">{{category}}</option>
-	{% endfor %}
-	</select>
-	
-	{% for user in users %}
-		<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="38" height="38"/></a>
-	{% endfor %}
-	<br class="clear"/>
+
+
+
+	<div style="border:2px #D6EBFF solid;margin-bottom:10px">
+		<div style="padding:10px">
+		<select style="float:right" onchange="if(this.value){document.location = '{{ path('user_freelance') }}?c=' + this.value;}">
+		<option value="">Buscar por categoria...</option>
+		{% for category in categories %}
+			<option value="{{loop.index0}}">{{category}}</option>
+		{% endfor %}
+		</select>
+		<b style="display:block;margin-bottom:10px;font-weight:bold">¿Buscas un freelance?</b>
+		
+		<div class="user_box" style="height:50px;max-height:50px;overflow:hidden">
+		{% for user in users %}
+			<div style="display:none">
+			<img src="{{ user.getAvatar('normal') }}" width="38" height="38" style="float:left;margin-right:10px"/>
+			<a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.getName() }}</a> <span class="date">{{ categories[ user.getCategoryId() ] }}</span><br/>
+			<span id="body">{{ user.body|truncate(150)|nl2br }}</span>
+			</div>
+		{% endfor %}
+		</div>
+		</div>
+		<div style="margin-top:5px;padding:5px;background:#EAF5FF"><a href="#" id="btn_more" style="display:block;text-align:center">Ver más</a></div>
 	</div>
+	
+
+
+	
 {% endif %}
 
 
@@ -78,4 +92,23 @@
 
 
 
+{% endblock %}
+
+
+
+{% block script_load %}
+	var i = 0;
+	var total = $('.user_box div').size();
+	function showMoreFreelancers(){
+		if( i >= total ) i = 0;
+		$('.user_box div').hide();
+		$('.user_box div').eq(i).show();
+		i++;
+	}
+	showMoreFreelancers();
+	$('#btn_more').click(function(){
+		showMoreFreelancers();
+		return false;
+	});
+	
 {% endblock %}
