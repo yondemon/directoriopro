@@ -911,8 +911,8 @@ class PostController extends Controller
 		   ->add('from', 'ApplicationUserBundle:User u')
 		   ->andWhere("u.body != ''")
 		   ->andWhere("u.category_id != 13")
-		   ->andWhere("u.twitter_url != NULL")
-		   ->andWhere("u.url != NULL")
+		   ->andWhere("u.twitter_url IS NOT NULL")
+		   ->andWhere("u.url IS NOT NULL")
 		   ->add('orderBy', 'u.date_login DESC')
 		   ->setMaxResults(20);
 		
