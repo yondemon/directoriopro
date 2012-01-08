@@ -26,6 +26,7 @@
 		<thead>
 			<tr>
 				<th>Evento</th>
+				<th>Apuntados</th>
 				<th>Visitas</th>
 				<th>&nbsp;</th>
 			</tr>
@@ -44,6 +45,7 @@
 					<a href="{{ path('event_show', { 'id': entity.id }) }}">{{ entity.title }}</a>
 					<br/><span class="date">{{ entity.datestart|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
 				</td>
+				<td>{{ entity.users }}</td>
 				<td>{{ entity.visits }}</td>
 				<td nowrap="nowrap"><a href="{{ path('event_edit', { 'id': entity.id }) }}" class="btn">editar</a> <a href="{{ path('event_admin_featured', { 'id': entity.id, 'value': featured }) }}" class="btn {% if entity.featured %}primary{% endif %}">&#9733;</a></td>
 	        </tr>
