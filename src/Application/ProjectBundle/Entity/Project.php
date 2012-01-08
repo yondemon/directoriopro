@@ -82,7 +82,7 @@ class Project
      *
      * @ORM\Column(name="visits", type="integer", nullable=true)
      */
-    private $visits;
+    private $visits = 0;
 
 
     /**

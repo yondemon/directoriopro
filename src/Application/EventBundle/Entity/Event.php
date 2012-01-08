@@ -103,7 +103,7 @@ class Event
      *
      * @ORM\Column(name="visits", type="integer", nullable=true)
      */
-    private $visits;
+    private $visits = 0;
 
 
     /**
@@ -111,7 +111,7 @@ class Event
      *
      * @ORM\Column(name="users", type="integer", nullable=true)
      */
-    private $users;
+    private $users = 0;
 
 
     /**
