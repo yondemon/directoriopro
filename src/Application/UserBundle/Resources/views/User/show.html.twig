@@ -25,7 +25,7 @@
 	{% endif %}
 	<br/>
 	
-	<a href="{{ path('user_comments', { 'id': entity.id }) }}" style="text-decoration:none;color:black;padding:10px;background:#FDF5D9;text-align:center">
+	<a href="{{ path('user_comments', { 'id': entity.id }) }}" style="text-decoration:none;color:black;padding:10px;border:2px #D6EBFF solid;text-align:center">
 		<span style="display:block;margin-bottom:10px">Recomendaciones</span>
 		<b>{{ total_wannawork }}</b> <img src="{{ asset('bundles/applicationanuncios/images/star.png') }}" width="24" height="24" align="absmiddle" data-original-title="Quiero trabajar con esta persona" rel="twipsy"/> &nbsp;&nbsp; 
 		<b>{{ total_like }}</b> <img src="{{ asset('bundles/applicationanuncios/images/wannawork.png') }}" width="24" height="24" align="absmiddle" data-original-title="Me gusta lo que hace" rel="twipsy"/> &nbsp;&nbsp; 
