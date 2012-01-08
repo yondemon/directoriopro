@@ -63,13 +63,27 @@
 
 {% block content %}
 
+
+{% if app.session.get('name') == null %}
+	<div class="alert-message block-message warning" style="font-size: 17px;">
+	
+		Conecta con <b>{{ entity.name }}</b> y {{ total_users }} más profesionales más, en el directorio betabeers podrás encontrar ofretas de empleo, buscar socios y eventos de tu alrededor.
+	
+		<div class="alert-actions" style="padding-top:5px;text-align:center">
+			<a class="btn" href="{{ path('user_register') }}" style="font-weight:bold">Crear cuenta</a> 
+			<a class="btn" href="{{ path('user_fblogin') }}">Entrar con facebook</a>
+		</div>
+	
+	</div>
+{% endif %}
+
+
 <script>
 var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackoverflow_user, masterbranch_user, youtube_user, vimeo_user, android_user, itunes_user, chrome_user, twitter_user, delicious_user, pinboard_user;
 </script>
 
 <style>
 .tabs > li > a{padding:0 10px}
-#sidebar{position: fixed;top: 60px;}
 </style>
 
 <ul class="breadcrumb">

@@ -340,6 +340,12 @@ class UserController extends Controller
 		$total = current($query->getResult());
 		$total_work = $total['total'];
 		
+		// usuarios registrados
+		$db = $this->get('database_connection');
+		$query = "SELECT COUNT(u.id) AS total FROM User u";
+		$result = $db->query($query)->fetch();
+		$total_users = $result['total'];
+		
 
         return array(
             'entity'       => $entity,
@@ -347,7 +353,8 @@ class UserController extends Controller
 			//'comments'     => $comments,
 			'total_work' => $total_work,
 			'total_wannawork' => $total_wannawork,
-			'total_like' => $total_like
+			'total_like' => $total_like,
+			'total_users' => $total_users
 			);
     }
 
