@@ -9,14 +9,14 @@
 <tr>
 	<td valign="top">
 	
-		<img src="http://betabeers.com/wp-content/themes/mejorandola/images/betabeers_logo_landing.png">
+		<a href="http://betabeers.com" target="_blank" style="display:block;margin-bottom:20px;"><img src="http://betabeers.com/wp-content/themes/mejorandola/images/betabeers_logo_landing.png"></a>
 
-		<br/><br/>
+		<br/>
 
 		<b>Próximos eventos</b><br/><br/>
 
 	    {% for entity in events %}
-			<a href="{{ path('event_show', { 'id': entity.id }) }}" style="color:#267DD3;text-decoration:none;">{{ entity.title }}</a><br/><br/>
+			<a href="{{ path('event_show', { 'id': entity.id }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
 	    {% endfor %}
 
 		<br/>
@@ -25,7 +25,7 @@
 
 		{% for entity in threads %}
 			{% if loop.index < 6 %}
-				<a href="{{ entity.link }}" style="color:#267DD3;text-decoration:none;">{{ entity.title }}</a><br/><br/>
+				<a href="{{ entity.link }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
 			{% endif %}
 		{% endfor %}
 	
@@ -34,18 +34,18 @@
 
 		<b>¿Cansado de tu trabajo?</b><br/><br/>
 	    {% for entity in posts %}
-				<a href="{{ path('post_show', { 'id': entity.id }) }}" style="color:#267DD3;text-decoration:none;">{{ entity.title }}</a><br/><br/>
+				<a href="{{ path('post_show', { 'id': entity.id }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
 	    {% endfor %}
 
 	
 	</td>
 	<td valign="top" style="width:220px;background:#D7F2FF;">
-		<a href="http://directoriopro.com/user/invite" style="font-weight:bold;background:#FFC;padding:10px;text-align:center;color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Invitar contactos</a>
+		<a href="http://dir.betabeers.com/user/invite" target="_blank" style="font-weight:bold;background:#FFC;padding:10px;text-align:center;color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Invitar contactos</a>
 		
-		<a href="http://betabeers.com/book" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Descargar entrevistas en PDF</a>
-		<a href="http://betabeers.com/quieres-presentar-en-betabeers/" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">¿Tienes un proyecto?</a>
-		<a href="http://dir.betabeers.com/user/freelance" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">¿Buscas freelance?</a>
-		<a href="http://groups.google.com/forum/#!forum/beta-beers" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Ver temas del foro</a>
+		<a href="http://betabeers.com/book" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Descargar entrevistas en PDF</a>
+		<a href="http://betabeers.com/quieres-presentar-en-betabeers/" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">¿Tienes un proyecto?</a>
+		<a href="http://dir.betabeers.com/user/freelance" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">¿Buscas freelance?</a>
+		<a href="http://groups.google.com/forum/#!forum/beta-beers" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Ver temas del foro</a>
 		
 		<br/>
 
@@ -53,7 +53,7 @@
 
 		{% for entity in users %}
 			<img src="{{ entity.getAvatar('normal') }}" alt="{{ entity.name }}" style="float:left;margin-right:10px" width="35" height="35"/>
-			<a href="{{ path('user_show', { 'id': entity.id }) }}" style="color:#267DD3;text-decoration:none;">{{ entity.name|truncate(21) }}</a><br/>
+			<a href="{{ path('user_show', { 'id': entity.id }) }}" target="_blank" style="color:#267DD3;text-decoration:none;display:block">{{ entity.name|truncate(21) }}</a>
 			<span style="color:#999">{{ categories[ entity.getCategoryId() ] }}</span>
 			<br style="clear:both"/><br/>
 		{% endfor %}
