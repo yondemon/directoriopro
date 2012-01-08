@@ -519,4 +519,96 @@ class EventController extends Controller
     }
 
 
+
+    /**
+     * Admin Event entities.
+     *
+     * @Route("/admin", name="event_admin")
+     * @Template()
+     */
+    public function adminAction()
+    {
+	
+		$session = $this->getRequest()->getSession();
+		if( !$session->get('admin') ){
+			return $this->redirect('/');
+		}
+	
+	
+		$request = $this->getRequest();
+		$page = $request->query->get('page');
+		if( !$page ) $page = 1;
+	
+
+	
+        $em = $this->getDoctrine()->getEntityManager();
+
+
+
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->add('orderBy', 'e.id DESC');
+		
+
+		
+		
+        $adapter = new DoctrineORMAdapter($query);
+
+		$pagerfanta = new Pagerfanta($adapter);
+		$pagerfanta->setMaxPerPage(10); // 10 by default
+		$maxPerPage = $pagerfanta->getMaxPerPage();
+
+		$pagerfanta->setCurrentPage($page); // 1 by default
+		$entities = $pagerfanta->getCurrentPageResults();
+		$routeGenerator = function($page) {//, $category_id
+			$url = '?page='.$page;
+			//if( $category_id ) $url .= '&c=' . $category_id;
+		    return $url;
+		};
+
+		$view = new DefaultView();
+		$html = $view->render($pagerfanta, $routeGenerator);//, array('category_id' => (int)$category_id)
+		
+		
+		
+	
+        //$em = $this->getDoctrine()->getEntityManager();
+        //$entities = $em->getRepository('ApplicationEventBundle:Event')->findAll();
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+
+        return array('pager' => $html, 'entities' => $entities);
+    }
+
+    /**
+     * Feature Event entities.
+     *
+     * @Route("/admin/featured/{id}/{value}", name="event_admin_featured")
+     * @Template()
+     */
+    public function featuredAction($id,$value)
+    {
+	
+		$session = $this->getRequest()->getSession();
+		if( !$session->get('admin') ){
+			return $this->redirect('/');
+		}
+	
+		// existe post?
+		$em = $this->getDoctrine()->getEntityManager();
+        $entity = $em->getRepository('ApplicationEventBundle:Event')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+        
+        $entity->setFeatured($value);
+        $em->persist($entity);
+		$em->flush();
+
+		return $this->redirect( $_SERVER['HTTP_REFERER'] );
+    }
+
 }

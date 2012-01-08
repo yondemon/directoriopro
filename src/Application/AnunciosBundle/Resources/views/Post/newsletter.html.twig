@@ -1,9 +1,14 @@
 {% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros", "Maquetador"] %}
-{% set categories_project = ["Todos","Viajes","Productividad","Classificados","Educación","Fotografía","Juegos","Música","Red social","Deportes","Salud","Ocio","Otros"] %}
 
-<html>
-<body style="background:url('http://betabeers.com/wp-content/themes/mejorandola/images/bg.jpg');padding-bottom:50px">
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+	<title>*|MC:SUBJECT|*</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<div style="background:#F0F0F0;padding-bottom:25px">
 
 <table cellspacing="0" cellpadding="25" style="background:white;margin:auto;width:650px;font-family:arial;font-size:15px">
 <tr>
@@ -16,7 +21,7 @@
 		<b>Próximos eventos</b><br/><br/>
 
 	    {% for entity in events %}
-			<a href="{{ path('event_show', { 'id': entity.id }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
+			<a href="{{ path('event_show', { 'id': entity.id }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</a>
 	    {% endfor %}
 
 		<br/>
@@ -60,6 +65,7 @@
 	</td>
 
 
+</div>
 </div>
 
 </body>

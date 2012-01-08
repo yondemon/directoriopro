@@ -828,25 +828,37 @@ class PostController extends Controller
 		$query = "SELECT COUNT(p.id) AS total FROM Post p WHERE p.type = 2";
 		$result = $db->query($query)->fetch();
 		$total_posts_internship = $result['total'];
+		
+		// eventos
+		$query = "SELECT COUNT(e.id) AS total FROM Event e";
+		$result = $db->query($query)->fetch();
+		$total_events = $result['total'];
 
-
+		// apuntados
+		$query = "SELECT COUNT(e.id) AS total FROM EventUser e";
+		$result = $db->query($query)->fetch();
+		$total_joined = $result['total'];
+		
+		
+		
+		// top posts
 		$query = $em->createQueryBuilder();
 		$query->add('select', 'p')
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
 		   ->add('orderBy', 'p.visits DESC')
 		   ->setMaxResults(10);
 		$top_posts = $query->getQuery()->getResult();
-
-
 		
+
+		// top cities posts
 		$query = "SELECT COUNT(p.id) AS total, c.name FROM Post p, City c WHERE p.city_id = c.id GROUP BY c.id ORDER BY total DESC LIMIT 10";
         $cities = $db->fetchAll($query);
 		
-		
+
 
 
         return array(
-			'posts_month' => $posts_month, 'cities' => $cities, 'top_posts' => $top_posts, 'users_month' => $users_month, 'total_users' => $total_users, 'total_ref' => $total_ref, 'total_fb' => $total_fb, 'total_unemployed' => $total_unemployed,
+			'total_events' => $total_events, 'total_joined' => $total_joined, 'posts_month' => $posts_month, 'cities' => $cities, 'top_posts' => $top_posts, 'users_month' => $users_month, 'total_users' => $total_users, 'total_ref' => $total_ref, 'total_fb' => $total_fb, 'total_unemployed' => $total_unemployed,
 	        'total_freelance' => $total_freelance, 'total_comments' => $total_comments, 'total_posts' => $total_posts, 'total_posts_freelance' => $total_posts_freelance, 'total_posts_internship' => $total_posts_internship
 	    	);
     }
