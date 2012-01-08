@@ -548,7 +548,7 @@ class EventController extends Controller
 		$query = $em->createQueryBuilder();
 		$query->add('select', 'e')
 		   ->add('from', 'ApplicationEventBundle:Event e')
-		   ->add('orderBy', 'e.id DESC');
+		   ->add('orderBy', 'e.featured DESC, e.id DESC');
 		
 
 		
