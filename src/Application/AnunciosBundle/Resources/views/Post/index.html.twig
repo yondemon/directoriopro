@@ -14,9 +14,6 @@
 		<a href="{{ path('post') }}?c={{loop.index0}}">{{category}}</a>
 	{% endfor %}
 	
-	<br/>
-	
-	<form style="" action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=betabeersjobs', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"><b>Suscribete por email</b><br/><br/><input type="text" style="width:100px" name="email"/> <input type="hidden" value="betabeersjobs" name="uri"/><input type="hidden" name="loc" value="es_ES"/><input type="submit" value="Enviar" class="btn" /></form>
 	
 {% endblock %}
 
@@ -25,36 +22,53 @@
 {% block content %}
 
 
-{% if users %}
+{% if home %}
 
+	<div style="background:#FFC;padding:10px;margin-bottom:18px">
 
-
-	<div style="border:2px #D6EBFF solid;margin-bottom:10px">
-		<div style="padding:10px">
-		<select style="float:right" onchange="if(this.value){document.location = '{{ path('user_freelance') }}?c=' + this.value;}">
-		<option value="">Buscar por categoria...</option>
-		{% for category in categories %}
-			<option value="{{loop.index0}}">{{category}}</option>
-		{% endfor %}
-		</select>
-		<b style="display:block;margin-bottom:10px;font-weight:bold">¿Buscas freelance?</b>
-		
-		<div class="user_box" style="height:50px;max-height:50px;overflow:hidden">
-		{% for user in users %}
-			<div style="display:none">
-			<img src="{{ user.getAvatar('normal') }}" width="38" height="38" style="float:left;margin-right:10px"/>
-			<a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.getName() }}</a> <span class="date">{{ categories[ user.getCategoryId() ] }}</span><br/>
-			<span id="body">{{ user.body|truncate(150)|nl2br }}</span>
-			</div>
-		{% endfor %}
-		</div>
-		</div>
-		<div style="margin-top:5px;padding:5px;background:#EAF5FF"><a href="#" id="btn_more" style="display:block;text-align:center">Ver otro freelance</a></div>
+		<form style="float:right;margin-bottom:0;" action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=betabeersjobs', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"><input placeholder="Tu email" type="text" style="width:100px" name="email"/> <input type="hidden" value="betabeersjobs" name="uri"/><input type="hidden" name="loc" value="es_ES"/><input type="submit" value="Recibir ofertas" class="btn" /></form>
+	
+		<div style="float:left;width:150px;overflow:hidden;padding-top:5px;">
+			<a href="https://twitter.com/betabeers" class="twitter-follow-button" data-show-screen-name="false" data-lang="es">Seguir</a>
+			<script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
+		</div>		
+		<iframe src="http://www.facebook.com/plugins/like.php?href=http://www.facebook.com/pages/Betabeers/184600811561767&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;float:left;padding-top:5px;margin-left:10px" allowTransparency="true"></iframe>
+		<br class="clear"/>
 	</div>
+
+
+	{% if users %}
+
+
+
+		<div style="border:1px #D6EBFF solid;margin-bottom:10px">
+			<div style="padding:10px">
+			<select style="opacity:0.5;float:right" onchange="if(this.value){document.location = '{{ path('user_freelance') }}?c=' + this.value;}">
+			<option value="">Buscar por categoria...</option>
+			{% for category in categories %}
+				<option value="{{loop.index0}}">{{category}}</option>
+			{% endfor %}
+			</select>
+			<b style="display:block;margin-bottom:10px;font-weight:bold">¿Buscas freelance?</b>
+		
+			<div class="user_box" style="height:50px;max-height:50px;overflow:hidden">
+			{% for user in users %}
+				<div style="display:none">
+				<img src="{{ user.getAvatar('normal') }}" width="38" height="38" style="float:left;margin-right:10px"/>
+				<a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.getName() }}</a> <span class="date">{{ categories[ user.getCategoryId() ] }}</span><br/>
+				<span id="body">{{ user.body|truncate(150)|nl2br }}</span>
+				</div>
+			{% endfor %}
+			</div>
+			</div>
+			<div style="margin-top:5px;padding:5px;background:#EAF5FF"><a href="#" id="btn_more" style="display:block;text-align:center">Ver otro freelance</a></div>
+		</div>
 	
 
 
 	
+	{% endif %}
+
 {% endif %}
 
 

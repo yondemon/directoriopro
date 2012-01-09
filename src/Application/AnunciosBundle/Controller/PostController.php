@@ -94,7 +94,10 @@ class PostController extends Controller
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 
-        return array('pager' => $html, 'entities' => $entities, 'users' => $users );
+		
+		$home = (!$category_id && $page == 1);
+
+        return array('pager' => $html, 'entities' => $entities, 'users' => $users, 'home' => $home );
     }
 
     /**
