@@ -74,7 +74,8 @@ class EventController extends Controller
 				$qb->add('select', 'u')
 				   ->add('from', 'ApplicationUserBundle:User u, ApplicationEventBundle:EventUser eu')
 				   ->andWhere('u.id = eu.user_id')
-				   ->andWhere('eu.event_id = :id')->setParameter('id', $entities[$i]->getId());
+				   ->andWhere('eu.event_id = :id')->setParameter('id', $entities[$i]->getId())
+				   ->setMaxResults(13);
 				$query = $qb->getQuery();
 				$entities[$i]->users_list = $query->getResult();
 			}
@@ -174,7 +175,8 @@ class EventController extends Controller
 				$qb->add('select', 'u')
 				   ->add('from', 'ApplicationUserBundle:User u, ApplicationEventBundle:EventUser eu')
 				   ->andWhere('u.id = eu.user_id')
-				   ->andWhere('eu.event_id = :id')->setParameter('id', $entities[$i]->getId());
+				   ->andWhere('eu.event_id = :id')->setParameter('id', $entities[$i]->getId())
+				   ->setMaxResults(13);
 				$query = $qb->getQuery();
 				$entities[$i]->users_list = $query->getResult();
 			}
