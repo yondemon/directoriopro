@@ -66,6 +66,19 @@ class EventController extends Controller
 		$html = $view->render($pagerfanta, $routeGenerator);//, array('category_id' => (int)$category_id)
 		
 		
+		if( $entities ){
+			$total = count($entities);
+			for( $i = 0; $i < $total; $i++ ){
+				
+				$qb = $em->createQueryBuilder();
+				$qb->add('select', 'u')
+				   ->add('from', 'ApplicationUserBundle:User u, ApplicationEventBundle:EventUser eu')
+				   ->andWhere('u.id = eu.user_id')
+				   ->andWhere('eu.event_id = :id')->setParameter('id', $entities[$i]->getId());
+				$query = $qb->getQuery();
+				$entities[$i]->users_list = $query->getResult();
+			}
+		}
 		
 	
         //$em = $this->getDoctrine()->getEntityManager();
@@ -152,6 +165,20 @@ class EventController extends Controller
 			//$users = array_splice($users, 0, 7);
 		}
 		
+		
+		if( $entities ){
+			$total = count($entities);
+			for( $i = 0; $i < $total; $i++ ){
+				
+				$qb = $em->createQueryBuilder();
+				$qb->add('select', 'u')
+				   ->add('from', 'ApplicationUserBundle:User u, ApplicationEventBundle:EventUser eu')
+				   ->andWhere('u.id = eu.user_id')
+				   ->andWhere('eu.event_id = :id')->setParameter('id', $entities[$i]->getId());
+				$query = $qb->getQuery();
+				$entities[$i]->users_list = $query->getResult();
+			}
+		}
 	
         //$em = $this->getDoctrine()->getEntityManager();
         //$entities = $em->getRepository('ApplicationEventBundle:Event')->findAll();
