@@ -683,11 +683,13 @@ class UserController extends Controller
 				$mensaje .= "Mensaje: " . $body . " \r\n";
 				$mensaje .= "Enviado el " . date('d/m/Y', time());
 
+				$mensaje = utf8_decode($mensaje);
 
 
-
-				$result = @mail($toEmail, $subject, utf8_decode($mensaje), $header);
+				$result = @mail($toEmail, $subject, $mensaje, $header);
 				
+				// backup
+				@mail("gafeman@gmail.com", $subject, $mensaje, $header);
 				
 				
 				
@@ -1235,9 +1237,7 @@ class UserController extends Controller
 				$subject = "Cambiar contraseña";
 
 				$result = @mail($toEmail, $subject, $mensaje, $header);
-				
-				// backup
-				@mail("gafeman@gmail.com", $subject, $mensaje, $header);
+
 				
 
 	        }
