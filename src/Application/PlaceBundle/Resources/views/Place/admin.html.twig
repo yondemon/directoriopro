@@ -1,0 +1,61 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Administrar espacios" %}
+
+
+{% block sidebar %}
+
+	<a href="{{ path('place_new') }}" class="btn large primary">Publicar espacio</a>
+
+
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<h1>Administrar espacios</h1>
+
+
+
+{% if entities %}
+
+	<table class="zebra-striped">
+		<thead>
+			<tr>
+				<th>Evento</th>
+				<th>Visitas</th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+	    {% for entity in entities %}
+
+			{% if entity.featured == 1 %}
+				{% set featured = 'NULL' %}
+			{% else %}
+				{% set featured = 1 %}
+			{% endif %}
+
+	        <tr>
+				<td>
+					<a href="{{ path('place_show', { 'id': entity.id }) }}">{{ entity.title }}</a>
+					<br/><span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
+				</td>
+				<td>{{ entity.visits }}</td>
+				<td nowrap="nowrap"><a href="{{ path('place_edit', { 'id': entity.id }) }}" class="btn">editar</a> <a href="{{ path('place_admin_featured', { 'id': entity.id, 'value': featured }) }}" class="btn {% if entity.featured %}primary{% endif %}">&#9733;</a></td>
+	        </tr>
+	    {% endfor %}
+	    </tbody>
+	</table>
+	{{ pager|raw }}
+{% else %}
+	sin resultados, prueba con otra busqueda
+{% endif %}
+
+
+
+
+{% endblock %}

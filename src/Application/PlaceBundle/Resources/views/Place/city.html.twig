@@ -1,0 +1,46 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Espacios coworking" %}
+
+
+{% block sidebar %}
+	<a href="{{ path('place_new') }}" class="btn large primary">Publicar espacio</a>
+
+	
+	
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+
+<h1>Espacios coworking en {{ city.name }}, {{ country.name }}</h1>
+
+
+
+
+<ul>
+    {% for entity in entities %}
+        <li style="margin-bottom:20px;" {% if entity.featured == 1 %}class="featured"{% endif %}">
+            <a href="{{ path('place_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
+            {{ entity.body|truncate(200) }}<br/>
+            {% if entity.location %}<a href="{{ path('place_city', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>{% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+
+
+
+
+{{ pager|raw }}
+
+
+
+
+{% endblock %}
+
+

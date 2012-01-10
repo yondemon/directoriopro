@@ -1,0 +1,74 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme edit_form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Editar espacio coworking" %}
+
+{% block content %}
+
+<h1>Publicar espacio coworking</h1>
+
+<style>
+TEXTAREA.xlarge{width:430px}
+</style>
+
+{% if app.session.get('id') %}
+
+<form action="{{ path('place_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+
+	{{ form_errors(edit_form) }}
+
+	{{ form_row(edit_form.title, { 'label': 'Titulo' }) }}
+	
+	{{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
+	
+	{{ form_row(edit_form.address, { 'label': 'Dirección' }) }}
+
+	
+
+	<div id="geo">
+		{{ form_row(edit_form.location, { 'label': 'Localización' }) }}
+		<div class="hide">
+			{{ form_row(edit_form.country_id, { 'label': 'country' }) }}
+			{{ form_row(edit_form.city_id, { 'label': 'city' }) }}
+		</div>
+	</div>
+
+	
+	<div id="price">
+		{{ form_row(edit_form.price, { 'label': 'Precio' }) }}
+	</div>
+	
+	{{ form_row(edit_form.url, { 'label': 'Web' }) }}
+
+
+	<div class="actions">
+		<button type="submit" class="btn primary">Guardar cambios</button> &nbsp;
+		<a href="{{ path('place_show', { 'id': entity.id }) }}" class="btn">Cancelar</a> &nbsp;
+
+		{% if app.session.get('admin') %}	
+			<a href="{{ path('place_delete', { 'id': entity.id }) }}" class="btn danger pull-right">Eliminar</a>
+		{% endif %}
+	</div>
+
+	{{ form_row(edit_form._token) }}
+
+</form>
+
+{% else %}
+	Area restringida, solo accesible para usuarios
+{% endif %}
+
+{% endblock %}
+
+{% block script_load %}
+	
+autoGeo();
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -63,6 +63,8 @@
 					</ul>
 				</li>
 				
+
+				
 				
 				<!--
 				<li class="dropdown">
@@ -80,6 +82,9 @@
 					<a href="{{ path('event') }}">Eventos</a>
 				</li>
 				
+				<li class="dropdown">
+					<a href="{{ path('place') }}">Coworking</a>
+				</li>
 				
 			</ul>
 			<form id="form_search" class="pull-left" action="{{ path('post') }}search">
@@ -106,6 +111,7 @@
 								<li><a href="{{ path('post_admin') }}">Administrar anuncios</a></li>
 								<li><a href="{{ path('user_admin') }}">Administrar usuarios</a></li>
 								<li><a href="{{ path('event_admin') }}">Administrar eventos</a></li>
+								<li><a href="{{ path('place_admin') }}">Administrar espacios</a></li>
 							{% endif %}
 							<li class="divider"></li>
 							<li><a href="{{ path('user_logout') }}">Salir</a></li>

@@ -1,3 +1,8 @@
+ApplicationPlaceBundle:
+    resource: "@ApplicationPlaceBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 ApplicationEventBundle:
     resource: "@ApplicationEventBundle/Controller/"
     type:     annotation

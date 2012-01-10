@@ -841,7 +841,11 @@ class PostController extends Controller
 		$query = "SELECT COUNT(e.id) AS total FROM EventUser e";
 		$result = $db->query($query)->fetch();
 		$total_joined = $result['total'];
-		
+
+		// places
+		$query = "SELECT COUNT(p.id) AS total FROM Place p";
+		$result = $db->query($query)->fetch();
+		$total_places = $result['total'];
 		
 		
 		// top posts
@@ -861,7 +865,7 @@ class PostController extends Controller
 
 
         return array(
-			'total_events' => $total_events, 'total_joined' => $total_joined, 'posts_month' => $posts_month, 'cities' => $cities, 'top_posts' => $top_posts, 'users_month' => $users_month, 'total_users' => $total_users, 'total_ref' => $total_ref, 'total_fb' => $total_fb, 'total_unemployed' => $total_unemployed,
+			'total_places' => $total_places, 'total_events' => $total_events, 'total_joined' => $total_joined, 'posts_month' => $posts_month, 'cities' => $cities, 'top_posts' => $top_posts, 'users_month' => $users_month, 'total_users' => $total_users, 'total_ref' => $total_ref, 'total_fb' => $total_fb, 'total_unemployed' => $total_unemployed,
 	        'total_freelance' => $total_freelance, 'total_comments' => $total_comments, 'total_posts' => $total_posts, 'total_posts_freelance' => $total_posts_freelance, 'total_posts_internship' => $total_posts_internship
 	    	);
     }

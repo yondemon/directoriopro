@@ -1,0 +1,69 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Publicar espacio coworking" %}
+
+{% block content %}
+
+<h1>Publicar espacio coworking</h1>
+
+<style>
+TEXTAREA.xlarge{width:430px}
+</style>
+
+{% if app.session.get('id') %}
+
+<form action="{{ path('place_create') }}" method="post" {{ form_enctype(form) }}>
+
+	{{ form_errors(form) }}
+
+	{{ form_row(form.title, { 'label': 'Titulo' }) }}
+	
+	{{ form_row(form.body, { 'label': 'Descripción' }) }}
+	
+	{{ form_row(form.address, { 'label': 'Dirección' }) }}
+
+	
+
+	<div id="geo">
+		{{ form_row(form.location, { 'label': 'Localización' }) }}
+		<div class="hide">
+			{{ form_row(form.country_id, { 'label': 'country' }) }}
+			{{ form_row(form.city_id, { 'label': 'city' }) }}
+		</div>
+	</div>
+
+	
+	<div id="price">
+		{{ form_row(form.price, { 'label': 'Precio' }) }}
+	</div>
+	
+	{{ form_row(form.url, { 'label': 'Web' }) }}
+
+
+	<div class="actions">
+        <button type="submit" class="btn primary">Publicar</button>
+	</div>
+
+	{{ form_row(form._token) }}
+
+</form>
+
+{% else %}
+	Area restringida, solo accesible para usuarios
+{% endif %}
+
+{% endblock %}
+
+{% block script_load %}
+	
+autoGeo();
+
+
+
+
+
+
+
+
+{% endblock %}

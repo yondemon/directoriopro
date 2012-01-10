@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Application\ProjectBundle\ApplicationProjectBundle(),
             new Application\CityBundle\ApplicationCityBundle(),
             new Application\EventBundle\ApplicationEventBundle(),
+            new Application\PlaceBundle\ApplicationPlaceBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
