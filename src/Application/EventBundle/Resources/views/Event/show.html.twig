@@ -28,7 +28,7 @@
 	<br class="clear"/>
 	
 	
-	<div style="margin-top:15px;border-top:1px #b3b3b3 solid;padding:15px 0;">
+	<div style="margin-top:15px;border-top:1px #b3b3b3 solid;padding:15px 0 5px 0;">
 		<a href="http://maps.google.es/maps?q={{ entity.address }}, {{ location }}" target="_blank" style="padding-left:30px;padding-top:0;min-height:29px;background:url('{{ asset('bundles/applicationanuncios/images/marker.png') }}') no-repeat left top;color:white">
 		{{ entity.address }}, {{ location }}
 		</a>
@@ -37,19 +37,19 @@
 
 
 	{% if user.id == false %}
-		<a class="btn primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a><br/>
+		<a class="btn primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a>
 	{% else %}
 	
 		{% if apuntado == false %}
-			<a class="btn primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a><br/>
+			<a class="btn primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a>
 		{% else %}
-			<a class="btn danger" href="{{ path('event_go', { 'id': entity.id, 'value': 0 }) }}">No voy a ir</a><br/>
+			<a class="btn danger" href="{{ path('event_go', { 'id': entity.id, 'value': 0 }) }}">No voy a ir</a>
 		{% endif %}
 		
 	{% endif %}
 	
 	{% if entity.url %}
-		<a class="btn" href="{{ entity.url }}" target="_blank">Más información</a><br/>
+		<a class="btn" href="{{ entity.url }}" target="_blank">Más información</a>
 	{% endif %}
 			
 	{% if user.id == app.session.get('id') or app.session.get('admin') == 1 %}
@@ -68,7 +68,7 @@
 
 <style>
 .filters{border:0;background:#666;padding:15px;color:white}
-
+.filters .btn{margin-top:10px}
 </style>
 
 <ul class="breadcrumb">
