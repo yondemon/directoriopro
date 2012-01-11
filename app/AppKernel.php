@@ -22,7 +22,7 @@ class AppKernel extends Kernel
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Application\AnunciosBundle\ApplicationAnunciosBundle(),
             new Application\UserBundle\ApplicationUserBundle(),
-            new Application\ProjectBundle\ApplicationProjectBundle(),
+            //new Application\ProjectBundle\ApplicationProjectBundle(),
             new Application\CityBundle\ApplicationCityBundle(),
             new Application\EventBundle\ApplicationEventBundle(),
             new Application\PlaceBundle\ApplicationPlaceBundle(),

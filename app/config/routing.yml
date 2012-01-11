@@ -13,10 +13,10 @@ ApplicationCityBundle:
     type:     annotation
     prefix:   /
 
-ApplicationProjectBundle:
-    resource: "@ApplicationProjectBundle/Controller/"
-    type:     annotation
-    prefix:   /
+#ApplicationProjectBundle:
+#    resource: "@ApplicationProjectBundle/Controller/"
+#    type:     annotation
+#    prefix:   /
 
 _welcome:
     pattern:  /
