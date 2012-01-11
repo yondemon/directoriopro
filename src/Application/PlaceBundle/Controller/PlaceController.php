@@ -69,11 +69,20 @@ class PlaceController extends Controller
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 	
 	
-        
+
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'COUNT(p.id) AS total, c.name, c.id')
+		   ->add('from', 'ApplicationPlaceBundle:Place p, ApplicationCityBundle:City c')
+		   ->andWhere('p.city_id = c.id')
+		   ->add('groupBy', 'c.id')
+		   ->add('orderBy', 'total DESC')
+		   ->setMaxResults(13);
+		$cities = $qb->getQuery()->getResult();
+    
 
 
 
-        return array('pager' => $html, 'entities' => $entities);
+        return array('cities' => $cities, 'pager' => $html, 'entities' => $entities);
     }
 
 
@@ -132,13 +141,20 @@ class PlaceController extends Controller
 		$view = new DefaultView();
 		$html = $view->render($pagerfanta, $routeGenerator);
 
-
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'COUNT(p.id) AS total, c.name, c.id')
+		   ->add('from', 'ApplicationPlaceBundle:Place p, ApplicationCityBundle:City c')
+		   ->andWhere('p.city_id = c.id')
+		   ->add('groupBy', 'c.id')
+		   ->add('orderBy', 'total DESC')
+		   ->setMaxResults(13);
+		$cities = $qb->getQuery()->getResult();
 
 
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 
-        return array('city' => $city, 'country' => $country, 'pager' => $html, 'entities' => $entities );
+        return array('cities' => $cities, 'city' => $city, 'country' => $country, 'pager' => $html, 'entities' => $entities );
     }
 
     /**

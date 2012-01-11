@@ -5,7 +5,18 @@
 
 
 {% block sidebar %}
-	<a href="{{ path('event_new') }}" class="btn large primary">Publicar evento</a>
+	<a href="{{ path('event_new') }}" class="btn large primary">Publicar empleo</a>
+
+
+
+	<br/><b>Top ciudades</b><br/><br/>
+
+	<ul>
+    {% for city in cities %}
+		<li><a style="display:inline" href="{{ path('event_city', { 'id': city.id }) }}">{{ city.name }}</a> ({{ city.total }})</li>
+    {% endfor %}
+	</ul>
+
 
 {% endblock %}
 

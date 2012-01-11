@@ -858,7 +858,7 @@ class PostController extends Controller
 		
 
 		// top cities posts
-		$query = "SELECT COUNT(p.id) AS total, c.name FROM Post p, City c WHERE p.city_id = c.id GROUP BY c.id ORDER BY total DESC LIMIT 10";
+		$query = "SELECT COUNT(p.id) AS total, c.name, c.id FROM Post p, City c WHERE p.city_id = c.id GROUP BY c.id ORDER BY total DESC LIMIT 10";
         $cities = $db->fetchAll($query);
 		
 

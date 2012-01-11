@@ -81,14 +81,27 @@ class EventController extends Controller
 			}
 		}
 		
+		
+
+
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'COUNT(e.id) AS total, c.name, c.id')
+		   ->add('from', 'ApplicationEventBundle:Event e, ApplicationCityBundle:City c')
+		   ->andWhere('e.city_id = c.id')
+    	   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->add('groupBy', 'c.id')
+		   ->add('orderBy', 'total DESC')
+		   ->setMaxResults(13);
+		$cities = $qb->getQuery()->getResult();
+
+
 	
-        //$em = $this->getDoctrine()->getEntityManager();
-        //$entities = $em->getRepository('ApplicationEventBundle:Event')->findAll();
+
 
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 
-        return array('pager' => $html, 'entities' => $entities);
+        return array('cities' => $cities, 'pager' => $html, 'entities' => $entities);
     }
 
 
@@ -182,13 +195,21 @@ class EventController extends Controller
 			}
 		}
 	
-        //$em = $this->getDoctrine()->getEntityManager();
-        //$entities = $em->getRepository('ApplicationEventBundle:Event')->findAll();
+
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'COUNT(e.id) AS total, c.name, c.id')
+		   ->add('from', 'ApplicationEventBundle:Event e, ApplicationCityBundle:City c')
+		   ->andWhere('e.city_id = c.id')
+    	   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->add('groupBy', 'c.id')
+		   ->add('orderBy', 'total DESC')
+		   ->setMaxResults(13);
+		$cities = $qb->getQuery()->getResult();
 
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 
-        return array('city' => $city, 'country' => $country, 'pager' => $html, 'entities' => $entities, 'users' => $users);
+        return array('cities' => $cities, 'city' => $city, 'country' => $country, 'pager' => $html, 'entities' => $entities, 'users' => $users);
     }
 
     /**

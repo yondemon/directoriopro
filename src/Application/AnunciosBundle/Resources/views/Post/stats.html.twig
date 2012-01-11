@@ -8,11 +8,16 @@
 
 	<b>Top ciudades</b><br/><br/>
 
+
+	<ul>
     {% for city in cities %}
-
-		{{ city.name }} ({{ city.total }} ofertas)<br/><br/>
-
+		<li><a style="display:inline" href="{{ path('post_city', { 'id': city.id }) }}">{{ city.name }}</a> ({{ city.total }})</li>
     {% endfor %}
+	</ul>
+	
+	
+
+
 
 	
 {% endblock %}
@@ -26,18 +31,19 @@
 	
 		<tr>
 			<td width="180"><b class="pull-right">{{ total_users }}</b>Usuarios</td>
-			<td width="180"><b class="pull-right">{{ total_unemployed }}</b>Buscan trabajo</td>
-            <td width="180"><b class="pull-right">{{ total_posts }}</b>Anuncios</td>
+			<td><b class="pull-right">{{ total_fb }}</b>Facebook</td>
+            <td><b class="pull-right">{{ total_ref }}</b>Referidos</td>
 		</tr>
 		<tr>
-			<td><b class="pull-right">{{ total_fb }}</b>Facebook</td>
-			<td><b class="pull-right">{{ total_freelance }}</b>Freelance</td>
+        	<td width="180"><b class="pull-right">{{ total_posts }}</b>Anuncios</td>
 			<td><b class="pull-right">{{ total_posts_freelance }}</b>Anuncios Freelance</td>
+            <td><b class="pull-right">{{ total_posts_internship }}</b>Practicas</td>			
 		</tr>
         <tr>
-            <td><b class="pull-right">{{ total_ref }}</b>Referidos</td>
+			<td width="180"><b class="pull-right">{{ total_unemployed }}</b>Buscan trabajo</td>
+			<td><b class="pull-right">{{ total_freelance }}</b>Freelance</td>
             <td><b class="pull-right">{{ total_comments }}</b>Recomendaciones</td>
-            <td><b class="pull-right">{{ total_posts_internship }}</b>Practicas</td>
+
         </tr>
         <tr>
             <td><b class="pull-right">{{ total_events }}</b>Eventos</td>

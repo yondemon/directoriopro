@@ -1,12 +1,18 @@
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 
-{% block title "Espacios coworking" %}
+{% block title %}Espacios coworking en {{ city.name }}, {{ country.name }}{% endblock %}
 
 
 {% block sidebar %}
 	<a href="{{ path('place_new') }}" class="btn large primary">Publicar espacio</a>
 
-	
+	<br/><b>Top ciudades</b><br/><br/>
+
+	<ul>
+    {% for city in cities %}
+		<li><a style="display:inline" href="{{ path('place_city', { 'id': city.id }) }}">{{ city.name }}</a> ({{ city.total }})</li>
+    {% endfor %}
+	</ul>
 	
 {% endblock %}
 

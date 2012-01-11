@@ -1,7 +1,7 @@
 {% set nav_user = 1 %}
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 
-{% block title "Profesionales" %}
+{% block title %}Profesionales en {{ city.name }}, {{ country.name }}{% endblock %}
 
 {% block sidebar %}
 	<a href="{{ path('user_register') }}" class="btn primary" style="font-weight:bold;font-size:20px;margin-top:15px">Registrarte</a>

@@ -81,7 +81,11 @@
 					{{ entity.body|truncate(200) }}<br/>
 				{% endif %}
 			
-				<a href="{{ path('user_city', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>
+				{% if entity.getCityId() %}
+					<a href="{{ path('user_city', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>
+				{% else %}
+					<span class="date">{{ entity.location }}</span>
+				{% endif %}
 
 
 				</div>
