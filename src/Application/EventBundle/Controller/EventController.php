@@ -254,6 +254,15 @@ class EventController extends Controller
 		$users = $query->getResult();
 
 
+		$city = $em->getRepository('ApplicationCityBundle:City')->find( $entity->getCityId() );
+		
+		$query = $em->createQuery("SELECT c.name FROM ApplicationCityBundle:Country c WHERE c.code = :code");
+		$query->setParameters(array(
+			'code' => $city->getCode()
+		));
+		$country = current( $query->getResult() );
+		
+
 		// es diferente usuario, visitas + 1
 		if( $session_id != $entity->getUserId() ){
 			$entity->setVisits($entity->getVisits() + 1 );
@@ -263,6 +272,8 @@ class EventController extends Controller
 		
 
         return array(
+			'city'        => $city,
+			'country'	  => $country,
             'entity'      => $entity,
 			'user'		  => $user,
 			'users'       => $users,

@@ -1,3 +1,5 @@
+{% set date_start = entity.datestart|date('d/m/Y') %}
+{% set date_end = entity.dateend|date('d/m/Y') %}
 {% set nav_event = 1 %}
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 {% set share_url = url('event_show', { 'id': entity.id }) %}
@@ -7,6 +9,31 @@
 
 
 {% block sidebar %}
+
+
+
+
+
+	<img src="{{ asset('bundles/applicationanuncios/images/calendarb.png') }}" style="float:left;margin-top:-5px;margin-right:15px"/>
+	<b style="font-size:20px">{{ entity.getPrettyDate('%e %B') }}</b>
+	<span style="font-size:17px">{{ entity.datestart|date('H:i') }} - {{ entity.dateend|date('H:i') }}
+	<!--
+	{% if date_start == date_end %}
+		{{ entity.dateend|date('H:i') }}
+	{% else %}
+		{{ entity.dateend|date('d/m/Y H:i') }}
+	{% endif %}
+	-->
+	</span>
+	<br class="clear"/>
+	
+	
+	<div style="margin-top:15px;border-top:1px #b3b3b3 solid;padding:15px 0;">
+		<a href="http://maps.google.es/maps?q={{ entity.address }}, {{ location }}" target="_blank" style="padding-left:30px;padding-top:0;min-height:29px;background:url('{{ asset('bundles/applicationanuncios/images/marker.png') }}') no-repeat left top;color:white">
+		{{ entity.address }}, {{ location }}
+		</a>
+	</div>
+	
 
 
 	{% if user.id == false %}
@@ -26,42 +53,10 @@
 	{% endif %}
 			
 	{% if user.id == app.session.get('id') or app.session.get('admin') == 1 %}
-		<a class="btn" href="{{ path('event_edit', { 'id': entity.id }) }}">Editar evento</a><br/>
+		<a class="btn" href="{{ path('event_edit', { 'id': entity.id }) }}">Editar evento</a>
 	{% endif %}
 	
 
-	
-	
-	<b>Compartir</b>
-	
-	<br/><br/>
-	
-	<!--
-	<a target="_blank" rel="nofollow,noindex" class="ico twitter" href="http://twitter.com/?status={{ entity.title }} {{ entity.datestart|date('d/m/Y') }} {{ share_url }} %23yovoy" target="_blank">twitter</a>
-	<a target="_blank" rel="nofollow,noindex" class="ico facebook" href="http://facebook.com/sharer.php?u={{ share_url }}&t={{ entity.title }}" target="_blank">facebook</a>
-	<a target="_blank" rel="nofollow,noindex" class="ico linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url={{ share_url }}&title={{ entity.title }}" target="_blank">linkedin</a>
-	
-	-->
-	
-	<a href="https://twitter.com/share" class="twitter-share-button" data-lang="es">Twittear</a>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-	
-	<br/><br/>
-	
-	<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
-	<script type="IN/Share" data-counter="right"></script>
-	
-	<br/><br/>
-	
-	<iframe src="http://www.facebook.com/plugins/like.php?href={{ share_url }}&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:21px;" allowTransparency="true"></iframe>
-
-	
-	<br/>
-	
-	<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{ entity.title }}&dates={{ entity.getGDateStart() }}/{{ entity.getGDateEnd() }}&details=&location={{ entity.address }}, {{ location }}&trp=false&sprop=&sprop=name:" target="_blank"><img src="http://www.google.com/calendar/images/ext/gc_button1.gif" alt="0" border="0"></a>
-
-	<br/>
 	
 	
 {% endblock %}
@@ -71,40 +66,51 @@
 {% block content %}
 
 
+<style>
+.filters{border:0;background:#666;padding:15px;color:white}
+
+</style>
 
 <ul class="breadcrumb">
   <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
-  <li><a href="{{ path('event') }}">Eventos</a><!-- <span class="divider">/</span>--></li>
+  <li><a href="{{ path('event') }}">Eventos</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('event_city', { 'id': entity.getCityId() }) }}">Eventos en {{ city.name }}, {{ country.name }}</a></li>
 </ul>
 
 
 
-<h1>{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</h1>
+<h1>{{ entity.title }}</h1>
 
-	{% set date_start = entity.datestart|date('d/m/Y') %}
-	{% set date_end = entity.dateend|date('d/m/Y') %}
+
 
 	
-	Fecha: {{ entity.datestart|date('d/m/Y H:i') }} - 
+	<div style="background:#FFFFCC;padding:10px;margin-bottom:15px">
 	
-	{% if date_start == date_end %}
-		{{ entity.dateend|date('H:i') }}
-	{% else %}
-		{{ entity.dateend|date('d/m/Y H:i') }}
-	{% endif %}
-	<br/>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-lang="es">Twittear</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+	
+	<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+	<script type="IN/Share" data-counter="right"></script>
 	
 	
-	Dirección: <a href="http://maps.google.es/maps?q={{ entity.address }}, {{ location }}" target="_blank">{{ entity.address }}, {{ location }}</a><br/><br/>
+	<iframe src="http://www.facebook.com/plugins/like.php?href={{ share_url }}&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="margin-left:20px;border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
+
+	
+	<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{ entity.title }}&dates={{ entity.getGDateStart() }}/{{ entity.getGDateEnd() }}&details=&location={{ entity.address }}, {{ location }}&trp=false&sprop=&sprop=name:" target="_blank"><img src="http://www.google.com/calendar/images/ext/gc_button1.gif" alt="0" border="0"></a>
+
+	</div>
+	
+	
+
 
 	<pre>{{ entity.body }}</pre>
 
-	<p>Publicado por <a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas</p>
+	
 
 	
 	{% if users %}
-		<br/>
-		<b>{{ users | length }} usuarios apuntados</b>
+		<b>{{ users | length }} apuntados</b>
 		<br/><br/>
 		
 
@@ -115,8 +121,11 @@
 	
 	
 	
-	
+		<br class="clear"/>
 	{% endif %}
+	
+	<br/><br/>
+	Publicado por <a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas
 
 
 {% endblock %}
