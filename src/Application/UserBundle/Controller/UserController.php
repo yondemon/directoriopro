@@ -346,15 +346,24 @@ class UserController extends Controller
 		$result = $db->query($query)->fetch();
 		$total_users = $result['total'];
 		
+		
+		$query = $em->createQuery("SELECT u FROM ApplicationUserBundle:User u WHERE u.category_id = :category_id AND u.id != :id AND u.body IS NOT NULL ORDER BY u.date_login DESC");
+		$query->setParameter('category_id', $entity->getCategoryId());
+		$query->setParameter('id', $id);
+		$query->setMaxResults(5);
+		$related_users = $query->getResult();
+		
+
 
         return array(
             'entity'       => $entity,
 			'contact_form' => $contact_form_html,
 			//'comments'     => $comments,
-			'total_work' => $total_work,
-			'total_wannawork' => $total_wannawork,
-			'total_like' => $total_like,
-			'total_users' => $total_users
+			//'total_work' => $total_work,
+			//'total_wannawork' => $total_wannawork,
+			//'total_like' => $total_like,
+			'total_users' => $total_users,
+			'related_users' => $related_users
 			);
     }
 

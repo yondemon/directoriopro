@@ -1005,7 +1005,7 @@ class User
     /**
      * Set unemployed
      *
-     * @param smallint $categoryId
+     * @param smallint $unemployed
      */
     public function setUnemployed($unemployed)
     {
