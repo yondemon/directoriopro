@@ -8,12 +8,6 @@
 	<a href="{{ path('post_new') }}" class="btn large primary">Publicar anuncio</a>
 	<br/>
 
-	<b>Filtrar anuncios</b><br/>
-
-	<a href="{{ path('post_admin') }}?featured=1">Destacados</a>
-	<a href="{{ path('post_admin') }}">Todos</a>
-
-	<br/>
 
 	<b>Filtrar por categoría</b><br/>
 	{% for category in categories_aux %}

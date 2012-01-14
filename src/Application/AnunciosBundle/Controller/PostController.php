@@ -646,11 +646,7 @@ class PostController extends Controller
 		   $query->add('where', 'p.category_id = :category_id')->setParameter('category_id', $category_id);
 		}
 
-		// destacados?
-		$featured = $request->query->get('featured');
-		if( $featured ){
-			$query->andWhere('p.featured = 1');
-		}
+
 		
 		
         $adapter = new DoctrineORMAdapter($query);
