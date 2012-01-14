@@ -285,6 +285,21 @@ class User
     private $city_id;
 
     /**
+     * @var tinyint $search_team
+     *
+     * @ORM\Column(name="search_team", type="integer", nullable=true)
+     */
+    private $search_team;
+
+    /**
+     * @var tinyint $newsletter
+     *
+     * @ORM\Column(name="newsletter", type="integer", nullable=true)
+     */
+    private $newsletter;
+
+
+    /**
      * Get id
      *
      * @return intger 
@@ -1045,6 +1060,46 @@ class User
     public function getCityId()
     {
         return $this->city_id;
+    }
+
+    /**
+     * Set search_team
+     *
+     * @param integer $searchTeam
+     */
+    public function setSearchTeam($searchTeam)
+    {
+        $this->search_team = $searchTeam;
+    }
+
+    /**
+     * Get search_team
+     *
+     * @return integer 
+     */
+    public function getSearchTeam()
+    {
+        return $this->search_team;
+    }
+
+    /**
+     * Set newsletter
+     *
+     * @param integer $newsletter
+     */
+    public function setNewsletter($newsletter)
+    {
+        $this->newsletter = $newsletter;
+    }
+
+    /**
+     * Get newsletter
+     *
+     * @return integer 
+     */
+    public function getNewsletter()
+    {
+        return $this->newsletter;
     }
 
     /**

@@ -194,6 +194,18 @@ input.xlarge{width:230px}
 	          <label for="application_userbundle_usertype_can_contact" class=" required">
 	            <input type="checkbox" {% if entity.getCanContact() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_can_contact" name="application_userbundle_usertype[can_contact]" value="1">
 	            <span>Permitir que contacten conmigo</span>
+	          </label><br/>
+	        </li>
+	        <li>
+	          <label for="application_userbundle_usertype_search_team" class=" required">
+	            <input type="checkbox" {% if entity.getSearchTeam() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_search_team" name="application_userbundle_usertype[search_team]" value="1">
+	            <span>¿Estas buscando equipo?</span>
+	          </label><br/>
+	        </li>
+	        <li>
+	          <label for="application_userbundle_usertype_newsletter" class=" required">
+	            <input type="checkbox" {% if entity.getNewsletter() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_newsletter" name="application_userbundle_usertype[newsletter]" value="1">
+	            <span>Suscribirme a la newsletter</span>
 	          </label>
 	        </li>
 	      </ul>

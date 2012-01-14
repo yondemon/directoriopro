@@ -37,6 +37,8 @@ class UserType extends AbstractType
 			->add('unemployed')
 			->add('city_id')
 			->add('country_id')
+			->add('search_team')
+			->add('newsletter')
         ;
     }
 

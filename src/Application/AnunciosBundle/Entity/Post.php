@@ -115,6 +115,13 @@ class Post
      */
     private $visits = 0;
 
+    /**
+     * @var integer $company
+     *
+     * @ORM\Column(name="company", type="string", length=100, nullable=true)
+     */
+    private $company;
+
 
     /**
      * Get id
@@ -384,5 +391,26 @@ class Post
     public function getVisits()
     {
         return $this->visits;
+    }
+
+
+    /**
+     * Set company
+     *
+     * @param integer $company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+    }
+
+    /**
+     * Get company
+     *
+     * @return integer 
+     */
+    public function getCompany()
+    {
+        return $this->company;
     }
 }

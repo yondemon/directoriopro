@@ -39,32 +39,29 @@ TEXTAREA.xlarge{width:430px}
 
 	{{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
 	
+	{{ form_row(edit_form.company, { 'label': 'Empresa' }) }}
+	
 	{{ form_row(edit_form.email, { 'label': 'Email' }) }}
 	
 	<div id="price">
 		{{ form_row(edit_form.price, { 'label': 'Sueldo' }) }}
 	</div>
 
-	<div id="nolocation" class="clearfix">
-		<label></label>
-		<div class="input">
-			<input type="checkbox" id="chk_location"/> <label for="chk_location" style="float:none">¿Es un trabajo presencial?</label>
-		</div>
-	</div>
 	<div id="geo">
-		{{ form_row(edit_form.location, { 'label': 'Localidad' }) }}
-		<div class="hide">
-			{{ form_row(edit_form.country_id, { 'label': 'country' }) }}
-			{{ form_row(edit_form.city_id, { 'label': 'city' }) }}
-		</div>
+	{{ form_row(edit_form.location, { 'label': 'Localidad' }) }}
+	<div class="hide">
+		{{ form_row(edit_form.country_id, { 'label': 'country' }) }}
+		{{ form_row(edit_form.city_id, { 'label': 'city' }) }}
 	</div>
+	</div>
+
 
 
 
 	
 	<div class="actions">
 
-		<button type="submit" class="btn primary">Guardar cambios</button> &nbsp;
+		<button type="submit" class="btn primary" style="width:150px">Guardar cambios</button> &nbsp;
 		<a href="{{ path('post_show', { 'id': entity.id }) }}" class="btn">Cancelar</a> &nbsp;
 	
 		{% if app.session.get('admin') %}	
@@ -84,22 +81,7 @@ TEXTAREA.xlarge{width:430px}
 	autoGeo();
 	
 
-	
-	// need location?
-	$('#chk_location').click(function(){
-		if( $(this).attr('checked') ){
-			$('#geo').show();
-			$('#geo input:first').focus();
-		}else{
-			$('#geo').hide();
-			$('#geo input:first').val('');
-		}
-	});
-	{% if entity.location == '' %}
-		$('#geo').hide();
-	{% else %}
-		$('#chk_location').attr('checked','checked');
-	{% endif %}
+
 	
 	
 {% endblock %}
