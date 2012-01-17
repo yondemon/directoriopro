@@ -19,7 +19,9 @@ use Application\UserBundle\Form\ForgotEmailType;
 use Application\UserBundle\Form\RegisterType;
 use Application\UserBundle\Form\LoginType;
 use Symfony\Component\Form as SymfonyForm;
-//use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Cookie;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -34,45 +36,7 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
  * @Route("/user")
  */
 class UserController extends Controller
-{
-	
-    /*
-     * Homepage
-     *
-     * @Route("/", name="home")
-     * @Template()
-     *
-    public function homeAction()
-    {
-		// esta logueado?
-		$session = $this->getRequest()->getSession();
-		$id = $session->get('id');
-		if( !$id ){
-			$url = $this->generateUrl('post');
-		}else{
-			$em = $this->getDoctrine()->getEntityManager();
-			$user = $em->getRepository('ApplicationUserBundle:User')->find($id);
-			$city_id = $user->getCityId();
-			
-
-			//if( $city_id ){
-			//	$url = $this->generateUrl('city_show', array('id' => $city_id));
-			//}else{
-			//	$url = $this->generateUrl('user_show', array('id' => $id));
-			//}
-			
-			
-			if( in_array($city_id, array(3117735,3128760,2509954)) ){ //mad,bcn,val
-				$url = $this->generateUrl('city_show', array('id' => $city_id));
-			}else{
-				$url = $this->generateUrl('user_show', array('id' => $id));
-			}
-			
-		}
-        return $this->redirect($url);	
-	}*/
-	
-	
+{	
     /**
      * Lists all User entities.
      *
@@ -421,6 +385,11 @@ class UserController extends Controller
 				$session->set('name', $user->getShortName());
 				$session->set('admin', $user->getAdmin());
 				
+				// cookie
+				$pass = $user->getPass();
+				if( !$pass ) $pass = md5( $user->getDate()->format('Y-m-d H:i:s') );
+				setcookie("login", $user->getId() . ':' . $pass, ( time() + 3600 * 24 * 31 ), "/");
+				
 
 				$back = $session->get('back');
 				if( $back ){
@@ -497,6 +466,12 @@ class UserController extends Controller
 				$session->set('id', $entity->getId());
 				$session->set('name', $entity->getName());
 				$session->set('admin', $entity->getAdmin());
+				
+				// cookie
+				$pass = $entity->getPass();
+				if( !$pass ) $pass = md5( $entity->getDate()->format('Y-m-d H:i:s') );
+				setcookie("login", $entity->getId() . ':' . $pass, ( time() + 3600 * 24 * 31 ), "/");
+				
 	            return $this->redirect($this->generateUrl('user_edit', array('id' => $entity->getId())));
 	        }
 		}
@@ -730,12 +705,12 @@ class UserController extends Controller
 
 		require __DIR__ . '/../../../../vendor/facebook/examples/example.php';
 		
-		
+		$request = $this->getRequest();
 		
 		// login ok ?
 		if( isset( $user_profile['id'] ) ){
 			
-			$session = $this->getRequest()->getSession();
+			$session = $request->getSession();
 			
 			// existe usuario en la bd?
 			$em = $this->getDoctrine()->getEntityManager();
@@ -768,13 +743,35 @@ class UserController extends Controller
 				$user->setUrl( $user_profile['website'] );
 				$user->setRefId($ref_id);
 				$user->setCanContact(1);
-				//$user->setVotes(0);
-				//$user->setVisits(0);
 				$user->setAvatarType(AVATAR_FACEBOOK);
 				
 				$url = $this->generateUrl('user_edit');
 				
 			}else{
+				
+
+				/*
+				$cookieGuest = array(
+				    'name'  => 'mycookie',
+				    'value' => 'testval',
+				    'path'  => '/',
+				    'time'  => time() + 3600 * 24 * 7
+				);
+				$cookie = new Cookie($cookieGuest['name'], $cookieGuest['value'], $cookieGuest['time'], $cookieGuest['path']);
+				$request->cookies->set('cookie_name', 'cookie val', (time()+3600*24*31),  );
+				print_r( $request->cookies );
+				*/
+				
+				// cookie
+				$pass = $user->getPass();
+				if( !$pass ) $pass = md5( $user->getDate()->format('Y-m-d H:i:s') );
+				setcookie("login", $user->getId() . ':' . $pass, ( time() + 3600 * 24 * 31 ), "/");
+				
+
+
+				
+
+				
 			
 				$back = $session->get('back');
 				if( $back ){
@@ -783,6 +780,8 @@ class UserController extends Controller
 				}else{
 					$url = $this->generateUrl('user_show', array('id' => $user->getId()));
 				}
+				
+
 			}
 			
 			
@@ -834,6 +833,10 @@ class UserController extends Controller
 		//$session->set('facebook_id',null);
 		$session->set('name',null);
 		$session->set('admin',null);
+		
+		
+		setcookie("login", false, ( time() - 3600 ), "/");
+		
 		return $this->redirect( $this->generateUrl('post') );
 	}
 
