@@ -1,0 +1,26 @@
+{% set sitename = "Ofertas de empleo Betabeers" %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ sitename }}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<style>
+*{font-size:12px;font-family:arial}
+BODY{padding:0;margin:0}
+A{color:#267DD3;text-decoration:none}
+A:HOVER{text-decoration:underline}
+UL{margin:0;padding:0;margin-left:25px}
+LI{margin-bottom:10px}
+</style>
+
+<ul>
+{% for entity in entities %}
+	<li><a href="{{ url('post_show', { 'id': entity.id }) }}" target="_blank">{{ entity.title }}</a></li>
+{% endfor %}
+</ul>
+	
+</body>
+</html>

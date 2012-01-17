@@ -982,4 +982,36 @@ class PostController extends Controller
 	}
 
 
+
+
+
+    /**
+     * Posts widget
+     *
+     * @Route("/widget", name="post_widget")
+     * @Template()
+     */
+    public function widgetAction()
+    {
+		$request = $this->getRequest();
+		$em = $this->getDoctrine()->getEntityManager();
+		
+
+
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'p')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('orderBy', 'p.featured DESC, p.id DESC')
+		   ->andWhere('p.type = 1')
+		   ->setMaxResults(10);
+		$entities = $query->getQuery()->getResult();
+
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+
+
+        return array('entities' => $entities );
+    }
+
 }
