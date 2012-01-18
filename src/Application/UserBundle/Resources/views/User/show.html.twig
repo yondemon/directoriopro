@@ -100,20 +100,56 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
   <li><a href="{{ path('user_search') }}?c={{ entity.categoryid }}">{{ categories[ entity.categoryid ] }}</a></li>
 </ul>
 
+<div style="margin-bottom:10px;padding:20px;padding-bottom:15px;background:#000 url('/bundles/applicationanuncios/images/bgprofile.png') no-repeat left top;color:white;font-size:15px">
 
 
-<img src="{{ entity.getAvatar('bigger') }}" width="100" height="100" style="float:left;margin-right:10px"/>
 
-<h1 style="margin-bottom:0">{{ entity.name }}</h1>
-<b>{{ categories[ entity.categoryid ] }}</b> 
+<img src="{{ entity.getAvatar('bigger') }}" width="100" height="100" style="float:left;margin-right:15px"/>
+
+
+<h1 style="margin-bottom:10px;color:white;font-size:38px">{{ entity.name }}</h1>
+<div style="padding-bottom:10px">
+<b>{{ categories[ entity.categoryid ] }}</b> en {{ entity.location }} 
 {% if entity.freelance %}
 	<span class="freelance">&#149; freelance</span>
 {% endif %}
-<br/>
-{{ entity.location }}
-<br/>
-<span class="date">registrado desde {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas</span>
-<br/><br/><br/>
+</div>
+
+
+
+<!--<span class="date">registrado desde {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas</span>-->
+
+
+
+
+
+
+
+
+<!--{% if entity.url %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.url }}">Portafolio</a>{% endif %}-->
+{% if entity.getTwitterUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://twitter.com/{{ entity.getTwitterUrl() }}"><img src="/bundles/applicationanuncios/images/social/twitter.png" width="26" height="26"/></a> {% endif %}
+{% if entity.getLinkedinUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://es.linkedin.com/in/{{ entity.getLinkedinUrl() }}"><img src="/bundles/applicationanuncios/images/social/linkedin.png" width="26" height="26"/></a> {% endif %}
+
+{% if entity.getFlickrUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://www.flickr.com/photos/{{ entity.getFlickrUrl() }}"><img src="/bundles/applicationanuncios/images/social/flickr.png" width="26" height="26"/></a> {% endif %}
+{% if entity.getDribbbleUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://dribbble.com/{{ entity.getDribbbleUrl() }}"><img src="/bundles/applicationanuncios/images/social/dribbble.png" width="26" height="26"/></a> {% endif %}
+{% if entity.getForrstUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://forrst.com/people/{{ entity.getForrstUrl() }}"><img src="/bundles/applicationanuncios/images/social/forrst.png" width="26" height="26"/></a> {% endif %}
+
+{% if entity.getGithubUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://github.com/{{ entity.getGithubUrl() }}"><img src="/bundles/applicationanuncios/images/social/github.png" width="26" height="26"/></a> {% endif %}
+{% if entity.getStackoverflowUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://stackoverflow.com/users/{{ entity.getStackoverflowUrl() }}"><img src="/bundles/applicationanuncios/images/social/stackoverflow.png" width="26" height="26"/></a> {% endif %}
+{% if entity.getMasterbranchUrl() %}<a rel="nofollow,noindex" target="_blank" href="https://www.masterbranch.com/developer/{{ entity.getMasterbranchUrl() }}"><img src="/bundles/applicationanuncios/images/social/masterbranch.png" width="26" height="26"/></a> {% endif %}
+
+{% if entity.getYoutubeUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://www.youtube.com/{{ entity.getYoutubeUrl() }}"><img src="/bundles/applicationanuncios/images/social/youtube.png" width="26" height="26"/></a> {% endif %}
+{% if entity.getVimeoUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://vimeo.com/{{ entity.getVimeoUrl() }}"><img src="/bundles/applicationanuncios/images/social/vimeo.png" width="26" height="26"/></a> {% endif %}
+
+{% if entity.getDeliciousUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://delicious.com/{{ entity.getDeliciousUrl() }}"><img src="/bundles/applicationanuncios/images/social/delicious.png" width="26" height="26"/></a> {% endif %}
+{% if entity.getPinboardUrl() %}<a rel="nofollow,noindex" target="_blank" href="https://pinboard.in/u:{{ entity.getPinboardUrl() }}"><img src="/bundles/applicationanuncios/images/social/pinboard.png" width="26" height="26"/></a> {% endif %}
+
+
+
+<br class="clear"/>
+
+
+</div>
 
 
 <ul id="tabs" class="tabs">
@@ -206,9 +242,6 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
 
 
 
-<style>
-.links A{color:#666;background:#F3F3F3;width:90px;padding:5px 0;float:left;text-align:center;margin:0 10px 10px 0}
-</style>
 
 
 
@@ -216,34 +249,13 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
 	{% if entity.body %}
 		<pre>{{ entity.body}}</pre>
 	{% else %}
-		<pre>El usuario todavía no ha completado su descripción</pre>
+		<pre>El usuario todavía no ha completado su descripción :(</pre>
 	{% endif %}
 
 
 
 
 
-
-	<div class="links">
-		{% if entity.url %}<a rel="nofollow,noindex" target="_blank" href="{{ entity.url }}">Portafolio</a>{% endif %}
-		{% if entity.getTwitterUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://twitter.com/{{ entity.getTwitterUrl() }}">Twitter</a>{% endif %}
-		{% if entity.getLinkedinUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://es.linkedin.com/in/{{ entity.getLinkedinUrl() }}">Linkedin</a>{% endif %}
-		
-		{% if entity.getFlickrUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://www.flickr.com/photos/{{ entity.getFlickrUrl() }}">Flickr</a>{% endif %}
-		{% if entity.getDribbbleUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://dribbble.com/{{ entity.getDribbbleUrl() }}">Dribbble</a>{% endif %}
-		{% if entity.getForrstUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://forrst.com/people/{{ entity.getForrstUrl() }}">Forrst</a>{% endif %}
-		
-		{% if entity.getGithubUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://github.com/{{ entity.getGithubUrl() }}">Github</a>{% endif %}
-		{% if entity.getStackoverflowUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://stackoverflow.com/users/{{ entity.getStackoverflowUrl() }}">Stackoverflow</a>{% endif %}
-		{% if entity.getMasterbranchUrl() %}<a rel="nofollow,noindex" target="_blank" href="https://www.masterbranch.com/developer/{{ entity.getMasterbranchUrl() }}">Masterbranch</a>{% endif %}
-		
-		{% if entity.getYoutubeUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://www.youtube.com/{{ entity.getYoutubeUrl() }}">Youtube</a>{% endif %}
-		{% if entity.getVimeoUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://vimeo.com/{{ entity.getVimeoUrl() }}">Vimeo</a>{% endif %}
-		
-		{% if entity.getDeliciousUrl() %}<a rel="nofollow,noindex" target="_blank" href="http://delicious.com/{{ entity.getDeliciousUrl() }}">Delicious</a>{% endif %}
-		{% if entity.getPinboardUrl() %}<a rel="nofollow,noindex" target="_blank" href="https://pinboard.in/u:{{ entity.getPinboardUrl() }}">Pinboard</a>{% endif %}
-		<br class="clear"/>
-	</div>
 </div>
 
 
