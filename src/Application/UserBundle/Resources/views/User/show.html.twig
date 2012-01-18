@@ -32,7 +32,7 @@
 	{% if entity.votes or related_users %}
 	
 		{% if entity.votes %}
-			<a href="" class="alert-message block-message warning" style="padding:14px 0;width:179px;text-align:center">
+			<a href="{{ path('user_comments', { 'id': entity.id }) }}" class="alert-message block-message warning" style="padding:14px 0;width:179px;text-align:center">
 				Recomendaciones
 				<b style="font-size:80px;display:block;text-align:center;line-height:80px">{{ entity.votes }}</b>
 			</a>
