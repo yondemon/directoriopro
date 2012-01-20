@@ -84,7 +84,7 @@ class TestController extends Controller
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
 		   ->andWhere("( p.body LIKE '%".$search."%' OR p.title LIKE '%".$search."%' )")
 		   ->add('orderBy', 'p.date DESC')
-		   ->setMaxResults(10);
+		   ->setMaxResults(5);
 		$posts = $query->getQuery()->getResult();
 		
 		
