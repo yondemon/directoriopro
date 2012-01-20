@@ -31,7 +31,7 @@ class Test
     /**
      * @var string $tag
      *
-     * @ORM\Column(name="tag", type="string", length=100)
+     * @ORM\Column(name="tag", type="string", length=100, nullable=true)
      */
     private $tag;
 
@@ -45,14 +45,14 @@ class Test
     /**
      * @var text $questions
      *
-     * @ORM\Column(name="questions", type="text")
+     * @ORM\Column(name="questions", type="text", nullable=true)
      */
     private $questions;
 
     /**
      * @var string $replies
      *
-     * @ORM\Column(name="replies", type="string", length=255)
+     * @ORM\Column(name="replies", type="string", length=255, nullable=true)
      */
     private $replies;
 
@@ -83,6 +83,13 @@ class Test
      * @ORM\Column(name="visits", type="integer")
      */
     private $visits = 0;
+
+    /**
+     * @var integer $enabled
+     *
+     * @ORM\Column(name="enabled", type="integer")
+     */
+    private $enabled = 1;
 
 
     /**
@@ -274,5 +281,26 @@ class Test
     public function getVisits()
     {
         return $this->visits;
+    }
+
+
+    /**
+     * Set enabled
+     *
+     * @param integer $enabled
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return integer 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

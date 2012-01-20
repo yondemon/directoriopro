@@ -7,8 +7,10 @@
 
 {% block sidebar %}
 
+{% if entity.enabled %}
 <a href="{{ path('test_take', { 'id': entity.id }) }}" class="btn large primary" style="font-weight:bold;font-size:20px;">Hacer test</a>
 <br/>
+{% endif %}
 
 
 <div class="alert-message block-message warning" style="padding:14px 0;width:179px;text-align:center">
@@ -96,13 +98,17 @@
 
 <br/><br/>
 
-{% if posts %}
-	<b>Ofertas de empleo donde se requiere {{ entity.tag }}</b><br/><br/>
-	<ul>
-	{% for post in posts %}
-		<li><a href="{{ url('post_show', { 'id': post.id }) }}">{{ post.title }}</a></li>
-	{% endfor %}
-	</ul>
+{% if entity.enabled %}
+
+	{% if posts %}
+		<b>Ofertas de empleo donde se requiere {{ entity.tag }}</b><br/><br/>
+		<ul>
+		{% for post in posts %}
+			<li><a href="{{ url('post_show', { 'id': post.id }) }}">{{ post.title }}</a></li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+	
 {% endif %}
 
 {% if users %}
@@ -113,6 +119,8 @@
 {% endif %}
 
 <br class="clear"/><br/>
+
+
 
 <span class="date">{{ entity.visits }} visitas</span>
 

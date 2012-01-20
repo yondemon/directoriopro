@@ -156,9 +156,9 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
 	<div style="background:#E0F2FF url('{{ asset('bundles/applicationanuncios/images/bgbadges.png') }}');margin-top:-10px;padding-bottom:16px;margin-bottom:10px">
 		<img src="{{ asset('bundles/applicationanuncios/images/badges/trofeo.png') }}" width="70" height="70" style="float:left;margin:16px 0 0 22px"/>
 	    {% for badge in badges %}
-			<a href="{{ path('test_show', { 'id': badge.id }) }}" data-original-title="{{ badge.tag }}" rel="twipsy" style="float:left;margin:16px 0 0 22px"><img src="{{ asset('bundles/applicationanuncios/images/badges/') }}{{ badge.id }}.png" width="70" height="70"/></a>
-			<br class="clear"/>
+			<a href="{{ path('test_show', { 'id': badge.id }) }}" data-original-title="{{ badge.title }}" rel="twipsy" style="float:left;margin:16px 0 0 22px"><img src="{{ asset('bundles/applicationanuncios/images/badges/') }}{{ badge.id }}.png" width="70" height="70"/></a>
 	    {% endfor %}
+		<br class="clear"/>
 	</div>
 {% endif %}
 

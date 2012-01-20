@@ -77,16 +77,17 @@ class TestController extends Controller
             throw $this->createNotFoundException('Unable to find Test entity.');
         }
 
-
-		$search = $entity->getTag();
-		$query = $em->createQueryBuilder();
-		$query->add('select', 'p')
-		   ->add('from', 'ApplicationAnunciosBundle:Post p')
-		   ->andWhere("( p.body LIKE '%".$search."%' OR p.title LIKE '%".$search."%' )")
-		   ->add('orderBy', 'p.date DESC')
-		   ->setMaxResults(5);
-		$posts = $query->getQuery()->getResult();
-		
+		$posts = false;
+		if( $entity->getEnabled() ){
+			$search = $entity->getTag();
+			$query = $em->createQueryBuilder();
+			$query->add('select', 'p')
+			   ->add('from', 'ApplicationAnunciosBundle:Post p')
+			   ->andWhere("( p.body LIKE '%".$search."%' OR p.title LIKE '%".$search."%' )")
+			   ->add('orderBy', 'p.date DESC')
+			   ->setMaxResults(5);
+			$posts = $query->getQuery()->getResult();
+		}
 		
 
 		$query = $em->createQueryBuilder();
@@ -141,6 +142,9 @@ class TestController extends Controller
             throw $this->createNotFoundException('Unable to find Test entity.');
         }
 
+		if( !$entity->getEnabled() ){
+			return $this->redirect($this->generateUrl('test_show', array('id' => $entity->getId())));
+		}
 
 
         return array(

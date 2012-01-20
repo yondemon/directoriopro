@@ -15,10 +15,6 @@ class TestType extends AbstractType
             ->add('body')
             ->add('questions')
             ->add('replies')
-            //->add('date')
-            //->add('featured')
-            //->add('user_id')
-            //->add('visits')
         ;
     }
 
