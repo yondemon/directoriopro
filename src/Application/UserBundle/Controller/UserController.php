@@ -319,6 +319,12 @@ class UserController extends Controller
 		
 
 
+		$badges = $em->createQuery("SELECT t FROM ApplicationTestBundle:Test t, ApplicationTestBundle:TestUser tu WHERE t.id = tu.test_id AND tu.user_id = :id ORDER BY tu.date ASC")
+			  ->setParameter('id', $id)
+			  ->setMaxResults(5)
+			  ->getResult();
+			
+
         return array(
             'entity'       => $entity,
 			'contact_form' => $contact_form_html,
@@ -327,7 +333,8 @@ class UserController extends Controller
 			//'total_wannawork' => $total_wannawork,
 			//'total_like' => $total_like,
 			'total_users' => $total_users,
-			'related_users' => $related_users
+			'related_users' => $related_users,
+			'badges' => $badges
 			);
     }
 

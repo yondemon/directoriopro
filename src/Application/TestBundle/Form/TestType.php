@@ -11,12 +11,14 @@ class TestType extends AbstractType
     {
         $builder
             ->add('title')
+            ->add('tag')
             ->add('body')
             ->add('questions')
-            ->add('date')
-            ->add('featured')
-            ->add('user_id')
-            ->add('visits')
+            ->add('replies')
+            //->add('date')
+            //->add('featured')
+            //->add('user_id')
+            //->add('visits')
         ;
     }
 

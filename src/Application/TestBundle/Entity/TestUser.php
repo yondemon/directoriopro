@@ -39,7 +39,7 @@ class TestUser
      * @var datetime $date
      *
      * @ORM\Column(name="date", type="datetime")
-     */
+     */ 
     private $date;
 
 

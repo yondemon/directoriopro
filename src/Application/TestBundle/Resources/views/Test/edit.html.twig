@@ -1,22 +1,58 @@
-<h1>Test edit</h1>
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+{% form_theme edit_form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+
+{% block title "Editar test" %}
+
+{% block content %}
+
+<h1>Editar Test</h1>
+
+<style>
+TEXTAREA.xlarge{width:430px}
+#application_anunciosbundle_posttype_type label{float:none;margin:0 20px 0 5px}
+.dates input{width:80px}
+</style>
+
+{% if app.session.get('admin') %}
 
 <form action="{{ path('test_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
+
+	{{ form_errors(edit_form) }}
+
+
+
+
+	
+
+
+	{{ form_row(edit_form.title, { 'label': 'Titulo' }) }}
+	{{ form_row(edit_form.tag, { 'label': 'Tag' }) }}
+	
+	{{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
+	
+	{{ form_row(edit_form.questions, { 'label': 'Preguntas' }) }}
+	{{ form_row(edit_form.replies, { 'label': 'Respuestas' }) }}
+	
+
+
+	
+
+
+	<div class="actions">
+		<button type="submit" class="btn primary">Guardar cambios</button> &nbsp;
+		<a href="{{ path('test_show', { 'id': entity.id }) }}" class="btn">Cancelar</a> &nbsp;
+
+		{% if app.session.get('admin') %}	
+			<a href="{{ path('test_delete', { 'id': entity.id }) }}" class="btn danger pull-right">Eliminar</a>
+		{% endif %}
+	</div>
+
+	{{ form_row(edit_form._token) }}
+
 </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('test') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('test_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+{% else %}
+	Area restringida, solo accesible para administradores
+{% endif %}
+
+{% endblock %}

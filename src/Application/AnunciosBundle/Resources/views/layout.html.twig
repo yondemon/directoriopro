@@ -60,6 +60,7 @@
     					<li class="hide_op"><a href="{{ path('user') }}">Profesionales</a></li>
 						<li><a href="{{ path('user_freelance') }}">Freelance</a></li>
 						<li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
+						<li><a href="{{ path('test') }}">Tests</a></li>
 					</ul>
 				</li>
 				
@@ -168,8 +169,7 @@ $().ready(function(){
 	{% block script_load %}{% endblock %}
 
 	$('#topbar').dropdown();
-	$("*[rel=twipsy]").twipsy({live: true, html: true});
-	
+	$("*[rel=twipsy]").twipsy({live: true, html: true, placement: 'below', animate: false});
 	
 	$('#query').focus(function(){
 		$('#menu_options').show();

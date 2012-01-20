@@ -1,49 +1,49 @@
-<h1>Test list</h1>
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Body</th>
-            <th>Questions</th>
-            <th>Date</th>
-            <th>Featured</th>
-            <th>User_id</th>
-            <th>Visits</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('test_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.title }}</td>
-            <td>{{ entity.body }}</td>
-            <td>{{ entity.questions }}</td>
-            <td>{{ entity.date|date('Y-m-d H:i:s') }}</td>
-            <td>{{ entity.featured }}</td>
-            <td>{{ entity.userid }}</td>
-            <td>{{ entity.visits }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('test_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('test_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{% block title "Tests" %}
+
+
+{% block sidebar %}
+
+
+	
+	
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<ul class="breadcrumb">
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('test') }}">Tests</a></li>
+</ul>
+
+
+
+<h1>Tests</h1>
+
+
+
 
 <ul>
-    <li>
-        <a href="{{ path('test_new') }}">
-            Create a new entry
-        </a>
-    </li>
+    {% for entity in entities %}
+        <li style="margin-bottom:20px;" {% if entity.featured == 1 %}class="featured"{% endif %}">
+            <a href="{{ path('test_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
+            {{ entity.body|truncate(200) }}
+        </li>
+    {% endfor %}
 </ul>
+
+
+
+
+
+{{ pager|raw }}
+
+
+
+
+{% endblock %}
+

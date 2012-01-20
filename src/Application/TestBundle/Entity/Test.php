@@ -29,6 +29,13 @@ class Test
     private $title;
 
     /**
+     * @var string $tag
+     *
+     * @ORM\Column(name="tag", type="string", length=100)
+     */
+    private $tag;
+
+    /**
      * @var text $body
      *
      * @ORM\Column(name="body", type="text")
@@ -43,6 +50,13 @@ class Test
     private $questions;
 
     /**
+     * @var string $replies
+     *
+     * @ORM\Column(name="replies", type="string", length=255)
+     */
+    private $replies;
+
+    /**
      * @var datetime $date
      *
      * @ORM\Column(name="date", type="datetime")
@@ -54,7 +68,7 @@ class Test
      *
      * @ORM\Column(name="featured", type="integer")
      */
-    private $featured;
+    private $featured = 0;
 
     /**
      * @var integer $user_id
@@ -68,7 +82,7 @@ class Test
      *
      * @ORM\Column(name="visits", type="integer")
      */
-    private $visits;
+    private $visits = 0;
 
 
     /**
@@ -99,6 +113,26 @@ class Test
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set tag
+     *
+     * @param string $tag
+     */
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
+    }
+
+    /**
+     * Get tag
+     *
+     * @return string 
+     */
+    public function getTag()
+    {
+        return $this->tag;
     }
 
     /**
@@ -139,6 +173,27 @@ class Test
     public function getQuestions()
     {
         return $this->questions;
+    }
+
+
+    /**
+     * Set replies
+     *
+     * @param string $replies
+     */
+    public function setReplies($replies)
+    {
+        $this->replies = $replies;
+    }
+
+    /**
+     * Get replies
+     *
+     * @return string 
+     */
+    public function getReplies()
+    {
+        return $this->replies;
     }
 
     /**

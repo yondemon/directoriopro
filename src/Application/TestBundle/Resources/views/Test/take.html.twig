@@ -1,0 +1,78 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title entity.title %}
+
+
+{% block sidebar %}
+
+
+
+	
+	
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+<script src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js" type="text/javascript"></script>
+<link href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css" type="text/css" rel="stylesheet" />
+<style>
+.answers{list-style-type:none;margin-left:15px}
+.answers label{float:none}
+.prettyprint{background:#efefef}
+</style>
+
+
+<ul class="breadcrumb">
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('test') }}">Tests</a></li>
+</ul>
+
+
+
+<h1>{{ entity.title }}</h1>
+
+
+<form method="post" action="{{ path('test_result', { 'id': entity.id }) }}">
+	{{ entity.questions|raw }}
+	<input id="check_quiz" type="submit" class="btn primary" value="Ver resultados" />
+</form>
+
+
+
+
+{% endblock %}
+
+
+
+
+{% block script_load %}
+
+/*
+$().ready( function(){
+
+  prettyPrint();
+
+  var $answers_ul = jQuery('.answers');
+  var $answers = [{{ entity.replies }}];
+
+  jQuery('#check_quiz').click( function(){
+    var score = 0;
+    for( var x = 0; x < $answers_ul.length; x++){
+      var answer_selected = jQuery('input:checked', $answers_ul[x]).attr('id');
+      if(answer_selected == 'answer-' + (x + 1) + '-' + $answers[x]){
+        score += 1;
+      }
+    }
+
+    alert( $answers.length + '-' + score + ' preguntas correctas!');
+  });
+});
+*/
+
+
+
+{% endblock %}

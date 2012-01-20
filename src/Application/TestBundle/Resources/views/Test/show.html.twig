@@ -1,57 +1,133 @@
-<h1>Test</h1>
+{% set share_url = url('test_show', { 'id': entity.id }) %}
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Title</th>
-            <td>{{ entity.title }}</td>
-        </tr>
-        <tr>
-            <th>Body</th>
-            <td>{{ entity.body }}</td>
-        </tr>
-        <tr>
-            <th>Questions</th>
-            <td>{{ entity.questions }}</td>
-        </tr>
-        <tr>
-            <th>Date</th>
-            <td>{{ entity.date|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Featured</th>
-            <td>{{ entity.featured }}</td>
-        </tr>
-        <tr>
-            <th>User_id</th>
-            <td>{{ entity.userid }}</td>
-        </tr>
-        <tr>
-            <th>Visits</th>
-            <td>{{ entity.visits }}</td>
-        </tr>
-    </tbody>
-</table>
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('test') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('test_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('test_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
+{% block title entity.title %}
+
+
+{% block sidebar %}
+
+<a href="{{ path('test_take', { 'id': entity.id }) }}" class="btn large primary" style="font-weight:bold;font-size:20px;">Hacer test</a>
+<br/>
+
+
+<div class="alert-message block-message warning" style="padding:14px 0;width:179px;text-align:center">
+	<b>¡Supera el test y<br/>consigue este badge!</b><br/><br/>
+	<img src="{{ asset('bundles/applicationanuncios/images/badges/') }}{{ entity.id }}.png" width="70" height="70"/>
+</div>
+
+<b>Compartir</b>
+
+<br/><br/>
+
+
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-lang="es" data-url="{{ share_url }}">Twittear</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+<br/><br/>
+
+<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+<script type="IN/Share" data-counter="right" data-url="{{ share_url }}"></script>
+
+
+<br/><br/>
+
+<iframe src="http://www.facebook.com/plugins/like.php?href={{ share_url }}&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:21px;" allowTransparency="true"></iframe>
+
+
+
+
+	
+	
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+
+<div id="new_badge" style="display:none;position:fixed;z-index:10001;padding:17px 0 17px 0;top:0;left:0;right:0;background:#FFFACD;border-bottom:2px #FFD700 solid;color:#454545;font-size:16px;font-weight:bold">
+	<div style="width:820px;margin:auto">
+	
+		<div style="float:right;width:325px;padding-top:9px">
+		
+			<a href="javascript:$('#new_badge').slideUp('fast')" style="border-radius:20px;margin-top:-5px;background:#DEDAB9;padding:5px 10px;color:#FFFACD;text-decoration:none;float:right">X</a>
+
+			<div style="float:left;width: 69px;overflow: hidden;margin-right: 11px;">
+				<a href="https://twitter.com/share" class="twitter-share-button" data-lang="es" data-url="{{ share_url }}">Twittear</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
+
+			<div style="float:left;margin-right: 11px;">
+				<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+				<script type="IN/Share" data-counter="right" data-url="{{ share_url }}"></script>
+			</div>
+
+			<iframe src="http://www.facebook.com/plugins/like.php?href={{ share_url }}&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="float:left;border:none; overflow:hidden; width:85px; height:21px;" allowTransparency="true"></iframe>
+
+		</div>
+		
+		
+	
+		¡Enhorabuena! Has desbloqueado un nuevo mérito <img src="{{ asset('bundles/applicationanuncios/images/badges/') }}{{ entity.id }}.png" align="absmiddle" width="40" height="40" style="margin:0 7px"/>
+	</div>
+</div>
+
+
+
+
+<ul class="breadcrumb">
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('test') }}">Tests</a></li>
 </ul>
+
+
+
+
+
+
+
+<h1>{{ entity.title }}</h1>
+
+{{ entity.body|raw|nl2br }}
+
+<br/><br/>
+
+{% if posts %}
+	<b>Ofertas de empleo donde se requiere {{ entity.tag }}</b><br/><br/>
+	<ul>
+	{% for post in posts %}
+		<li><a href="{{ url('post_show', { 'id': post.id }) }}" target="_blank">{{ post.title }}</a></li>
+	{% endfor %}
+	</ul>
+{% endif %}
+
+{% if users %}
+	<b>¿Quien ha conseguido el mérito?</b><br/><br/>
+	{% for user in users %}
+		<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="38" height="38"/></a>
+	{% endfor %}
+{% endif %}
+
+<br class="clear"/><br/>
+
+<span class="date">{{ entity.visits }} visitas</span>
+
+
+
+{% endblock %}
+
+
+
+{% block script_load %}
+
+if( document.location.href.indexOf('#win') != -1 ){
+	$('#new_badge').delay(500).slideDown();
+}
+
+
+
+{% endblock %}
