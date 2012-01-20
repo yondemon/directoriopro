@@ -93,7 +93,7 @@ class TestController extends Controller
 		$query = $em->createQueryBuilder();
 		$query->add('select', 'u')
 		   ->add('from', 'ApplicationUserBundle:User u, ApplicationTestBundle:TestUser tu')
-		   ->add('where', 'u.id = tu.user_id')
+		   ->add('where', 'u.id = tu.user_id AND tu.test_id = ' . $id)
 		   ->add('orderBy', 'u.date DESC');
 		   //->setMaxResults(14);
 		$users = $query->getQuery()->getResult();
