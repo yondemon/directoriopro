@@ -57,7 +57,7 @@
 			<a href="javascript:$('#new_badge').slideUp('fast')" style="border-radius:20px;margin-top:-5px;background:#DEDAB9;padding:5px 10px;color:#FFFACD;text-decoration:none;float:right">X</a>
 
 			<div style="float:left;width: 69px;overflow: hidden;margin-right: 11px;">
-				<a href="https://twitter.com/share" class="twitter-share-button" data-lang="es" data-url="{{ share_url }}">Twittear</a>
+				<a href="https://twitter.com/share" class="twitter-share-button" data-lang="es" data-text="He superado el {{ entity.title }} ¿Y tú?" data-url="{{ share_url }}">Twittear</a>
 				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</div>
 
@@ -100,7 +100,7 @@
 	<b>Ofertas de empleo donde se requiere {{ entity.tag }}</b><br/><br/>
 	<ul>
 	{% for post in posts %}
-		<li><a href="{{ url('post_show', { 'id': post.id }) }}" target="_blank">{{ post.title }}</a></li>
+		<li><a href="{{ url('post_show', { 'id': post.id }) }}">{{ post.title }}</a></li>
 	{% endfor %}
 	</ul>
 {% endif %}
