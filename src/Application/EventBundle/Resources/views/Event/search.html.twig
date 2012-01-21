@@ -1,0 +1,73 @@
+{% set nav_event = 1 %}
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Buscar eventos" %}
+
+
+{% block sidebar %}
+	<a href="{{ path('event_new') }}" class="btn large primary" style="font-weight:bold;font-size:20px;">Publicar evento</a>
+
+
+
+	<br/><b>Top ciudades</b><br/><br/>
+
+	<ul>
+    {% for city in cities %}
+		<li><a style="display:inline" href="{{ path('event_city', { 'id': city.id }) }}">{{ city.name }}</a> ({{ city.total }})</li>
+    {% endfor %}
+	</ul>
+
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<h1>Buscar eventos</h1>
+
+
+
+
+<ul style="list-style-type:none;margin:0">
+    {% for entity in entities %}
+        <li style="margin-bottom:20px;" {% if entity.featured == 1 %}class="featured"{% endif %}">
+		
+
+
+				
+	            <a href="{{ path('event_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
+				<b>{{ entity.datestart|date('d/m/Y H:i') }}</b>
+				
+				
+					
+
+				
+				<br/>
+	            {{ entity.body|truncate(200) }}
+				<br/>
+				<a href="{{ path('event_city', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>
+				
+				{% if entity.users %}
+					<div style="padding-top:5px">
+						<span class="users" style="margin-left:0;width:34px;height:34px;background-color:#efefef;float:left;margin-right:5px;background-position:10px center"><span style="position:relative;top:7px;left:10px;">{{ entity.users }}</span></span>
+						{% for user in entity.users_list %}
+							<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="34" height="34"/></a>
+						{% endfor %}
+						<br class="clear"/>
+					</div>
+				{% endif %}
+				
+
+        </li>
+    {% endfor %}
+</ul>
+
+
+
+
+
+
+
+{% endblock %}

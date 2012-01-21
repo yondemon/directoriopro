@@ -1,0 +1,27 @@
+{% set sitename = "Agenda Betabeers" %}
+BEGIN:VCALENDAR
+PRODID:-//hacksw/handcal//NONSGML v1.0//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:betabeers
+X-WR-TIMEZONE:Europe/Madrid
+X-WR-CALDESC:{{sitename}}
+{% for entity in entities %}
+BEGIN:VEVENT
+DTSTART:{{ entity.datestart|date('Ymd\\THis\\Z') }}
+DTEND:{{ entity.dateend|date('Ymd\\THis\\Z') }}
+DTSTAMP:{{ entity.datestart|date('Ymd\\THis\\Z') }}
+UID:{{ uids[loop.index0] }}@betabeers.com
+CREATED:{{ entity.datestart|date('Ymd\\THis\\Z') }}
+DESCRIPTION:{{ url('event_show', { 'id': entity.id }) }}
+{{ entity.body|truncate(200) }}
+LAST-MODIFIED:{{ entity.datestart|date('Ymd\\THis\\Z') }}
+LOCATION:{{entity.address}}, {{entity.location}}
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:{{ entity.title }}
+TRANSP:OPAQUE
+END:VEVENT
+{% endfor %}
+END:VCALENDAR

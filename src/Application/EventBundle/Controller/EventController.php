@@ -672,4 +672,126 @@ class EventController extends Controller
 		return $this->redirect( $_SERVER['HTTP_REFERER'] );
     }
 
+
+
+
+    /**
+     * Search Event entities.
+     *
+     * @Route("/search", name="event_search")
+     * @Template()
+     */
+    public function searchAction()
+    {
+		$request = $this->getRequest();
+		$search = $request->query->get('q');
+		
+
+		$em = $this->getDoctrine()->getEntityManager();
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->add('orderBy', 'e.featured DESC, e.date_start ASC');
+		
+		if( $search ) $qb->andWhere("( e.body LIKE '%".$search."%' OR e.title LIKE '%".$search."%' )");
+
+		$entities = $qb->getQuery()->getResult();
+		
+		
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'COUNT(e.id) AS total, c.name, c.id')
+		   ->add('from', 'ApplicationEventBundle:Event e, ApplicationCityBundle:City c')
+		   ->andWhere('e.city_id = c.id')
+    	   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->add('groupBy', 'c.id')
+		   ->add('orderBy', 'total DESC')
+		   ->setMaxResults(13);
+		$cities = $qb->getQuery()->getResult();
+		
+		
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+		
+        return array('entities' => $entities, 'cities' => $cities);
+	}
+
+    /**
+     * Feed Event entities.
+     *
+     * @Route("/feed", name="event_feed", defaults={"_format"="xml"})
+     * @Template()
+     */
+    public function feedAction()
+    {
+
+		$request = $this->getRequest();
+
+		
+		$em = $this->getDoctrine()->getEntityManager();
+
+		$qb = $em->createQueryBuilder()
+		   ->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->add('orderBy', 'e.date ASC')
+		   ->setMaxResults(10);
+		
+
+
+		$query = $qb->getQuery();
+		$entities = $query->getResult();
+
+		
+		
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+		
+        return array('entities' => $entities);
+    }
+
+    /**
+     * Calendar Event entities.
+     *
+     * @Route("/calendar.ics", name="event_calendar")
+     * @Template()
+     */
+    public function calendarAction()
+    {
+
+		$request = $this->getRequest();
+		$id = $request->query->get('id');
+
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		$limit = 50;
+
+		$qb = $em->createQueryBuilder()
+		   ->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->add('orderBy', 'e.date ASC')
+		   ->setMaxResults( $limit );
+		
+		if( $id ){
+			$qb->andWhere('e.city_id = :city_id')->setParameter('city_id', $id);
+		}
+		
+		
+		for( $i = 0; $i < $limit; $i++ ){
+			$uids[] = md5(uniqid(mt_rand(), true));
+		}
+
+
+		$entities = $qb->getQuery()->getResult();
+
+		
+		
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+		
+        return array('entities' => $entities, 'uids' => $uids);
+    }
+
 }
