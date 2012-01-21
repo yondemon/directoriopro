@@ -726,11 +726,23 @@ class EventController extends Controller
      */
     public function feedAction()
     {
-
-		$request = $this->getRequest();
-
-		
+	
 		$em = $this->getDoctrine()->getEntityManager();
+		
+		$request = $this->getRequest();
+		$id = $request->query->get('id');
+
+		if( $id ){
+			$city = $em->getRepository('ApplicationCityBundle:City')->find($id);
+		
+			if(!$city){
+				throw $this->createNotFoundException('Unable to find Post entity.');
+			}
+		}
+
+
+
+
 
 		$qb = $em->createQueryBuilder()
 		   ->add('select', 'e')
@@ -738,7 +750,10 @@ class EventController extends Controller
 		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
 		   ->add('orderBy', 'e.date ASC')
 		   ->setMaxResults(10);
-		
+
+		if( $id ){
+		   $qb->andWhere('e.city_id = :city_id')->setParameter('city_id', $id);
+		}
 
 
 		$query = $qb->getQuery();
