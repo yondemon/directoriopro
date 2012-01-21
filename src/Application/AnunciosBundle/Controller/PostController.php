@@ -624,7 +624,10 @@ class PostController extends Controller
 				@mail("gafeman@gmail.com", $subject, utf8_decode($mensaje), $header);
 				
 				
-				
+				// contabilizar contacto
+				$entity->setInterested( $entity->getInterested() + 1 );
+				$em->persist($entity);
+				$em->flush();
 				
 
 	

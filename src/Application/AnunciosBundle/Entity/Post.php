@@ -122,6 +122,12 @@ class Post
      */
     private $company;
 
+    /**
+     * @var integer $interested
+     *
+     * @ORM\Column(name="interested", type="integer", nullable=true)
+     */
+    private $interested = 0;
 
     /**
      * Get id
@@ -393,7 +399,6 @@ class Post
         return $this->visits;
     }
 
-
     /**
      * Set company
      *
@@ -412,5 +417,25 @@ class Post
     public function getCompany()
     {
         return $this->company;
+    }
+
+    /**
+     * Set interested
+     *
+     * @param integer $interested
+     */
+    public function setInterested($interested)
+    {
+        $this->interested = $interested;
+    }
+
+    /**
+     * Get interested
+     *
+     * @return integer 
+     */
+    public function getInterested()
+    {
+        return $this->interested;
     }
 }
