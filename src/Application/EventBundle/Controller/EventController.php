@@ -796,13 +796,27 @@ class EventController extends Controller
 		
 		
 		$headers = array(
-	        'Content-Type'        => "text/calendar; charset=utf-8",
+	        'Content-Type'        => "text/calendar",
 	        'Content-Disposition' => "inline; filename=calendar.ics"
 	    );
-	
-		$content = $this->render('ApplicationEventBundle:Event:calendar.html.twig', array('entities' => $entities, 'uids' => $uids));
+		$content = $this->renderView('ApplicationEventBundle:Event:calendar.html.twig', array('entities' => $entities, 'uids' => $uids));
+		
 
-	    return new Response($content, 200, $headers);
+		return new Response($content, 200, $headers);
+	
+	
+
+		/*
+		$response = new Response();
+		$response->setContent($content);
+		$response->setStatusCode(200);
+		$response->headers->set('Content-Disposition', 'inline; filename=calendar.ics');
+		$response->headers->set('Content-Type', 'text/calendar; charset=utf-8');
+		$response->send();
+		exit();
+		*/
+
+
 		
     }
 
