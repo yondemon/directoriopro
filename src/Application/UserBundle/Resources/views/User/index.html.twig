@@ -22,12 +22,14 @@
 
 
 
+
+<div style="background:#FFFFCC;padding:10px;margin-bottom:20px">
+<b style="display:block;margin-bottom:10px;font-weight:bold">Ranking semanal de personas que más invitan</b>
+
 {% if users_ref %}
-	<div style="background:#FFFFCC;padding:10px;margin-bottom:20px">
-	<b style="display:block;margin-bottom:10px;font-weight:bold">Usuarios que más han invitado</b>
-	
-	<a href="{{ path('user_invite') }}" style="float:right;margin-top:10px;font-size:16px;">Invitar usuarios</a>
-	
+
+	<a href="{{ path('user_invite') }}" style="float:right;margin-top:10px;font-size:16px;">Invitar contactos</a>
+
 	{% for user in users_ref %}
 		<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.category_id ] }}</b><br/>{{ user.name }}" rel="twipsy" style="float:left;margin-right:5px"><span style="position:absolute;margin-top:20px;padding:0 5px;background:red;color:white;font-size:10px">{{ user.total }}</span><img src="
 		{% if user.avatar_type == 1 %}
@@ -39,9 +41,15 @@
 		{% endif %}
 		" width="38" height="38"/></a>
 	{% endfor %}
-	<br class="clear"/>
-	</div>
+
+{% else %}
+	¿Quieres aparecer aquí? <a href="{{ path('user_invite') }}">Invita a tus contactos</a>
+
 {% endif %}
+
+<br class="clear"/>
+</div>
+
 
 
 <ul class="breadcrumb">
