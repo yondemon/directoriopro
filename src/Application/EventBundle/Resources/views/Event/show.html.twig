@@ -3,10 +3,12 @@
 {% set nav_event = 1 %}
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 {% set share_url = url('event_show', { 'id': entity.id }) %}
-
-{% block title entity.title %}
 {% set location = entity.getLocation() %}
+{% set pretty_date = entity.getPrettyDate('%e %B') %}
 
+{% block title %}
+	{{ entity.title }} - {{ pretty_date }}
+{% endblock %}
 
 {% block sidebar %}
 
@@ -14,7 +16,7 @@
 
 
 	<div style="background:url('{{ asset('bundles/applicationanuncios/images/calendarb.png') }}') no-repeat left center;padding:5px 0 10px 73px">
-	<b style="font-size:20px">{{ entity.getPrettyDate('%e %B') }}</b><br/>
+	<b style="font-size:20px">{{ pretty_date }}</b><br/>
 	<span style="font-size:17px">{{ entity.datestart|date('H:i') }} - {{ entity.dateend|date('H:i') }}
 	</div>
 	<!--
@@ -86,7 +88,7 @@
 	
 	<div style="background:#FFFFCC;padding:10px;margin-bottom:15px">
 	
-	<a href="https://twitter.com/share" class="twitter-share-button" data-lang="es">Twittear</a>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-text="{{ entity.title }} - {{ pretty_date }}" data-via="betabeers" data-lang="es">Twittear</a>
 	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 	
