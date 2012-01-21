@@ -1,4 +1,3 @@
-{% set sitename = "Agenda Betabeers" %}
 BEGIN:VCALENDAR
 PRODID:-//hacksw/handcal//NONSGML v1.0//EN
 VERSION:2.0
@@ -6,7 +5,7 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:betabeers
 X-WR-TIMEZONE:Europe/Madrid
-X-WR-CALDESC:{{sitename}}
+X-WR-CALDESC:{{title}}
 {% for entity in entities %}
 BEGIN:VEVENT
 DTSTART:{{ entity.datestart|date('Ymd\\THis\\Z') }}

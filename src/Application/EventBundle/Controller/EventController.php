@@ -10,6 +10,7 @@ use Application\EventBundle\Entity\Event;
 use Application\EventBundle\Entity\EventUser;
 use Application\EventBundle\Form\EventType;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -751,16 +752,19 @@ class EventController extends Controller
         return array('entities' => $entities);
     }
 
+
+
+
     /**
      * Calendar Event entities.
      *
      * @Route("/calendar.ics", name="event_calendar")
+     * @Cache(expires="+2 days")
      */
     public function calendarAction()
     {
 
-		$request = $this->getRequest();
-		$id = $request->query->get('id');
+
 
 		
 		$em = $this->getDoctrine()->getEntityManager();
@@ -774,9 +778,7 @@ class EventController extends Controller
 		   ->add('orderBy', 'e.date_start ASC')
 		   ->setMaxResults( $limit );
 		
-		if( $id ){
-			$qb->andWhere('e.city_id = :city_id')->setParameter('city_id', $id);
-		}
+
 		
 		
 		for( $i = 0; $i < $limit; $i++ ){
@@ -799,7 +801,7 @@ class EventController extends Controller
 	        'Content-Type'        => "text/calendar",
 	        'Content-Disposition' => "inline; filename=calendar.ics"
 	    );
-		$content = $this->renderView('ApplicationEventBundle:Event:calendar.html.twig', array('entities' => $entities, 'uids' => $uids));
+		$content = $this->renderView('ApplicationEventBundle:Event:calendar.html.twig', array('entities' => $entities, 'uids' => $uids, 'title' => 'Agenda betabeers'));
 		
 
 		return new Response($content, 200, $headers);
@@ -815,6 +817,67 @@ class EventController extends Controller
 		$response->send();
 		exit();
 		*/
+
+
+		
+    }
+
+
+    /**
+     * Calendar City Event entities.
+     *
+     * @Route("/calendar_{id}.ics", name="event_calendarcity")
+     * @Cache(expires="+2 days")
+     */
+    public function calendarcityAction($id)
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+		$city = $em->getRepository('ApplicationCityBundle:City')->find($id);
+		
+		if(!$city){
+			throw $this->createNotFoundException('Unable to find Post entity.');
+		}
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		$limit = 50;
+
+		$qb = $em->createQueryBuilder()
+		   ->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->andWhere('e.city_id = :city_id')->setParameter('city_id', $id)
+		   ->add('orderBy', 'e.date_start ASC')
+		   ->setMaxResults( $limit );
+
+		
+		for( $i = 0; $i < $limit; $i++ ){
+			$uids[] = md5(uniqid(mt_rand(), true));
+		}
+
+
+		$entities = $qb->getQuery()->getResult();
+
+		
+		
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+		
+		
+		
+		
+		
+		$headers = array(
+	        'Content-Type'        => "text/calendar",
+	        'Content-Disposition' => "inline; filename=calendar_" . $id . ".ics"
+	    );
+		$content = $this->renderView('ApplicationEventBundle:Event:calendar.html.twig', array('entities' => $entities, 'uids' => $uids, 'title' => 'Agenda betabeers en ' . $city->getName() ));
+		
+
+		return new Response($content, 200, $headers);
+
 
 
 		
