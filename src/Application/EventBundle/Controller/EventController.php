@@ -771,7 +771,7 @@ class EventController extends Controller
 		   ->add('select', 'e')
 		   ->add('from', 'ApplicationEventBundle:Event e')
 		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
-		   ->add('orderBy', 'e.date ASC')
+		   ->add('orderBy', 'e.date_start ASC')
 		   ->setMaxResults( $limit );
 		
 		if( $id ){
