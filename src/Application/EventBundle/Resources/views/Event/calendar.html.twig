@@ -15,7 +15,6 @@ DTSTAMP:{{ entity.datestart|date('Ymd\\THis\\Z') }}
 UID:{{ uids[loop.index0] }}@betabeers.com
 CREATED:{{ entity.datestart|date('Ymd\\THis\\Z') }}
 DESCRIPTION:{{ url('event_show', { 'id': entity.id }) }}
-{{ entity.body|truncate(200) }}
 LAST-MODIFIED:{{ entity.datestart|date('Ymd\\THis\\Z') }}
 LOCATION:{{entity.address}}, {{entity.location}}
 SEQUENCE:0
