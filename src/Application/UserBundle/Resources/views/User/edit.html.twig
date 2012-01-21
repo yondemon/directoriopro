@@ -1,41 +1,50 @@
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 {% form_theme edit_form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+{% set share_url = url('user_show', { 'id': entity.id }) %}
 
 {% block title "Editar perfil" %}
 
 {% block sidebar %}
 
+
 	<div class="alert-message block-message warning">
-		<div id="todo" style="margin:0;line-height:normal">
-			<b>Completa tu perfil</b><br/>
-			<span id="percent_value" style="position:absolute;font-size:11px;margin:6px 0 0 4px;color:white">5%</span>
-			<div style="background:#ccc;margin-bottom:10px;">
-				<div id="percent" style="height:15px;background:#66CC66">&nbsp;</div>
-			</div>
-			<ul style="margin:0 0 0 15px">
-			<li>Seleccionar sector</li>
-			<li>Introducir nombre</li>
-			<li>Introducir descripción</li>
-			<li>Introducir ciudad</li>
-			<li>Introducir portafolio</li>
-			<li>Introducir twitter</li>
-			{% if total > 19 %}
-				<li style="text-decoration:line-through"><a href="{{ path('user_invite') }}">Invitar a 20 amigos</a></li>
-			{% else %}
-				<li><a href="{{ path('user_invite') }}">Invitar a {{ 20 - total }} amigos</a></li>
-			{% endif %}
+
+
+	{% if entity.categoryid != 0 and entity.name != '' and entity.body != '' and entity.location != '' and entity.url != '' and entity.twitterurl != '' %}
+
+		<b>Descarga gratis</b><br/><br/>
+		<a href="http://bit.ly/wvVBdl" target="_blank" class="btn" style="padding:10px;">eBook con entrevistas</a>
+		<br/><br/>
+	
+	{% else %}
+	
+		<b>Descarga gratis</b><br/><br/>
+		<a href="javascript:$('#todo').slideDown('fast');" class="btn" style="padding:10px;">eBook con entrevistas</a>
+		<br/><br/>
+
+		<div id="todo" style="display:none;padding-top:10px;margin:0;line-height:normal">
+
+			<span style="color:red">Antes tienes que indicar ;)</span><br/>	
+			<ul style="margin:10px 0 0 15px">
+				<li>Especialidad</li>
+				<li>Nombre y apellidos</li>
+				<li>Descripción</li>
+				<li>Localidad</li>
+				<li>URL portafolio</li>
+				<li>Twitter</li>
 			</ul>
 		</div>
-		<div id="todo_complete" style="display:none;margin:0;line-height:normal">
-			<b>Perfil completado</b><br/><br/>
-			<ul style="margin:0 0 0 15px">
-				<li><a href="{{ path('post_new') }}?t=1">Publicar colaboración</a></li>
-				<li><a href="{{ path('post_new') }}?">Publicar anuncio</a></li>
-				<li>Recomendar personas</li>
-				<li><a href="{{ path('user_invite') }}">Invitar a más amigos</a></li>
-			</ul>
-		</div>
+	
+	{% endif %}
+
+
+	
+
+	
+
+	
 	</div>
+
 
 
 {% endblock %}
@@ -45,25 +54,59 @@
 
 
 
+<div id="new_badge" style="display:none;position:fixed;z-index:10001;padding:17px 0 17px 0;top:0;left:0;right:0;background:#FFFACD;border-bottom:2px #FFD700 solid;color:#454545;font-size:16px;font-weight:bold">
+	<div style="width:820px;margin:auto">
+	
+		<div style="float:right;width:325px;">
+		
+			<a href="#" id="btn_close" style="border-radius:20px;margin-top:-5px;background:#DEDAB9;padding:5px 10px;color:#FFFACD;text-decoration:none;float:right">X</a>
+
+			<div style="float:left;width: 69px;overflow: hidden;margin-right: 11px;">
+				<a href="https://twitter.com/share" class="twitter-share-button" data-lang="es" data-text="¿A que esperas para registrarte en @betabeers? Mira mi perfil " data-url="{{ share_url }}">Twittear</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
+
+			<div style="float:left;margin-right: 11px;">
+				<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+				<script type="IN/Share" data-counter="right" data-url="{{ share_url }}"></script>
+			</div>
+
+			<iframe src="http://www.facebook.com/plugins/like.php?href={{ share_url }}&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="float:left;border:none; overflow:hidden; width:85px; height:21px;" allowTransparency="true"></iframe>
+
+		</div>
+		
+		
+	
+		¡Has actualizado tu perfil! enséñalo a todo el mundo ;)
+	</div>
+</div>
 
 <style>
 TEXTAREA.xlarge{width:430px}
 .filters{border:0}
 .span3 a{padding-top:0;display:inline}
 input.xlarge{width:230px}
+#content{padding-top:30px}
 </style>
 
 
-<h1>Editar perfil</h1>
 
-<span class="help_arrow" id="help_arrow" style="display:none">Mejora tu perfil, rellenando tus perfiles en la red</span>
+
+
+
+
+
+
+
+
+
 
 
 
 <ul id="tabs" class="tabs">
-  <li class="active"><a href="#info">Información</a></li>
-  <li><a href="#networks">Perfiles</a></li>
-  <li><a href="#options">Opciones</a></li>
+  <li class="active"><a href="#info" style="font-weight:bold">1. Completa tu perfil</a></li>
+  <li><a href="#networks">2. Perfiles</a></li>
+  <li><a href="#options">3. Opciones</a></li>
 </ul>
 
 
@@ -80,9 +123,48 @@ input.xlarge{width:230px}
 	<div class="pill-content">
 
 	<div id="info" class="active">
+
+		<div class="clearfix alert-message block-message info">
+
+
+			<ul style="margin:0 0 0 15px">
+				<li>Tu perfil será más visible en los listados y busquedas</li>
+				<li>Si buscas trabajo, serás más interesante para las empresas</li>
+				<li>Serás más relevante en tu sector y más visible en los buscadores</li>
+			</ul>
+		</div>
 	
 		{{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
 		
+
+		
+		<div class="clearfix">
+			<label>Especialidad</label>
+			<div class="input">
+				<select id="application_userbundle_usertype_category_id" name="application_userbundle_usertype[category_id]">
+					{% for category in categories %}
+						{% if loop.index0 > 0 %}
+							<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
+						{% endif %}
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+
+
+		
+		
+		<div id="geo">
+			{{ form_row(edit_form.location, { 'label': 'Localidad' }) }}
+			<div class="hide">
+				{{ form_row(edit_form.country_id, { 'label': 'country' }) }}
+				{{ form_row(edit_form.city_id, { 'label': 'city' }) }}
+			</div>
+		</div>
+		
+		{{ form_row(edit_form.name, { 'label': 'Nombre y apellidos' }) }}
+		{{ form_row(edit_form.email, { 'label': 'Email' }) }}
+
 		<div class="clearfix">
 			<label for="application_userbundle_usertype_avatar_type">Avatar</label>
 			<div class="input">
@@ -94,46 +176,21 @@ input.xlarge{width:230px}
 				<img src="" id="user_avatar" width="45" height="45" style="display:none;position:absolute;margin:-10px 0 0 10px"/>
 			</div>
 		</div>
-		
-		<div class="clearfix">
-			<label>Perfil</label>
-			<div class="input">
-				<select id="application_userbundle_usertype_category_id" name="application_userbundle_usertype[category_id]">
-					{% for category in categories %}
-						{% if loop.index0 > 0 %}
-							<option value="{{loop.index0}}" {% if loop.index0 == entity.getCategoryId() %}selected="selected"{% endif %} >{{category}}</a>
-						{% endif %}
-					{% endfor %}
-				</select>
-			</div>
-		</div>
-		{{ form_row(edit_form.name, { 'label': 'Nombre y apellidos' }) }}
-		
-		
-		
-		<div id="geo">
-			{{ form_row(edit_form.location, { 'label': 'Localidad' }) }}
-			<div class="hide">
-				{{ form_row(edit_form.country_id, { 'label': 'country' }) }}
-				{{ form_row(edit_form.city_id, { 'label': 'city' }) }}
-			</div>
-		</div>
-		
-		
-		{{ form_row(edit_form.email, { 'label': 'Email' }) }}
-
-
 
 	</div>
 
 	
 	<div id="networks">
+	
+		<div class="clearfix alert-message block-message info" style="text-align:center">
+			Demuestra tus conocimientos y trabajos, indica tus perfiles en la red - <a href="{{ path('user_show', { 'id': entity.getId() }) }}" target="_blank">Ejemplo</a><br/>
+		</div>
 
 		<div class="group_edit">Comunicación</div>
 		<span class="help_edit">Ejemplo: miquelcamps</span>
 		{{ form_row(edit_form.twitter_url, { 'label': 'Twitter' }) }}
 		<span class="help_edit">Ej: http://miquelcamps.com</span>
-		{{ form_row(edit_form.url, { 'label': 'Portafolio' }) }}
+		{{ form_row(edit_form.url, { 'label': 'URL portafolio' }) }}
 		<span class="help_edit">Ejemplo: miquelcamps</span>
 		{{ form_row(edit_form.linkedin_url, { 'label': 'Linkedin' }) }}
 		<span class="help_edit">Ejemplo: viciao2k3</span>
@@ -141,7 +198,7 @@ input.xlarge{width:230px}
 		<span class="help_edit">Ejemplo: user820547</span>
 		{{ form_row(edit_form.vimeo_url, { 'label': 'Vimeo' }) }}
 		
-		<div class="group_edit">Programador</div>
+		<div class="group_edit">¿Programas?</div>
 
 		<span class="help_edit">Ejemplo: miquelcamps</span>
 		{{ form_row(edit_form.github_url, { 'label': 'Github' }) }}
@@ -152,7 +209,7 @@ input.xlarge{width:230px}
 		<a href="http://dirbeta.tumblr.com/post/11547225386/desarrollas-extensiones-de-chrome-muestra-tus" target="_blank" class="help_a">¿Cómo saber tu usuario?</a>
 		{{ form_row(edit_form.chrome_url, { 'label': 'Chrome web store' }) }}
 		
-		<div class="group_edit">Programador apps móvil</div>
+		<div class="group_edit">¿Programas aplicaciones móviles?</div>
 		
 		<a href="http://dirbeta.tumblr.com/post/11528134993/eres-desarrollador-de-android-muestra-tus-apps-en-tu" target="_blank" class="help_a">¿Cómo saber tu usuario?</a>
 		{{ form_row(edit_form.android_url, { 'label': 'Android market' }) }}
@@ -160,7 +217,7 @@ input.xlarge{width:230px}
 		<a href="http://dirbeta.tumblr.com/post/11506524530/eres-desarrollador-de-ios-muestra-tus-apps-en-tu" target="_blank" class="help_a">¿Cómo saber tu usuario?</a>
 		{{ form_row(edit_form.itunes_url, { 'label': 'Appstore iOS' }) }}
 		
-		<div class="group_edit">Diseñador</div>
+		<div class="group_edit">¿Diseñas?</div>
 		<span class="help_edit">Ejemplo: ftp2nuke</span>
 		{{ form_row(edit_form.flickr_url, { 'label': 'Flickr' }) }}
 		<span class="help_edit">Ejemplo: miquelcamps</span>
@@ -175,7 +232,12 @@ input.xlarge{width:230px}
 		{{ form_row(edit_form.pinboard_url, { 'label': 'Pinboard' }) }}
 	</div>
 
-	<div id="options">	
+	<div id="options">
+	
+		<div class="clearfix alert-message block-message info" style="text-align:center">
+			Ayúdanos a conocerte mejor para ofrecerte un mejor servicio
+		</div>
+		
 		<div class="input">
 		    <ul class="inputs-list">
 	        <li>
@@ -228,11 +290,15 @@ input.xlarge{width:230px}
     <div class="actions">
         <button type="submit" class="btn primary">Guardar cambios</button> &nbsp;
 
+		<!--
 		{% if updated == 1 %}
 			<a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn success">¡Actualizado! Visitar mi perfil</a>
 		{% else %}
 			<a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn">Visitar mi perfil</a>
 		{% endif %}
+		-->
+		
+		<a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn">Visitar mi perfil</a>
     </div>
 
 
@@ -296,26 +362,25 @@ input.xlarge{width:230px}
 	
 	networks_tooltip();
 	
-	
-	var percent = 0;
-	{% if entity.categoryid != 0 %}percent+=14;$('#todo li:eq(0)').css('text-decoration','line-through');{% endif %}
-	{% if entity.name != '' %}percent+=14;$('#todo li:eq(1)').css('text-decoration','line-through');{% endif %}
-	{% if entity.body != '' %}percent+=14;$('#todo li:eq(2)').css('text-decoration','line-through');{% endif %}
-	{% if entity.location != '' %}percent+=14;$('#todo li:eq(3)').css('text-decoration','line-through');{% endif %}
-	{% if entity.url != '' %}percent+=14;$('#todo li:eq(4)').css('text-decoration','line-through');{% endif %}
-	{% if entity.twitterurl != '' %}percent+=14;$('#todo li:eq(5)').css('text-decoration','line-through');{% endif %}
-	{% if total > 19 %}percent+=14;{% endif %}
-	$('#percent').css('width',percent+'%');
-	$('#percent_value').html(percent+'%');
 
-	if( percent == 98 ){
+	if( $('#todo').size() ){
+		
+		{% if entity.categoryid != 0 %}$('#todo li:eq(0)').hide();{% endif %}
+		{% if entity.name != '' %}$('#todo li:eq(1)').hide();{% endif %}
+		{% if entity.body != '' %}$('#todo li:eq(2)').hide();{% endif %}
+		{% if entity.location != '' %}$('#todo li:eq(3)').hide();{% endif %}
+		{% if entity.url != '' %}$('#todo li:eq(4)').hide();{% endif %}
+		{% if entity.twitterurl != '' %}$('#todo li:eq(5)').hide();{% endif %}
+	}
 	
-		$('#todo').hide();
-		$('#todo_complete').show();
+	
+	if( document.location.href.indexOf('updated') != -1 ){
+		$('#new_badge').delay(500).slideDown();
 	}
 
+	$('#btn_close').click(function(){
+		$('#new_badge').hide();
+	});
 	
-	
-	$('#help_arrow').fadeIn('slow');
 	
 {% endblock %}
