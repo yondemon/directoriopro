@@ -8,13 +8,13 @@ X-WR-TIMEZONE:Europe/Madrid
 X-WR-CALDESC:{{title}}
 {% for entity in entities %}
 BEGIN:VEVENT
-DTSTART:{{ entity.datestart|date('Ymd\\THis\\Z') }}
-DTEND:{{ entity.dateend|date('Ymd\\THis\\Z') }}
-DTSTAMP:{{ entity.datestart|date('Ymd\\THis\\Z') }}
+DTSTART:{{ entity.getGDateStart() }}
+DTEND:{{ entity.getGDateEnd() }}
+DTSTAMP:{{ entity.getGDateStart() }}
 UID:{{ uids[loop.index0] }}@betabeers.com
-CREATED:{{ entity.datestart|date('Ymd\\THis\\Z') }}
+CREATED:{{ entity.getGDateStart() }}
 DESCRIPTION:{{ url('event_show', { 'id': entity.id }) }}
-LAST-MODIFIED:{{ entity.datestart|date('Ymd\\THis\\Z') }}
+LAST-MODIFIED:{{ entity.getGDateStart() }}
 LOCATION:{{entity.address}}, {{entity.location}}
 SEQUENCE:0
 STATUS:CONFIRMED
