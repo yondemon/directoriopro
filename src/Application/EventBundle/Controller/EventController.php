@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\EventBundle\Entity\Event;
 use Application\EventBundle\Entity\EventUser;
 use Application\EventBundle\Form\EventType;
+use Symfony\Component\HttpFoundation\Response;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -754,7 +755,6 @@ class EventController extends Controller
      * Calendar Event entities.
      *
      * @Route("/calendar.ics", name="event_calendar")
-     * @Template()
      */
     public function calendarAction()
     {
@@ -791,7 +791,19 @@ class EventController extends Controller
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
-        return array('entities' => $entities, 'uids' => $uids);
+		
+		
+		
+		
+		$headers = array(
+	        'Content-Type'        => "text/calendar; charset=utf-8",
+	        'Content-Disposition' => "inline; filename=calendar.ics"
+	    );
+	
+		$content = $this->render('ApplicationEventBundle:Event:calendar.html.twig', array('entities' => $entities, 'uids' => $uids));
+
+	    return new Response($content, 200, $headers);
+		
     }
 
 }
