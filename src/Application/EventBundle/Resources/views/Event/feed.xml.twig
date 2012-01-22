@@ -11,7 +11,7 @@
 	{% for entity in entities %}
 
 		<item>
-			<title>{{ entity.title }} - {{ pretty_date }}</title>
+			<title>{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</title>
 			<link>{{ url('event_show', { 'id': entity.id }) }}</link>
 			<pubDate>{{ entity.date|date('D, d M Y H:i:s O') }}</pubDate>
 			<category>{{ entity.location }}</category>
