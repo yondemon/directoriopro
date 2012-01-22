@@ -56,6 +56,7 @@ class UserController extends Controller
 		$query = $em->createQueryBuilder();
 		$query->add('select', 'u')
 		   ->add('from', 'ApplicationUserBundle:User u')
+		   ->add('where', "u.body != ''")
 		   ->add('orderBy', 'u.id DESC');
 		
 		// categoria?
