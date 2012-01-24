@@ -46,6 +46,12 @@
 			{% else %}
 				{% set featured = 1 %}
 			{% endif %}
+			
+			{% if entity.visible == 1 %}
+				{% set visible = 'NULL' %}
+			{% else %}
+				{% set visible = 1 %}
+			{% endif %}
 
 	        <tr>
 				<td>
@@ -54,7 +60,11 @@
 				</td>
 				<td>{{ entity.visits }}</td>
 				<td>{{ entity.interested }}</td>
-				<td nowrap="nowrap"><a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn">editar</a> <a href="{{ path('post_admin_featured', { 'id': entity.id, 'value': featured }) }}" class="btn {% if entity.featured %}primary{% endif %}">&#9733;</a></td>
+				<td nowrap="nowrap">
+					<a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn">editar</a> 
+					<a href="{{ path('post_admin_featured', { 'id': entity.id, 'value': featured }) }}" class="btn {% if entity.featured %}primary{% endif %}">&#9733;</a>
+					<a href="{{ path('post_admin_visible', { 'id': entity.id, 'value': visible }) }}">{% if entity.visible %}visible{% else %}<span style="color:red">oculto</span>{% endif %}</a>
+				</td>
 	        </tr>
 	    {% endfor %}
 	    </tbody>

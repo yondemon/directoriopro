@@ -78,7 +78,7 @@ class PostController extends Controller
 		$query = $em->createQueryBuilder();
 		$query->add('select', 'p')
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
-		   //->add('where', 'p.type != 2')
+		   ->add('where', 'p.visible = 1')
 		   ->add('orderBy', 'p.featured DESC, p.id DESC');
 		
 		// categoria?
@@ -352,7 +352,7 @@ class PostController extends Controller
 		$user_id = $session->get('id');
 		$entity->setUserId( $user_id );
 		$entity->setDate( new \DateTime("now") );
-		$entity->setFeatured( 0 );
+		//$entity->setFeatured( 0 );
 		
 
         if ($form->isValid()) {
@@ -543,6 +543,7 @@ class PostController extends Controller
 		$qb = $em->createQueryBuilder()
 		   ->add('select', 'p')
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('where', 'p.visible = 1')
 		   ->add('orderBy', 'p.id DESC')
 		   ->setMaxResults(10);
 		
@@ -734,6 +735,35 @@ class PostController extends Controller
         }
         
         $entity->setFeatured($value);
+        $em->persist($entity);
+		$em->flush();
+
+		return $this->redirect( $_SERVER['HTTP_REFERER'] );
+    }
+
+    /**
+     * Visible Post entities.
+     *
+     * @Route("/admin/visible/{id}/{value}", name="post_admin_visible")
+     * @Template()
+     */
+    public function visibleAction($id,$value)
+    {
+	
+		$session = $this->getRequest()->getSession();
+		if( !$session->get('admin') ){
+			return $this->redirect('/');
+		}
+	
+		// existe post?
+		$em = $this->getDoctrine()->getEntityManager();
+        $entity = $em->getRepository('ApplicationAnunciosBundle:Post')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+        
+        $entity->setVisible($value);
         $em->persist($entity);
 		$em->flush();
 

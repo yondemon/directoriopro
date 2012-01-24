@@ -68,7 +68,14 @@ class Post
      *
      * @ORM\Column(name="featured", type="integer")
      */
-    private $featured;
+    private $featured = 0;
+
+    /**
+     * @var integer $visible
+     *
+     * @ORM\Column(name="visible", type="integer")
+     */
+    private $visible = 1;
 
 
     /**
@@ -277,6 +284,26 @@ class Post
     public function getFeatured()
     {
         return $this->featured;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param integer $visible
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return integer 
+     */
+    public function getVisible()
+    {
+        return $this->visible;
     }
 
     /**
