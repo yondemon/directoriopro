@@ -165,6 +165,7 @@ class PostController extends Controller
 		$query->add('select', 'p')
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
 		   ->andWhere('p.city_id = :city_id')->setParameter('city_id', $id)
+		   ->andWhere('p.visible = 1')
 		   ->add('orderBy', 'p.featured DESC, p.id DESC');
 		
 		// categoria?
@@ -511,6 +512,7 @@ class PostController extends Controller
 		$qb = $em->createQueryBuilder();
 		$qb->add('select', 'p')
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('where', 'p.visible = 1')
 		   ->add('orderBy', 'p.featured DESC, p.id DESC');
 		
 		if( $search ) $qb->andWhere("( p.body LIKE '%".$search."%' OR p.title LIKE '%".$search."%' )");
@@ -976,6 +978,7 @@ class PostController extends Controller
 		$qb = $em->createQueryBuilder();
 		$qb->add('select', 'p')
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('where', 'p.visible = 1')
 		   ->add('orderBy', 'p.featured DESC, p.id DESC')
 		   ->setMaxResults(5);
 		
@@ -1035,6 +1038,7 @@ class PostController extends Controller
 		$query->add('select', 'p')
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
 		   ->add('orderBy', 'p.featured DESC, p.id DESC')
+		   ->andWhere('p.visible = 1')
 		   ->andWhere('p.type = 1')
 		   ->setMaxResults(10);
 		$entities = $query->getQuery()->getResult();
