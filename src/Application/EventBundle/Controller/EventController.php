@@ -79,7 +79,7 @@ class EventController extends Controller
 					$date_now = $date_current;
 					$entities[$i]->date_now = $date_current;
 				}else{
-					$entities[$i]->date_now = false;
+					//$entities[$i]->date_now = false;
 				}
 				
 				$qb = $em->createQueryBuilder();
@@ -206,7 +206,7 @@ class EventController extends Controller
 					$date_now = $date_current;
 					$entities[$i]->date_now = $date_current;
 				}else{
-					$entities[$i]->date_now = false;
+				//	$entities[$i]->date_now = false;
 				}
 				
 				$qb = $em->createQueryBuilder();
