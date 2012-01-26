@@ -70,14 +70,24 @@ class EventController extends Controller
 		
 		if( $entities ){
 			$total = count($entities);
+			$date_now = false;
+			
 			for( $i = 0; $i < $total; $i++ ){
+				
+				$date_current = $entities[$i]->getPrettyDate();
+				if( $date_now != $date_current ){
+					$date_now = $date_current;
+					$entities[$i]->date_now = $date_current;
+				}else{
+					$entities[$i]->date_now = false;
+				}
 				
 				$qb = $em->createQueryBuilder();
 				$qb->add('select', 'u')
 				   ->add('from', 'ApplicationUserBundle:User u, ApplicationEventBundle:EventUser eu')
 				   ->andWhere('u.id = eu.user_id')
 				   ->andWhere('eu.event_id = :id')->setParameter('id', $entities[$i]->getId())
-				   ->setMaxResults(13);
+				   ->setMaxResults(12);
 				$query = $qb->getQuery();
 				$entities[$i]->users_list = $query->getResult();
 			}
@@ -182,9 +192,22 @@ class EventController extends Controller
 		}
 		
 		
+		
+		
+		
 		if( $entities ){
 			$total = count($entities);
+			$date_now = false;
+			
 			for( $i = 0; $i < $total; $i++ ){
+				
+				$date_current = $entities[$i]->getPrettyDate();
+				if( $date_now != $date_current ){
+					$date_now = $date_current;
+					$entities[$i]->date_now = $date_current;
+				}else{
+					$entities[$i]->date_now = false;
+				}
 				
 				$qb = $em->createQueryBuilder();
 				$qb->add('select', 'u')

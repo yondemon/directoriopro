@@ -1,4 +1,3 @@
-{% set date_now = false %}
 {% set nav_event = 1 %}
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 
@@ -40,11 +39,9 @@
 
 <ul style="list-style-type:none;margin:0">
     {% for entity in entities %}
-        		
-			{% set date_now_current = entity.getPrettyDate() %}
-			{% if date_now != date_now_current and date_now_current != '' %}
-				{% set date_now = date_now_current %}
-				<li style="margin-bottom:10px;background:url('{{ asset('bundles/applicationanuncios/images/calendar.png') }}') no-repeat left center;padding:10px;padding-left:41px;font-weight:bold;font-size:15px;color:#404040">{{ date_now }}</li>
+        	
+			{% if entity.date_now %}
+				<li style="margin-bottom:10px;background:url('{{ asset('bundles/applicationanuncios/images/calendar.png') }}') no-repeat left center;padding:10px;padding-left:41px;font-weight:bold;font-size:15px;color:#404040">{{ entity.date_now }}</li>
 			{% endif %}
 			
 			
