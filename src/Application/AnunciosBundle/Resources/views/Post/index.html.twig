@@ -123,6 +123,9 @@
 			<div style="float:left;width:415px;padding-left:15px">
 				<a href="{{ path('post_show', { 'id': entity.id }) }}" class="title" style="font-size:16px;line-height:16px;font-weight:bold;">{{ entity.title }}</a>
 				<!--<br/>{{ entity.body|truncate(70) }}-->
+				{% if entity.company %}
+					<br/><span class="date">{{ entity.company }}</span>
+				{% endif %}
 			</div>
 			
 			<div style="float:left;width:130px;margin-left:10px">

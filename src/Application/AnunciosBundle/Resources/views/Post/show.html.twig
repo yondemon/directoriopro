@@ -93,11 +93,15 @@
 
 	
 	{% if location %}
-		Localidad: {{ location }} &nbsp; &nbsp;
+		Localidad: {{ location }} &nbsp; &nbsp; &nbsp;
+	{% endif %}
+	
+	{% if entity.company %}
+		Empresa: {{ entity.company }} &nbsp; &nbsp; &nbsp;
 	{% endif %}
 	
 	{% if price %}
-		Precio: {{ price }}
+		Sueldo: {{ price }}
 	{% endif %}
 
 	{% if location or price %}
@@ -115,8 +119,7 @@
 			<ul>
 			{% for entity in entities %}
 				<li>
-					<a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}</a><br/>
-					<span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
+					<a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}{% if entity.location %} en {{ entity.location }}{% endif %}</a>
 				</li>
 	    	{% endfor %}
 			</ul>
