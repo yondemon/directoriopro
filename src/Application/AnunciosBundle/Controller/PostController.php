@@ -1039,7 +1039,7 @@ class PostController extends Controller
 		   ->add('from', 'ApplicationAnunciosBundle:Post p')
 		   ->add('orderBy', 'p.featured DESC, p.id DESC')
 		   ->andWhere('p.visible = 1')
-		   ->andWhere('p.type = 1')
+		   ->andWhere('p.type = 0')
 		   ->setMaxResults(10);
 		$entities = $query->getQuery()->getResult();
 
