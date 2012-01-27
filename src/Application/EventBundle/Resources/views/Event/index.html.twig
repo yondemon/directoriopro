@@ -46,6 +46,9 @@
 			
 			
 			<li style="margin-bottom:20px;margin-left:39px" {% if entity.featured == 1 %}class="featured"{% endif %}">
+			
+			
+		--{{ entity.date_now|length }}--
 				
 	            <a href="{{ path('event_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
 				<b>{{ entity.datestart|date('H:i') }}</b><br/>
