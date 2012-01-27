@@ -74,10 +74,10 @@ class EventController extends Controller
 			
 			for( $i = 0; $i < $total; $i++ ){
 				
-				$date_current = $entities[$i]->getPrettyDate();
+				$date_current = $entities[$i]->getDateStart()->format('Y-m-d');
 				if( $date_now != $date_current ){
 					$date_now = $date_current;
-					$entities[$i]->date_now = $date_current;
+					$entities[$i]->date_now = $entities[$i]->getPrettyDate();
 				}else{
 					$entities[$i]->date_now = false;
 				}
