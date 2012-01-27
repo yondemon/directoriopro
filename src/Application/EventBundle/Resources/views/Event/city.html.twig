@@ -53,7 +53,7 @@
 <ul style="list-style-type:none;margin:0">
     {% for entity in entities %}
 
-		{% if entity.date_now != null %}
+		{% if entity.date_now|length > 0 %}
 			<li style="margin-bottom:10px;background:url('{{ asset('bundles/applicationanuncios/images/calendar.png') }}') no-repeat left center;padding:10px;padding-left:41px;font-weight:bold;font-size:15px;color:#404040">{{ entity.date_now }}</li>
 		{% endif %}
 	
