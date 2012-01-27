@@ -53,15 +53,22 @@
 <ul style="list-style-type:none;margin:0">
     {% for entity in entities %}
 
-		{% if entity.date_now|length > 0 %}
-			<li style="margin-bottom:10px;background:url('{{ asset('bundles/applicationanuncios/images/calendar.png') }}') no-repeat left center;padding:10px;padding-left:41px;font-weight:bold;font-size:15px;color:#404040">{{ entity.date_now }}</li>
-		{% endif %}
+			{% if entity.date_now %}
+				<li style="margin-bottom:10px;background:url('{{ asset('bundles/applicationanuncios/images/calendar.png') }}') no-repeat left center;padding:10px;padding-left:41px;font-weight:bold;font-size:15px;color:#404040">{{ entity.date_now|raw }}</li>
+			{% endif %}
 	
 	
-		<li style="margin-bottom:20px;margin-left:39px" {% if entity.featured == 1 %}class="featured"{% endif %}">
+			<li style="margin-bottom:20px;margin-left:39px" {% if entity.featured == 1 %}class="featured"{% endif %}">
 		
+
+
+				
 	            <a href="{{ path('event_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
-				<b>{{ entity.datestart|date('H:i') }}</b><br/><br/>
+				<b>{{ entity.datestart|date('H:i') }}</b><br/>
+				
+
+				
+				<br/>
 	            {{ entity.body|truncate(200) }}
 				<br/>
 				<a href="{{ path('city_show', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>
