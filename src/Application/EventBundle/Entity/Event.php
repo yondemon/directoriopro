@@ -420,7 +420,7 @@ class Event
      */
     public function getPrettyDate( $format = '%A %e %B %Y' )
     {
-        return strftime( $format, strtotime( $this->getDateStart()->format('Y-m-d H:i:s') ) );
+        return utf8_encode( strftime( $format, strtotime( $this->getDateStart()->format('Y-m-d H:i:s') ) ) );
     }
 
     /**
