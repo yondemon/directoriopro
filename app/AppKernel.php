@@ -4,7 +4,7 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 date_default_timezone_set('Europe/Madrid');
-setlocale(LC_ALL, 'es_ES');
+setlocale(LC_ALL, 'es_ES.UTF-8');
 
 class AppKernel extends Kernel
 {
