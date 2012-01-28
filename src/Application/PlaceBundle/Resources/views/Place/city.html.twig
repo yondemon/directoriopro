@@ -33,8 +33,23 @@
         <li style="margin-bottom:20px;" {% if entity.featured == 1 %}class="featured"{% endif %}">
             <a href="{{ path('place_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a> 
 			{% if entity.price %}<span style="color:#3C0;padding-left:10px">{{ entity.price }}</span>{% endif %}
-            <br/>{{ entity.body|truncate(200) }}<br/>
-            {% if entity.location %}<a href="{{ path('place_city', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>{% endif %}
+
+			<br/>
+            {{ entity.body|truncate(200) }}
+			<br/>
+			<a href="{{ path('city_show', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>
+			
+			{% if entity.users %}
+				<div style="padding-top:5px">
+					<span class="users" style="margin-left:0;width:34px;height:34px;background-color:#efefef;float:left;margin-right:5px;background-position:10px center"><span style="position:relative;top:7px;left:10px;">{{ entity.users }}</span></span>
+					{% for user in entity.users_list %}
+						<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="34" height="34"/></a>
+					{% endfor %}
+					<br class="clear"/>
+				</div>
+			{% endif %}
+
+
         </li>
     {% endfor %}
 </ul>
