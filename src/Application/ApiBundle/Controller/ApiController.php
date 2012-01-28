@@ -39,9 +39,6 @@ class ApiController extends Controller
 		if( $result ){
 			$user = current( $result );
 			
-			$twitter = $user->getTwitterUrl();
-			if( $twitter ) $twitter = '@' . $twitter; 
-			
 			$profile = array(
 				'name' => $user->getName(),
 				'email' => $user->getEmail(),
