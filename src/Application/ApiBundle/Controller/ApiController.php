@@ -45,7 +45,7 @@ class ApiController extends Controller
 			$profile = array(
 				'name' => $user->getName(),
 				'email' => $user->getEmail(),
-				'url' => str_replace('http://','', $this->generateUrl('user_show', array('id' => $user->getId()), true)), //$user->getUrl()
+				'url' => $this->generateUrl('user_show', array('id' => $user->getId()), true), //$user->getUrl()
 				'twitter' => $twitter,
 				'phone' => $user->getPhone(),
 			);
@@ -54,6 +54,6 @@ class ApiController extends Controller
 		}else{
 			$response = array('result' => 'ko');
 		}	
-		die(json_encode($response));
+		die('('.json_encode($response).')');
 	}
 }
