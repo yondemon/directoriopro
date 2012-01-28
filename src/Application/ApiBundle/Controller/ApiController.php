@@ -42,7 +42,7 @@ class ApiController extends Controller
 			$profile = array(
 				'name' => $user->getName(),
 				'email' => $user->getEmail(),
-				'url' => $user->getUrl()
+				'url' => $user->getUrl(),
 				'location' => $user->getLocation(),
 				'phone' => $user->getPhone(),
 			);
