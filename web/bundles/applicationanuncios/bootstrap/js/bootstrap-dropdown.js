@@ -28,6 +28,7 @@ var is_mobile = ( navigator.userAgent.match(/Android/i) || navigator.userAgent.m
   if( is_mobile ){
   	$('.dropdown .hide_op').css('display','block');
   	$('.dropdown .dropdown-toggle').attr('href','#');
+	$('#topbar').css('position','absolute');
   }
 
   function clearMenus() {
