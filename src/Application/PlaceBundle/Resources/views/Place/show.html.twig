@@ -7,19 +7,45 @@
 
 {% block sidebar %}
 
+<div style="background:#666;padding:15px;color:white;display:block">
+	<div style="padding:0 0 5px 0;">
+		<a href="http://maps.google.es/maps?q={{ entity.address }}, {{ location }}" target="_blank" style="padding-left:30px;padding-top:0;min-height:29px;background:url('{{ asset('bundles/applicationanuncios/images/marker.png') }}') no-repeat left top;color:white">
+		{{ entity.address }}, {{ location }}
+		</a>
+	</div>
+
+
+
+	{% if user.id == false %}
+		<a class="btn primary" href="{{ path('place_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a>
+	{% else %}
+
+		{% if apuntado == false %}
+			<a class="btn primary" href="{{ path('place_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a>
+		{% else %}
+			<a class="btn danger" href="{{ path('place_go', { 'id': entity.id, 'value': 0 }) }}">No voy a ir</a>
+		{% endif %}
+	
+	{% endif %}
+
+
+
+
 
 	
 	{% if entity.url %}
-		<a class="btn primary" href="{{ entity.url }}" target="_blank">Más información</a><br/>
+		<a class="btn" href="{{ entity.url }}" target="_blank">Más información</a>
 	{% endif %}
 			
 	{% if user.id == app.session.get('id') or app.session.get('admin') == 1 %}
-		<a class="btn" href="{{ path('place_edit', { 'id': entity.id }) }}">Editar espacio</a><br/>
+		<a class="btn" href="{{ path('place_edit', { 'id': entity.id }) }}">Editar espacio</a>
 	{% endif %}
 	
 
 	
+</div>
 	
+	<br/>
 	<b>Compartir</b>
 	
 	<br/><br/>
@@ -50,18 +76,22 @@
 {% block content %}
 
 
+<style>
+.filters{border:0;}
+.filters a.btn{margin-top:10px;width:160px;}
+</style>
 
 <ul class="breadcrumb">
   <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
-  <li><a href="{{ path('place') }}">Espacios coworking</a></li>
+  <li><a href="{{ path('place') }}">Espacios coworking</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('place_city', { 'id': entity.getCityId() }) }}">{{ city.name }}, {{ country.name }}</a></li>
 </ul>
 
 
 
 <h1>{{ entity.title }}</h1>
 
-	Dirección: <a href="http://maps.google.es/maps?q={{ entity.address }}, {{ location }}" target="_blank">{{ entity.address }}, {{ location }}</a>
-	<br/>
+
 	
 	{% if entity.price %}
 		Precio: {{ entity.price }}
@@ -73,7 +103,25 @@
 
 
 	<pre>{{ entity.body }}</pre>
+	
+	
+	
+	{% if users %}
+		<b>{{ users | length }} apuntados</b>
+		<br/><br/>
+		
 
+	
+		{% for user in users %}
+			<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="38" height="38"/></a>
+		{% endfor %}
+	
+	
+	
+		<br class="clear"/>
+	{% endif %}
+
+	<br/><br/>
 	<p>Publicado por <a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas</p>
 
 

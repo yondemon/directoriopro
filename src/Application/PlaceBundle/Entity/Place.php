@@ -85,6 +85,13 @@ class Place
     private $visits = 0;
 
     /**
+     * @var integer $users
+     *
+     * @ORM\Column(name="users", type="integer", nullable=true)
+     */
+    private $users = 0;
+
+    /**
      * @var string $price
      *
      * @ORM\Column(name="price", type="string", length=100)
@@ -294,6 +301,27 @@ class Place
     public function getVisits()
     {
         return $this->visits;
+    }
+
+
+    /**
+     * Set users
+     *
+     * @param integer $users
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
+    }
+
+    /**
+     * Get users
+     *
+     * @return integer 
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 
     /**

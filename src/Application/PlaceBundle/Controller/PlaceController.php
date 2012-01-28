@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\PlaceBundle\Entity\Place;
+use Application\PlaceBundle\Entity\PlaceUser;
 use Application\PlaceBundle\Form\PlaceType;
 
 
@@ -63,6 +64,21 @@ class PlaceController extends Controller
 		$view = new DefaultView();
 		$html = $view->render($pagerfanta, $routeGenerator);
 		
+
+		if( $entities ){
+			$total = count($entities);
+			for( $i = 0; $i < $total; $i++ ){
+				$qb = $em->createQueryBuilder();
+				$qb->add('select', 'u')
+				   ->add('from', 'ApplicationUserBundle:User u, ApplicationPlaceBundle:PlaceUser pu')
+				   ->andWhere('u.id = pu.user_id')
+				   ->andWhere('pu.place_id = :id')->setParameter('id', $entities[$i]->getId())
+				   ->setMaxResults(12);
+				$query = $qb->getQuery();
+				$entities[$i]->users_list = $query->getResult();
+			}
+		}
+
 
 
 	 	$twig = $this->container->get('twig'); 
@@ -141,6 +157,20 @@ class PlaceController extends Controller
 		$view = new DefaultView();
 		$html = $view->render($pagerfanta, $routeGenerator);
 
+		if( $entities ){
+			$total = count($entities);
+			for( $i = 0; $i < $total; $i++ ){
+				$qb = $em->createQueryBuilder();
+				$qb->add('select', 'u')
+				   ->add('from', 'ApplicationUserBundle:User u, ApplicationPlaceBundle:PlaceUser pu')
+				   ->andWhere('u.id = pu.user_id')
+				   ->andWhere('pu.place_id = :id')->setParameter('id', $entities[$i]->getId())
+				   ->setMaxResults(12);
+				$query = $qb->getQuery();
+				$entities[$i]->users_list = $query->getResult();
+			}
+		}
+
 		$qb = $em->createQueryBuilder();
 		$qb->add('select', 'COUNT(p.id) AS total, c.name, c.id')
 		   ->add('from', 'ApplicationPlaceBundle:Place p, ApplicationCityBundle:City c')
@@ -175,6 +205,36 @@ class PlaceController extends Controller
 
 		$user = $em->getRepository('ApplicationUserBundle:User')->find($entity->getUserId());
 
+
+		$apuntado = false;
+		
+		$session = $this->getRequest()->getSession();
+		$session_id = $session->get('id');
+		if( $session_id ){
+			$db = $this->get('database_connection');
+			$query = "SELECT pu.id FROM PlaceUser pu WHERE pu.user_id = " . $session_id . " AND place_id = " . (int)$id;
+			$result = $db->query($query)->fetch();
+			$apuntado = $result['id'];	
+		}
+
+
+
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'u')
+		   ->add('from', 'ApplicationUserBundle:User u, ApplicationPlaceBundle:PlaceUser pu')
+		   ->andWhere('u.id = pu.user_id')
+		   ->andWhere('pu.place_id = :id')->setParameter('id', $id);
+		$query = $qb->getQuery();
+		$users = $query->getResult();
+		
+		$city = $em->getRepository('ApplicationCityBundle:City')->find( $entity->getCityId() );
+		
+		$query = $em->createQuery("SELECT c.name FROM ApplicationCityBundle:Country c WHERE c.code = :code");
+		$query->setParameters(array(
+			'code' => $city->getCode()
+		));
+		$country = current( $query->getResult() );
+
 		// es diferente usuario, visitas + 1
 		$session = $this->getRequest()->getSession();
 		$session_id = $session->get('id');
@@ -185,8 +245,13 @@ class PlaceController extends Controller
 		}
 
         return array(
-            'entity'      => $entity,
-			'user'         => $user,        );
+            'entity'	=> $entity,
+			'user'		=> $user,
+			'users'		=> $users,
+			'apuntado'	=> $apuntado,
+			'city'		=> $city,
+			'country'	=> $country
+			);
     }
 
     /**
@@ -358,6 +423,9 @@ class PlaceController extends Controller
 		$admin = $session->get('admin');
 		
 		if( ( $entity->getUserId() == $user_id ) || $admin ){
+			// eliminar usuarios apuntados
+			$query = "DELETE FROM ApplicationPlaceBundle:PlaceUser pu WHERE pu.place_id = " . (int)$id;
+			$em->createQuery($query)->execute();
 
             $em->remove($entity);
             $em->flush();
@@ -464,4 +532,76 @@ class PlaceController extends Controller
 		return $this->redirect( $_SERVER['HTTP_REFERER'] );
     }
 
+
+
+    /**
+     * Place go
+     *
+     * @Route("/{id}/go/{value}", name="place_go")
+     */
+    public function goAction($id,$value)
+    {
+		// esta logueado?
+		$session = $this->getRequest()->getSession();
+		$session_id = $session->get('id');
+		if( !$session_id ){
+			return $this->redirect($this->generateUrl('user_welcome', array('back' => $_SERVER['REQUEST_URI'])).'#alert');
+		}
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		$place = $em->getRepository('ApplicationPlaceBundle:Place')->find($id);
+		if (!$place) {
+            throw $this->createNotFoundException('Unable to find Post entity.');
+        }
+		
+		
+
+		
+		$db = $this->get('database_connection');
+		$query = "SELECT pu.id FROM PlaceUser pu WHERE pu.user_id = " . $session_id . " AND pu.place_id = " . (int)$id;
+		$result = $db->query($query)->fetch();
+		$id_apuntado = $result['id'];
+
+		
+		// esta registrado?
+		if( $value ){
+			if( !$id_apuntado ){
+				// apuntar usuario
+		        $entity = new PlaceUser();
+		        $entity->setPlaceId($id);
+				$entity->setUserId( $session_id );
+				$entity->setDate( new \DateTime("now") );
+				$em->persist($entity);
+		        $em->flush();
+			}
+		}else if( $id_apuntado ){
+			// quitar usuario
+			$entity = $em->getRepository('ApplicationPlaceBundle:PlaceUser')->find($id_apuntado);
+			$em->remove($entity);
+			$em->flush();
+		}
+		
+		
+		
+		
+		// actualizar users
+		$query = $em->createQuery("SELECT COUNT(pu) as total FROM ApplicationPlaceBundle:PlaceUser pu WHERE pu.place_id = :id");
+		$query->setParameter('id', $id);
+		$total = current($query->getResult());
+		$total_users = $total['total'];
+		
+
+		$place->setUsers($total_users);
+		$em->persist($place);
+		$em->flush();
+		
+		
+		
+
+		$url = $this->generateUrl('place_show', array('id' => $id));
+		return $this->redirect($url);
+
+
+    }
 }
