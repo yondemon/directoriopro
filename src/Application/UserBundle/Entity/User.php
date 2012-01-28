@@ -54,6 +54,13 @@ class User
     private $email;
 
     /**
+     * @var string $phone
+     *
+     * @ORM\Column(name="phone", type="string", length=30, nullable=true)
+     */
+    private $phone;
+
+    /**
      * @var string $pass
      *
      * @ORM\Column(name="pass", type="string", length=255, nullable=true)
@@ -387,6 +394,26 @@ class User
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
     /**
