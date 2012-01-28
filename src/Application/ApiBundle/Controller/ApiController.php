@@ -54,6 +54,6 @@ class ApiController extends Controller
 		}else{
 			$response = array('result' => 'ko');
 		}	
-		die('('.json_encode($response).')');
+		die('jsontest('.json_encode($response).')');
 	}
 }
