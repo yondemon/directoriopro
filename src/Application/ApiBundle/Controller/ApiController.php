@@ -45,7 +45,7 @@ class ApiController extends Controller
 			$profile = array(
 				'name' => $user->getName(),
 				'email' => $user->getEmail(),
-				'url' => $this->generateUrl('user_show', array('id' => $user->getId()), true), //$user->getUrl()
+				'url' => str_replace('http://','', $this->generateUrl('user_show', array('id' => $user->getId()), true)), //$user->getUrl()
 				'twitter' => $twitter,
 				'phone' => $user->getPhone(),
 			);
