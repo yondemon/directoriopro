@@ -13,7 +13,7 @@
 {% block sidebar %}
 
 
-
+<div style="background:#666;padding:15px;color:white;display:block">
 
 	<div style="background:url('{{ asset('bundles/applicationanuncios/images/calendarb.png') }}') no-repeat left center;padding:5px 0 10px 73px">
 	<b style="font-size:20px">{{ pretty_date }}</b><br/>
@@ -59,6 +59,31 @@
 	{% endif %}
 	
 
+
+	</div>
+
+	<br/>
+	<b>Compartir</b>
+
+	<br/><br/>
+
+
+	<a href="https://twitter.com/share" class="twitter-share-button" data-text="{{ entity.title }} - {{ pretty_date }}" data-via="betabeers" data-lang="es">Twittear</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+	<br/><br/>
+	
+	<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+	<script type="IN/Share" data-counter="right"></script>
+	
+	<br/><br/>
+	
+	<iframe src="http://www.facebook.com/plugins/like.php?href={{ share_url }}&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:21px;" allowTransparency="true"></iframe>
+
+	<br/>
+	
+	<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{ entity.title }}&dates={{ entity.getGDateStart() }}/{{ entity.getGDateEnd() }}&details=&location={{ entity.address }}, {{ location }}&trp=false&sprop=&sprop=name:" target="_blank"><img src="http://www.google.com/calendar/images/ext/gc_button1.gif" alt="0" border="0"></a>
+
 	
 	
 {% endblock %}
@@ -69,8 +94,8 @@
 
 
 <style>
-.filters{border:0;background:#666;padding:15px;color:white}
-.filters .btn{margin-top:10px}
+.filters{border:0;}
+.filters a.btn{margin-top:10px;width:160px;}
 </style>
 
 <ul class="breadcrumb">
@@ -85,23 +110,7 @@
 
 
 
-	
-	<div style="background:#FFFFCC;padding:10px;margin-bottom:15px">
-	
-	<a href="https://twitter.com/share" class="twitter-share-button" data-text="{{ entity.title }} - {{ pretty_date }}" data-via="betabeers" data-lang="es">Twittear</a>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
-	
-	<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
-	<script type="IN/Share" data-counter="right"></script>
-	
-	
-	<iframe src="http://www.facebook.com/plugins/like.php?href={{ share_url }}&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="margin-left:20px;border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
-
-	
-	<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{ entity.title }}&dates={{ entity.getGDateStart() }}/{{ entity.getGDateEnd() }}&details=&location={{ entity.address }}, {{ location }}&trp=false&sprop=&sprop=name:" target="_blank"><img src="http://www.google.com/calendar/images/ext/gc_button1.gif" alt="0" border="0"></a>
-
-	</div>
 	
 	
 
