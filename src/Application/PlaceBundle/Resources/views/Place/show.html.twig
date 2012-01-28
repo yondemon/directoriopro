@@ -89,13 +89,8 @@
 
 
 
-<h1>{{ entity.title }}</h1>
-
-
-	
-	{% if entity.price %}
-		Precio: {{ entity.price }}
-	{% endif %}
+	<h1 style="display:inline">{{ entity.title }}</h1>
+	{% if entity.price %}<span style="color:#3C0;padding-left:10px">{{ entity.price }}</span>{% endif %}
 
 
 	<br/><br/>
