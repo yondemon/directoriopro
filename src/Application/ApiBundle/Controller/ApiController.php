@@ -86,7 +86,7 @@ class ApiController extends Controller
 			$events[] = array(
 				'id' => $entity->getId(),
 				'title' => $entity->getTitle() . ' - ' . $entity->getPrettyDate('%e %B'),
-				'text' => $entity->getBody(),
+				'text' => nl2br( $entity->getBody() ),
 				'url' => $this->get('router')->generate('event_show', array('id' => $entity->getId()), true),
 				'users' => $entity->getUsers()
 			);
@@ -125,7 +125,7 @@ class ApiController extends Controller
 			$jobs[] = array(
 				'id' => $entity->getId(),
 				'title' => $entity->getTitle(),
-				'text' => $entity->getBody(),
+				'text' => nl2br( $entity->getBody() ),
 				'url' => $this->get('router')->generate('post_show', array('id' => $entity->getId()), true)
 			);
 		}
