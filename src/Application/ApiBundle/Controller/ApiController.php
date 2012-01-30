@@ -85,7 +85,7 @@ class ApiController extends Controller
 		foreach( $entities as $entity ){
 			$events[] = array(
 				'id' => $entity->getId(),
-				'title' => $entity->getTitle(),
+				'title' => $entity->getTitle() . ' - ' . $entity->getPrettyDate('%e %B'),
 				'text' => $entity->getBody(),
 				'url' => $this->get('router')->generate('event_show', array('id' => $entity->getId()), true),
 				'users' => $entity->getUsers()
