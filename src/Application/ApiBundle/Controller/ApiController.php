@@ -6,9 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Application\UserBundle\Entity\User;
-
-
+use Application\EventBundle\Entity\Event;
+use Application\EventBundle\Entity\EventUser;
+use Application\AnunciosBundle\Entity\Post;
 
 /**
  * Api controller.
@@ -21,7 +23,6 @@ class ApiController extends Controller
      * Validate user login
      *
      * @Route("/login", name="api_login")
-     * @Template()
      */
     public function loginAction()
     {
@@ -55,5 +56,115 @@ class ApiController extends Controller
 			$response = array('result' => 'ko');
 		}	
 		die('jsontest('.json_encode($response).')');
+	}
+	
+	
+    /**
+     * Lists all Events entities.
+     *
+     * @Route("/events", name="api_events")
+     */
+    public function eventsAction()
+    {
+	
+		$request = $this->getRequest();
+		$callback = $request->query->get('callback');
+	
+		$em = $this->getDoctrine()->getEntityManager();
+
+		$qb = $em->createQueryBuilder()
+		   ->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d 00:00:00') )
+		   ->add('orderBy', 'e.date_start ASC')
+		   ->setMaxResults(20);
+
+		$entities = $qb->getQuery()->getResult();
+		
+		$events = array();
+		foreach( $entities as $entity ){
+			$events[] = array(
+				'id' => $entity->getId(),
+				'title' => $entity->getTitle(),
+				'text' => $entity->getBody(),
+				'url' => $this->get('router')->generate('event_show', array('id' => $entity->getId()), true),
+				'users' => $entity->getUsers()
+			);
+		}
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+		
+		die($callback.'('.json_encode($events).')');
+    }
+	
+    /**
+     * Lists all Jobs entities.
+     *
+     * @Route("/jobs", name="api_jobs")
+     */
+    public function jobsAction()
+    {
+	
+		$request = $this->getRequest();
+		$callback = $request->query->get('callback');
+	
+		$em = $this->getDoctrine()->getEntityManager();
+
+		$qb = $em->createQueryBuilder()
+		   ->add('select', 'p')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('where', 'p.visible = 1')
+		   ->add('orderBy', 'p.id DESC')
+		   ->setMaxResults(20);
+
+		$entities = $qb->getQuery()->getResult();
+		
+		$jobs = array();
+		foreach( $entities as $entity ){
+			$jobs[] = array(
+				'id' => $entity->getId(),
+				'title' => $entity->getTitle(),
+				'text' => $entity->getBody(),
+				'url' => $this->get('router')->generate('post_show', array('id' => $entity->getId()), true)
+			);
+		}
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+		
+		die($callback.'('.json_encode($jobs).')');
+    }
+	
+    /**
+     * Lists all Users from event.
+     *
+     * @Route("/event_users/{id}", name="api_events_users")
+     */
+    public function eventusersAction($id)
+    {
+		$categories = array("Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros", "Maquetador");
+	
+		$request = $this->getRequest();
+		$callback = $request->query->get('callback');
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'u')
+		   ->add('from', 'ApplicationUserBundle:User u, ApplicationEventBundle:EventUser eu')
+		   ->andWhere('u.id = eu.user_id')
+		   ->andWhere('eu.event_id = :id')->setParameter('id', $id);
+		$entities = $qb->getQuery()->getResult();
+		$users = array();
+		foreach( $entities as $entity ){
+			$users[] = array(
+				'name' => $entity->getName(),
+				//'text' => $entity->getBody(),
+				'avatar' => $entity->getAvatar(),
+				'type' => $categories[$entity->getCategoryId()]
+				
+			);
+		}
+		die($callback.'('.json_encode($users).')');
 	}
 }
