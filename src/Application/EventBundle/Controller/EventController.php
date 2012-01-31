@@ -294,7 +294,7 @@ class EventController extends Controller
 		$qb->add('select', 'e')
 		   ->add('from', 'ApplicationEventBundle:Event e')
 		   ->add('orderBy', 'e.featured DESC, e.date_start DESC')
-		   ->andWhere("( e.body LIKE '%" . $search . "%' OR e.title LIKE '%" . $search . "%' )")//->setParameter('search1', $search)->setParameter('search2', $search)
+		   ->andWhere("( e.title LIKE '%" . $search . "%' )")
 		   ->andWhere("e.id != :id")->setParameter('id', $entity->getID())
 		   ->setMaxResults( 5 );
 		$related_events = $qb->getQuery()->getResult();
