@@ -113,6 +113,19 @@ class Event
      */
     private $users = 0;
 
+    /**
+     * @var integer $hashtag
+     *
+     * @ORM\Column(name="hashtag", type="string", nullable=true, length=30)
+     */
+    private $hashtag;
+
+    /**
+     * @var text $resources
+     *
+     * @ORM\Column(name="resources", type="text", nullable=true)
+     */
+    private $resources;
 
     /**
      * Get id
@@ -411,7 +424,45 @@ class Event
         return $this->users;
     }
 
+    /**
+     * Set hashtag
+     *
+     * @param string $hashtag
+     */
+    public function setHashtag($hashtag)
+    {
+        $this->hashtag = $hashtag;
+    }
 
+    /**
+     * Get hashtag
+     *
+     * @return string 
+     */
+    public function getHashtag()
+    {
+        return $this->hashtag;
+    }
+
+    /**
+     * Set resources
+     *
+     * @param text $resources
+     */
+    public function setResources($resources)
+    {
+        $this->resources = $resources;
+    }
+
+    /**
+     * Get resources
+     *
+     * @return text 
+     */
+    public function getResources()
+    {
+        return $this->resources;
+    }
 
     /**
      * Get pretty date

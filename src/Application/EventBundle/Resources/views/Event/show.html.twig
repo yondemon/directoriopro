@@ -28,6 +28,12 @@
 	-->
 	</span>
 	<br class="clear"/>
+
+	{% if entity.hashtag %}
+		<div style="border-top:1px #b3b3b3 solid;padding-bottom:10px">
+			<a href="http://twitter.com/search/%23{{ entity.hashtag }}" target="_blank" style="color:white;font-size:18px;">#{{ entity.hashtag }}</a>
+		</div>
+	{% endif %}
 	
 	
 	<div style="border-top:1px #b3b3b3 solid;padding:15px 0 5px 0;">
@@ -106,18 +112,23 @@
 
 
 
+
+
 <h1>{{ entity.title }}</h1>
 
 
 
 
-	
-	
-
-
+		
+		
 	<pre>{{ entity.body }}</pre>
 
-	
+
+	{% if entity.resources %}
+		<b>Recursos</b><br/><br/>
+		<pre style="background:none;">{{ entity.resources }}</pre>
+	{% endif %}
+		
 
 	
 	{% if users %}
@@ -132,12 +143,46 @@
 	
 	
 	
-		<br class="clear"/>
+		<br class="clear"/><br/>
 	{% endif %}
 	
-	<br/><br/>
+	
 	Publicado por <a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas
+
+
+
+	{% if related_events %}
+		<div style="border-top:1px #efefef solid;padding-top:15px;margin-top:25px">
+			<b>Eventos relacionadas</b><br/><br/>
+			<ul>
+			{% for event in related_events %}
+				<li>
+					<a href="{{ path('event_show', { 'id': event.id }) }}">{{ event.title }} - {{ event.getPrettyDate('%e %B') }}</a>
+				</li>
+	    	{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
 
 
 {% endblock %}
 
+
+
+
+{% block script_load %}
+
+
+function replaceURLWithHTMLLinks(text) {
+    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return text.replace(exp,"<a href='$1' target='_blank'>$1</a>"); 
+}
+
+
+
+
+$('pre').each(function() {
+     $(this).html( replaceURLWithHTMLLinks( $(this).html() ) );
+});
+
+{% endblock %}

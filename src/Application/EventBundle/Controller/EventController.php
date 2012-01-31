@@ -44,7 +44,7 @@ class EventController extends Controller
 		$query = $em->createQueryBuilder();
 		$query->add('select', 'e')
 		   ->add('from', 'ApplicationEventBundle:Event e')
-		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d 00:00:00'))
 		   ->add('orderBy', 'e.featured DESC, e.date_start ASC');
 		
 
@@ -288,6 +288,20 @@ class EventController extends Controller
 		$country = current( $query->getResult() );
 		
 
+		
+		$search = $entity->getTitle();
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->add('orderBy', 'e.featured DESC, e.date_start DESC')
+		   ->andWhere("( e.body LIKE '%" . $search . "%' OR e.title LIKE '%" . $search . "%' )")//->setParameter('search1', $search)->setParameter('search2', $search)
+		   ->andWhere("e.id != :id")->setParameter('id', $entity->getID())
+		   ->setMaxResults( 5 );
+		$related_events = $qb->getQuery()->getResult();
+		
+
+
+
 		// es diferente usuario, visitas + 1
 		if( $session_id != $entity->getUserId() ){
 			$entity->setVisits($entity->getVisits() + 1 );
@@ -302,7 +316,8 @@ class EventController extends Controller
             'entity'      => $entity,
 			'user'		  => $user,
 			'users'       => $users,
-			'apuntado'    => $apuntado
+			'apuntado'    => $apuntado,
+			'related_events' => $related_events
 		);
     }
 
@@ -409,8 +424,12 @@ class EventController extends Controller
 			// fechas
 			$date_start = $entity->getDateStart();
 			$date_end = $entity->getDateEnd();
+			
+			
+			$pasado = ( time() > strtotime( $entity->getDateStart()->format('d/m/Y H:i:s') ) );
 
 	        return array(
+				'pasado'	  => $pasado,
 	            'entity'      => $entity,
 	            'edit_form'   => $editForm->createView(),
 				'h_start'     => $date_start->format('H'),
@@ -716,8 +735,8 @@ class EventController extends Controller
 		$qb = $em->createQueryBuilder();
 		$qb->add('select', 'e')
 		   ->add('from', 'ApplicationEventBundle:Event e')
-		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
-		   ->add('orderBy', 'e.featured DESC, e.date_start ASC');
+		   //->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->add('orderBy', 'e.featured DESC, e.date_start DESC');
 		
 		if( $search ) $qb->andWhere("( e.body LIKE '%".$search."%' OR e.title LIKE '%".$search."%' )");
 
