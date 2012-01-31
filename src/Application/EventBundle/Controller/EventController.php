@@ -425,8 +425,8 @@ class EventController extends Controller
 			$date_start = $entity->getDateStart();
 			$date_end = $entity->getDateEnd();
 			
-			
-			$pasado = ( time() > strtotime( $entity->getDateStart()->format('d/m/Y H:i:s') ) );
+
+			$pasado = ( time() > strtotime( $date_start->format('d-m-Y H:i:s') ) );
 
 	        return array(
 				'pasado'	  => $pasado,
