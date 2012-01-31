@@ -294,7 +294,7 @@ class EventController extends Controller
 		$qb->add('select', 'e')
 		   ->add('from', 'ApplicationEventBundle:Event e')
 		   ->add('orderBy', 'e.featured DESC, e.date_start DESC')
-		   ->andWhere("e.hashtag = ':hashtag'")->setParameter('hashtag', $entity->getHashtag())
+		   ->andWhere("e.hashtag = :hashtag")->setParameter('hashtag', $entity->getHashtag())
 		   ->andWhere("e.id != :id")->setParameter('id', $entity->getID())
 		   ->setMaxResults( 5 );
 		$related_events = $qb->getQuery()->getResult();
