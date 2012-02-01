@@ -329,7 +329,7 @@ class EventController extends Controller
 		$entity->setDateEnd(  new \DateTime( $date_end->format('Y-m-d') . ' ' . $h_end . ":" . $m_end . ':00' ) );
 
         if ($form->isValid()) {
-			$entity->setSlug( getSlug( $entity->getTitle() . ' ' . $entity->getPrettyDate('%e %B %Y') . ' ' . $entity->getID() ) );
+			$entity->setSlug( getSlug( $entity->getTitle() . ' ' . $entity->getPrettyDate('%e %B %Y') ) );
 	
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
@@ -444,7 +444,7 @@ class EventController extends Controller
 
 
 		        if ($editForm->isValid()) {
-					$entity->setSlug( getSlug( $entity->getTitle() . ' ' . $entity->getPrettyDate('%e %B %Y') . ' ' . $entity->getID() ) );
+					$entity->setSlug( getSlug( $entity->getTitle() . ' ' . $entity->getPrettyDate('%e %B %Y') ) );
 			
 		            $em->persist($entity);
 		            $em->flush();
@@ -916,7 +916,7 @@ class EventController extends Controller
 		$total = count( $entities );
 		
 		for( $i = 0; $i < $total; $i++ ){
-			$entities[$i]->setSlug( getSlug( $entities[$i]->getTitle() . ' ' . $entities[$i]->getPrettyDate('%e %B %Y') . ' ' . $entities[$i]->getID() ) );
+			$entities[$i]->setSlug( getSlug( $entities[$i]->getTitle() . ' ' . $entities[$i]->getPrettyDate('%e %B %Y') ) );
 			$em->persist($entities[$i]);
 			$em->flush();
 		}
