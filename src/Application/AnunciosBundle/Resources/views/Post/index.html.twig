@@ -123,12 +123,12 @@
 			<div style="float:left;width:415px;padding-left:15px">
 				<a href="{{ path('post_show', { 'id': entity.id }) }}" class="title" style="font-size:16px;line-height:16px;font-weight:bold;">{{ entity.title }}</a><br/>
 				{% if entity.company %}
-					{{ entity.company }}
+					{{ entity.company }} - 
 				{% endif %}
+				<a href="{{ path('post_city', { 'id': entity.getCityId() }) }}" style="color:black">{{ entity.location }}</a>
 			</div>
 			
 			<div style="float:left;width:130px;margin-left:10px">
-				<a href="{{ path('post_city', { 'id': entity.getCityId() }) }}" style="color:black">{{ entity.location }}</a><br/>
 				<span class="date">{{ entity.date|date('d/m/Y') }}</span>
 			</div>
 			
