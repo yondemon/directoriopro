@@ -5,9 +5,10 @@
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 {% set location = entity.getLocation() %}
 {% set pretty_date = entity.getPrettyDate('%e %B') %}
+{% set pretty_date2 = entity.getPrettyDate('%e %B %Y') %}
 
 {% block title %}
-	{{ entity.title }} - {{ pretty_date }}
+	{{ entity.title }} - {{ pretty_date2 }}
 {% endblock %}
 
 {% block sidebar %}
@@ -114,7 +115,7 @@
 
 
 
-<h1>{{ entity.title }} - {{ pretty_date }}</h1>
+<h1>{{ entity.title }} - {{ pretty_date2 }}</h1>
 
 
 
