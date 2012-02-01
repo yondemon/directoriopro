@@ -24,7 +24,7 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 define('CAT_OTHER',9);
 
 
-function getSlug($str, $replace=array(), $delimiter='-') {
+function getSlug($str, $replace=array(' con ', ' de ', ' para ', ' y ', ' en ', ' of '), $delimiter='-') {
 	if( !empty($replace) ) {
 		$str = str_replace((array)$replace, ' ', $str);
 	}
