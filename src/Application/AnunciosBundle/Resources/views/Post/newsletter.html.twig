@@ -21,7 +21,7 @@
 		<b>Próximos eventos</b><br/><br/>
 
 	    {% for entity in events %}
-			<a href="{{ path('event_show', { 'id': entity.id }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</a>
+			<a href="{{ path('event_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</a>
 	    {% endfor %}
 
 		<br/>
@@ -39,7 +39,7 @@
 
 		<b>¿Cansado de tu trabajo?</b><br/><br/>
 	    {% for entity in posts %}
-				<a href="{{ path('post_show', { 'id': entity.id }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
+				<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
 	    {% endfor %}
 
 	

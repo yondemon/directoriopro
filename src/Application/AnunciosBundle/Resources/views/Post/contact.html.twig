@@ -29,7 +29,7 @@
 
 		<div class="actions">
 			<button type="submit" class="btn primary">Enviar</button> &nbsp;
-			<a href="{{ path('post_show', { 'id': entity.id }) }}" class="btn">Cancelar</a>
+			<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="btn">Cancelar</a>
 		</div>
 	
 	
@@ -41,7 +41,7 @@
 	<div class="alert-message block-message success">
 		<b>Mensaje enviado correctamente</b>
 		<div class="alert-actions">
-			<a class="btn small" href="{{ path('post_show', { 'id': entity.id }) }}">Volver al anuncio</a>
+			<a class="btn small" href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}">Volver al anuncio</a>
 		</div>
 	</div>
 	

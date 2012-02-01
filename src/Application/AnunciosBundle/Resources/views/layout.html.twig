@@ -20,7 +20,7 @@
 
 	<meta name="google-site-verification" content="ggl4xKpndqsKTfoDqWE6jVaDAv2g_PRj1UIM64fs5Pc" />
 	
-	{% if canonical_url %}
+	{% if canonical_url is defined %}
 		<link rel="canonical" href="{{ canonical_url }}"/>
 	{% endif %}
 

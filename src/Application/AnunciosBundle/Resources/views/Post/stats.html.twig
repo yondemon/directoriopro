@@ -104,7 +104,7 @@
 <ul>
     {% for entity in top_posts %}
 		<li>
-			<a href="{{ path('post_show', { 'id': entity.id }) }}">
+			<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}">
 			{% if entity.type == 0 %}Empleo{% elseif entity.type == 1 %}Freelance{% else %}Prácticas{% endif %}, 
 			{{ entity.title }}</a> ({{ entity.visits }} visitas)
         </li>

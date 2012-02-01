@@ -18,7 +18,7 @@ LI{margin-bottom:10px}
 
 <ul>
 {% for entity in entities %}
-	<li><a href="{{ url('post_show', { 'id': entity.id }) }}" target="_blank">{{ entity.title }}</a></li>
+	<li><a href="{{ url('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank">{{ entity.title }}</a></li>
 {% endfor %}
 </ul>
 	

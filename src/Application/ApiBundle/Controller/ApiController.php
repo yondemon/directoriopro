@@ -127,7 +127,7 @@ class ApiController extends Controller
 				'id' => $entity->getId(),
 				'title' => $entity->getTitle(),
 				'text' => nl2br( $entity->getBody() ),
-				'url' => $this->get('router')->generate('post_show', array('id' => $entity->getId()), true)
+				'url' => $this->get('router')->generate('post_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true)
 			);
 		}
 

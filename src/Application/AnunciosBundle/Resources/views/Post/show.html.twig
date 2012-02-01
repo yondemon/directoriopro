@@ -7,7 +7,8 @@
 {% endif %}
 
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
-{% set share_url = url('post_show', { 'id': entity.id }) %}
+{% set share_url = url('post_show', { 'id': entity.id, 'slug': entity.slug }) %}
+{% set canonical_url = share_url %}
 {% set form_url = path('post_contact', { 'id': entity.id }) %}
 {% block title entity.title %}
 {% set location = entity.getLocation() %}
@@ -119,7 +120,7 @@
 			<ul>
 			{% for entity in entities %}
 				<li>
-					<a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}{% if entity.location %} en {{ entity.location }}{% endif %}</a>
+					<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}">{{ entity.title }}{% if entity.location %} en {{ entity.location }}{% endif %}</a>
 				</li>
 	    	{% endfor %}
 			</ul>

@@ -62,7 +62,7 @@ TEXTAREA.xlarge{width:430px}
 	<div class="actions">
 
 		<button type="submit" class="btn primary" style="width:150px">Guardar cambios</button> &nbsp;
-		<a href="{{ path('post_show', { 'id': entity.id }) }}" class="btn">Cancelar</a> &nbsp;
+		<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="btn">Cancelar</a> &nbsp;
 	
 		{% if app.session.get('admin') %}	
 			<a href="{{ path('post_delete', { 'id': entity.id }) }}" class="btn danger pull-right">Eliminar</a>

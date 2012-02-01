@@ -137,6 +137,13 @@ class Post
     private $interested = 0;
 
     /**
+     * @var string $slug
+     *
+     * @ORM\Column(name="slug", type="string", nullable=true, length=255)
+     */
+    private $slug;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -464,5 +471,25 @@ class Post
     public function getInterested()
     {
         return $this->interested;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

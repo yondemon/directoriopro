@@ -23,6 +23,20 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 
 define('CAT_OTHER',9);
 
+
+function getSlug($str, $replace=array(), $delimiter='-') {
+	if( !empty($replace) ) {
+		$str = str_replace((array)$replace, ' ', $str);
+	}
+
+	$clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+	$clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);
+	$clean = strtolower(trim($clean, '-'));
+	$clean = preg_replace("/[\/_|+ -]+/", $delimiter, $clean);
+
+	return $clean;
+}
+
 /**
  * Post controller.
  *
@@ -205,95 +219,18 @@ class PostController extends Controller
     /**
      * Finds and displays a Post entity.
      *
-     * @Route("/{id}/show", name="post_show")
+     * @Route("/{id}/show", name="post_show2")
      * @Template()
      */
-    public function showAction($id)
+    public function show2Action($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-
         $entity = $em->getRepository('ApplicationAnunciosBundle:Post')->find($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
-
-		$user = $em->getRepository('ApplicationUserBundle:User')->find($entity->getUserId());
-
-
-		$session = $this->getRequest()->getSession();
-		$contact = new \Application\UserBundle\Entity\Contact;
-		$id = $session->get('id');
-		if( $id ){
-			$user_login = $em->getRepository('ApplicationUserBundle:User')->find($id);
-			$contact->setName( $user_login->getName() );
-			$contact->setEmail( $user_login->getEmail() );
-		}
-		$contact->setSubject( "RE: " . $entity->getTitle() );
-		$contact_form = $this->createForm(new ContactType(), $contact);
-		$contact_form_html = $contact_form->createView();
-
-
-		
-		$entities = false;
-		$users = false;
-
-		// ofertas relacionadas
-		if( $entity->getType() == 0 ){
-			$query = $em->createQueryBuilder();
-			$query->add('select', 'p')
-			   ->add('from', 'ApplicationAnunciosBundle:Post p')
-			   ->add('where', 'p.category_id = :category_id')->setParameter('category_id', $entity->getCategoryId())
-			   ->andWhere('p.id != :id')->setParameter('id', $entity->getId())
-			   ->add('orderBy', 'p.id DESC')
-			   ->setMaxResults(5);
-			$entities = $query->getQuery()->getResult();
-			
-		}
-
-		/*
-		// usuarios relacionados
-		$query = $em->createQueryBuilder();
-		$query->add('select', 'u')
-		   ->add('from', 'ApplicationUserBundle:User u')
-		   ->andWhere('u.category_id = :category_id')->setParameter('category_id', $entity->getCategoryId())
-		   ->andWhere('u.body IS NOT NULL')
-		   ->add('orderBy', 'u.votes DESC, u.id DESC')
-		   ->setMaxResults(12);
-		
-		// empleo
-		if( $entity->getType() == 0 ){
-			$query->andWhere('u.unemployed = 1');
-		
-		// freelance
-		}else if( $entity->getType() == 1 ){
-			$query->andWhere('u.freelance = 1');
-		}
-
-		$users = $query->getQuery()->getResult();
-		*/
-
-
-		
-
-
-		// es diferente usuario, visitas + 1
-		$session = $this->getRequest()->getSession();
-		$session_id = $session->get('id');
-		if( $session_id != $entity->getUserId() ){
-			$entity->setVisits($entity->getVisits() + 1 );
-			$em->persist($entity);
-			$em->flush();
-		}
-
-        return array(
-            'entity'       => $entity,
-            'user'         => $user,
-			'contact_form' => $contact_form_html,
-			'entities'     => $entities
-			//'users'        => $users
-			);
-    }
+		return $this->redirect($this->generateUrl('post_show', array('id' => $entity->getID(), 'slug' => $entity->getSlug() )),301);
+	}
 
     /**
      * Displays a form to create a new Post entity.
@@ -357,11 +294,26 @@ class PostController extends Controller
 		
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+
+			$em = $this->getDoctrine()->getEntityManager();
+	
+			$slug = $entity->getTitle();
+			$city_id = $entity->getCityId();
+			if( $city_id ){
+				$city = $em->getRepository('ApplicationCityBundle:City')->find( $city_id );
+				$slug .= ' ' . $city->getName();
+			}
+			$company = $entity->getCompany();
+			if( $company ){
+				$slug .= ' ' . $company;
+			}
+	
+			$entity->setSlug( getSlug( $slug ) );
+			
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('post_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('post_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug())));
             
         }
 
@@ -401,7 +353,7 @@ class PostController extends Controller
 	        );
 	
 		}else{
-			$url = $this->generateUrl('post_show', array('id' => $entity->getId()));
+			$url = $this->generateUrl('post_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
 			return $this->redirect($url);
 		}
 		
@@ -441,10 +393,24 @@ class PostController extends Controller
 	        $editForm->bindRequest($request);
 
 	        if ($editForm->isValid()) {
+		
+				$slug = $entity->getTitle();
+				$city_id = $entity->getCityId();
+				if( $city_id ){
+					$city = $em->getRepository('ApplicationCityBundle:City')->find( $city_id );
+					$slug .= ' ' . $city->getName();
+				}
+				$company = $entity->getCompany();
+				if( $company ){
+					$slug .= ' ' . $company;
+				}
+		
+				$entity->setSlug( getSlug( $slug ) );
+				
 	            $em->persist($entity);
 	            $em->flush();
 
-	            return $this->redirect($this->generateUrl('post_show', array('id' => $id)));
+	            return $this->redirect($this->generateUrl('post_show', array('id' => $id, 'slug' => $entity->getSlug())));
 	        }
 
 	        return array(
@@ -453,7 +419,7 @@ class PostController extends Controller
 	        );
 	
 		}else{
-			$url = $this->generateUrl('post_show', array('id' => $entity->getId()));
+			$url = $this->generateUrl('post_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
 			return $this->redirect($url);
 		}
 		
@@ -487,7 +453,7 @@ class PostController extends Controller
 
 			$url = $this->generateUrl('post');
 		}else{
-			$url = $this->generateUrl('post_show', array('id' => $entity->getId()));
+			$url = $this->generateUrl('post_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
 			
 		}
 		return $this->redirect($url);
@@ -1049,6 +1015,112 @@ class PostController extends Controller
 
 
         return array('entities' => $entities );
+    }
+
+    /**
+     * Get post slugs
+     *
+     * @Route("/slugs", name="post_slugs")
+     */
+    public function slugs()
+    {
+		$em = $this->getDoctrine()->getEntityManager();
+		$qb = $em->createQueryBuilder()
+		   ->add('select', 'p')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->add('orderBy', 'p.id ASC');
+
+		$entities = $qb->getQuery()->getResult();
+		$total = count( $entities );
+		
+		for( $i = 0; $i < $total; $i++ ){
+			
+			$slug = $entities[$i]->getTitle();
+			$city_id = $entities[$i]->getCityId();
+			if( $city_id ){
+				$city = $em->getRepository('ApplicationCityBundle:City')->find( $city_id );
+				$slug .= ' ' . $city->getName();
+			}
+			$company = $entities[$i]->getCompany();
+			if( $company ){
+				$slug .= ' ' . $company;
+			}
+
+
+			$entities[$i]->setSlug( getSlug( $slug ) );
+			$em->persist($entities[$i]);
+			$em->flush();
+			
+			//echo $entities[$i]->getSlug(),'<br>';
+		}
+		die();
+	}
+	
+    /**
+     * Finds and displays a Post entity.
+     *
+     * @Route("/{slug}-{id}/", requirements={"slug" = "[a-z0-9\-]+", "id" = "^\d+$"}, name="post_show")
+     * @Template()
+     */
+    public function showAction($slug, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('ApplicationAnunciosBundle:Post')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Post entity.');
+        }
+
+		$user = $em->getRepository('ApplicationUserBundle:User')->find($entity->getUserId());
+
+
+		$session = $this->getRequest()->getSession();
+		$contact = new \Application\UserBundle\Entity\Contact;
+		$id = $session->get('id');
+		if( $id ){
+			$user_login = $em->getRepository('ApplicationUserBundle:User')->find($id);
+			$contact->setName( $user_login->getName() );
+			$contact->setEmail( $user_login->getEmail() );
+		}
+		$contact->setSubject( "RE: " . $entity->getTitle() );
+		$contact_form = $this->createForm(new ContactType(), $contact);
+		$contact_form_html = $contact_form->createView();
+
+
+		
+		$entities = false;
+		$users = false;
+
+		// ofertas relacionadas
+		if( $entity->getType() == 0 ){
+			$query = $em->createQueryBuilder();
+			$query->add('select', 'p')
+			   ->add('from', 'ApplicationAnunciosBundle:Post p')
+			   ->add('where', 'p.category_id = :category_id')->setParameter('category_id', $entity->getCategoryId())
+			   ->andWhere('p.id != :id')->setParameter('id', $entity->getId())
+			   ->add('orderBy', 'p.id DESC')
+			   ->setMaxResults(5);
+			$entities = $query->getQuery()->getResult();
+			
+		}
+
+		// es diferente usuario, visitas + 1
+		$session = $this->getRequest()->getSession();
+		$session_id = $session->get('id');
+		if( $session_id != $entity->getUserId() ){
+			$entity->setVisits($entity->getVisits() + 1 );
+			$em->persist($entity);
+			$em->flush();
+		}
+
+        return array(
+            'entity'       => $entity,
+            'user'         => $user,
+			'contact_form' => $contact_form_html,
+			'entities'     => $entities
+			//'users'        => $users
+			);
     }
 
 }
