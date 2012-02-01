@@ -129,21 +129,20 @@
 			</div>
 			
 			<div style="float:left;width:130px;margin-left:10px">
+				{% if entity.type == 0 %}
+					<span class="label success">Empleo</span>
+				{% elseif entity.type == 1 %}
+					<span class="label notice">Freelance</span>
+				{% else %}
+					<span class="label warning">Prácticas</span>
+				{% endif %}<br/>
 				<span class="date">{{ entity.date|date('d/m/Y') }}</span>
 			</div>
 			
 
 			
 
-			<!--
-			{% if entity.type == 0 %}
-				<span class="label success">Empleo</span>
-			{% elseif entity.type == 1 %}
-				<span class="label notice">Freelance</span>
-			{% else %}
-				<span class="label warning">Prácticas</span>
-			{% endif %}
-			-->
+
 
 
 			<!--<b>{{ categories[ entity.getCategoryId() ] }}</b>-->
