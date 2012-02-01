@@ -42,7 +42,7 @@
 
 	        <tr>
 				<td>
-					<a href="{{ path('event_show', { 'id': entity.id }) }}">{{ entity.title }}</a>
+					<a href="{{ path('event_show', { 'id': entity.id, 'slug': entity.slug }) }}">{{ entity.title }}</a>
 					<br/><span class="date">{{ entity.datestart|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
 				</td>
 				<td>{{ entity.users }}</td>
