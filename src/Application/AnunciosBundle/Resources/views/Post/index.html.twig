@@ -121,10 +121,9 @@
 		<div style="padding:15px 0;border-top:1px #efefef solid;{% if entity.featured != 1 and loop.index is divisibleby(2) %}background:#F6F6F6{% endif %}" {% if entity.featured == 1 %}class="featured"{% endif %}>
 
 			<div style="float:left;width:415px;padding-left:15px">
-				<a href="{{ path('post_show', { 'id': entity.id }) }}" class="title" style="font-size:16px;line-height:16px;font-weight:bold;">{{ entity.title }}</a>
-				<!--<br/>{{ entity.body|truncate(70) }}-->
+				<a href="{{ path('post_show', { 'id': entity.id }) }}" class="title" style="font-size:16px;line-height:16px;font-weight:bold;">{{ entity.title }}</a><br/>
 				{% if entity.company %}
-					<br/><span class="date">{{ entity.company }}</span>
+					{{ entity.company }}
 				{% endif %}
 			</div>
 			
