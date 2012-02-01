@@ -895,22 +895,15 @@ class EventController extends Controller
     /**
      * Calendar City Event entities.
      *
-     * @Route("/slugs", name="event_slug")
+     * @Route("/slugs", name="event_slugs")
      */
     public function slugs()
     {
-
-
 		$em = $this->getDoctrine()->getEntityManager();
-
-
 		$qb = $em->createQueryBuilder()
 		   ->add('select', 'e')
 		   ->add('from', 'ApplicationEventBundle:Event e')
-		   //->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
-		   //->andWhere('e.city_id = :city_id')->setParameter('city_id', $id)
-		   ->add('orderBy', 'e.date_start ASC');
-		   //->setMaxResults( $limit );
+		   ->add('orderBy', 'p.id ASC');
 
 		$entities = $qb->getQuery()->getResult();
 		$total = count( $entities );
@@ -920,12 +913,7 @@ class EventController extends Controller
 			$em->persist($entities[$i]);
 			$em->flush();
 		}
-
-		//echo '<pre>';
-		//print_r($entities);
-		//echo '</pre>';
 		die();
-
 	}
 
 
@@ -933,7 +921,7 @@ class EventController extends Controller
     /**
      * Finds and displays a Event entity.
      *
-     * @Route("/{slug}-{id}", requirements={"slug" = "[a-z0-9\-]+", "id" = "^\d+$"}, name="event_show")
+     * @Route("/{slug}-{id}/", requirements={"slug" = "[a-z0-9\-]+", "id" = "^\d+$"}, name="event_show")
      * @Template()
      */
     public function showAction($slug, $id)
