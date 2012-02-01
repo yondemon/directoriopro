@@ -1,8 +1,9 @@
+{% set share_url = url('event_show', { 'id': entity.id, 'slug': entity.slug }) %}
+{% set canonical_url = share_url %}
 {% set date_start = entity.datestart|date('d/m/Y') %}
 {% set date_end = entity.dateend|date('d/m/Y') %}
 {% set nav_event = 1 %}
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
-{% set share_url = url('event_show', { 'id': entity.id }) %}
 {% set location = entity.getLocation() %}
 {% set pretty_date = entity.getPrettyDate('%e %B') %}
 
@@ -157,7 +158,7 @@
 			<ul>
 			{% for event in related_events %}
 				<li>
-					<a href="{{ path('event_show', { 'id': event.id }) }}">{{ event.title }} - {{ event.getPrettyDate('%e %B') }}</a>
+					<a href="{{ path('event_show', { 'id': event.id, 'slug': event.slug }) }}">{{ event.title }} - {{ event.getPrettyDate('%e %B') }}</a>
 				</li>
 	    	{% endfor %}
 			</ul>

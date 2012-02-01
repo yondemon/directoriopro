@@ -17,6 +17,22 @@ use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\View\DefaultView;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 
+
+function getSlug($str, $replace=array(), $delimiter='-') {
+	if( !empty($replace) ) {
+		$str = str_replace((array)$replace, ' ', $str);
+	}
+
+	$clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+	$clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);
+	$clean = strtolower(trim($clean, '-'));
+	$clean = preg_replace("/[\/_|+ -]+/", $delimiter, $clean);
+
+	return $clean;
+}
+
+
+
 /**
  * Event controller.
  *
@@ -237,88 +253,21 @@ class EventController extends Controller
         return array('cities' => $cities, 'city' => $city, 'country' => $country, 'pager' => $html, 'entities' => $entities, 'users' => $users);
     }
 
+
     /**
      * Finds and displays a Event entity.
      *
-     * @Route("/{id}/show", name="event_show")
+     * @Route("/{id}/show", name="event_show2")
      * @Template()
      */
-    public function showAction($id)
+    public function show2Action($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-
         $entity = $em->getRepository('ApplicationEventBundle:Event')->find($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Event entity.');
         }
-
-        $user = $em->getRepository('ApplicationUserBundle:User')->find($entity->getUserId());
-
-
-
-		$apuntado = false;
-		
-		$session = $this->getRequest()->getSession();
-		$session_id = $session->get('id');
-		if( $session_id ){
-			$db = $this->get('database_connection');
-			$query = "SELECT eu.id FROM EventUser eu WHERE eu.user_id = " . $session_id . " AND event_id = " . (int)$id;
-			$result = $db->query($query)->fetch();
-			$apuntado = $result['id'];	
-		}
-
-
-
-		$qb = $em->createQueryBuilder();
-		$qb->add('select', 'u')
-		   ->add('from', 'ApplicationUserBundle:User u, ApplicationEventBundle:EventUser eu')
-		   ->andWhere('u.id = eu.user_id')
-		   ->andWhere('eu.event_id = :id')->setParameter('id', $id);
-		$query = $qb->getQuery();
-		$users = $query->getResult();
-
-
-		$city = $em->getRepository('ApplicationCityBundle:City')->find( $entity->getCityId() );
-		
-		$query = $em->createQuery("SELECT c.name FROM ApplicationCityBundle:Country c WHERE c.code = :code");
-		$query->setParameters(array(
-			'code' => $city->getCode()
-		));
-		$country = current( $query->getResult() );
-		
-
-		
-
-		$qb = $em->createQueryBuilder();
-		$qb->add('select', 'e')
-		   ->add('from', 'ApplicationEventBundle:Event e')
-		   ->add('orderBy', 'e.featured DESC, e.date_start DESC')
-		   ->andWhere("e.hashtag = :hashtag")->setParameter('hashtag', $entity->getHashtag())
-		   ->andWhere("e.id != :id")->setParameter('id', $entity->getID())
-		   ->setMaxResults( 5 );
-		$related_events = $qb->getQuery()->getResult();
-		
-
-
-
-		// es diferente usuario, visitas + 1
-		if( $session_id != $entity->getUserId() ){
-			$entity->setVisits($entity->getVisits() + 1 );
-			$em->persist($entity);
-			$em->flush();
-		}
-		
-
-        return array(
-			'city'        => $city,
-			'country'	  => $country,
-            'entity'      => $entity,
-			'user'		  => $user,
-			'users'       => $users,
-			'apuntado'    => $apuntado,
-			'related_events' => $related_events
-		);
+		return $this->redirect($this->generateUrl('event_show', array('id' => $entity->getID(), 'slug' => $entity->getSlug() )),301);
     }
 
     /**
@@ -380,11 +329,13 @@ class EventController extends Controller
 		$entity->setDateEnd(  new \DateTime( $date_end->format('Y-m-d') . ' ' . $h_end . ":" . $m_end . ':00' ) );
 
         if ($form->isValid()) {
+			$entity->setSlug( getSlug( $entity->getTitle() . ' ' . $entity->getPrettyDate('%e %B %Y') . ' ' . $entity->getID() ) );
+	
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('event_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('event_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug())));
             
         }
 
@@ -441,7 +392,7 @@ class EventController extends Controller
 	        );
 
 		}else{
-			$url = $this->generateUrl('event_show', array('id' => $entity->getId()));
+			$url = $this->generateUrl('event_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
 			return $this->redirect($url);
 		}
 
@@ -493,10 +444,12 @@ class EventController extends Controller
 
 
 		        if ($editForm->isValid()) {
+					$entity->setSlug( getSlug( $entity->getTitle() . ' ' . $entity->getPrettyDate('%e %B %Y') . ' ' . $entity->getID() ) );
+			
 		            $em->persist($entity);
 		            $em->flush();
 
-		            return $this->redirect($this->generateUrl('event_show', array('id' => $id)));
+		            return $this->redirect($this->generateUrl('event_show', array('id' => $id, 'slug' => $entity->getSlug())));
 		        }
 
 		        return array(
@@ -505,7 +458,7 @@ class EventController extends Controller
 		        );
 
 			}else{
-				$url = $this->generateUrl('event_show', array('id' => $entity->getId()));
+				$url = $this->generateUrl('event_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
 				return $this->redirect($url);
 			}
 
@@ -543,7 +496,7 @@ class EventController extends Controller
 
 			$url = $this->generateUrl('event');
 		}else{
-			$url = $this->generateUrl('event_show', array('id' => $entity->getId()));
+			$url = $this->generateUrl('event_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
 			
 		}
 		return $this->redirect($url);
@@ -617,7 +570,7 @@ class EventController extends Controller
 		
 		
 
-		$url = $this->generateUrl('event_show', array('id' => $id));
+		$url = $this->generateUrl('event_show', array('id' => $id, 'slug' => $event->getSlug()));
 		return $this->redirect($url);
 
 
@@ -897,8 +850,6 @@ class EventController extends Controller
 			throw $this->createNotFoundException('Unable to find Post entity.');
 		}
 		
-		$em = $this->getDoctrine()->getEntityManager();
-		
 		$limit = 50;
 
 		$qb = $em->createQueryBuilder()
@@ -939,5 +890,129 @@ class EventController extends Controller
 
 		
     }
+
+
+    /**
+     * Calendar City Event entities.
+     *
+     * @Route("/slugs", name="event_slug")
+     */
+    public function slugs()
+    {
+
+
+		$em = $this->getDoctrine()->getEntityManager();
+
+
+		$qb = $em->createQueryBuilder()
+		   ->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   //->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   //->andWhere('e.city_id = :city_id')->setParameter('city_id', $id)
+		   ->add('orderBy', 'e.date_start ASC');
+		   //->setMaxResults( $limit );
+
+		$entities = $qb->getQuery()->getResult();
+		$total = count( $entities );
+		
+		for( $i = 0; $i < $total; $i++ ){
+			$entities[$i]->setSlug( getSlug( $entities[$i]->getTitle() . ' ' . $entities[$i]->getPrettyDate('%e %B %Y') . ' ' . $entities[$i]->getID() ) );
+			$em->persist($entities[$i]);
+			$em->flush();
+		}
+
+		//echo '<pre>';
+		//print_r($entities);
+		//echo '</pre>';
+		die();
+
+	}
+
+
+
+    /**
+     * Finds and displays a Event entity.
+     *
+     * @Route("/{slug}-{id}", requirements={"slug" = "[a-z0-9\-]+", "id" = "^\d+$"}, name="event_show")
+     * @Template()
+     */
+    public function showAction($slug, $id)
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('ApplicationEventBundle:Event')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Event entity.');
+        }
+
+        $user = $em->getRepository('ApplicationUserBundle:User')->find($entity->getUserId());
+
+
+
+		$apuntado = false;
+		
+		$session = $this->getRequest()->getSession();
+		$session_id = $session->get('id');
+		if( $session_id ){
+			$db = $this->get('database_connection');
+			$query = "SELECT eu.id FROM EventUser eu WHERE eu.user_id = " . $session_id . " AND event_id = " . (int)$id;
+			$result = $db->query($query)->fetch();
+			$apuntado = $result['id'];	
+		}
+
+
+
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'u')
+		   ->add('from', 'ApplicationUserBundle:User u, ApplicationEventBundle:EventUser eu')
+		   ->andWhere('u.id = eu.user_id')
+		   ->andWhere('eu.event_id = :id')->setParameter('id', $id);
+		$query = $qb->getQuery();
+		$users = $query->getResult();
+
+
+		$city = $em->getRepository('ApplicationCityBundle:City')->find( $entity->getCityId() );
+		
+		$query = $em->createQuery("SELECT c.name FROM ApplicationCityBundle:Country c WHERE c.code = :code");
+		$query->setParameters(array(
+			'code' => $city->getCode()
+		));
+		$country = current( $query->getResult() );
+		
+
+		
+
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->add('orderBy', 'e.featured DESC, e.date_start DESC')
+		   ->andWhere("e.hashtag = :hashtag")->setParameter('hashtag', $entity->getHashtag())
+		   ->andWhere("e.id != :id")->setParameter('id', $entity->getID())
+		   ->setMaxResults( 5 );
+		$related_events = $qb->getQuery()->getResult();
+		
+
+
+
+		// es diferente usuario, visitas + 1
+		if( $session_id != $entity->getUserId() ){
+			$entity->setVisits($entity->getVisits() + 1 );
+			$em->persist($entity);
+			$em->flush();
+		}
+		
+
+        return array(
+			'city'        => $city,
+			'country'	  => $country,
+            'entity'      => $entity,
+			'user'		  => $user,
+			'users'       => $users,
+			'apuntado'    => $apuntado,
+			'related_events' => $related_events
+		);
+	}
 
 }

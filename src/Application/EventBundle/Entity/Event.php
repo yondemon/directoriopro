@@ -127,6 +127,14 @@ class Event
      */
     private $resources;
 
+
+    /**
+     * @var string $slug
+     *
+     * @ORM\Column(name="slug", type="string", nullable=true, length=255)
+     */
+    private $slug;
+
     /**
      * Get id
      *
@@ -462,6 +470,26 @@ class Event
     public function getResources()
     {
         return $this->resources;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

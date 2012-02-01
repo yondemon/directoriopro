@@ -37,7 +37,7 @@
 
 
 				
-	            <a href="{{ path('event_show', { 'id': entity.id }) }}" class="title">{{ entity.title }}</a><br/>
+	            <a href="{{ path('event_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="title">{{ entity.title }}</a><br/>
 				<b>{{ entity.datestart|date('d/m/Y H:i') }}</b>
 				
 				

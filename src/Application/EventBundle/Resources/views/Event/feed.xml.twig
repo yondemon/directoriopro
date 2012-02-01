@@ -12,7 +12,7 @@
 
 		<item>
 			<title>{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</title>
-			<link>{{ url('event_show', { 'id': entity.id }) }}</link>
+			<link>{{ url('event_show', { 'id': entity.id, 'slug': entity.slug }) }}</link>
 			<pubDate>{{ entity.date|date('D, d M Y H:i:s O') }}</pubDate>
 			<category>{{ entity.location }}</category>
 			<description><![CDATA[{{ entity.body|truncate(200) }}]]></description>
