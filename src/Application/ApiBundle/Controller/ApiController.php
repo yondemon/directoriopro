@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 use Application\UserBundle\Entity\User;
 use Application\EventBundle\Entity\Event;
@@ -55,7 +56,7 @@ class ApiController extends Controller
 		}else{
 			$response = array('result' => 'ko');
 		}	
-		die('jsontest('.json_encode($response).')');
+		return new Response('jsontest('.json_encode($response).')');
 	}
 	
 	
@@ -87,7 +88,7 @@ class ApiController extends Controller
 				'id' => $entity->getId(),
 				'title' => $entity->getTitle() . ' - ' . $entity->getPrettyDate('%e %B'),
 				'text' => nl2br( $entity->getBody() ),
-				'url' => $this->get('router')->generate('event_show', array('id' => $entity->getId()), true),
+				'url' => $this->get('router')->generate('event_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true),
 				'users' => $entity->getUsers()
 			);
 		}
@@ -95,7 +96,7 @@ class ApiController extends Controller
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
-		die($callback.'('.json_encode($events).')');
+		return new Response($callback.'('.json_encode($events).')');
     }
 	
     /**
@@ -133,7 +134,7 @@ class ApiController extends Controller
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
-		die($callback.'('.json_encode($jobs).')');
+		return new Response($callback.'('.json_encode($jobs).')');
     }
 	
     /**
@@ -165,6 +166,6 @@ class ApiController extends Controller
 				
 			);
 		}
-		die($callback.'('.json_encode($users).')');
+		return new Response($callback.'('.json_encode($users).')');
 	}
 }
