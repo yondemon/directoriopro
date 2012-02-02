@@ -58,7 +58,7 @@
 
 		{% for entity in users %}
 			<img src="{{ entity.getAvatar('normal') }}" alt="{{ entity.name }}" style="float:left;margin-right:10px" width="35" height="35"/>
-			<a href="{{ path('user_show', { 'id': entity.id }) }}" target="_blank" style="color:#267DD3;text-decoration:none;display:block">{{ entity.name|truncate(21) }}</a>
+			<a href="{{ path('user_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="color:#267DD3;text-decoration:none;display:block">{{ entity.name|truncate(21) }}</a>
 			<span style="color:#999">{{ categories[ entity.getCategoryId() ] }}</span>
 			<br style="clear:both"/><br/>
 		{% endfor %}

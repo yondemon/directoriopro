@@ -24,7 +24,7 @@
 	<ul class="breadcrumb">
 	  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
 	  <li><a href="{{ path('user') }}">Profesionales</a> <span class="divider">/</span></li>
-	  <li><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.name }}</a> <span class="divider">/</span></li>
+	  <li><a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}">{{ user.name }}</a> <span class="divider">/</span></li>
 	  <li><a href="{{ path('user_comments', { 'id': user.id }) }}">Recomendaciones</a></li>
 	</ul>
 
@@ -45,7 +45,7 @@
 					{% endif %}
 				</div>
 				<div class="span3">
-					<a href="{{ path('user_show', { 'id': item.from_id }) }}">{{ item.name }}</a><br/>
+					<a href="{{ path('user_show', { 'id': item.from_id, 'slug': item.slug }) }}">{{ item.name }}</a><br/>
 					{{ categories[item.category_id] }}<br/>
 					<a href="{{ path('user_comment', { 'user_id': user.id, 'comment_id': item.id }) }}" class="date">{{ item.date|date('d/m/Y') }}</a>
 				</div>

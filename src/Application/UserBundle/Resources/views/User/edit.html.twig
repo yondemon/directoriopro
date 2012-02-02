@@ -1,6 +1,6 @@
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 {% form_theme edit_form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
-{% set share_url = url('user_show', { 'id': entity.id }) %}
+{% set share_url = url('user_show', { 'id': entity.id, 'slug': entity.slug }) %}
 
 {% block title "Editar perfil" %}
 
@@ -184,7 +184,7 @@ input.xlarge{width:230px}
 	<div id="networks">
 	
 		<div class="clearfix alert-message block-message info" style="text-align:center">
-			Demuestra tus conocimientos y trabajos, indica tus perfiles en la red - <a href="{{ path('user_show', { 'id': entity.getId() }) }}" target="_blank">Ejemplo</a><br/>
+			Demuestra tus conocimientos y trabajos, indica tus perfiles en la red - <a href="{{ path('user_show', { 'id': entity.getId(), 'slug': entity.getSlug() }) }}" target="_blank">Ejemplo</a><br/>
 		</div>
 
 		<div class="group_edit">Comunicación</div>
@@ -293,13 +293,13 @@ input.xlarge{width:230px}
 
 		<!--
 		{% if updated == 1 %}
-			<a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn success">¡Actualizado! Visitar mi perfil</a>
+			<a href="{{ path('user_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="btn success">¡Actualizado! Visitar mi perfil</a>
 		{% else %}
-			<a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn">Visitar mi perfil</a>
+			<a href="{{ path('user_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="btn">Visitar mi perfil</a>
 		{% endif %}
 		-->
 		
-		<a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn">Visitar mi perfil</a>
+		<a href="{{ path('user_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="btn">Visitar mi perfil</a>
     </div>
 
 

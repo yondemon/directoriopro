@@ -48,7 +48,7 @@
 				" width="35" height="35" style="float:left;margin-right:13px"/>
 
 				<div style="float:left;width:425px">
-	            <a href="{{ path('user_show', { 'id': entity.user_id }) }}">{{ entity.name }}</a> 
+	            <a href="{{ path('user_show', { 'id': entity.user_id, 'slug': entity.slug }) }}">{{ entity.name }}</a> 
 				<br/><b>{{ categories[ entity.category_id ] }}</b><br/>
 
 				{{ entity.body|truncate(180) }} 

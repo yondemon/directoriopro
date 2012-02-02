@@ -28,7 +28,7 @@ TEXTAREA.xlarge{width:430px}
 
 		<div class="actions">
 			<button type="submit" class="btn primary">Guardar recomendación</button> &nbsp;
-			<a href="{{ path('user_show', { 'id': user.id }) }}" class="btn">Volver al perfil</a>
+			<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" class="btn">Volver al perfil</a>
 		</div>
 
 

@@ -75,6 +75,7 @@ class PostController extends Controller
 				$session = $this->getRequest()->getSession();
 				$session->set('id', $user->getId());
 				$session->set('name', $user->getShortName());
+				$session->set('slug', $user->getSlug());
 				$session->set('admin', $user->getAdmin());
 			}	
 		}
@@ -120,7 +121,7 @@ class PostController extends Controller
 		$view = new DefaultView();
 		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
 		
-
+		/*
 		$users = false;
 		if( $page == 1 ){
 			$qb = $em->createQueryBuilder();
@@ -136,6 +137,7 @@ class PostController extends Controller
 			shuffle( $users );
 			$users = array_splice($users, 0, 7);
 		}
+		*/
 
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
@@ -143,7 +145,7 @@ class PostController extends Controller
 		
 		$home = (!$category_id && $page == 1);
 
-        return array('pager' => $html, 'entities' => $entities, 'users' => $users, 'home' => $home );
+        return array('pager' => $html, 'entities' => $entities, 'home' => $home );
     }
 
     /**

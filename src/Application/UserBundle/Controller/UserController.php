@@ -29,6 +29,20 @@ use Pagerfanta\View\DefaultView;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 
 
+function getSlug($str, $replace=array(' con ', ' de ', ' para ', ' y ', ' en ', ' of '), $delimiter='-') {
+	if( !empty($replace) ) {
+		$str = str_replace((array)$replace, ' ', $str);
+	}
+
+	$clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+	$clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);
+	$clean = strtolower(trim($clean, '-'));
+	$clean = preg_replace("/[\/_|+ -]+/", $delimiter, $clean);
+
+	return $clean;
+}
+
+
 
 /**
  * User controller.
@@ -223,120 +237,23 @@ class UserController extends Controller
         return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1);
     }
 
+
     /**
      * Finds and displays a User entity.
      *
-     * @Route("/{id}/show", name="user_show")
+     * @Route("/{id}/show", name="user_show2")
      * @Template()
      */
-    public function showAction($id)
+    public function show2Action($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-
         $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
-
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
-	
-	
-
-		// es diferencia usuario, visitas + 1
-		$session = $this->getRequest()->getSession();
-		$session_id = $session->get('id');
-	
-		if( $session_id != $entity->getId() ){
-			$entity->setVisits($entity->getVisits() + 1 );
-			$em->persist($entity);
-			$em->flush();
-		}
-		
-		$contact_form_html = false;
-		if( $entity->getCanContact() ){
-			$contact = new \Application\UserBundle\Entity\Contact;
-			if( $session_id && $session_id != $id ){
-				$user_login = $em->getRepository('ApplicationUserBundle:User')->find($session_id);
-				$contact->setName( $user_login->getName() );
-				$contact->setEmail( $user_login->getEmail() );
-			}
-			$contact->setSubject( "Contacto desde betabeers" );
-			$contact_form = $this->createForm(new ContactType(), $contact);
-			$contact_form_html = $contact_form->createView();
-		}
-
-		/*
-		// comentarios a la persona
-		$query = $em->createQuery("SELECT c.id as comment_id, u.id as user_id, u.name, u.category_id, u.avatar_type, u.twitter_url, u.facebook_id, u.email FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.from_id AND c.to_id = :id ORDER BY c.id DESC");
-		$query->setParameter('id', $id);
-		$query->setMaxResults(12);
-		$comments = $query->getResult();
-		
-		// ñapa para poder usar el modelo de usuario
-		if( $comments ){
-			$total = count( $comments );
-			for( $i = 0; $i < $total; $i++ ){
-				$user_comment = new User();
-				$user_comment->setAvatarType( $comments[$i]['avatar_type'] );
-				$user_comment->setTwitterUrl( $comments[$i]['twitter_url'] );
-				$user_comment->setEmail( $comments[$i]['email'] );
- 				$user_comment->setFacebookId( $comments[$i]['facebook_id'] );
-				$comments[$i]['user'] = $user_comment;
-			}
-		}
-		*/
-		
-		// contadores
-		$query = $em->createQuery("SELECT COUNT(c) as total FROM ApplicationUserBundle:Comment c WHERE c.to_id = :id AND c.type = 0");
-		$query->setParameter('id', $id);
-		$total = current($query->getResult());
-		$total_like = $total['total'];
-		
-		$query = $em->createQuery("SELECT COUNT(c) as total FROM ApplicationUserBundle:Comment c WHERE c.to_id = :id AND c.type = 1");
-		$query->setParameter('id', $id);
-		$total = current($query->getResult());
-		$total_wannawork = $total['total'];
-		
-		$query = $em->createQuery("SELECT COUNT(c) as total FROM ApplicationUserBundle:Comment c WHERE c.to_id = :id AND c.type = 2");
-		$query->setParameter('id', $id);
-		$total = current($query->getResult());
-		$total_work = $total['total'];
-		
-		// usuarios registrados
-		$db = $this->get('database_connection');
-		$query = "SELECT COUNT(u.id) AS total FROM User u";
-		$result = $db->query($query)->fetch();
-		$total_users = $result['total'];
-		
-		
-		$query = $em->createQuery("SELECT u FROM ApplicationUserBundle:User u WHERE u.category_id = :category_id AND u.id != :id AND u.body IS NOT NULL ORDER BY u.date_login DESC");
-		$query->setParameter('category_id', $entity->getCategoryId());
-		$query->setParameter('id', $id);
-		$query->setMaxResults(5);
-		$related_users = $query->getResult();
-		
-
-
-		$badges = $em->createQuery("SELECT t FROM ApplicationTestBundle:Test t, ApplicationTestBundle:TestUser tu WHERE t.id = tu.test_id AND tu.user_id = :id ORDER BY tu.date ASC")
-			  ->setParameter('id', $id)
-			  ->setMaxResults(5)
-			  ->getResult();
-			
-
-        return array(
-            'entity'       => $entity,
-			'contact_form' => $contact_form_html,
-			//'comments'     => $comments,
-			//'total_work' => $total_work,
-			//'total_wannawork' => $total_wannawork,
-			//'total_like' => $total_like,
-			'total_users' => $total_users,
-			'related_users' => $related_users,
-			'badges' => $badges
-			);
+		return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getID(), 'slug' => $entity->getSlug() )),301);
     }
+
 
     /**
      * User login
@@ -390,6 +307,7 @@ class UserController extends Controller
 				$session = $this->getRequest()->getSession();
 				$session->set('id', $user->getId());
 				$session->set('name', $user->getShortName());
+				$session->set('slug', $user->getSlug());
 				$session->set('admin', $user->getAdmin());
 				
 				// cookie
@@ -403,7 +321,7 @@ class UserController extends Controller
 					$url = $back;
 					$session->set('back','');
 				}else{
-					$url = $this->generateUrl('user_show', array('id' => $user->getId()));
+					$url = $this->generateUrl('user_show', array('id' => $user->getId(), 'slug' => $user->getSlug()));
 				}
 				
 	            return $this->redirect($url);
@@ -465,6 +383,7 @@ class UserController extends Controller
 				$entity->setTotalLogins( 1 );
 				$entity->setCanContact( 1 );
 				$entity->setIp();
+				$entity->setSlug( getSlug( $entity->getName() ) );
 				
 	            $em->persist($entity);
 	            $em->flush();
@@ -472,6 +391,7 @@ class UserController extends Controller
 				// autologin?
 				$session->set('id', $entity->getId());
 				$session->set('name', $entity->getName());
+				$session->set('slug', $entity->getSlug());
 				$session->set('admin', $entity->getAdmin());
 				
 				// cookie
@@ -562,12 +482,13 @@ class UserController extends Controller
 				$entity->setItunesUrl( str_replace(' ','-', strtolower( trim( $entity->getItunesUrl() ) ) ) );
 				$entity->setAndroidUrl( str_replace(' ','+', trim( $entity->getAndroidUrl() ) ) );
 				
+				$entity->setSlug( getSlug( $entity->getName() ) );
 				
 	            $em->persist($entity);
 	            $em->flush();
 
 				$session->set('name', $entity->getShortName());
-				
+				$session->set('slug', $entity->getSlug());
 
 				
 				
@@ -751,6 +672,7 @@ class UserController extends Controller
 				$user->setRefId($ref_id);
 				$user->setCanContact(1);
 				$user->setAvatarType(AVATAR_FACEBOOK);
+				$user->setSlug( getSlug( $user->getName() ) );
 				
 				$url = $this->generateUrl('user_edit');
 				
@@ -785,7 +707,7 @@ class UserController extends Controller
 					$url = $back;
 					$session->set('back','');
 				}else{
-					$url = $this->generateUrl('user_show', array('id' => $user->getId()));
+					$url = $this->generateUrl('user_show', array('id' => $user->getId(), 'slug' => $user->getSlug()));
 				}
 				
 
@@ -816,6 +738,7 @@ class UserController extends Controller
 
 			$session->set('id', $user->getId());
 			$session->set('name', $user->getShortName());
+			$session->set('slug', $user->getSlug());
 			$session->set('admin', $user->getAdmin());
 			
 			
@@ -839,6 +762,7 @@ class UserController extends Controller
 		$session->set('id',null);
 		//$session->set('facebook_id',null);
 		$session->set('name',null);
+		$session->set('slug', null);
 		$session->set('admin',null);
 		
 		
@@ -953,17 +877,19 @@ class UserController extends Controller
 			return $this->redirect($this->generateUrl('user_welcome', array('back' => $_SERVER['REQUEST_URI'])));
 		}
 		
-		// me quiero votar a mi mismo?
-		if( $session_id == $id ){
-			return $this->redirect($this->generateUrl('user_show', array('id' => $id)));
-		}
-
 		// existe usuario?
         $em = $this->getDoctrine()->getEntityManager();
 		$user = $em->getRepository('ApplicationUserBundle:User')->find($id);
         if (!$user) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
+		
+		// me quiero votar a mi mismo?
+		if( $session_id == $id ){
+			return $this->redirect($this->generateUrl('user_show', array('id' => $id, 'slug' => $user->getSlug())));
+		}
+
+
 
 		// setear comentario si ya he escrito anteriormente
 		$query = $em->createQuery('SELECT c FROM ApplicationUserBundle:Comment c WHERE c.from_id = :from_id AND c.to_id = :to_id');
@@ -1082,7 +1008,7 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 	
-		$query = $em->createQuery("SELECT u.name, u.category_id, c.id, c.from_id, c.body, c.type, c.date FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.from_id AND c.to_id = :id ORDER BY c.id DESC");
+		$query = $em->createQuery("SELECT u.name, u.category_id, u.slug, c.id, c.from_id, c.body, c.type, c.date FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.from_id AND c.to_id = :id ORDER BY c.id DESC");
 		$query->setParameter('id', $id);
 		$comments = $query->getResult();
 
@@ -1188,11 +1114,12 @@ class UserController extends Controller
 				if( !$session->get('id') ){
 					$session->set('id', $entity->getId());
 					$session->set('name', $entity->getShortName());
+					$session->set('slug', $entity->getSlug());
 					$session->set('admin', $entity->getAdmin());
 				}
 				
 				// redirigir perfil
-				$url = $this->generateUrl('user_show', array('id' => $entity->getId()));
+				$url = $this->generateUrl('user_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
 				return $this->redirect($url);
 	        }
 	    }
@@ -1360,8 +1287,124 @@ class UserController extends Controller
 	}
 
 
+    /**
+     * Set slug users
+     *
+     * @Route("/slugs", name="user_slugs")
+     */
+    public function slugs()
+    {
+		$em = $this->getDoctrine()->getEntityManager();
+		$qb = $em->createQueryBuilder()
+		   ->add('select', 'u')
+		   ->add('from', 'ApplicationUserBundle:User u')
+		   ->add('orderBy', 'u.id ASC');
+
+		$entities = $qb->getQuery()->getResult();
+		$total = count( $entities );
+		
+		for( $i = 0; $i < $total; $i++ ){
+			$entities[$i]->setSlug( getSlug( $entities[$i]->getName() ) );
+			$em->persist($entities[$i]);
+			$em->flush();
+		}
+		die();
+	}
 
 
+    /**
+     * Finds and displays a User entity.
+     *
+     * @Route("/{slug}-{id}/", requirements={"slug" = "[a-z0-9\-]+", "id" = "^\d+$"}, name="user_show")
+     * @Template()
+     */
+    public function showAction($slug, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('ApplicationUserBundle:User')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+
+	 	$twig = $this->container->get('twig'); 
+	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	
+	
+
+		// es diferencia usuario, visitas + 1
+		$session = $this->getRequest()->getSession();
+		$session_id = $session->get('id');
+	
+		if( $session_id != $entity->getId() ){
+			$entity->setVisits($entity->getVisits() + 1 );
+			$em->persist($entity);
+			$em->flush();
+		}
+		
+		$contact_form_html = false;
+		if( $entity->getCanContact() ){
+			$contact = new \Application\UserBundle\Entity\Contact;
+			if( $session_id && $session_id != $id ){
+				$user_login = $em->getRepository('ApplicationUserBundle:User')->find($session_id);
+				$contact->setName( $user_login->getName() );
+				$contact->setEmail( $user_login->getEmail() );
+			}
+			$contact->setSubject( "Contacto desde betabeers" );
+			$contact_form = $this->createForm(new ContactType(), $contact);
+			$contact_form_html = $contact_form->createView();
+		}
+		
+		// contadores
+		$query = $em->createQuery("SELECT COUNT(c) as total FROM ApplicationUserBundle:Comment c WHERE c.to_id = :id AND c.type = 0");
+		$query->setParameter('id', $id);
+		$total = current($query->getResult());
+		$total_like = $total['total'];
+		
+		$query = $em->createQuery("SELECT COUNT(c) as total FROM ApplicationUserBundle:Comment c WHERE c.to_id = :id AND c.type = 1");
+		$query->setParameter('id', $id);
+		$total = current($query->getResult());
+		$total_wannawork = $total['total'];
+		
+		$query = $em->createQuery("SELECT COUNT(c) as total FROM ApplicationUserBundle:Comment c WHERE c.to_id = :id AND c.type = 2");
+		$query->setParameter('id', $id);
+		$total = current($query->getResult());
+		$total_work = $total['total'];
+		
+		// usuarios registrados
+		$db = $this->get('database_connection');
+		$query = "SELECT COUNT(u.id) AS total FROM User u";
+		$result = $db->query($query)->fetch();
+		$total_users = $result['total'];
+		
+		
+		$query = $em->createQuery("SELECT u FROM ApplicationUserBundle:User u WHERE u.category_id = :category_id AND u.id != :id AND u.body IS NOT NULL ORDER BY u.date_login DESC");
+		$query->setParameter('category_id', $entity->getCategoryId());
+		$query->setParameter('id', $id);
+		$query->setMaxResults(5);
+		$related_users = $query->getResult();
+		
+
+
+		$badges = $em->createQuery("SELECT t FROM ApplicationTestBundle:Test t, ApplicationTestBundle:TestUser tu WHERE t.id = tu.test_id AND tu.user_id = :id ORDER BY tu.date ASC")
+			  ->setParameter('id', $id)
+			  ->setMaxResults(5)
+			  ->getResult();
+			
+
+        return array(
+            'entity'       => $entity,
+			'contact_form' => $contact_form_html,
+			//'comments'     => $comments,
+			//'total_work' => $total_work,
+			//'total_wannawork' => $total_wannawork,
+			//'total_like' => $total_like,
+			'total_users' => $total_users,
+			'related_users' => $related_users,
+			'badges' => $badges
+			);
+    }
 
 
 }

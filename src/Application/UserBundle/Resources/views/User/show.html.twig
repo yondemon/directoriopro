@@ -2,7 +2,7 @@
 
 {% set nav_user = 1 %}
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
-{% set share_url = url('user_show', { 'id': entity.id }) %}
+{% set share_url = url('user_show', { 'id': entity.id, 'slug': entity.slug }) %}
 {% set form_url = path('user_contact', { 'id': entity.id }) %}
 {% block title entity.name %}
 
@@ -42,7 +42,7 @@
 			<b>Relacionados</b><br/><br/>
 		    {% for entity in related_users %}
 				<img src="{{ entity.getAvatar('mini') }}" width="35" height="35" style="float:left;margin-right:13px"/>
-		           <a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.name }}</a><br class="clear"/>
+		           <a href="{{ path('user_show', { 'id': entity.id, 'slug': entity.slug }) }}">{{ entity.name }}</a><br class="clear"/>
 		    {% endfor %}
 		{% endif %}
 	{% else %}

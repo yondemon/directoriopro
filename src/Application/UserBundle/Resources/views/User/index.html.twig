@@ -31,7 +31,7 @@
 	<a href="{{ path('user_invite') }}" style="float:right;margin-top:10px;font-size:16px;">Invitar contactos</a>
 
 	{% for user in users_ref %}
-		<a href="{{ path('user_show', { 'id': user.id }) }}" data-original-title="<b>{{ categories[ user.category_id ] }}</b><br/>{{ user.name }}" rel="twipsy" style="float:left;margin-right:5px"><span style="position:absolute;margin-top:20px;padding:0 5px;background:red;color:white;font-size:10px">{{ user.total }}</span><img src="
+		<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" data-original-title="<b>{{ categories[ user.category_id ] }}</b><br/>{{ user.name }}" rel="twipsy" style="float:left;margin-right:5px"><span style="position:absolute;margin-top:20px;padding:0 5px;background:red;color:white;font-size:10px">{{ user.total }}</span><img src="
 		{% if user.avatar_type == 1 %}
 			http://api.twitter.com/1/users/profile_image/{{ user.twitter_url }}?size=normal
 		{% elseif( user.avatar_type == 2 ) %}
@@ -74,7 +74,7 @@
 			
 				<img src="{{ entity.getAvatar('mini') }}" width="35" height="35" style="float:left;margin-right:13px"/>
 				<div style="float:left;width:425px">
-	            <a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.name }}</a> 
+	            <a href="{{ path('user_show', { 'id': entity.id, 'slug': entity.slug }) }}">{{ entity.name }}</a> 
 				{% if entity.freelance %}
 					<span class="freelance">&#149; freelance</span>
 				{% endif %}

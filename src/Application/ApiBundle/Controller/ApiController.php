@@ -42,7 +42,7 @@ class ApiController extends Controller
 			$user = current( $result );
 			
 			$url = $user->getUrl();
-			if( !$url ) $url = $this->generateUrl('user_show', array('id' => $user->getId()), true);
+			if( !$url ) $url = $this->generateUrl('user_show', array('id' => $user->getId(), 'slug' => $user->getSlug()), true);
 			
 			$profile = array(
 				'name' => $user->getName(),
