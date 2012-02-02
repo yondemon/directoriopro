@@ -963,10 +963,10 @@ class UserController extends Controller
 
 		$category_id = $request->query->get('c');
 		if( $category_id ){
-			$query = $em->createQuery("SELECT c.id as comment_id, c.body, c.date, u.id as user_id, u.name, u.category_id, u.avatar_type, u.twitter_url, u.facebook_id, u.email FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.to_id AND u.category_id = :category_id ORDER BY c.id DESC")
+			$query = $em->createQuery("SELECT c.id as comment_id, c.body, c.date, u.id as user_id, u.name, u.slug, u.category_id, u.avatar_type, u.twitter_url, u.facebook_id, u.email FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.to_id AND u.category_id = :category_id ORDER BY c.id DESC")
 						->setParameter('category_id', $category_id);
 		}else{
-			$query = $em->createQuery("SELECT c.id as comment_id, c.body, c.date, u.id as user_id, u.name, u.category_id, u.avatar_type, u.twitter_url, u.facebook_id, u.email FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.to_id ORDER BY c.id DESC");
+			$query = $em->createQuery("SELECT c.id as comment_id, c.body, c.date, u.id as user_id, u.name, u.slug, u.category_id, u.avatar_type, u.twitter_url, u.facebook_id, u.email FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.to_id ORDER BY c.id DESC");
 		}
 		
 
