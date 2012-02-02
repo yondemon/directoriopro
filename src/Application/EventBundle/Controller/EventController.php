@@ -903,7 +903,7 @@ class EventController extends Controller
 		$qb = $em->createQueryBuilder()
 		   ->add('select', 'e')
 		   ->add('from', 'ApplicationEventBundle:Event e')
-		   ->add('orderBy', 'p.id ASC');
+		   ->add('orderBy', 'e.id ASC');
 
 		$entities = $qb->getQuery()->getResult();
 		$total = count( $entities );
