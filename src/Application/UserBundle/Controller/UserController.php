@@ -1298,6 +1298,7 @@ class UserController extends Controller
 		$qb = $em->createQueryBuilder()
 		   ->add('select', 'u')
 		   ->add('from', 'ApplicationUserBundle:User u')
+		   ->add('where', 'u.slug = null')
 		   ->add('orderBy', 'u.id ASC');
 
 		$entities = $qb->getQuery()->getResult();
