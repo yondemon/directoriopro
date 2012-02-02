@@ -933,6 +933,7 @@ class PostController extends Controller
 		$qb->add('select', 'e')
 		   ->add('from', 'ApplicationEventBundle:Event e')
 		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->andWhere('e.hashtag != :hashtag')->setParameter('hashtag', 'betabeers')
 		   ->add('orderBy', 'e.featured DESC, e.date_start ASC')
 		   ->setMaxResults(5);
 		
@@ -941,6 +942,21 @@ class PostController extends Controller
 		}
 		
 		$events = $qb->getQuery()->getResult();
+		
+		// eventos betabeers
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
+		   ->andWhere('e.hashtag = :hashtag')->setParameter('hashtag', 'betabeers')
+		   ->add('orderBy', 'e.featured DESC, e.date_start ASC')
+		   ->setMaxResults(5);
+		
+		if( $id ){
+			$qb->andWhere('e.city_id = :city_id')->setParameter('city_id', $id);
+		}
+		
+		$events2 = $qb->getQuery()->getResult();
 
 		// anuncios
 		$qb = $em->createQueryBuilder();
@@ -965,7 +981,7 @@ class PostController extends Controller
 		   ->andWhere("u.twitter_url IS NOT NULL")
 		   ->andWhere("u.url IS NOT NULL")
 		   ->add('orderBy', 'u.date_login DESC')
-		   ->setMaxResults(20);
+		   ->setMaxResults(25);
 		
 		if( $id ){
 			$qb->andWhere('u.city_id = :city_id')->setParameter('city_id', $id);
@@ -982,7 +998,7 @@ class PostController extends Controller
 	 	$twig = $this->container->get('twig'); 
 	    $twig->addExtension(new \Twig_Extensions_Extension_Text);		
 
-		return array('city' => $city, 'country' => $country, 'events' => $events, 'posts' => $posts, 'users' => $users, 'threads' => $threads );
+		return array('city' => $city, 'country' => $country, 'events' => $events, 'events2' => $events2, 'posts' => $posts, 'users' => $users, 'threads' => $threads );
 	}
 
 

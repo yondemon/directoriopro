@@ -10,7 +10,7 @@
 
 <div style="background:#F0F0F0;padding-bottom:25px">
 
-<table cellspacing="0" cellpadding="25" style="background:white;margin:auto;width:650px;font-family:arial;font-size:15px">
+<table cellspacing="0" cellpadding="25" style="background:white;margin:auto;width:600px;font-family:arial;font-size:15px">
 <tr>
 	<td valign="top">
 	
@@ -25,6 +25,23 @@
 	    {% endfor %}
 
 		<br/>
+		
+		<b>Próximos betabeers</b><br/><br/>
+
+	    {% for entity in events2 %}
+			<a href="{{ path('event_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</a>
+	    {% endfor %}
+
+
+		<br/>
+
+		<b>¿Cansado de tu trabajo?</b><br/><br/>
+	    {% for entity in posts %}
+				<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
+	    {% endfor %}
+	
+
+		<br/>
 
 		<b>Últimos temas en el foro</b><br/><br/>
 
@@ -35,20 +52,20 @@
 		{% endfor %}
 	
 	
+
+
 		<br/>
 
-		<b>¿Cansado de tu trabajo?</b><br/><br/>
-	    {% for entity in posts %}
-				<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
-	    {% endfor %}
+		<b>Este mes patrocina</b><br/><br/>
+	    <a href="http://bit.ly/AasuVb" target="_blank"><img src="http://betabeers.com/wp-content/themes/mejorandola/images/banners/chicisimo.png" width="125" height="125" style="border:1px #ccc solid;background:#efefef;margin:3px 3px 0 0"></a>
 
 	
 	</td>
 	<td valign="top" style="width:220px;background:#D7F2FF;">
 		<a href="http://dir.betabeers.com/user/invite" target="_blank" style="font-weight:bold;background:#FFC;padding:10px;text-align:center;color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Invitar contactos</a>
-		
-		<a href="http://betabeers.com/book" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Descargar entrevistas en PDF</a>
-		<a href="http://betabeers.com/quieres-presentar-en-betabeers/" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">¿Tienes un proyecto?</a>
+		<a href="http://dir.betabeers.com/test/1/show" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Test javascript</a>
+		<a href="http://cursos.betabeers.com/" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Cursos betabeers</a>
+		<a href="http://betabeers.com/book" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Descargar libro entrevistas</a>
 		<a href="http://dir.betabeers.com/user/freelance" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">¿Buscas freelance?</a>
 		<a href="http://groups.google.com/forum/#!forum/beta-beers" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Ver temas del foro</a>
 		
