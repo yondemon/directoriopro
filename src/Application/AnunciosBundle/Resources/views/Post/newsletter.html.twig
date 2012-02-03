@@ -38,7 +38,14 @@
 
 		<b>¿Cansado de tu trabajo?</b><br/><br/>
 	    {% for entity in posts %}
-				<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
+				<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
+				<span style="color:#666">
+					{% if entity.company %}
+						{{ entity.company }} - 
+					{% endif %}
+					{{ entity.location }}
+				</span>
+				<br/><br/>
 	    {% endfor %}
 	
 
@@ -65,7 +72,6 @@
 		<a href="http://dir.betabeers.com/user/freelance" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">¿Buscas freelance?</a>
 		<a href="http://groups.google.com/forum/#!forum/beta-beers" target="_blank" style="color:#267DD3;text-decoration:none;display:block;margin-bottom:20px;">Ver temas del foro</a>
 		
-		<br/>
 
 		Este mes patrocinan<br/><br/>
 		<a href="http://bit.ly/AasuVb" target="_blank"><img src="http://betabeers.com/wp-content/themes/mejorandola/images/banners/chicisimo.png" width="125" height="125" style="margin-right:3px"></a>

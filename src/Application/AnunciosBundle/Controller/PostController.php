@@ -980,7 +980,7 @@ class PostController extends Controller
 		   ->andWhere("u.twitter_url IS NOT NULL")
 		   ->andWhere("u.url IS NOT NULL")
 		   ->add('orderBy', 'u.date_login DESC')
-		   ->setMaxResults(25);
+		   ->setMaxResults(28);
 		
 		if( $id ){
 			$qb->andWhere('u.city_id = :city_id')->setParameter('city_id', $id);
