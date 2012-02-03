@@ -39,7 +39,7 @@
 		<b>¿Cansado de tu trabajo?</b><br/><br/>
 	    {% for entity in posts %}
 				<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
-				<span style="color:#666">
+				<span style="color:#999">
 					{% if entity.company %}
 						{{ entity.company }} - 
 					{% endif %}
@@ -58,7 +58,7 @@
 				<a href="{{ entity.link }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
 			{% endif %}
 		{% endfor %}
-		<a href="http://groups.google.com/group/beta-beers/" target="_blank" style="display:block;margin-bottom:20px;color:orange;font-weight:bold;text-decoration:none;">Suscribirse a la lista</a>
+		<a href="http://groups.google.com/group/beta-beers/" target="_blank" style="display:block;margin-bottom:20px;color:orange;font-weight:bold;text-decoration:none;">Ver más temas del foro</a>
 	
 
 
