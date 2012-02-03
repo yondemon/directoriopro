@@ -21,7 +21,7 @@
 		<b>Próximos eventos</b><br/><br/>
 
 	    {% for entity in events %}
-			<a href="{{ path('event_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</a>
+			<a href="{{ url('event_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</a>
 	    {% endfor %}
 		<a href="http://dir.betabeers.com/event/" target="_blank" style="display:block;margin-bottom:20px;color:orange;font-weight:bold;text-decoration:none;">Ver toda la agenda</a>
 
@@ -30,7 +30,7 @@
 		<b>Próximos betabeers</b><br/><br/>
 
 	    {% for entity in events2 %}
-			<a href="{{ path('event_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</a>
+			<a href="{{ url('event_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;margin-bottom:20px;color:#267DD3;text-decoration:none;">{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</a>
 	    {% endfor %}
 
 
@@ -38,7 +38,7 @@
 
 		<b>¿Cansado de tu trabajo?</b><br/><br/>
 	    {% for entity in posts %}
-				<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
+				<a href="{{ url('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="display:block;color:#267DD3;text-decoration:none;">{{ entity.title }}</a>
 				<span style="color:#999">
 					{% if entity.company %}
 						{{ entity.company }} - 
@@ -83,7 +83,7 @@
 
 		{% for entity in users %}
 			<img src="{{ entity.getAvatar('normal') }}" alt="{{ entity.name }}" style="float:left;margin-right:10px" width="35" height="35"/>
-			<a href="{{ path('user_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="color:#267DD3;text-decoration:none;display:block">{{ entity.name|truncate(21) }}</a>
+			<a href="{{ url('user_show', { 'id': entity.id, 'slug': entity.slug }) }}" target="_blank" style="color:#267DD3;text-decoration:none;display:block">{{ entity.name|truncate(21) }}</a>
 			<span style="color:#999">{{ categories[ entity.getCategoryId() ] }}</span>
 			<br style="clear:both"/><br/>
 		{% endfor %}
