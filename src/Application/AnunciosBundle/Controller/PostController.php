@@ -935,7 +935,7 @@ class PostController extends Controller
 		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
 		   ->andWhere('e.hashtag != :hashtag')->setParameter('hashtag', 'betabeers')
 		   ->add('orderBy', 'e.featured DESC, e.date_start ASC')
-		   ->setMaxResults(10);
+		   ->setMaxResults(5);
 		
 		if( $id ){
 			$qb->andWhere('e.city_id = :city_id')->setParameter('city_id', $id);
