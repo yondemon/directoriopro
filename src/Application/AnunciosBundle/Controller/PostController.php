@@ -139,8 +139,8 @@ class PostController extends Controller
 		}
 		*/
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
 		
 		$home = (!$category_id && $page == 1);
@@ -212,8 +212,8 @@ class PostController extends Controller
 
 
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('city' => $city, 'country' => $country, 'pager' => $html, 'entities' => $entities );
     }
@@ -490,8 +490,8 @@ class PostController extends Controller
 
 		$entities = $qb->getQuery()->getResult();
 		
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
         return array('entities' => $entities, 'form_category' =>$category_id, 'form_type' => $type);
     }
@@ -536,8 +536,8 @@ class PostController extends Controller
 
 		
 		
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
         return array('entities' => $entities, 'form_category' =>$category_id);
     }
@@ -676,8 +676,8 @@ class PostController extends Controller
         $categories = $db->fetchAll($query);
 
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('categories_aux' => $categories, 'pager' => $html, 'entities' => $entities);
     }
@@ -994,8 +994,8 @@ class PostController extends Controller
 		$threads = simplexml_load_file('https://groups.google.com/group/beta-beers/feed/rss_v2_0_topics.xml');
 		$threads = $threads->channel->item;
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);		
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);		
 
 		return array('city' => $city, 'country' => $country, 'events' => $events, 'events2' => $events2, 'posts' => $posts, 'users' => $users, 'threads' => $threads );
 	}
@@ -1027,8 +1027,8 @@ class PostController extends Controller
 		$entities = $query->getQuery()->getResult();
 
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
 
         return array('entities' => $entities );

@@ -104,8 +104,8 @@ class UserController extends Controller
         $users_ref = $db->fetchAll($query);
 
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 	
 
         return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1, 'users_ref' => $users_ref);
@@ -179,8 +179,8 @@ class UserController extends Controller
 
 
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 	
 
         return array('city' => $city, 'country' => $country, 'entities' => $entities, 'pager' => $html);
@@ -231,8 +231,8 @@ class UserController extends Controller
 		$html = $view->render($pagerfanta, $routeGenerator, array('category_id' => (int)$category_id));
 
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1);
     }
@@ -543,8 +543,8 @@ class UserController extends Controller
 		$query = $qb->getQuery();
 		$entities = $query->getResult();
 		
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
         return array('entities' => $entities);
     }
@@ -987,8 +987,8 @@ class UserController extends Controller
 		$html = $view->render($pagerfanta, $routeGenerator);
 
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('entities' => $entities, 'pager' => $html, 'nav_user' => 1);
 	}
@@ -1255,8 +1255,8 @@ class UserController extends Controller
         $categories = $db->fetchAll($query);
 
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('categories_aux' => $categories, 'pager' => $html, 'entities' => $entities);
     }
@@ -1329,8 +1329,8 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 	
 	
 

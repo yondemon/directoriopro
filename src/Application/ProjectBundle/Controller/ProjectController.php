@@ -86,8 +86,8 @@ class ProjectController extends Controller
 
 
 
-        $twig = $this->container->get('twig'); 
-        $twig->addExtension(new \Twig_Extensions_Extension_Text);
+        //$twig = $this->container->get('twig'); 
+        //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
 
 		switch( $type ){

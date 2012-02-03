@@ -87,8 +87,8 @@ class CityController extends Controller
 		$query = $qb->getQuery();
 		$ideas = $query->getResult();
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
 		return array('users' => $users, 'ideas' => $ideas, 'city' => $city);//, 'country' => $country
 

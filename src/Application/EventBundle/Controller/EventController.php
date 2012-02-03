@@ -126,8 +126,8 @@ class EventController extends Controller
 	
 
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('cities' => $cities, 'pager' => $html, 'entities' => $entities);
     }
@@ -247,8 +247,8 @@ class EventController extends Controller
 		   ->setMaxResults(13);
 		$cities = $qb->getQuery()->getResult();
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('cities' => $cities, 'city' => $city, 'country' => $country, 'pager' => $html, 'entities' => $entities, 'users' => $users);
     }
@@ -634,8 +634,8 @@ class EventController extends Controller
         //$em = $this->getDoctrine()->getEntityManager();
         //$entities = $em->getRepository('ApplicationEventBundle:Event')->findAll();
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('pager' => $html, 'entities' => $entities);
     }
@@ -707,8 +707,8 @@ class EventController extends Controller
 		$cities = $qb->getQuery()->getResult();
 		
 		
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
         return array('entities' => $entities, 'cities' => $cities);
 	}
@@ -756,8 +756,8 @@ class EventController extends Controller
 
 		
 		
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
         return array('entities' => $entities);
     }
@@ -800,8 +800,8 @@ class EventController extends Controller
 
 		
 		
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
 		
 		
@@ -870,8 +870,8 @@ class EventController extends Controller
 
 		
 		
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
 		
 		

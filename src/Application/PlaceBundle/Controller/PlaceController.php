@@ -81,8 +81,8 @@ class PlaceController extends Controller
 
 
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 	
 	
 
@@ -181,8 +181,8 @@ class PlaceController extends Controller
 		$cities = $qb->getQuery()->getResult();
 
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('cities' => $cities, 'city' => $city, 'country' => $country, 'pager' => $html, 'entities' => $entities );
     }
@@ -496,8 +496,8 @@ class PlaceController extends Controller
         //$em = $this->getDoctrine()->getEntityManager();
         //$entities = $em->getRepository('ApplicationEventBundle:Event')->findAll();
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('pager' => $html, 'entities' => $entities);
     }

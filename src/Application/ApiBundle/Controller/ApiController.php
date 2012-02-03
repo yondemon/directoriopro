@@ -93,8 +93,8 @@ class ApiController extends Controller
 			);
 		}
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
 		return new Response($callback.'('.json_encode($events).')');
     }
@@ -131,8 +131,8 @@ class ApiController extends Controller
 			);
 		}
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 		
 		return new Response($callback.'('.json_encode($jobs).')');
     }

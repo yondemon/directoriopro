@@ -55,8 +55,8 @@ class TestController extends Controller
 		$view = new DefaultView();
 		$html = $view->render($pagerfanta, $routeGenerator);
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array('pager' => $html, 'entities' => $entities);
     }
@@ -109,8 +109,8 @@ class TestController extends Controller
 		}
 		
 
-	 	$twig = $this->container->get('twig'); 
-	    $twig->addExtension(new \Twig_Extensions_Extension_Text);
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
 
         return array(
             'entity' => $entity,
