@@ -935,7 +935,7 @@ class PostController extends Controller
 		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
 		   ->andWhere('e.hashtag != :hashtag')->setParameter('hashtag', 'betabeers')
 		   ->add('orderBy', 'e.featured DESC, e.date_start ASC')
-		   ->setMaxResults(5);
+		   ->setMaxResults(10);
 		
 		if( $id ){
 			$qb->andWhere('e.city_id = :city_id')->setParameter('city_id', $id);
@@ -949,8 +949,7 @@ class PostController extends Controller
 		   ->add('from', 'ApplicationEventBundle:Event e')
 		   ->andWhere('e.date_start > :date')->setParameter('date', date('Y-m-d H:i:s'))
 		   ->andWhere('e.hashtag = :hashtag')->setParameter('hashtag', 'betabeers')
-		   ->add('orderBy', 'e.featured DESC, e.date_start ASC')
-		   ->setMaxResults(5);
+		   ->add('orderBy', 'e.featured DESC, e.date_start ASC');
 		
 		if( $id ){
 			$qb->andWhere('e.city_id = :city_id')->setParameter('city_id', $id);
