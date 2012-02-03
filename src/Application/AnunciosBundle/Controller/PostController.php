@@ -980,7 +980,7 @@ class PostController extends Controller
 		   ->andWhere("u.twitter_url IS NOT NULL")
 		   ->andWhere("u.url IS NOT NULL")
 		   ->add('orderBy', 'u.date_login DESC')
-		   ->setMaxResults(35);
+		   ->setMaxResults(20);
 		
 		if( $id ){
 			$qb->andWhere('u.city_id = :city_id')->setParameter('city_id', $id);
@@ -988,7 +988,7 @@ class PostController extends Controller
 		
 		$users = $qb->getQuery()->getResult();
 		shuffle( $users );
-		$users = array_splice($users, 0, 9);
+		$users = array_splice($users, 0, 14);
 
 		// google group
 		$threads = simplexml_load_file('https://groups.google.com/group/beta-beers/feed/rss_v2_0_topics.xml');
