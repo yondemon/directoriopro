@@ -1,0 +1,38 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Colaboradores" %}
+
+
+{% block sidebar %}
+
+<b>Secciones</b><br/>
+
+<a href="{{ path('page_success') }}">Casos de éxito</a>
+<a href="{{ path('page_faq') }}">Preguntas frecuentes</a>
+<a href="{{ path('page_about') }}">Acerca de</a>
+<a href="{{ path('page_opensource') }}">Open source</a>	
+<a href="{{ path('page_thanks') }}">Colaboradores</a>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<h1>Colaboradores</h1>
+
+No se puede ser bueno con todo, por suerte varias personas han ayudado a mejorar esta web con sus conocimientos y sin pedir nada a cambio, desde aquí quería agradecerles su ayuda:
+
+<br/><br/>
+
+<ul>
+	<li><a href="http://www.raulfrailebeneyto.com/" target="_blank">Raúl Fraile</a>, <a href="http://www.osukaru.es/" target="_blank">Oscar López</a>, <a href="http://www.ricardclau.com" target="_blank">Ricard Clau</a>, <a href="http://moidev.com" target="_blank">Moises Gallego</a> por la ayuda con symfony</li>
+	<li><a href="http://twitter.com/pablodip" target="_blank">Pablo Díez</a> por su bundle de symfony <a href="https://github.com/whiteoctober/Pagerfanta" target="_blank" style="color:gray">PagerFanta</a></li>
+	<li><a href="http://etnassoft.com/" target="_blank">Carlos Benítez</a> por el test javascript</li>
+	<li><a href="http://www.aleydasolis.com/" target="_blank">Aleyda Solis</a> y <a href="http://www.christianoliveira.com/blog/" target="_blank">Christian Oliveira</a> por la ayuda con el SEO</li>
+</ul>
+
+
+{% endblock %}
+
+

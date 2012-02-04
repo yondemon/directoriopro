@@ -1,0 +1,39 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Preguntas frecuentes" %}
+
+
+{% block sidebar %}
+
+<b>Secciones</b><br/>
+
+<a href="{{ path('page_success') }}">Casos de éxito</a>
+<a href="{{ path('page_faq') }}">Preguntas frecuentes</a>
+<a href="{{ path('page_about') }}">Acerca de</a>
+<a href="{{ path('page_opensource') }}">Open source</a>	
+<a href="{{ path('page_thanks') }}">Colaboradores</a>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<h1>Preguntas frecuentes</h1>
+
+<ol>
+	<li>
+		<b>¿Como publicar una oferta de empleo?</b><br/>
+		Publicar una oferta de empleo es gratis para ello <a href="{{ path('user_register') }}">hace falta registrado</a> y desde la misma página principal con el botón <a href="{{ path('post_new') }}">Publicar empleo</a><br/><br/>
+	</li>
+	<li>
+		<b>¿Qué tipo de ofertas de pueden publicar?</b><br/>
+		Ofertas de empleo a tiempo completo, freelance o para hacer prácticas.<br/><br/>
+	</li>
+	<li>
+		<b>¿Para que debería registrarme?</b><br/>
+		Este directorio pretende ser un punto de encuentro para reunir profesionales del sector tecnológico en internet, estar registrado te puede facilitar la forma de hacer contactos con gente relevante del sector.
+	</li>
+</ol>
+
+{% endblock %}

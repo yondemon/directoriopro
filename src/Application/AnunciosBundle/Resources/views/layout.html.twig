@@ -1,4 +1,4 @@
-{% set static_id = 37 %}
+{% set static_id = 38 %}
 
 {% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros", "Maquetador"] %}
 
@@ -143,15 +143,32 @@
 			</div>
 		</div>
 	</div>
+	
+	
 	<div class="footer">
-		<a href="http://twitter.com/betabeers" target="_blank">Sigue @betabeers en twitter</a>
-		<div class="pull-right">
-			<a href="{{ path('post_about') }}">¿Qué es esto?</a> &nbsp;&nbsp; 
-			<a href="http://dirbeta.tumblr.com/" target="_blank">Blog</a> &nbsp;&nbsp; 
-			<a href="{{ path('user_contact', { 'id': 9 }) }}">Contactar</a> &nbsp;&nbsp; 
-			&copy; 2011 betabeers
+		<div class="row">
+			<div class="span4">
+				Ayuda<br/>
+				<a href="{{ path('page_faq') }}">¿Como publicar un auncio?</a><br/>
+				<a href="{{ path('page_success') }}">Casos de éxito</a><br/>
+			</div>
+			<div class="span4">
+				Información<br/>
+				<a href="{{ path('page_about') }}">Acerca de y contacto</a><br/>
+				<a href="{{ path('page_thanks') }}">Colaboradores</a>
+			</div>
+			<div class="span4">
+				Comunicación<br/>
+				<a href="http://betabeers.com" target="_blank">Blog</a> / 
+				<a href="http://twitter.com/betabeers" target="_blank">Twitter</a> / 
+				<a href="http://facebook.com/betabeers" target="_blank">Facebook</a><br/>
+				<a href="http://betabeers.com/prensa/" target="_blank">Zona de prensa</a>
+			</div>
 		</div>
 	</div>
+	
+	
+
 </div>
 
 

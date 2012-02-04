@@ -61,7 +61,7 @@ PRE{background:white;border:0;padding:0;font-family:"Helvetica Neue",Helvetica,A
 .fixed{position:fixed}
 /* other */
 
-.footer{padding:15px 0 15px 0;margin-top:5px;border-top:1px #efefef solid;}
+.footer{margin-top:10px;background:#FDF5D9;padding:15px}
 	
 
 .wrap{width:750px;margin:auto;padding:10px}

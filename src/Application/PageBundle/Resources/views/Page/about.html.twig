@@ -1,0 +1,35 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Acerca de" %}
+
+{% block sidebar %}
+
+<b>Secciones</b><br/>
+
+<a href="{{ path('page_success') }}">Casos de éxito</a>
+<a href="{{ path('page_faq') }}">Preguntas frecuentes</a>
+<a href="{{ path('page_about') }}">Acerca de</a>
+<a href="{{ path('page_opensource') }}">Open source</a>	
+<a href="{{ path('page_thanks') }}">Colaboradores</a>
+	
+{% endblock %}
+
+{% block content %}
+
+<h1>Acerca de</h1>
+
+Betabeers es una reunión mensual de desarrolladores web y apps, que empezó en madrid con un grupo pequeño de amigos y que poco a poco se ha ido extendiendo a más ciudades llegando a formar una comunidad.
+
+<br/><br/>
+
+Este directorio nace de la necesidad de agrupar todas las ofertas de empleo, profesionales y eventos sobre desarrollo en un solo lugar.
+
+<br/><br/>
+
+Actualmente el directorio betabeers esta gestionado y mantenido por <a href="http://dir.betabeers.com/user/miquel-camps-orteza-9/">Miquel Camps Orteza</a>
+
+<br/><br/>
+
+<a href="http://betabeers.com/contacto/" class="btn">Contacta por email</a> o por <a href="http://twitter.com/betabeers">Twitter</a>
+
+{% endblock %}

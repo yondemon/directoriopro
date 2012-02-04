@@ -1,0 +1,38 @@
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Casos de éxito" %}
+
+
+{% block sidebar %}
+
+<b>Secciones</b><br/>
+
+<a href="{{ path('page_success') }}">Casos de éxito</a>
+<a href="{{ path('page_faq') }}">Preguntas frecuentes</a>
+<a href="{{ path('page_about') }}">Acerca de</a>
+<a href="{{ path('page_opensource') }}">Open source</a>	
+<a href="{{ path('page_thanks') }}">Colaboradores</a>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<h1>Casos de éxito</h1>
+
+<h3>Empresas</h3>
+
+<ul>
+<li>
+<b>Mathieu Derval - dilunch.com</b><br/>
+Gracias a este tipo de evento, hemos tenido la oportunidad de ampliar nuestras posibilidades para concretizar nuestra búsqueda de programador.<br/>
+En tan solo 2 días, después de que Alejandra contactó con Cristian para pedirle si tenía contactos,  he recibido 3 o 4 propuestas.<br/>
+Al final nos hemos quedado con uno que me contactó a través de vuestra bolsa de trabajo, es un chico de Cabra (Cordoba). Nos pusimos en contacto, y desde 2 semanas trabajamos junto sobre 2 tareas que teníamos pendientes en nuestra página. El tiempo nos dirá si esta elección habrá sido buena, pero por lo menos ha sido rápido!<br/>
+</li>
+</ul>
+
+
+
+
+{% endblock %}
