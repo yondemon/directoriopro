@@ -585,7 +585,7 @@ class UserController extends Controller
 				
 				extract( $values );
 				
-				if( filter_var($email, FILTER_VALIDATE_EMAIL) ){
+				if( filter_var($email, FILTER_VALIDATE_EMAIL) && !strstr( $body, '<a href=' ) ){
 
 					$header = 'From: ' . $email . " \r\n";
 					$header .= "X-Mailer: PHP/" . phpversion() . " \r\n";
