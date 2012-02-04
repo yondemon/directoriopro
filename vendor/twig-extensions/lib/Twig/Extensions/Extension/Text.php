@@ -53,8 +53,6 @@ function twig_md5_filter(Twig_Environment $env, $value)
 
 function twig_bbcode_filter(Twig_Environment $env, $value)
 {
-	$value = htmlentities($value);
-
     $simple_search = array(
 		'/\[b\](.*?)\[\/b\]/is',
 		'/     /',
@@ -71,7 +69,7 @@ function twig_bbcode_filter(Twig_Environment $env, $value)
 		'<a href="$1" target="_blank">$2</a>',
 		);
 
-	$value = preg_replace ($simple_search, $simple_replace, $value);
+	$value = preg_replace($simple_search, $simple_replace, $value);
 	return $value;
 }
 
