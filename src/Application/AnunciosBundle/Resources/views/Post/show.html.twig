@@ -109,7 +109,7 @@
 		<br/><br/>
 	{% endif %}
 
-	<pre>{{ entity.body }}</pre>
+	<pre>{{ entity.body|bbcode }}</pre>
 
 	<p>Publicado por <a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas - {{ entity.interested }} interesados</p>
 
