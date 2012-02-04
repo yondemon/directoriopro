@@ -1115,4 +1115,27 @@ class PostController extends Controller
 			);
     }
 
+
+    /**
+     * internship
+     *
+     * @Route("/internship", name="post_internship")
+     * @Template()
+     */
+    public function internshipAction()
+    {
+		$em = $this->getDoctrine()->getEntityManager();
+
+		$query = $em->createQueryBuilder();
+		$query->add('select', 'p')
+		   ->add('from', 'ApplicationAnunciosBundle:Post p')
+		   ->andWhere('p.visible = 1')
+		   ->andWhere('p.type = 2')
+		   ->add('orderBy', 'p.featured DESC, p.id DESC');
+
+		$entities = $query->getQuery()->getResult();
+	
+        return array('entities' => $entities);
+    }
+
 }

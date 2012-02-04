@@ -68,6 +68,16 @@
 
 
 
+<div style="background:#666;padding:10px">
+	<a href="{{ path('post_internship') }}" style="font-weight:bold;color:#efefef;margin-right:20px">Prácticas</a>
+	<a href="http://directoriopro.com/post/search?t=1" style="color:#efefef;margin-right:20px">Freelance</a>
+	<a href="http://directoriopro.com/post/?c=2" style="color:#efefef;margin-right:20px">Backend</a>
+	<a href="http://directoriopro.com/post/?c=1" style="color:#efefef;margin-right:20px">Frontend</a>
+	<a href="http://directoriopro.com/post/?c=3" style="color:#efefef;margin-right:20px">Programdor apps</a>
+	<a href="http://directoriopro.com/post/?c=8" style="color:#efefef;margin-right:20px">Diseñador</a>
+</div>
+
+
     {% for entity in entities %}
 		<div style="padding:15px 0;border-top:1px #efefef solid;{% if entity.featured != 1 and loop.index is divisibleby(2) %}background:#F6F6F6{% endif %}" {% if entity.featured == 1 %}class="featured"{% endif %}>
 
