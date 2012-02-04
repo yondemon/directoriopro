@@ -572,7 +572,7 @@ class PostController extends Controller
 				
 				$values = $form->getData();
 				
-				$toEmail = $entity->getEmail();// 'gafeman@gmail.com';
+				$toEmail = $entity->getEmail();
 				
 				extract( $values );
 				
@@ -595,16 +595,19 @@ class PostController extends Controller
 				
 					// backup
 					@mail("gafeman@gmail.com", $subject, utf8_decode($mensaje), $header);
+					
+					
+					// contabilizar contacto
+					$entity->setInterested( $entity->getInterested() + 1 );
+					$em->persist($entity);
+					$em->flush();
 				
 				}else{
 					return new Response("SPAM!");
 				}
 				
 				
-				// contabilizar contacto
-				$entity->setInterested( $entity->getInterested() + 1 );
-				$em->persist($entity);
-				$em->flush();
+
 				
 
 	
