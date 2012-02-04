@@ -575,24 +575,30 @@ class PostController extends Controller
 				$toEmail = $entity->getEmail();// 'gafeman@gmail.com';
 				
 				extract( $values );
-
-				$header = 'From: ' . $email . " \r\n";
-				$header .= "X-Mailer: PHP/" . phpversion() . " \r\n";
-				$header .= "Mime-Version: 1.0 \r\n";
-				$header .= "Content-Type: text/plain";
-
-				$mensaje = "Este mensaje fue enviado por " . $name . ". \r\n";
-				$mensaje .= "Su e-mail es: " . $email . "\r\n";
-				$mensaje .= "Mensaje: " . $body . " \r\n";
-				$mensaje .= "Enviado el " . date('d/m/Y', time());
-
-
-
-
-				$result = @mail($toEmail, $subject, utf8_decode($mensaje), $header);
 				
-				// backup
-				@mail("gafeman@gmail.com", $subject, utf8_decode($mensaje), $header);
+				if( filter_var($email, FILTER_VALIDATE_EMAIL) && !strstr( $body, '<a href=' ) ){
+
+					$header = 'From: ' . $email . " \r\n";
+					$header .= "X-Mailer: PHP/" . phpversion() . " \r\n";
+					$header .= "Mime-Version: 1.0 \r\n";
+					$header .= "Content-Type: text/plain";
+
+					$mensaje = "Este mensaje fue enviado por " . $name . ". \r\n";
+					$mensaje .= "Su e-mail es: " . $email . "\r\n";
+					$mensaje .= "Mensaje: " . $body . " \r\n";
+					$mensaje .= "Enviado el " . date('d/m/Y', time());
+
+
+
+
+					$result = @mail($toEmail, $subject, utf8_decode($mensaje), $header);
+				
+					// backup
+					@mail("gafeman@gmail.com", $subject, utf8_decode($mensaje), $header);
+				
+				}else{
+					return new Response("SPAM!");
+				}
 				
 				
 				// contabilizar contacto
