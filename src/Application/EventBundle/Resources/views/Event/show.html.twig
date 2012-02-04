@@ -123,7 +123,7 @@
 
 		
 		
-	<pre>{{ entity.body }}</pre>
+	<pre>{{ entity.body|bbcode|raw }}</pre>
 
 
 	{% if entity.resources %}
@@ -183,8 +183,8 @@ function replaceURLWithHTMLLinks(text) {
 
 
 
-$('pre').each(function() {
-     $(this).html( replaceURLWithHTMLLinks( $(this).html() ) );
-});
+//$('pre').each(function() {
+//     $(this).html( replaceURLWithHTMLLinks( $(this).html() ) );
+//});
 
 {% endblock %}

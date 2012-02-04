@@ -26,6 +26,7 @@ class Twig_Extensions_Extension_Text extends Twig_Extension
             'wordwrap' => new Twig_Filter_Function('twig_wordwrap_filter', array('needs_environment' => true)),
             'nl2br'    => new Twig_Filter_Function('twig_nl2br_filter', array('pre_escape' => 'html', 'is_safe' => array('html'))),
             'md5'      => new Twig_Filter_Function('twig_md5_filter', array('needs_environment' => true)),
+            'bbcode'   => new Twig_Filter_Function('twig_bbcode_filter', array('needs_environment' => true)),
         );
     }
 
@@ -48,6 +49,30 @@ function twig_nl2br_filter($value, $sep = '<br />')
 function twig_md5_filter(Twig_Environment $env, $value)
 {
     return md5($value);
+}
+
+function twig_bbcode_filter(Twig_Environment $env, $value)
+{
+	$value = htmlentities($value);
+
+    $simple_search = array(
+		'/\[b\](.*?)\[\/b\]/is',
+		'/     /',
+		'/- /',
+		'/\[imglink\=(.*?)\](.*?)\[\/imglink\]/is',
+		'/\[url\=(.*?)\](.*?)\[\/url\]/is',
+		); 
+
+	$simple_replace = array(
+		'<strong>$1</strong>',
+		'     &bull; ',
+		'     &bull; ',
+		'<a href="$1" target="_blank"><img src="$2" style="border:1px #efefef solid"/></a>',
+		'<a href="$1" target="_blank">$2</a>',
+		);
+
+	$value = preg_replace ($simple_search, $simple_replace, $value);
+	return $value;
 }
 
 if (function_exists('mb_get_info')) {
