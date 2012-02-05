@@ -43,12 +43,10 @@
 						<img src="{{ asset('bundles/applicationanuncios/images/weworked.png') }}" data-original-title="He trabajdo con esta persona" rel="twipsy" />
 					{% endif %}
 				</div>
-				<div class="span3">
+				<div class="span9">
 					<a href="{{ path('user_show', { 'id': item.from_id, 'slug': item.slug }) }}">{{ item.name }}</a><br/>
 					{{ categories[item.category_id] }}<br/>
 					<a href="{{ path('user_comment', { 'user_id': user.id, 'comment_id': item.id }) }}" class="date">{{ item.date|date('d/m/Y') }}</a>
-				</div>
-				<div class="span6">
 					<pre>{{ item.body }}</pre>
 				</div>
 			</div>
