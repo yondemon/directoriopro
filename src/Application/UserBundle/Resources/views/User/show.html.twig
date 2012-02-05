@@ -100,14 +100,14 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
   <li><a href="{{ path('user_search') }}?c={{ entity.categoryid }}">{{ categories[ entity.categoryid ] }}</a></li>
 </ul>
 
-<div style="margin-bottom:10px;padding:20px;padding-bottom:15px;background:#000 url('/bundles/applicationanuncios/images/bgprofile.png') no-repeat left top;color:white;font-size:15px">
+<div style="margin-bottom:10px;padding:12px;padding-bottom:11px;background:#000 url('/bundles/applicationanuncios/images/bgprofile.png') no-repeat left top;color:white;font-size:15px">
 
 
 
 <img src="{{ entity.getAvatar('bigger') }}" width="100" height="100" style="float:left;margin-right:15px"/>
 
 
-<h1 style="margin-bottom:5px;color:white;font-size:38px;width:410px;overflow:hidden;height:40px"><div style="width:800px">{{ entity.name }}</div></h1>
+<h1 style="margin-bottom:5px;color:white;font-size:35px;width:410px;overflow:hidden;height:37px"><div style="width:800px">{{ entity.name }}</div></h1>
 <div style="padding-bottom:10px">
 {{ categories[ entity.categoryid ] }} en {{ entity.location }} 
 {% if entity.freelance %}
