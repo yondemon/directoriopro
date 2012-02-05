@@ -152,15 +152,6 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
 </div>
 
 
-{% if badges %}
-	<div style="background:#E0F2FF;margin-top:-10px;padding-bottom:5px;margin-bottom:10px">
-		<img src="{{ asset('bundles/applicationanuncios/images/badges/trofeo.png') }}" width="40" height="40" style="float:left;margin:11px 0 0 11px"/>
-	    {% for badge in badges %}
-			<a href="{{ path('test_show', { 'id': badge.id }) }}" data-original-title="{{ badge.title }}" rel="twipsy" style="float:left;margin:11px 0 0 11px"><img src="{{ asset('bundles/applicationanuncios/images/badges/') }}{{ badge.id }}.png" width="40" height="40"/></a>
-	    {% endfor %}
-		<br class="clear"/>
-	</div>
-{% endif %}
 
 
 <ul id="tabs" class="tabs">
@@ -259,6 +250,20 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
 
 
 <div class="active" id="info">
+
+
+	{% if badges %}
+		<div style="background:#E0F2FF;margin-top:-20px;padding-bottom:5px;margin-bottom:10px">
+			<img src="{{ asset('bundles/applicationanuncios/images/badges/trofeo.png') }}" width="40" height="40" style="float:left;margin:11px 0 0 11px"/>
+		    {% for badge in badges %}
+				<a href="{{ path('test_show', { 'id': badge.id }) }}" data-original-title="{{ badge.title }}" rel="twipsy" style="float:left;margin:11px 0 0 11px"><img src="{{ asset('bundles/applicationanuncios/images/badges/') }}{{ badge.id }}.png" width="40" height="40"/></a>
+		    {% endfor %}
+			<br class="clear"/>
+		</div>
+	{% endif %}
+
+
+
 	{% if entity.body %}
 		<pre>{{ entity.body}}</pre>
 	{% else %}
