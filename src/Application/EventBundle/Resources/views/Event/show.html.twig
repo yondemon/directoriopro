@@ -170,21 +170,3 @@
 {% endblock %}
 
 
-
-
-{% block script_load %}
-
-
-function replaceURLWithHTMLLinks(text) {
-    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-    return text.replace(exp,"<a href='$1' target='_blank'>$1</a>"); 
-}
-
-
-
-
-//$('pre').each(function() {
-//     $(this).html( replaceURLWithHTMLLinks( $(this).html() ) );
-//});
-
-{% endblock %}
