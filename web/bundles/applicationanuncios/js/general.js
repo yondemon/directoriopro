@@ -247,7 +247,7 @@ function get_twitterstatus(){
 					$("#twitterstatus_info").html(html);
 					
 				    $.each(data, function(i,item){
-				      $('<li>' + item.text + '<br/><br/></li>').appendTo("#twitterstatus_list"); //<span class="date">' + item.created_at + '</span>
+				      $('<li>' + replaceURLWithHTMLLinks( item.text ) + '<br/><br/></li>').appendTo("#twitterstatus_list"); //<span class="date">' + item.created_at + '</span>
 				    });
 
 				}else{
