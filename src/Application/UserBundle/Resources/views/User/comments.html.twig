@@ -44,8 +44,7 @@
 					{% endif %}
 				</div>
 				<div class="span9">
-					<a href="{{ path('user_show', { 'id': item.from_id, 'slug': item.slug }) }}">{{ item.name }}</a><br/>
-					{{ categories[item.category_id] }}<br/>
+					<a href="{{ path('user_show', { 'id': item.from_id, 'slug': item.slug }) }}">{{ item.name }}</a> ({{ categories[item.category_id] }}) 
 					<a href="{{ path('user_comment', { 'user_id': user.id, 'comment_id': item.id }) }}" class="date">{{ item.date|date('d/m/Y') }}</a>
 					<pre>{{ item.body }}</pre>
 				</div>
