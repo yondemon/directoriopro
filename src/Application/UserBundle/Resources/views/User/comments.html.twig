@@ -45,8 +45,7 @@
 				</div>
 				<div class="span9">
 					<a href="{{ path('user_comment', { 'user_id': user.id, 'comment_id': item.id }) }}" class="date floatR">{{ item.date|date('d/m/Y') }}</a>
-					<a href="{{ path('user_show', { 'id': item.from_id, 'slug': item.slug }) }}">{{ item.name }}</a> - 
-					{{ categories[item.category_id] }} 
+					<b><a href="{{ path('user_show', { 'id': item.from_id, 'slug': item.slug }) }}">{{ item.name }}</a> - {{ categories[item.category_id] }}</b>
 					<pre>{{ item.body }}</pre>
 				</div>
 			</div>
