@@ -121,14 +121,13 @@ function get_github(){
 				if( data.repositories.length ){
 				    $.each(data.repositories, function(i,item){
 					  
-					  
-					  if( github_langs_values[item.language] ){
-						github_langs_values[item.language]++;
-					  }else{
-						github_langs_values[item.language] = 1;
+					  if( item.language ){
+						  if( github_langs_values[item.language] ){
+							github_langs_values[item.language]++;
+						  }else{
+							github_langs_values[item.language] = 1;
+						  }
 					  }
-
-
 
 				      $('<li><a href="' + item.url + '" target="_blank">' + item.name + ' (' + item.language + ')</a><br/>' + item.description + '</li>').appendTo("#github_projects");
 
@@ -137,10 +136,8 @@ function get_github(){
 					
 					
 					for( lang in github_langs_values ){
-						if( lang ){
-							github_langs.push( lang );
-							github_langs_values_aux.push(github_langs_values[lang]);
-						}
+						github_langs.push( lang );
+						github_langs_values_aux.push(github_langs_values[lang]);
 					}
 					
 					
