@@ -251,4 +251,4 @@ body{background:url('../images/bggray.gif');}
 
 .pagination{margin-bottom:0}
 
-.nav.secondary-nav{margin-left:0;margin-right:-20px}
+.topbar div > ul.secondary-nav, .nav.secondary-nav{margin-left:0;margin-right:-20px}
