@@ -96,6 +96,7 @@
 					<li class="dropdown">
 						<a href="{{ path('user_show', { 'id': app.session.get('id'), 'slug': app.session.get('slug') }) }}" class="dropdown-toggle">&nbsp;{{ app.session.get('name') }}&nbsp;</a>
         				<ul class="dropdown-menu">
+							<li class="hide_op"><a href="{{ path('user_show', { 'id': app.session.get('id'), 'slug': app.session.get('slug') }) }}">Perfil</a></li>
 							<li><a href="{{ path('user_edit') }}">Editar perfil</a></li>
 							<li><a href="{{ path('user_comments', { 'id': app.session.get('id') }) }}">Recomendaciones</a></li>
 
