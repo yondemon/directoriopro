@@ -244,4 +244,4 @@ LI.featured{background:#FEFBF3}
 /* jquery ui */
 .ui-autocomplete-loading { background: white url('../images/ui-anim_basic_16x16.gif') right center no-repeat; }
 
-body{background:url('../images/bgwood.png');height:100%;}
+body{background:url('../images/bgwood.png');}
