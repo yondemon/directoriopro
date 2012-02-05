@@ -29,7 +29,11 @@
 
 {% block content %}
 
-
+<ul class="breadcrumb">
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('event') }}">Eventos</a> <span class="divider">/</span></li>
+  <li class="active"><a href="{{ path('event_city', { 'id': city.id }) }}">{{ city.name }}, {{ country.name }}</a></li>
+</ul>
 
 {% if users %}
 	<div style="background:#FFFFCC;padding:10px;margin-bottom:10px">
