@@ -31,14 +31,12 @@
 
 {% block content %}
 
-
-<h1>Eventos</h1>
-
 <ul class="breadcrumb">
   <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
   <li class="active"><a href="{{ path('event') }}">Eventos</a></li>
 </ul>
 
+<h1>Eventos</h1>
 
 <ul style="list-style-type:none;margin:0">
     {% for entity in entities %}
