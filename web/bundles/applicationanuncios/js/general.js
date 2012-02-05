@@ -121,6 +121,7 @@ function get_github(){
 				if( data.repositories.length ){
 				    $.each(data.repositories, function(i,item){
 					  
+					  
 					  if( github_langs_values[item.language] ){
 						github_langs_values[item.language]++;
 					  }else{
@@ -136,8 +137,10 @@ function get_github(){
 					
 					
 					for( lang in github_langs_values ){
-						github_langs.push( lang );
-						github_langs_values_aux.push(github_langs_values[lang]);
+						if( lang ){
+							github_langs.push( lang );
+							github_langs_values_aux.push(github_langs_values[lang]);
+						}
 					}
 					
 					
