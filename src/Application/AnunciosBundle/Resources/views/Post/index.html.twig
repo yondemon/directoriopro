@@ -5,9 +5,7 @@
 
 
 {% block sidebar %}
-	<a href="{{ path('post_new') }}" class="btn large primary" style="font-weight:bold;font-size:20px;">Publicar empleo</a>
-	
-	<br/>
+
 	
 	<b>Empresas que buscan talento</b><br/>
 	<a href="http://dir.betabeers.com/post/search?q=chicisimo"><img src="{{ asset( 'bundles/applicationanuncios/images/companies/chicisimo.png' ) }}"/></a>
@@ -52,14 +50,21 @@
 
 <br class="clear"/>
 
+<!--
 <div style="float:right;margin-top:13px;padding:7px;background:#DDF4FB">
-	<a href="{{ path('post_feed') }}" style="background:url('{{ asset( 'bundles/applicationanuncios/images/rss.png' ) }}') no-repeat left center;padding-left:20px;font-weight:bold;color:black">Recibir ofertas de empleo</a>
+	<a href="{{ path('post_feed') }}" style="background:url('{{ asset( 'bundles/applicationanuncios/images/rss.png' ) }}') no-repeat left center;padding-left:20px;font-weight:bold;color:black">Recibir ofertas de empleo</a><br/>
+	<a href="http://feedburner.google.com/fb/a/mailverify?uri=betabeersjobs&amp;loc=en_US">Subscribe to Beetabeers Jobs by Email</a>
 	<form style="padding-top:8px;margin-bottom:0" action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=betabeersjobs', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"><input placeholder="Tu email" type="text" style="width:100px" name="email"/> <input type="hidden" value="betabeersjobs" name="uri"/><input type="hidden" name="loc" value="es_ES"/><input type="submit" value="Apuntarme" class="btn" /></form>
 </div>
+-->
+
+
+<a href="{{ path('post_new') }}" class="btn large primary" style="float:right;margin-top:30px;font-weight:bold;font-size:20px;">Publicar empleo</a>
+
 <div style="float:left;margin-top:5px">
 	<h1>Bolsa de empleo 2.0</h1>
 	<form action="{{ path('post_search') }}">
-		<input name="q" placeholder="Posicíón, keyword o empresa" style="width:250"/> <input value="Buscar" type="submit" class="btn primary" style="font-weight:bold"/>
+		<input name="q" placeholder="Posicíón, keyword o empresa" style="width:250"/> <input value="Buscar" type="submit" class="btn" style="font-weight:bold"/>
 	</form>
 </div>
 
@@ -79,10 +84,10 @@
 
 
     {% for entity in entities %}
-		<div style="padding:15px 0;border-top:1px #efefef solid;{% if entity.featured != 1 and loop.index is divisibleby(2) %}background:#F6F6F6{% endif %}" {% if entity.featured == 1 %}class="featured"{% endif %}>
+		<div style="padding:10px 0;border-top:1px #efefef solid;{% if entity.featured != 1 and loop.index is divisibleby(2) %}background:#F6F6F6{% endif %}" {% if entity.featured == 1 %}class="featured"{% endif %}>
 
 			<div style="float:left;width:415px;padding-left:15px">
-				<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="title" style="font-size:16px;line-height:16px;font-weight:bold;">{{ entity.title }}</a><br/>
+				<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="title" style="font-size:15px;line-height:16px;font-weight:bold;">{{ entity.title }}</a><br/>
 				{% if entity.company %}
 					{{ entity.company }} - 
 				{% endif %}

@@ -61,7 +61,7 @@ PRE{background:white;border:0;padding:0;font-family:"Helvetica Neue",Helvetica,A
 .fixed{position:fixed}
 /* other */
 
-.footer{margin-top:10px;background:#FDF5D9;padding:15px}
+.footer{margin:0 -20px 0 -20px;background:#DDF4FB;padding:25px}
 	
 
 .wrap{width:750px;margin:auto;padding:10px}
@@ -137,6 +137,7 @@ UL.list LI{clear:both;margin-bottom:10px}
 /* redesign topbar */
 /*body{padding-top:0}
 .topbar{position:relative}*/
+/*
 .topbar-inner, .topbar .fill{
   background-repeat: repeat-x;
   background-image: -khtml-gradient(linear, left top, left bottom, from(#fff), to(#f5f5f5));
@@ -153,16 +154,19 @@ UL.list LI{clear:both;margin-bottom:10px}
   border-bottom:1px #ccc solid;
   background-color: white;
 }
-.topbar h3 a, .topbar .brand{color:#F30;font-weight:bold;padding-right:10px}
-	.topbar .brand:hover{text-decoration:none}
 .topbar a{text-shadow:none}
 .nav a{color:#000}
-#query {margin-top:1px;border: 1px solid #CCC;background-image:url('../images/icon_search.png');background-repeat:no-repeat;background-position:10px center;color:#000;-webkit-border-radius:14px;border-radius:14px;padding:4px 9px 4px 30px;width:135px}
+
 .topbar div > ul a:hover, .nav a:hover {color:#000;background-color:#F7F7F7;}
 .topbar div > ul li.active > a, .nav li.active > a{color:black;background-color:#efefef;}
 
 ul.nav li.open{background-color:#191919}
 .topbar div > ul a, .nav a{padding:10px 10px 11px 11px;}
+*/
+.topbar h3 a, .topbar .brand{color:#F30;font-weight:bold;padding-right:10px}
+	.topbar .brand:hover{text-decoration:none}
+
+#query {margin-top:1px;border: 1px solid #CCC;background-image:url('../images/icon_search.png');background-repeat:no-repeat;background-position:10px center;color:#000;-webkit-border-radius:14px;border-radius:14px;padding:4px 9px 4px 30px;width:135px}
 
 /* buscador */
 #menu_options{position:absolute;background:#fff;color:white;width:210px;display:none;border:1px #AFAFAF solid;-webkit-box-shadow:1px 1px 4px #888;box-shadow:1px 1px 4px #888;-moz-box-shadow:1px 1px 4px #888}
@@ -171,15 +175,16 @@ ul.nav li.open{background-color:#191919}
 
 /* triangle menu dropdown */
 .dropdown li.hide_op{display:none;}
-a.menu:after,.dropdown-toggle:after{width:0;height:0;display:inline-block;content:"&darr;";text-indent:-99999px;vertical-align:top;margin-top:8px;margin-left:4px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid #000;filter:alpha(opacity=50);-khtml-opacity:0.5;-moz-opacity:0.5;opacity:0.5;}
+/*a.menu:after,.dropdown-toggle:after{width:0;height:0;display:inline-block;content:"&darr;";text-indent:-99999px;vertical-align:top;margin-top:8px;margin-left:4px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid #000;filter:alpha(opacity=50);-khtml-opacity:0.5;-moz-opacity:0.5;opacity:0.5;}
 .open a.dropdown-toggle:after{border-top:4px solid #fff}
-
+*/
 
 .breadcrumb{background:none;padding:0;border:0}
 
 
-#topbar a.config{font-size:0;background:url('../images/config.png') no-repeat center center;}
-#topbar li.open a.config{background-image:url('../images/config2.png')}
+/*#topbar a.config{font-size:0;background:url('../images/config.png') no-repeat center center;}
+#topbar li.open a.config{background-image:url('../images/config2.png')}*/
+#topbar a.config{font-size:0;background:url('../images/config2.png') no-repeat center center;}
 #topbar a.config::after{opacity:0}
 
 
@@ -238,3 +243,4 @@ LI.featured{background:#FEFBF3}
 /* jquery ui */
 .ui-autocomplete-loading { background: white url('../images/ui-anim_basic_16x16.gif') right center no-repeat; }
 
+body{background:url('../images/bgwood.png')}
