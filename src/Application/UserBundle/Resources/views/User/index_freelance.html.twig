@@ -4,7 +4,13 @@
 {% block title "Profesionales" %}
 
 {% block sidebar %}
-	<a href="{{ path('user_register') }}" class="btn primary" style="font-weight:bold;font-size:20px;">Registrarte</a>
+
+	{% if app.session.get('name') %}
+		<a href="{{ path('user_invite') }}" class="btn primary" style="font-weight:bold;font-size:20px;">Invitar contactos</a>
+	{% else %}
+		<a href="{{ path('user_register') }}" class="btn primary" style="font-weight:bold;font-size:20px;">Registrarte</a>
+	{% endif %}
+
 	<br/>
 
 	<b>Filtrar por categoría</b><br/>

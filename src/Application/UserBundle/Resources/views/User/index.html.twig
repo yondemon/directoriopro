@@ -4,7 +4,14 @@
 {% block title "Profesionales" %}
 
 {% block sidebar %}
-	<a href="{{ path('user_register') }}" class="btn primary" style="font-weight:bold;font-size:20px;">Registrarte</a>
+
+	{% if app.session.get('name') %}
+		<a href="{{ path('user_invite') }}" class="btn primary" style="font-weight:bold;font-size:20px;">Invitar contactos</a>
+	{% else %}
+		<a href="{{ path('user_register') }}" class="btn primary" style="font-weight:bold;font-size:20px;">Registrarte</a>
+	{% endif %}
+	
+	
 	<br/>
 
 	<b>Filtrar por categoría</b><br/>
@@ -28,7 +35,7 @@
 
 {% if users_ref %}
 
-	<a href="{{ path('user_invite') }}" class="btn" style="float:right;font-size:16px;">Invitar contactos</a>
+
 
 	{% for user in users_ref %}
 		<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" data-original-title="<b>{{ categories[ user.category_id ] }}</b><br/>{{ user.name }}" rel="twipsy" style="float:left;margin-right:5px"><span style="position:absolute;margin-top:20px;padding:0 5px;background:red;color:white;font-size:10px">{{ user.total }}</span><img src="
