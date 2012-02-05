@@ -163,10 +163,11 @@ UL.list LI{clear:both;margin-bottom:10px}
 ul.nav li.open{background-color:#191919}
 .topbar div > ul a, .nav a{padding:10px 10px 11px 11px;}
 */
-.topbar h3 a, .topbar .brand{color:#F30;font-weight:bold;padding-right:10px}
+.topbar h3 a, .topbar .brand{color:#F30;font-weight:normal;padding-right:10px;padding-left:0}
 	.topbar .brand:hover{text-decoration:none}
 
-#query {margin-top:1px;border: 1px solid #CCC;background-image:url('../images/icon_search.png');background-repeat:no-repeat;background-position:10px center;color:#000;-webkit-border-radius:14px;border-radius:14px;padding:4px 9px 4px 30px;width:135px}
+#query {background-color:#fff;margin-top:1px;border: 1px solid #666;background-image:url('../images/icon_search.png');background-repeat:no-repeat;background-position:10px center;color:#000;-webkit-border-radius:14px;border-radius:14px;padding:4px 9px 4px 30px;width:0}
+#query:focus{width:135px}
 
 /* buscador */
 #menu_options{position:absolute;background:#fff;color:white;width:210px;display:none;border:1px #AFAFAF solid;-webkit-box-shadow:1px 1px 4px #888;box-shadow:1px 1px 4px #888;-moz-box-shadow:1px 1px 4px #888}
