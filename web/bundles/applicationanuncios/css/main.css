@@ -16,6 +16,7 @@ body {
 
 /* The white background content wrapper */
 #content {
+  box-shadow:0 1px 15px 5px #ccc;
   min-height:320px;
   background-color: #fff;
   padding: 20px;
