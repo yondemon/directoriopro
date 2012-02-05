@@ -91,10 +91,10 @@
 	        </form>
 			<ul class="nav secondary-nav">
 				{% if app.session.get('name') %}
-					<li><a href="{{ path('user_invite') }}" class="label warning" style="line-height:10px;margin-top:10px;padding:5px 10px;background:#efefef;font-weight:normal;color:#000">Invitar</a></li>
-					<li><a href="{{ path('user_show', { 'id': app.session.get('id'), 'slug': app.session.get('slug') }) }}">{{ app.session.get('name') }}</a></li>
+					<li><a href="{{ path('user_invite') }}" class="btn primary" style="color:#fff;line-height:5px;margin-top:7px;">Invitar</a></li>
+					
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle config">&nbsp;</a>
+						<a href="{{ path('user_show', { 'id': app.session.get('id'), 'slug': app.session.get('slug') }) }}" class="dropdown-toggle">&nbsp;{{ app.session.get('name') }}&nbsp;</a>
         				<ul class="dropdown-menu">
 							<li><a href="{{ path('user_edit') }}">Editar perfil</a></li>
 							<li><a href="{{ path('user_comments', { 'id': app.session.get('id') }) }}">Recomendaciones</a></li>
