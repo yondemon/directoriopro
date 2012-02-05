@@ -158,19 +158,34 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
 
 
 	<li class="dropdown" data-dropdown="dropdown">
-		<a href="#" class="dropdown-toggle">Perfil</a>
+		<a href="#" class="dropdown-toggle">Información</a>
 		<ul class="dropdown-menu">
 			<li class="active"><a href="#info"><img src="/bundles/applicationanuncios/images/portafolio.png" align="absmiddle"> Descripción</a></li>
 			<li id="tab_linkedin" style="display:none"><a href="#linkedin" onclick="get_linkedin();"><img src="/bundles/applicationanuncios/images/linkedin.png" align="absmiddle"> CV en linkedin</a></li>
+			{% if entity.pinboardurl or entity.deliciousurl %}
+				<li id="tab_delicious" style="display:none"><a href="#delicious" onclick="get_delicious();"><img src="/bundles/applicationanuncios/images/delicious.png" align="absmiddle"> delicious</a></li>
+				<li id="tab_pinboard" style="display:none"><a href="#pinboard" onclick="get_pinboard();"><img src="/bundles/applicationanuncios/images/pinboard.png" align="absmiddle"> pinboard</a></li>
+			{% endif %}
 		</ul>
 	</li>
 
-
-
-
+	{% if entity.githuburl or entity.stackoverflowurl or entity.masterbranchurl or entity.chromeurl or entity.androidurl or entity.itunesurl %}
+		<li class="dropdown" data-dropdown="dropdown">
+			<a href="#" class="dropdown-toggle">Programador</a>
+			<ul class="dropdown-menu">
+				<li id="tab_github" style="display:none"><a href="#github" onclick="get_github();"><img src="/bundles/applicationanuncios/images/github.png" align="absmiddle"> Github</a></li>
+				<li id="tab_stackoverflow" style="display:none"><a href="#stackoverflow" onclick="get_stackoverflow();"><img src="/bundles/applicationanuncios/images/stackoverflow.png" align="absmiddle"> Stackoverflow</a></li>
+				<li id="tab_masterbranch" style="display:none"><a href="#masterbranch" onclick="get_masterbranch();"><img src="/bundles/applicationanuncios/images/masterbranch.png" align="absmiddle"> Masterbranch</a></li>
+				<li id="tab_android" style="display:none"><a href="#android" onclick="get_android();"><img src="/bundles/applicationanuncios/images/android.png" align="absmiddle"> Android</a></li>
+				<li id="tab_itunes" style="display:none"><a href="#itunes" onclick="get_itunes();"><img src="/bundles/applicationanuncios/images/itunes.png" align="absmiddle"> iPhone / iPad</a></li>
+				<li id="tab_chrome" style="display:none"><a href="#chrome" onclick="get_chrome();"><img src="/bundles/applicationanuncios/images/chrome.png" align="absmiddle"> Chrome</a></li>
+			</ul>
+		</li>
+	{% endif %}
+	
 	{% if entity.dribbbleurl or entity.forrsturl or entity.flickrurl %}
 		<li class="dropdown" data-dropdown="dropdown">
-			<a href="#" class="dropdown-toggle">Diseña</a>
+			<a href="#" class="dropdown-toggle">Diseñador</a>
 			<ul class="dropdown-menu">
 				<li id="tab_flickr" style="display:none"><a href="#flickr" onclick="get_flickr();"><img src="/bundles/applicationanuncios/images/flickr.png" align="absmiddle"> Flickr</a></li>
 				<li id="tab_dribbble" style="display:none"><a href="#dribbble" onclick="get_dribbble();"><img src="/bundles/applicationanuncios/images/dribbble.png" align="absmiddle"> Dribbble</a></li>
@@ -179,57 +194,23 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
 		</li>
 	{% endif %}
 	
-	{% if entity.githuburl or entity.stackoverflowurl or entity.masterbranchurl %}
+	{% if entity.youtubeurl or entity.vimeourl or entity.twitterurl %}
 		<li class="dropdown" data-dropdown="dropdown">
-			<a href="#" class="dropdown-toggle">Programa</a>
+			<a href="#" class="dropdown-toggle">Comunicación</a>
 			<ul class="dropdown-menu">
-				<li id="tab_github" style="display:none"><a href="#github" onclick="get_github();"><img src="/bundles/applicationanuncios/images/github.png" align="absmiddle"> Github</a></li>
-				<li id="tab_stackoverflow" style="display:none"><a href="#stackoverflow" onclick="get_stackoverflow();"><img src="/bundles/applicationanuncios/images/stackoverflow.png" align="absmiddle"> Stackoverflow</a></li>
-				<li id="tab_masterbranch" style="display:none"><a href="#masterbranch" onclick="get_masterbranch();"><img src="/bundles/applicationanuncios/images/masterbranch.png" align="absmiddle"> Masterbranch</a></li>
-			</ul>
-		</li>
-	{% endif %}
-	
-	{% if entity.youtubeurl or entity.vimeourl %}
-		<li class="dropdown" data-dropdown="dropdown">
-			<a href="#" class="dropdown-toggle">Video</a>
-			<ul class="dropdown-menu">
+				<li id="tab_twitterstatus"><a href="#twitterstatus" onclick="get_twitterstatus();">Twitter</a></li>
+				<!--<li id="tab_twitter"><a href="#twitter" onclick="get_twitter();">Listas</a></li>-->
 				<li id="tab_youtube" style="display:none"><a href="#youtube" onclick="get_youtube();"><img src="/bundles/applicationanuncios/images/youtube.png" align="absmiddle"> Youtube</a></li>
 				<li id="tab_vimeo" style="display:none"><a href="#vimeo" onclick="get_vimeo();"><img src="/bundles/applicationanuncios/images/vimeo.png" align="absmiddle"> Vimeo</a></li>
 			</ul>
 		</li>
 	{% endif %}
 	
-	{% if entity.chromeurl or entity.androidurl or entity.itunesurl %}
-		<li class="dropdown" data-dropdown="dropdown">
-			<a href="#" class="dropdown-toggle">Apps</a>
-			<ul class="dropdown-menu">
-				<li id="tab_android" style="display:none"><a href="#android" onclick="get_android();"><img src="/bundles/applicationanuncios/images/android.png" align="absmiddle"> Android</a></li>
-				<li id="tab_itunes" style="display:none"><a href="#itunes" onclick="get_itunes();"><img src="/bundles/applicationanuncios/images/itunes.png" align="absmiddle"> iPhone / iPad</a></li>
-				<li id="tab_chrome" style="display:none"><a href="#chrome" onclick="get_chrome();"><img src="/bundles/applicationanuncios/images/chrome.png" align="absmiddle"> Chrome</a></li>
-			</ul>
-		</li>
-	{% endif %}
+
 	
-	{% if entity.pinboardurl or entity.deliciousurl %}
-		<li class="dropdown" data-dropdown="dropdown">
-			<a href="#" class="dropdown-toggle">Favs</a>
-			<ul class="dropdown-menu">
-				<li id="tab_delicious" style="display:none"><a href="#delicious" onclick="get_delicious();"><img src="/bundles/applicationanuncios/images/delicious.png" align="absmiddle"> delicious</a></li>
-				<li id="tab_pinboard" style="display:none"><a href="#pinboard" onclick="get_pinboard();"><img src="/bundles/applicationanuncios/images/pinboard.png" align="absmiddle"> pinboard</a></li>
-			</ul>
-		</li>
-	{% endif %}
+
 	
-	{% if entity.twitterurl %}
-		<li class="dropdown" data-dropdown="dropdown">
-			<a href="#" class="dropdown-toggle">Twitter</a>
-			<ul class="dropdown-menu">
-				<li id="tab_twitterstatus"><a href="#twitterstatus" onclick="get_twitterstatus();">Estados</a></li>
-				<li id="tab_twitter"><a href="#twitter" onclick="get_twitter();">Listas</a></li>
-			</ul>
-		</li>
-	{% endif %}
+
 	
 	
 	
