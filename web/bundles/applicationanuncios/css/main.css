@@ -166,7 +166,7 @@ ul.nav li.open{background-color:#191919}
 .topbar h3 a, .topbar .brand{color:#F30;font-weight:normal;padding-right:10px;padding-left:0}
 	.topbar .brand:hover{text-decoration:none}
 
-#query {background-color:#fff;margin-top:1px;border: 1px solid #666;background-image:url('../images/icon_search.png');background-repeat:no-repeat;background-position:10px center;color:#000;-webkit-border-radius:14px;border-radius:14px;padding:4px 9px 4px 30px;width:0}
+#query {background-color:#fff;margin-top:1px;border: 1px solid #666;background-image:url('../images/icon_search.png');background-repeat:no-repeat;background-position:10px center;color:#000;-webkit-border-radius:14px;border-radius:14px;padding:4px 9px 4px 30px;width:50px}
 #query:focus{width:135px}
 
 /* buscador */
