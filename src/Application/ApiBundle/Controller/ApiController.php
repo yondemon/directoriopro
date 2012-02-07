@@ -161,7 +161,7 @@ class ApiController extends Controller
 			$users[] = array(
 				'name' => $entity->getName(),
 				//'text' => $entity->getBody(),
-				'avatar' => $entity->getAvatar(),
+				'avatar' => $entity->getAvatar('mini'),
 				'type' => $categories[$entity->getCategoryId()]
 				
 			);
