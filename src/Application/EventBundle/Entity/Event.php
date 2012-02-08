@@ -64,6 +64,13 @@ class Event
     private $date_end;
 
     /**
+     * @var datetime $date_update
+     *
+     * @ORM\Column(name="date_update", type="datetime")
+     */
+    private $date_update;
+
+    /**
      * @var integer $featured
      *
      * @ORM\Column(name="featured", type="integer")
@@ -290,6 +297,26 @@ class Event
     public function getDateEnd()
     {
         return $this->date_end;
+    }
+
+    /**
+     * Set date_update
+     *
+     * @param datetime $dateUpdate
+     */
+    public function setDateUpdate($dateUpdate)
+    {
+        $this->date_update = $dateUpdate;
+    }
+
+    /**
+     * Get date_update
+     *
+     * @return datetime 
+     */
+    public function getDateUpdate()
+    {
+        return $this->date_update;
     }
 
     /**

@@ -38,7 +38,14 @@
 
 <h1>Eventos</h1>
 
-<ul style="list-style-type:none;margin:0">
+<ul id="tabs" class="tabs">
+  <li class="active"><a href="{{ path('event') }}">Próximos</a></li>
+  <li><a href="{{ path('event_resources') }}">Recursos</a></li>
+</ul>
+
+
+
+<ul style="clear:both;list-style-type:none;margin:0">
     {% for entity in entities %}
         	
 			{% if entity.date_now %}

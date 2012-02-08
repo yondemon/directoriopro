@@ -1,0 +1,65 @@
+{% set nav_event = 1 %}
+{% extends "ApplicationAnunciosBundle::layout.html.twig" %}
+
+{% block title "Recursos de eventos" %}
+
+
+{% block sidebar %}
+
+
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<ul class="breadcrumb">
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('event') }}">Eventos</a> <span class="divider">/</span></li>
+  <li class="active"><a href="{{ path('event_resources') }}">Recursos</a></li>
+</ul>
+
+<h1>Recursos de eventos</h1>
+
+<ul id="tabs" class="tabs">
+  <li><a href="{{ path('event') }}">Próximos</a></li>
+  <li class="active"><a href="{{ path('event_resources') }}">Recursos</a></li>
+</ul>
+
+
+
+<ul style="clear:both;list-style-type:none;margin:0">
+    {% for entity in entities %}
+        	
+			{% if entity.date_now %}
+				<li style="margin-bottom:10px;background:url('{{ asset('bundles/applicationanuncios/images/calendar.png') }}') no-repeat left center;padding:10px;padding-left:41px;font-weight:bold;font-size:15px;color:#404040">{{ entity.date_now }}</li>
+			{% endif %}
+			
+			
+			<li style="margin-bottom:20px;margin-left:39px" {% if entity.featured == 1 %}class="featured"{% endif %}">
+				
+	            <a href="{{ path('event_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="title">{{ entity.title }}</a><br/>
+	
+	
+	
+	
+				{% if entity.resources %}
+				<pre>{{ entity.resources }}</pre>
+				{% endif %}
+				
+
+        </li>
+    {% endfor %}
+</ul>
+
+
+
+
+
+{{ pager|raw }}
+
+
+
+
+{% endblock %}

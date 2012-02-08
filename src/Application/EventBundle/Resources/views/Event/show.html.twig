@@ -123,13 +123,15 @@
 
 		
 		
-	<pre>{{ entity.body|bbcode|raw }}</pre>
+<pre>
+{{ entity.body|bbcode|raw }}
+{% if entity.resources %}
 
+<b>Recursos</b>
 
-	{% if entity.resources %}
-		<b>Recursos</b><br/><br/>
-		<pre style="background:none;">{{ entity.resources }}</pre>
-	{% endif %}
+{{ entity.resources }}
+{% endif %}
+</pre>
 		
 
 	
