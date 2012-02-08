@@ -833,6 +833,37 @@ class EventController extends Controller
     }
 
 
+    /**
+     * Feed Resources Event entities.
+     *
+     * @Route("/resources/feed", name="event_resources_feed", defaults={"_format"="xml"})
+     * @Template()
+     */
+    public function resourcesFeedAction()
+    {
+	
+		$em = $this->getDoctrine()->getEntityManager();
+
+
+
+
+		$query = $em->createQueryBuilder()
+		   ->add('select', 'e')
+		   ->add('from', 'ApplicationEventBundle:Event e')
+		   ->andWhere('e.date_update != :date')->setParameter('date', '0000-00-00 00:00:00')
+		   ->add('orderBy', 'e.date_update DESC')
+		   ->setMaxResults(10);
+
+
+		$entities = $query->getQuery()->getResult();
+
+		
+		
+	 	//$twig = $this->container->get('twig'); 
+	    //$twig->addExtension(new \Twig_Extensions_Extension_Text);
+		
+        return array('entities' => $entities);
+    }
 
 
     /**

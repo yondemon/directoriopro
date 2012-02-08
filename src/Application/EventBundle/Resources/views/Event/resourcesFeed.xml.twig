@@ -1,0 +1,23 @@
+{% set sitename = "RSS Recursos eventos Betabeers" %}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" version="2.0">
+<channel>
+	<title>{{ sitename }}</title>
+	<link>{{ url('event_resources') }}</link>
+	<description></description>
+	<lastBuildDate>{{ "now"|date('D, d M Y H:i:s O') }}</lastBuildDate>
+	<language>es</language>
+	
+	{% for entity in entities %}
+
+		<item>
+			<title>{{ entity.title }} - {{ entity.getPrettyDate('%e %B') }}</title>
+			<link>{{ url('event_show', { 'id': entity.id, 'slug': entity.slug }) }}</link>
+			<pubDate>{{ entity.date|date('D, d M Y H:i:s O') }}</pubDate>
+			<category>{{ entity.location }}</category>
+			<description><![CDATA[{{ entity.body|truncate(200) }}]]></description>
+		</item>
+	{% endfor %}
+	
+	</channel>
+</rss>
