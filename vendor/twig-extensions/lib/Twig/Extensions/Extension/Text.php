@@ -56,7 +56,7 @@ function twig_bbcode_filter(Twig_Environment $env, $value)
     $simple_search = array(
 		'/\[b\](.*?)\[\/b\]/is',
 		'/     /',
-		'/- /',
+		//'/- /',
 		'/\[imglink\=(.*?)\](.*?)\[\/imglink\]/is',
 		'/\[url\=(.*?)\](.*?)\[\/url\]/is',
 		); 
@@ -64,7 +64,7 @@ function twig_bbcode_filter(Twig_Environment $env, $value)
 	$simple_replace = array(
 		'<strong>$1</strong>',
 		'     &bull; ',
-		'     &bull; ',
+		//'     &bull; ',
 		'<a href="$1" target="_blank"><img src="$2" style="border:1px #efefef solid"/></a>',
 		'<a href="$1" target="_blank">$2</a>',
 		);
