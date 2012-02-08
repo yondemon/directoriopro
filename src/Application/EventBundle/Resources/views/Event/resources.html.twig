@@ -6,7 +6,12 @@
 
 {% block sidebar %}
 
+	<a href="{{ path('event_new') }}" class="btn large primary" style="font-weight:bold;font-size:20px;">Publicar evento</a><br/>
 
+	<b>Suscribirse</b><br/><br/>
+	<ul>
+		<li><a style="display:inline" href="{{ path('event_resources_feed') }}" target="_blank">RSS</a></li>
+	</ul>
 
 {% endblock %}
 
