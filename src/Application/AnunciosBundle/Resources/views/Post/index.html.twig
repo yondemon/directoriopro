@@ -133,20 +133,13 @@
 
 {% block script_load %}
 
-	/*
-	var i = 0;
-	var total = $('.user_box div').size();
-	function showMoreFreelancers(){
-		if( i >= total ) i = 0;
-		$('.user_box div').hide();
-		$('.user_box div').eq(i).show();
-		i++;
-	}
-	showMoreFreelancers();
-	$('#btn_more').click(function(){
-		showMoreFreelancers();
-		return false;
-	});
-	*/
+
+	
+  var uvOptions = {};
+  (function() {
+    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/EJ9MNe5mnqsdtWENt31fw.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+  })();
 	
 {% endblock %}
