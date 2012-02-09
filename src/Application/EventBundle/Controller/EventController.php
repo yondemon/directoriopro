@@ -392,6 +392,7 @@ class EventController extends Controller
 		$date_end = $entity->getDateEnd();
 		$entity->setDateStart(  new \DateTime( $date_start->format('Y-m-d') . ' ' . $h_start . ":" . $m_start . ':00' ) );
 		$entity->setDateEnd(  new \DateTime( $date_end->format('Y-m-d') . ' ' . $h_end . ":" . $m_end . ':00' ) );
+		$entity->setDateUpdate( new \DateTime( '0000-00-00 00:00:00' ) );
 
         if ($form->isValid()) {
 			$entity->setSlug( getSlug( $entity->getTitle() . ' ' . $entity->getPrettyDate('%e %B %Y') ) );
