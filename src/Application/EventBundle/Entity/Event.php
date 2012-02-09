@@ -66,7 +66,7 @@ class Event
     /**
      * @var datetime $date_update
      *
-     * @ORM\Column(name="date_update", type="datetime")
+     * @ORM\Column(name="date_update", type="datetime", nullable=true)
      */
     private $date_update;
 
