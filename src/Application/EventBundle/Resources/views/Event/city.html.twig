@@ -75,7 +75,7 @@
 				<br/>
 	            {{ entity.body|truncate(200) }}
 				<br/>
-				<a href="{{ path('city_show', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>
+				<span class="date">{{ entity.location }}</span>
 				
 				{% if entity.users %}
 					<div style="padding-top:5px">

@@ -143,7 +143,7 @@
 				<div id="coll{{ loop.index }}" class="accordion-body collapse">
 					<div class="accordion-inner">
 						{% for user in users_cat  %}
-							<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" rel="twipsy" style="float:left;margin:0 10px 10px 0;width:240px"><img src="{{ user.getAvatar('normal') }}" width="24" height="24" align="absmiddle"/> {{ user.getName() }}</a>
+							<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" style="float:left;margin:0 10px 10px 0;width:240px"><img src="{{ user.getAvatar('normal') }}" width="24" height="24" align="absmiddle"/> {{ user.getName() }}</a>
 						{% endfor %}
 					</div>
 				</div>
