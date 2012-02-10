@@ -132,17 +132,10 @@
 	{% if users %}
 		<b>{{ users | length }} apuntados</b>
 		<br/><br/>
-		
 
-		{% for key, users_cat in users %} 
-		
-		
-		
-		
 		
 		<div class="accordion" id="accordion2">
-
-
+		{% for key, users_cat in users %} 
 			<div class="accordion-group">
 				<div class="accordion-heading group_edit">
 					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#coll{{ loop.index }}">{{ categories[ key ] }} ({{ users_cat | length }})</a>
@@ -155,14 +148,8 @@
 					</div>
 				</div>
 			</div>
-
-
-
-		</div>
-		
-		
-
 		{% endfor %}
+		</div>
 
 	{% endif %}
 	
