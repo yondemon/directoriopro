@@ -1059,7 +1059,8 @@ class EventController extends Controller
 		$qb->add('select', 'u')
 		   ->add('from', 'ApplicationUserBundle:User u, ApplicationEventBundle:EventUser eu')
 		   ->andWhere('u.id = eu.user_id')
-		   ->andWhere('eu.event_id = :id')->setParameter('id', $id);
+		   ->andWhere('eu.event_id = :id')->setParameter('id', $id)
+		   ->add('orderBy', 'u.category_id ASC, u.name ASC');
 		$query = $qb->getQuery();
 		$users_aux = $query->getResult();
 		
