@@ -4,13 +4,16 @@
 {% block title "Buscar profesionales" %}
 
 {% block sidebar %}
-	<a href="{{ path('user_register') }}" class="btn primary" style="font-weight:bold;font-size:20px;margin-top:15px">Registrarte</a>
-	<br/>
+	<a href="{{ path('user_register') }}" class="btn btn-primary btn-large">Registrarte</a>
+	
 
-	<b>Filtrar por categoría</b><br/>
+	<b>Filtrar por categoría</b><br/><br/>
+	<ul>
 	{% for category in categories %}
-		<a href="{{ path('user') }}?c={{loop.index0}}">{{category}}</a>
+		<li><a href="{{ path('user') }}?c={{loop.index0}}">{{category}}</a></li>
 	{% endfor %}
+	</url>
+	
 {% endblock %}
 
 {% block content %}

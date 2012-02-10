@@ -30,7 +30,7 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link rel="stylesheet" href="{{ asset('bundles/applicationanuncios/bootstrap/bootstrap.min.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('bundles/applicationanuncios/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="all" />
 	<link rel="stylesheet" href="{{ asset('bundles/applicationanuncios/css/main.css') }}?v={{ static_id }}" type="text/css" media="all" />
 	
 	<link rel="alternate" type="application/rss+xml" title="Betabeers jobs" href="http://feeds.feedburner.com/betabeersjobs" />
@@ -38,104 +38,119 @@
 <body>
 
 
-	
-<div class="topbar" id="topbar">
-	<div class="fill">
-		<div class="container">
-			<a class="brand" href="/">{{sitename}}</a>
-			<ul class="nav">
+
+<!-- Navbar -->
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="/">Betabeers</a>
+        <div class="nav-collapse">
+
+<ul class="nav">
+		<li>
+			<a href="{{ path('post') }}">Empleo</a>
+
+		</li>
+		
+		
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profesionales <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+			<li><a href="{{ path('user') }}">Directorio</a></li>
+			<li><a href="{{ path('user_freelance') }}">Freelance</a></li>
+			<li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
+            <li class="divider"></li>
+			<li><a href="{{ path('test') }}">Tests</a></li>
+          </ul>
+        </li>
 
 
-				 
-				<li class="dropdown">
-					<a href="{{ path('post') }}">Empleo</a>
-					<!--
-    				<ul class="dropdown-menu">
-    					<li class="hide_op"><a href="{{ path('post') }}">Empleo</a></li>
-						<li><a href="{{ path('post_search') }}?t=1">Freelance</a></li>
-						<li><a href="{{ path('post_search') }}?t=2">Colaboraciones</a></li>
-					</ul>
-					-->
-				</li>
-				
-				<li class="dropdown">
-					<a href="{{ path('user') }}" class="dropdown-toggle">Profesionales</a>
-    				<ul class="dropdown-menu">
-    					<li class="hide_op"><a href="{{ path('user') }}">Profesionales</a></li>
-						<li><a href="{{ path('user_freelance') }}">Freelance</a></li>
-						<li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
-						<li><a href="{{ path('test') }}">Tests</a></li>
-					</ul>
-				</li>
-				
+
+		<li>
+			<a href="{{ path('event') }}">Eventos</a>
+		</li>
+		
+		<li>
+			<a href="{{ path('place') }}">Coworking</a>
+		</li>
+</ul>
 
 
 
-				<li class="dropdown">
-					<a href="{{ path('event') }}">Eventos</a>
-				</li>
-				
-				<li class="dropdown">
-					<a href="{{ path('place') }}">Coworking</a>
-				</li>
-				
-			</ul>
-			<form id="form_search" class="pull-left" action="{{ path('post') }}search">
-	            <input name="q" id="query" type="text" placeholder="Buscar" autocomplete="off" class="medium">
-				
-				<div id="menu_options">
-					<a href="#" onclick="$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Empleos</a>
-					<a href="#" onclick="$('#form_search').attr('action','{{ path('user') }}search').submit()">Buscar Profesionales</a>
-					<a href="#" onclick="$('#form_search').attr('action','{{ path('event') }}search').submit()">Buscar Eventos</a>
-				</div>
-	        </form>
-			<ul class="nav secondary-nav">
-				{% if app.session.get('name') %}
-
-					
-					<li class="dropdown">
-						<a href="{{ path('user_show', { 'id': app.session.get('id'), 'slug': app.session.get('slug') }) }}" class="dropdown-toggle">&nbsp;{{ app.session.get('name') }}&nbsp;</a>
-        				<ul class="dropdown-menu">
-							<li class="hide_op"><a href="{{ path('user_show', { 'id': app.session.get('id'), 'slug': app.session.get('slug') }) }}">Perfil</a></li>
-							<li><a href="{{ path('user_invite') }}">Invitar contactos</a></li>
-							<li><a href="{{ path('user_edit') }}">Editar perfil</a></li>
-							<!--<li><a href="{{ path('user_comments', { 'id': app.session.get('id') }) }}">Recomendaciones</a></li>-->
-
-							{% if app.session.get('admin') %}
-								<li class="divider"></li>
-								<li><a href="{{ path('post_stats') }}">Estadísticas</a></li>
-								<li><a href="{{ path('post_admin') }}">Administrar anuncios</a></li>
-								<li><a href="{{ path('user_admin') }}">Administrar usuarios</a></li>
-								<li><a href="{{ path('event_admin') }}">Administrar eventos</a></li>
-								<li><a href="{{ path('place_admin') }}">Administrar espacios</a></li>
-							{% endif %}
-							<li class="divider"></li>
-							<li><a href="{{ path('user_logout') }}">Salir</a></li>
-						</ul>
-				{% else %}
-					
-					
-					<li class="dropdown">
-						<a href="{{ path('user_welcome') }}" class="dropdown-toggle">Iniciar sesión</a>
-	    				<ul class="dropdown-menu">
-							<li class="hide_op"><a href="{{ path('user_welcome') }}">Iniciar sesión</a></li>
-							<li><a href="{{ path('user_fblogin') }}">Entra con facebook</a></li>
-							<li><a href="{{ path('user_register') }}">Registrate</a></li>
-						</ul>
-					</li>
-					
-					
-				{% endif %}
-				</li>
-			</ul>
-		</div>
+<form class="navbar-search pull-left" action="{{ path('post_search') }}" id="form_search">
+  <input type="text" name="q" id="query" class="search-query span2" placeholder="Buscar" autocomplete="off">
+	<div id="menu_options">
+		<a href="#" onclick="$('#form_search').attr('action','{{ path('post') }}search').submit()">Buscar Empleos</a>
+		<a href="#" onclick="$('#form_search').attr('action','{{ path('user') }}search').submit()">Buscar Profesionales</a>
+		<a href="#" onclick="$('#form_search').attr('action','{{ path('event') }}search').submit()">Buscar Eventos</a>
 	</div>
-</div>
+</form>
+
+
+
+
+
+
+<ul class="nav pull-right">
+	{% if app.session.get('name') %}
+
+		
+		<li class="dropdown">
+		
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{ app.session.get('name') }} <b class="caret"></b></a>
+		
+
+			<ul class="dropdown-menu">
+				<li><a href="{{ path('user_show', { 'id': app.session.get('id'), 'slug': app.session.get('slug') }) }}">Perfil</a></li>
+				<li><a href="{{ path('user_invite') }}">Invitar contactos</a></li>
+				<li><a href="{{ path('user_edit') }}">Editar perfil</a></li>
+
+
+				{% if app.session.get('admin') %}
+					<li class="divider"></li>
+					<li><a href="{{ path('post_stats') }}">Estadísticas</a></li>
+					<li><a href="{{ path('post_admin') }}">Administrar anuncios</a></li>
+					<li><a href="{{ path('user_admin') }}">Administrar usuarios</a></li>
+					<li><a href="{{ path('event_admin') }}">Administrar eventos</a></li>
+					<li><a href="{{ path('place_admin') }}">Administrar espacios</a></li>
+				{% endif %}
+				<li class="divider"></li>
+				<li><a href="{{ path('user_logout') }}">Salir</a></li>
+			</ul>
+	{% else %}
+		
+		
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Iniciar sesión <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li><a href="{{ path('user_welcome') }}">Iniciar sesión</a></li>
+				<li><a href="{{ path('user_fblogin') }}">Entra con facebook</a></li>
+				<li><a href="{{ path('user_register') }}">Registrate</a></li>
+			</ul>
+		</li>
+		
+		
+	{% endif %}
+	</li>
+</ul>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 <div class="container">
 	<div id="content">
-		<div class="row">
-			<div class="span10">
+		<div class="row show-grid">
+			<div class="span6">
 				{% block content %}{% endblock %}
 			</div>
 			<div class="span3 filters">
@@ -148,18 +163,18 @@
 	
 	
 	<div class="footer">
-		<div class="row">
-			<div class="span4">
+		<div class="row show-grid">
+			<div class="span2">
 				Ayuda<br/>
 				<a href="{{ path('page_faq') }}">¿Cómo publicar un anuncio?</a><br/>
 				<a href="{{ path('page_success') }}">Casos de éxito</a><br/>
 			</div>
-			<div class="span4">
+			<div class="span2">
 				Información<br/>
 				<a href="{{ path('page_about') }}">Acerca de y contacto</a><br/>
 				<a href="{{ path('page_thanks') }}">Colaboradores</a>
 			</div>
-			<div class="span4">
+			<div class="span2">
 				Comunicación<br/>
 				<a href="http://betabeers.com" target="_blank">Blog</a> / 
 				<a href="http://twitter.com/betabeers" target="_blank">Twitter</a> / 
@@ -177,15 +192,25 @@
 
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all" />
 <link rel="stylesheet" href="http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css" type="text/css" media="all" />
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
 
+
+<script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap.min.js') }}?v=6"></script>
+
+
+<!--
 <script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-dropdown.js') }}?v=6"></script>
 <script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-modal.js') }}"></script>
 <script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-twipsy.js') }}"></script>
 <script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-popover.js') }}"></script>
 <script src="{{ asset('bundles/applicationanuncios/bootstrap/js/bootstrap-tabs.js') }}"></script>
-<script src="{{ asset('bundles/applicationanuncios/js/general.js') }}?v={{ static_id }}"></script>	
+-->
+
+
+
+<script src="{{ asset('bundles/applicationanuncios/js/general.js') }}?v={{ static_id }}"></script>
 {% block load_src %}{% endblock %}
 <script type="text/javascript">
 /* onload */
@@ -193,17 +218,43 @@ $().ready(function(){
 
 	{% block script_load %}{% endblock %}
 
-	$('#topbar').dropdown();
-	$("*[rel=twipsy]").twipsy({live: true, html: true, placement: 'below', animate: false});
+
+
+
+
+
+
+
+
+
+
+
+
+//$('.dropdown-toggle').dropdown()
+
+
+
+
+	//$('#topbar').dropdown();
+	$("*[rel=twipsy]").tooltip({placement:'bottom',animation:false});//{live: true, html: true, placement: 'below', animate: false}
+
+
+
+
+
+
 	
 	$('#query').focus(function(){
 		$('#menu_options').show();
 	});
+
+	
 	$('#query').blur(function(){
 		setTimeout(function(){
 			$('#menu_options').hide();
 		},300);
 	});
+
 
 	
 });

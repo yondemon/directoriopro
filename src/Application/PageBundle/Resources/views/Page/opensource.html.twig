@@ -5,13 +5,14 @@
 
 {% block sidebar %}
 
-<b>Secciones</b><br/>
-
-<a href="{{ path('page_success') }}">Casos de éxito</a>
-<a href="{{ path('page_faq') }}">Preguntas frecuentes</a>
-<a href="{{ path('page_about') }}">Acerca de</a>
-<a href="{{ path('page_opensource') }}">Open source</a>	
-<a href="{{ path('page_thanks') }}">Colaboradores</a>
+<b>Secciones</b><br/><br/>
+<ul>
+	<li><a href="{{ path('page_success') }}">Casos de éxito</a></li>
+	<li><a href="{{ path('page_faq') }}">Preguntas frecuentes</a></li>
+	<li><a href="{{ path('page_about') }}">Acerca de</a></li>
+	<li><a href="{{ path('page_opensource') }}">Open source</a></li>
+	<li><a href="{{ path('page_thanks') }}">Colaboradores</a></li>
+</ul>
 
 {% endblock %}
 

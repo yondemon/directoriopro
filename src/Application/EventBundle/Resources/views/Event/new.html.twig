@@ -9,7 +9,7 @@
 
 <style>
 TEXTAREA.xlarge{width:430px}
-#application_anunciosbundle_posttype_type label{float:none;margin:0 20px 0 5px}
+#application_anunciosbundle_posttype_type label{display:inline;margin:0 20px 0 5px}
 
 
 
@@ -21,7 +21,7 @@ TEXTAREA.xlarge{width:430px}
 
 {% if app.session.get('id') %}
 
-<form action="{{ path('event_create') }}" method="post" {{ form_enctype(form) }}>
+<form class="form-horizontal" action="{{ path('event_create') }}" method="post" {{ form_enctype(form) }}>
 
 	{{ form_errors(form) }}
 
@@ -52,9 +52,10 @@ TEXTAREA.xlarge{width:430px}
 
 	
 	<div class="dates">
-		<div class="clearfix ">
+	
+		<div class="control-group">
 			<label for="application_eventbundle_eventtype_date_start" class=" required">Fecha inicio</label>
-			<div class="input">
+			<div class="controls">
 				<input type="text" id="application_eventbundle_eventtype_date_start" name="application_eventbundle_eventtype[date_start]" required="required"    class="xlarge" rows="9" value="" /> &nbsp;
 				<select name="h_start">
 				{% for i in hours %}
@@ -69,9 +70,9 @@ TEXTAREA.xlarge{width:430px}
 				</select>
 			</div>
 		</div>
-		<div class="clearfix ">
+		<div class="control-group">
 			<label for="application_eventbundle_eventtype_date_end" class=" required">Fecha fin</label>
-			<div class="input">
+			<div class="controls">
 				<input type="text" id="application_eventbundle_eventtype_date_end" name="application_eventbundle_eventtype[date_end]" required="required"    class="xlarge" rows="9" value="" /> &nbsp;
 				<select name="h_end">
 				{% for i in hours %}
@@ -91,8 +92,8 @@ TEXTAREA.xlarge{width:430px}
 	{{ form_row(form.hashtag, { 'label': 'Hashtag' }) }}
 	
 
-	<div class="actions">
-        <button type="submit" class="btn primary" style="width:150px">Publicar</button>
+	<div class="form-actions">
+        <button type="submit" class="btn btn-primary" style="width:150px">Publicar</button>
 	</div>
 
 	{{ form_row(form._token) }}

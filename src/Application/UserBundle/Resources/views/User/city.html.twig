@@ -26,7 +26,8 @@
 
 <ul class="breadcrumb">
   <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
-  <li class="active"><a href="{{ path('user') }}">Profesionales</a></li>
+  <li><a href="{{ path('user') }}">Profesionales</a></li>
+  <li class="active"><a href="{{ path('user') }}">{{ city.name }}, {{ country.name }}</a></li>
 </ul>
 
 <h1>Profesionales en {{ city.name }}, {{ country.name }}</h1>

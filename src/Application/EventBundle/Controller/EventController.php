@@ -279,6 +279,7 @@ class EventController extends Controller
 		if( $entities ){
 			$total = count($entities);
 			$date_now = false;
+
 			
 			for( $i = 0; $i < $total; $i++ ){
 				
@@ -296,8 +297,8 @@ class EventController extends Controller
 				   ->andWhere('u.id = eu.user_id')
 				   ->andWhere('eu.event_id = :id')->setParameter('id', $entities[$i]->getId())
 				   ->setMaxResults(13);
-				$query = $qb->getQuery();
-				$entities[$i]->users_list = $query->getResult();
+	
+				$entities[$i]->users_list = $qb->getQuery()->getResult();
 			}
 		}
 	
@@ -1060,7 +1061,16 @@ class EventController extends Controller
 		   ->andWhere('u.id = eu.user_id')
 		   ->andWhere('eu.event_id = :id')->setParameter('id', $id);
 		$query = $qb->getQuery();
-		$users = $query->getResult();
+		$users_aux = $query->getResult();
+		
+		$users = array();
+		if( $users_aux ){
+			foreach( $users_aux as $user ){
+				$users[ $user->getCategoryId() ][] = $user;
+			}
+		}
+		
+		
 
 
 		$city = $em->getRepository('ApplicationCityBundle:City')->find( $entity->getCityId() );

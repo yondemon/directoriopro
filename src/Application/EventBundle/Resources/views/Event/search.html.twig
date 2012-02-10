@@ -24,11 +24,16 @@
 
 {% block content %}
 
+<ul class="breadcrumb">
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('event') }}">Eventos</a> <span class="divider">/</span></li>
+  <li class="active">Buscar</li>
+</ul>
 
 <h1>Buscar eventos</h1>
 
 
-
+{% if entities %}
 
 <ul style="list-style-type:none;margin:0">
     {% for entity in entities %}
@@ -49,15 +54,7 @@
 				<br/>
 				<a href="{{ path('event_city', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>
 				
-				{% if entity.users %}
-					<div style="padding-top:5px">
-						<span class="users" style="margin-left:0;width:34px;height:34px;background-color:#efefef;float:left;margin-right:5px;background-position:10px center"><span style="position:relative;top:7px;left:10px;">{{ entity.users }}</span></span>
-						{% for user in entity.users_list %}
-							<img src="{{ user.getAvatar('normal') }}" width="34" height="34" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"/>
-						{% endfor %}
-						<br class="clear"/>
-					</div>
-				{% endif %}
+
 				
 
         </li>
@@ -66,6 +63,9 @@
 
 
 
+{% else %}
+	sin resultados, prueba con otra busqueda
+{% endif %}
 
 
 

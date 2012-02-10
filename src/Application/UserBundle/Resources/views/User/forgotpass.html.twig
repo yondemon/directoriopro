@@ -10,7 +10,7 @@
 <h1>Cambiar contraseña</h1>
 
 
-<form action="{{ path('user_forgotpass', { 'token': token, 'id': entity.id }) }}" method="post">
+<form class="form-horizontal" action="{{ path('user_forgotpass', { 'token': token, 'id': entity.id }) }}" method="post">
 
 	
   {{ form_errors(form) }}
@@ -21,8 +21,8 @@
 	{{ form_row(form.pass, { 'label': 'Contraseña' }) }}
 
 
-	<div class="actions">
-		<button type="submit" class="btn primary">Cambiar contraseña</button>
+	<div class="form-actions">
+		<button type="submit" class="btn btn-primary">Cambiar contraseña</button>
 	</div>
 
 	

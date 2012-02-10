@@ -5,16 +5,16 @@
 
 {% block sidebar %}
 
-	<a href="{{ path('post_new') }}" class="btn large primary">Publicar anuncio</a>
-	<br/>
+	<a href="{{ path('post_new') }}" class="btn btn-large btn-primary">Publicar anuncio</a>
 
-
-	<b>Filtrar por categoría</b><br/>
+	<b>Categorías</b><br/><br/>
+	<ul>
 	{% for category in categories_aux %}
 		{% if category.category_id != 0 and category.category_id != 13 %}
-			<a href="{{ path('post_admin') }}?c={{ category.category_id }}"><b>{{ category.total }}</b> &nbsp;{{ categories[ category.category_id ] }}</a>
+			<li><a href="{{ path('post_admin') }}?c={{ category.category_id }}"><b>{{ category.total }}</b> &nbsp;{{ categories[ category.category_id ] }}</a></li>
 		{% endif %}
 	{% endfor %}
+	</ul>
 
 {% endblock %}
 
@@ -29,7 +29,7 @@
 
 {% if entities %}
 
-	<table class="zebra-striped">
+	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
 				<th>Anuncio</th>
@@ -62,7 +62,7 @@
 				<td>{{ entity.interested }}</td>
 				<td nowrap="nowrap">
 					<a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn">editar</a> 
-					<a href="{{ path('post_admin_featured', { 'id': entity.id, 'value': featured }) }}" class="btn {% if entity.featured %}primary{% endif %}">&#9733;</a>
+					<a href="{{ path('post_admin_featured', { 'id': entity.id, 'value': featured }) }}" class="btn {% if entity.featured %}btn-primary{% endif %}">&#9733;</a>
 					<a href="{{ path('post_admin_visible', { 'id': entity.id, 'value': visible }) }}">{% if entity.visible %}visible{% else %}<span style="color:red">oculto</span>{% endif %}</a>
 				</td>
 	        </tr>

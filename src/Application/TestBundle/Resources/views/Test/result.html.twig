@@ -7,7 +7,7 @@
 {% block sidebar %}
 
 
-<div class="alert-message block-message warning" style="padding:14px;width:151px;">
+<div class="alert" style="padding:14px;width:151px;">
 <b>Reta a tus amigos</b>
 
 <br/><br/>
@@ -49,7 +49,7 @@ Para desbloquear el mérito {{entity.tag}} tienes que acertar todas las pregunta
 <div style="background:#99CC00;text-align:center;padding:10px 0;color:white;float:left;margin-right:1px;width:90px"><b style="display:block;font-size:50px;padding-top:20px">{{ ok }}</b><br/>ACIERTOS</div>
 <div style="background:#FF6666;text-align:center;padding:10px 0;color:white;float:left;margin-right:20px;width:90px"><b style="display:block;font-size:50px;padding-top:20px">{{ total - ok }}</b><br/>FALLOS</div>
 
-<a href="{{ path('test_take', { 'id': entity.id }) }}" class="btn" style="float:left;font-size:20px;margin-left:20px;margin-top:30px">¿Repetir test?</a>
+<a href="{{ path('test_take', { 'id': entity.id }) }}" class="btn btn-large" style="float:left;margin-left:20px;margin-top:30px">¿Repetir test?</a>
 
 
 <br class="clear"/>

@@ -12,7 +12,7 @@ TEXTAREA.xlarge{width:430px}
 	<h1>Recomendar a {{ user.name }}</h1>
 	
 
-	<form action="{{ path('user_recommend', { 'id': user.id }) }}" method="post">
+	<form class="form-horizontal" action="{{ path('user_recommend', { 'id': user.id }) }}" method="post">
 
 
 		{{ form_errors(form) }}
@@ -26,8 +26,8 @@ TEXTAREA.xlarge{width:430px}
 
 
 
-		<div class="actions">
-			<button type="submit" class="btn primary">Guardar recomendación</button> &nbsp;
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Guardar recomendación</button> &nbsp;
 			<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" class="btn">Volver al perfil</a>
 		</div>
 

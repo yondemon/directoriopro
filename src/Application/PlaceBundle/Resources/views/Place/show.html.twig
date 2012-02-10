@@ -7,8 +7,8 @@
 
 {% block sidebar %}
 
-<div style="background:#666;padding:15px;color:white;display:block">
-	<div style="padding:0 0 5px 0;">
+<div style="background:#666;padding:15px 15px 0 15px;color:white;display:block">
+	<div style="padding:0 0 10px 0;">
 		<a href="http://maps.google.es/maps?q={{ entity.address }}, {{ location }}" target="_blank" style="padding-left:30px;padding-top:0;min-height:29px;background:url('{{ asset('bundles/applicationanuncios/images/marker.png') }}') no-repeat left top;color:white">
 		{{ entity.address }}, {{ location }}
 		</a>
@@ -17,13 +17,13 @@
 
 
 	{% if user.id == false %}
-		<a class="btn primary" href="{{ path('place_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a>
+		<a class="btn btn-primary" href="{{ path('place_go', { 'id': entity.id, 'value': 1 }) }}">Trabajo aquí</a>
 	{% else %}
 
 		{% if apuntado == false %}
-			<a class="btn primary" href="{{ path('place_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a>
+			<a class="btn btn-primary" href="{{ path('place_go', { 'id': entity.id, 'value': 1 }) }}">Trabajo aquí</a>
 		{% else %}
-			<a class="btn danger" href="{{ path('place_go', { 'id': entity.id, 'value': 0 }) }}">No voy a ir</a>
+			<a class="btn btn-danger" href="{{ path('place_go', { 'id': entity.id, 'value': 0 }) }}">No voy a ir</a>
 		{% endif %}
 	
 	{% endif %}
@@ -77,8 +77,7 @@
 
 
 <style>
-.filters{border:0;}
-.filters a.btn{margin-top:10px;width:160px;}
+.filters a.btn{width:160px;}
 </style>
 
 <ul class="breadcrumb">

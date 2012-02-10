@@ -12,7 +12,7 @@
 
 {% if result == 0 %}
 
-<form action="{{ path('post_contact', { 'id': entity.id }) }}" method="post">
+<form class="form-horizontal" action="{{ path('post_contact', { 'id': entity.id }) }}" method="post">
 
 	
   {{ form_errors(form) }}
@@ -27,8 +27,8 @@
 
 
 
-		<div class="actions">
-			<button type="submit" class="btn primary">Enviar</button> &nbsp;
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Enviar</button> &nbsp;
 			<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="btn">Cancelar</a>
 		</div>
 	
@@ -38,7 +38,7 @@
 {% elseif result == 1 %}
 
 	
-	<div class="alert-message block-message success">
+	<div class="alert alert-success">
 		<b>Mensaje enviado correctamente</b>
 		<div class="alert-actions">
 			<a class="btn small" href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}">Volver al anuncio</a>

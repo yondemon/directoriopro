@@ -8,12 +8,12 @@
 {% block sidebar %}
 
 {% if entity.enabled %}
-<a href="{{ path('test_take', { 'id': entity.id }) }}" class="btn large primary" style="font-weight:bold;font-size:20px;">Hacer test</a>
+<a href="{{ path('test_take', { 'id': entity.id }) }}" class="btn btn-large btn-primary">Hacer test</a>
 <br/>
 {% endif %}
 
 
-<div class="alert-message block-message warning" style="padding:14px 0;width:179px;text-align:center">
+<div class="alert" style="padding:14px 0;width:179px;text-align:center">
 	<b>¡Supera el test y<br/>desbloquea el mérito!</b><br/><br/>
 	<img src="{{ asset('bundles/applicationanuncios/images/badges/') }}{{ entity.id }}.png" width="70" height="70"/>
 </div>
@@ -114,7 +114,7 @@
 {% if users %}
 	<b>¿Quien ha conseguido el mérito?</b><br/><br/>
 	{% for user in users %}
-		<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="38" height="38"/></a>
+		<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="38" height="38"/></a>
 	{% endfor %}
 {% endif %}
 

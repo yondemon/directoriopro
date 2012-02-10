@@ -13,11 +13,11 @@ TEXTAREA.xlarge{width:430px}
 
 {% if app.session.get('id') %}
 
-<form action="{{ path('place_create') }}" method="post" {{ form_enctype(form) }}>
+<form class="form-horizontal" action="{{ path('place_create') }}" method="post" {{ form_enctype(form) }}>
 
 	{{ form_errors(form) }}
 
-	{{ form_row(form.title, { 'label': 'Titulo' }) }}
+	{{ form_row(form.title, { 'label': 'Nombre' }) }}
 	
 	{{ form_row(form.body, { 'label': 'Descripción' }) }}
 	
@@ -41,8 +41,8 @@ TEXTAREA.xlarge{width:430px}
 	{{ form_row(form.url, { 'label': 'Web' }) }}
 
 
-	<div class="actions">
-        <button type="submit" class="btn primary" style="width:150px">Publicar</button>
+	<div class="form-actions">
+        <button type="submit" class="btn btn-primary" style="width:150px">Publicar</button>
 	</div>
 
 	{{ form_row(form._token) }}

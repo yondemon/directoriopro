@@ -5,7 +5,7 @@
 
 {% block sidebar %}
 
-	<div class="alert-message block-message warning" style="padding:14px 0;width:179px;text-align:center">
+	<div class="alert" style="padding:14px 0;width:179px;text-align:center">
 		Recomendaciones
 		<b style="font-size:80px;display:block;text-align:center;line-height:80px">{{ total }}</b>
 	</div>
@@ -13,13 +13,17 @@
 
 	{% if app.session.get('id') != user.id %}
 	
-		<a href="{{ path('user_recommend', { 'id': user.id }) }}" class="btn primary large">Recomendar</a>
+		<a href="{{ path('user_recommend', { 'id': user.id }) }}" class="btn btn-primary btn-large">Recomendar</a>
 				
 	{% endif %}
 {% endblock %}
 
 {% block content %}
 
+
+<style>
+.span5{margin-left:0}
+</style>
 
 	<ul class="breadcrumb">
 	  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
@@ -43,10 +47,10 @@
 						<img src="{{ asset('bundles/applicationanuncios/images/weworked.png') }}" data-original-title="He trabajdo con esta persona" rel="twipsy" />
 					{% endif %}
 				</div>
-				<div class="span9">
+				<div class="span5">
 					<a href="{{ path('user_comment', { 'user_id': user.id, 'comment_id': item.id }) }}" class="date floatR">{{ item.date|date('d/m/Y') }}</a>
 					<b><a href="{{ path('user_show', { 'id': item.from_id, 'slug': item.slug }) }}">{{ item.name }}</a> - {{ categories[item.category_id] }}</b>
-					<pre>{{ item.body }}</pre>
+					<pre style="padding-top:10px">{{ item.body }}</pre>
 				</div>
 			</div>
 			<br/>

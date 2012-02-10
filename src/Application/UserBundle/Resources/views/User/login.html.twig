@@ -5,7 +5,7 @@
 
 {% block sidebar %}
 
-	<b>Registrate en 1 minuto</b><br/>
+	<b>Registrate en 1 minuto</b><br/><br/>
 	<a href="{{ path('user_fblogin') }}"><img src="{{ asset('bundles/applicationanuncios/images/fblogin.png') }}"/></a>
 	<iframe src="https://www.facebook.com/plugins/facepile.php?app_id=194718703877738&amp;max_rows=2" scrolling="no" frameborder="0" allowTransparency="true" style="border:none;overflow:hidden; width:190px; height:120px;"></iframe>
 	
@@ -18,7 +18,7 @@
 
 
 
-<form id="tabs_content" action="{{ path('user_login') }}" method="post" {{ form_enctype(form) }}>
+<form class="form-horizontal" id="tabs_content" action="{{ path('user_login') }}" method="post" {{ form_enctype(form) }}>
 
 
 
@@ -32,12 +32,17 @@
 
 	{{ form_row(form.email, { 'label': 'Email' }) }}
 	{{ form_row(form.pass, { 'label': 'Contraseña' }) }}
-	<div class="clearfix "><label>&nbsp;</label><div class="input"><a href="{{ path('user_forgotemail') }}">¿Has olvidado la contraseña?</a></div></div>
+	<div class="control-group">
+		<label>&nbsp;</label>
+		<div class="controls">
+			<a href="{{ path('user_forgotemail') }}">¿Has olvidado la contraseña?</a>
+		</div>
+	</div>
 
 
 
-    <div class="actions">
-        <button type="submit" class="btn primary">Iniciar sesión</button> &nbsp;
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button> &nbsp;
 		<a href="{{ path('user_register') }}" class="btn">Registrarme</a>
     </div>
 

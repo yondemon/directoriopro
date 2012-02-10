@@ -38,7 +38,9 @@
 
 <form method="post" action="{{ path('test_result', { 'id': entity.id }) }}">
 	{{ entity.questions|raw }}
-	<input id="check_quiz" type="submit" class="btn primary" value="Ver resultados" />
+	<div class="form-actions">
+		<input id="check_quiz" type="submit" class="btn btn-primary" value="Ver resultados" />
+	</div>
 </form>
 
 

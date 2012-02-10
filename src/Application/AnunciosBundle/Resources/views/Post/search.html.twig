@@ -9,14 +9,15 @@
 {% block title "Buscar anuncios" %}
 
 {% block sidebar %}
-	<a href="{{ path('post_new') }}{% if form_type == 1 %}?type=1{% endif %}" class="btn large primary" style="font-weight:bold;font-size:20px;">Publicar empleo</a>
-	<br/>
+	<a href="{{ path('post_new') }}{% if form_type == 1 %}?type=1{% endif %}" class="btn btn-large btn-primary">Publicar empleo</a>
 
-	<b>Filtrar por categoría</b><br/>
+
+	<b>Filtrar por categoría</b><br/><br/>
+	<ul>
 	{% for category in categories %}
-		<a href="{{ path('post_feed') }}?c={{loop.index0}}&t={{ form_type }}" class="rss"><img src="{{ asset( 'bundles/applicationanuncios/images/rss.png' ) }}" width="12" height="12"/></a>
-		<a href="{{ path('post_search') }}?c={{loop.index0}}&t={{ form_type }}">{{category}}</a>
+		<li><a href="{{ path('post_search') }}?c={{loop.index0}}&t={{ form_type }}">{{category}}</a></li>
 	{% endfor %}
+	</ul>
 	
 
 {% endblock %}
@@ -39,16 +40,42 @@
 
 
 {% if entities %}
-	<ul>
-		{% for entity in entities %}
-	       <li style="margin-bottom:20px;" {% if entity.featured == 1 %}class="featured"{% endif %}">
-	           <b>{{ categories[ entity.getCategoryId() ] }}</b><br/>
-	           <a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="title">{{ entity.title }}</a><br/>
-	           {{ entity.body|truncate(200) }}<br/>
-	           <span class="date">{{ entity.date|date('d/m/Y') }} {% if entity.location %}- {{ entity.location }}{% endif %}</span>
-	       </li>
-	   {% endfor %}
-	</ul>
+
+
+{% for entity in entities %}
+	<div style="padding:10px 0;border-top:1px #efefef solid;{% if entity.featured != 1 and loop.index is divisibleby(2) %}background:#F6F6F6{% endif %}" {% if entity.featured == 1 %}class="featured"{% endif %}>
+
+		<div style="float:left;width:415px;padding-left:15px">
+			<a href="{{ path('post_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="title" style="font-size:15px;line-height:16px;font-weight:bold;">{{ entity.title }}</a><br/>
+			{% if entity.company %}
+				{{ entity.company }} - 
+			{% endif %}
+			<a href="{{ path('post_city', { 'id': entity.getCityId() }) }}" style="color:black">{{ entity.location }}</a>
+		</div>
+		
+		<div style="float:right;width:100px;">
+			{% if entity.type == 0 %}
+				<span class="label label-success">Empleo</span>
+			{% elseif entity.type == 1 %}
+				<span class="label label-info">Freelance</span>
+			{% else %}
+				<span class="label label-warning">Prácticas</span>
+			{% endif %}<br/>
+			<span class="date">{{ entity.date|date('d/m/Y') }}</span>
+		</div>
+		
+
+		
+
+
+
+
+		<!--<b>{{ categories[ entity.getCategoryId() ] }}</b>-->
+		<br class="clear"/>
+        
+    </div>
+{% endfor %}
+
 
 {% else %}
 	sin resultados, prueba con otra busqueda

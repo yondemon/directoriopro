@@ -13,11 +13,11 @@ TEXTAREA.xlarge{width:430px}
 
 {% if app.session.get('id') %}
 
-<form action="{{ path('place_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+<form class="form-horizontal" action="{{ path('place_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
 
 	{{ form_errors(edit_form) }}
 
-	{{ form_row(edit_form.title, { 'label': 'Titulo' }) }}
+	{{ form_row(edit_form.title, { 'label': 'Nombre' }) }}
 	
 	{{ form_row(edit_form.body, { 'label': 'Descripción' }) }}
 	
@@ -41,12 +41,12 @@ TEXTAREA.xlarge{width:430px}
 	{{ form_row(edit_form.url, { 'label': 'Web' }) }}
 
 
-	<div class="actions">
-		<button type="submit" class="btn primary">Guardar cambios</button> &nbsp;
+	<div class="form-actions">
+		<button type="submit" class="btn btn-primary">Guardar cambios</button> &nbsp;
 		<a href="{{ path('place_show', { 'id': entity.id }) }}" class="btn">Cancelar</a> &nbsp;
 
 		{% if app.session.get('admin') %}	
-			<a href="{{ path('place_delete', { 'id': entity.id }) }}" class="btn danger pull-right">Eliminar</a>
+			<a href="{{ path('place_delete', { 'id': entity.id }) }}" class="btn btn-danger pull-right">Eliminar</a>
 		{% endif %}
 	</div>
 

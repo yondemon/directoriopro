@@ -1042,7 +1042,7 @@ class UserController extends Controller
         }
 
 		// existe comentario?
-		$query = $em->createQuery("SELECT u.name, u.category_id, c.id, c.from_id, c.body, c.type, c.date FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.from_id AND c.to_id = :to_id AND c.id = :id ORDER BY c.id DESC");
+		$query = $em->createQuery("SELECT u.name, u.category_id, u.slug, c.id, c.from_id, c.body, c.type, c.date FROM ApplicationUserBundle:User u, ApplicationUserBundle:Comment c WHERE u.id = c.from_id AND c.to_id = :to_id AND c.id = :id ORDER BY c.id DESC");
 		$query->setParameters(array(
 			'id' => $comment_id,
 			'to_id' => $user_id

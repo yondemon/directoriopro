@@ -10,11 +10,11 @@
 
 	{% if app.session.get('id') != entity.id %}
 		{% include "ApplicationAnunciosBundle:Form:contact.html.twig" %}
-		<br/><br/>
+
 		
 		
 		
-		<a href="{{ path('user_recommend', { 'id': entity.id }) }}" class="btn large">Recomendar</a>
+		<a href="{{ path('user_recommend', { 'id': entity.id }) }}" class="btn btn-large">Recomendar</a>
 
 		
 		
@@ -22,7 +22,7 @@
 		
 		
 	{% else %}
-		<a href="{{ path('user_invite') }}" class="btn large primary" style="font-weight:bold;font-size:20px;">Invitar contactos</a>
+		<a href="{{ path('user_invite') }}" class="btn btn-large btn-primary" style="font-weight:bold;font-size:20px;">Invitar contactos</a>
 	{% endif %}
 	<br/>
 	
@@ -32,17 +32,19 @@
 	{% if entity.votes or related_users %}
 	
 		{% if entity.votes %}
-			<a href="{{ path('user_comments', { 'id': entity.id }) }}" class="alert-message block-message warning" style="padding:14px 0;width:179px;text-align:center">
+			<div class="alert" style="padding:14px 0;width:179px;text-align:center;">
+			<a href="{{ path('user_comments', { 'id': entity.id }) }}" style="color:black">
 				Recomendaciones
 				<b style="font-size:80px;display:block;text-align:center;line-height:80px">{{ entity.votes }}</b>
 			</a>
+			</div>
 		{% endif %}
 	
 		{% if related_users %}
 			<b>Relacionados</b><br/><br/>
 		    {% for entity in related_users %}
 				<img src="{{ entity.getAvatar('mini') }}" width="35" height="35" style="float:left;margin-right:13px"/>
-		           <a href="{{ path('user_show', { 'id': entity.id, 'slug': entity.slug }) }}">{{ entity.name }}</a><br class="clear"/>
+		           <a href="{{ path('user_show', { 'id': entity.id, 'slug': entity.slug }) }}">{{ entity.name }}</a><br class="clear"/><br/>
 		    {% endfor %}
 		{% endif %}
 	{% else %}
@@ -73,13 +75,13 @@
 
 
 {% if app.session.get('name') == null %}
-	<div class="alert-message block-message warning" style="font-size: 17px;">
+	<div class="alert" style="font-size: 17px;">
 	
 		Conecta con <b>{{ entity.name }}</b> y {{ total_users }} profesionales más, en el directorio podrás encontrar ofretas de empleo, buscar socios y eventos.
 	
 		<div class="alert-actions" style="padding-top:5px;text-align:center">
-			<a class="btn" href="http://bit.ly/registerfb" style="font-weight:bold;background:#3B5998;color:white;border:0">Entrar con facebook</a> &nbsp;&nbsp;
-			<a href="http://bit.ly/registerbeta">Crear cuenta</a> 
+			<a class="btn btn-primary">Entrar con facebook</a> 
+			<a href="http://bit.ly/registerbeta" class="btn">Crear cuenta</a> 
 		</div>
 	
 	</div>
@@ -100,11 +102,11 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
   <li><a href="{{ path('user_search') }}?c={{ entity.categoryid }}">{{ categories[ entity.categoryid ] }}</a></li>
 </ul>
 
-<div style="margin-bottom:10px;padding:12px;padding-bottom:11px;background:#000 url('/bundles/applicationanuncios/images/bgprofile.png') no-repeat left top;color:white;font-size:15px">
+<div style="margin-bottom:15px;padding:12px;padding-bottom:11px;background:#000 url('/bundles/applicationanuncios/images/bgprofile.png') no-repeat left top;color:white;font-size:15px">
 
 
 
-<img src="{{ entity.getAvatar('bigger') }}" width="100" height="100" style="float:left;margin-right:15px"/>
+<img src="{{ entity.getAvatar('bigger') }}" width="100" height="100" style="width:100px;height:100px;float:left;margin-right:15px"/>
 
 
 <h1 style="margin-bottom:5px;color:white;font-size:35px;width:410px;overflow:hidden;height:37px"><div style="width:800px">{{ entity.name }}</div></h1>
@@ -146,62 +148,60 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
 
 
 
-<br class="clear"/>
-
 
 </div>
 
 
 
 
-<ul id="tabs" class="tabs">
 
 
+<ul id="tabs" class="nav nav-tabs">
 	<li class="dropdown" data-dropdown="dropdown">
-		<a href="#" class="dropdown-toggle">Información</a>
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Información <b class="caret"></b></a>
 		<ul class="dropdown-menu">
-			<li class="active"><a href="#info"><img src="/bundles/applicationanuncios/images/portafolio.png" align="absmiddle"> Descripción</a></li>
-			<li id="tab_linkedin" style="display:none"><a href="#linkedin" onclick="get_linkedin();"><img src="/bundles/applicationanuncios/images/linkedin.png" align="absmiddle"> Linkedin</a></li>
+			<li><a href="#info" data-toggle="tab"><img src="/bundles/applicationanuncios/images/portafolio.png" align="absmiddle"> Descripción</a></li>
+			<li id="tab_linkedin" style="display:none"><a href="#linkedin" data-toggle="tab" onclick="get_linkedin();"><img src="/bundles/applicationanuncios/images/linkedin.png" align="absmiddle"> Linkedin</a></li>
 			{% if entity.pinboardurl or entity.deliciousurl %}
-				<li id="tab_delicious" style="display:none"><a href="#delicious" onclick="get_delicious();"><img src="/bundles/applicationanuncios/images/delicious.png" align="absmiddle"> Delicious</a></li>
-				<li id="tab_pinboard" style="display:none"><a href="#pinboard" onclick="get_pinboard();"><img src="/bundles/applicationanuncios/images/pinboard.png" align="absmiddle"> Pinboard</a></li>
+				<li id="tab_delicious" style="display:none"><a href="#delicious" data-toggle="tab" onclick="get_delicious();"><img src="/bundles/applicationanuncios/images/delicious.png" align="absmiddle"> Delicious</a></li>
+				<li id="tab_pinboard" style="display:none"><a href="#pinboard" data-toggle="tab" onclick="get_pinboard();"><img src="/bundles/applicationanuncios/images/pinboard.png" align="absmiddle"> Pinboard</a></li>
 			{% endif %}
 		</ul>
 	</li>
 
 	{% if entity.githuburl or entity.stackoverflowurl or entity.masterbranchurl or entity.chromeurl or entity.androidurl or entity.itunesurl %}
 		<li class="dropdown" data-dropdown="dropdown">
-			<a href="#" class="dropdown-toggle">Programador</a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Programador <b class="caret"></b></a>
 			<ul class="dropdown-menu">
-				<li id="tab_github" style="display:none"><a href="#github" onclick="get_github();"><img src="/bundles/applicationanuncios/images/github.png" align="absmiddle"> Github</a></li>
-				<li id="tab_stackoverflow" style="display:none"><a href="#stackoverflow" onclick="get_stackoverflow();"><img src="/bundles/applicationanuncios/images/stackoverflow.png" align="absmiddle"> Stackoverflow</a></li>
-				<li id="tab_itunes" style="display:none"><a href="#itunes" onclick="get_itunes();"><img src="/bundles/applicationanuncios/images/itunes.png" align="absmiddle"> iPhone / iPad</a></li>
-				<li id="tab_android" style="display:none"><a href="#android" onclick="get_android();"><img src="/bundles/applicationanuncios/images/android.png" align="absmiddle"> Android</a></li>
-				<li id="tab_chrome" style="display:none"><a href="#chrome" onclick="get_chrome();"><img src="/bundles/applicationanuncios/images/chrome.png" align="absmiddle"> Chrome</a></li>
-				<li id="tab_masterbranch" style="display:none"><a href="#masterbranch" onclick="get_masterbranch();"><img src="/bundles/applicationanuncios/images/masterbranch.png" align="absmiddle"> Masterbranch</a></li>
+				<li id="tab_github" style="display:none"><a href="#github" data-toggle="tab" onclick="get_github();"><img src="/bundles/applicationanuncios/images/github.png" align="absmiddle"> Github</a></li>
+				<li id="tab_stackoverflow" style="display:none"><a href="#stackoverflow" data-toggle="tab" onclick="get_stackoverflow();"><img src="/bundles/applicationanuncios/images/stackoverflow.png" align="absmiddle"> Stackoverflow</a></li>
+				<li id="tab_itunes" style="display:none"><a href="#itunes" data-toggle="tab" onclick="get_itunes();"><img src="/bundles/applicationanuncios/images/itunes.png" align="absmiddle"> iPhone / iPad</a></li>
+				<li id="tab_android" style="display:none"><a href="#android" data-toggle="tab" onclick="get_android();"><img src="/bundles/applicationanuncios/images/android.png" align="absmiddle"> Android</a></li>
+				<li id="tab_chrome" style="display:none"><a href="#chrome" data-toggle="tab" onclick="get_chrome();"><img src="/bundles/applicationanuncios/images/chrome.png" align="absmiddle"> Chrome</a></li>
+				<li id="tab_masterbranch" style="display:none"><a href="#masterbranch" data-toggle="tab" onclick="get_masterbranch();"><img src="/bundles/applicationanuncios/images/masterbranch.png" align="absmiddle"> Masterbranch</a></li>
 			</ul>
 		</li>
 	{% endif %}
 	
 	{% if entity.dribbbleurl or entity.forrsturl or entity.flickrurl %}
 		<li class="dropdown" data-dropdown="dropdown">
-			<a href="#" class="dropdown-toggle">Diseñador</a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Diseñador <b class="caret"></b></a>
 			<ul class="dropdown-menu">
-				<li id="tab_flickr" style="display:none"><a href="#flickr" onclick="get_flickr();"><img src="/bundles/applicationanuncios/images/flickr.png" align="absmiddle"> Flickr</a></li>
-				<li id="tab_dribbble" style="display:none"><a href="#dribbble" onclick="get_dribbble();"><img src="/bundles/applicationanuncios/images/dribbble.png" align="absmiddle"> Dribbble</a></li>
-				<li id="tab_forrst" style="display:none"><a href="#forrst" onclick="get_forrst();"><img src="/bundles/applicationanuncios/images/forrst.png" align="absmiddle"> Forrst</a></li>
+				<li id="tab_flickr" style="display:none"><a href="#flickr" data-toggle="tab" onclick="get_flickr();"><img src="/bundles/applicationanuncios/images/flickr.png" align="absmiddle"> Flickr</a></li>
+				<li id="tab_dribbble" style="display:none"><a href="#dribbble" data-toggle="tab" onclick="get_dribbble();"><img src="/bundles/applicationanuncios/images/dribbble.png" align="absmiddle"> Dribbble</a></li>
+				<li id="tab_forrst" style="display:none"><a href="#forrst" data-toggle="tab" onclick="get_forrst();"><img src="/bundles/applicationanuncios/images/forrst.png" align="absmiddle"> Forrst</a></li>
 			</ul>
 		</li>
 	{% endif %}
 	
 	{% if entity.youtubeurl or entity.vimeourl or entity.twitterurl %}
 		<li class="dropdown" data-dropdown="dropdown">
-			<a href="#" class="dropdown-toggle">Social</a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Social <b class="caret"></b></a>
 			<ul class="dropdown-menu">
-				<li id="tab_twitterstatus"><a href="#twitterstatus" onclick="get_twitterstatus();"><img src="/bundles/applicationanuncios/images/twitter.png" align="absmiddle"> Twitter</a></li>
-				<!--<li id="tab_twitter"><a href="#twitter" onclick="get_twitter();">Listas</a></li>-->
-				<li id="tab_youtube" style="display:none"><a href="#youtube" onclick="get_youtube();"><img src="/bundles/applicationanuncios/images/youtube.png" align="absmiddle"> Youtube</a></li>
-				<li id="tab_vimeo" style="display:none"><a href="#vimeo" onclick="get_vimeo();"><img src="/bundles/applicationanuncios/images/vimeo.png" align="absmiddle"> Vimeo</a></li>
+				<li id="tab_twitterstatus"><a href="#twitterstatus" data-toggle="tab" onclick="get_twitterstatus();"><img src="/bundles/applicationanuncios/images/twitter.png" align="absmiddle"> Twitter</a></li>
+				<!--<li id="tab_twitter"><a href="#twitter" data-toggle="tab" onclick="get_twitter();">Listas</a></li>-->
+				<li id="tab_youtube" style="display:none"><a href="#youtube" data-toggle="tab" onclick="get_youtube();"><img src="/bundles/applicationanuncios/images/youtube.png" align="absmiddle"> Youtube</a></li>
+				<li id="tab_vimeo" style="display:none"><a href="#vimeo" data-toggle="tab" onclick="get_vimeo();"><img src="/bundles/applicationanuncios/images/vimeo.png" align="absmiddle"> Vimeo</a></li>
 			</ul>
 		</li>
 	{% endif %}
@@ -218,11 +218,10 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
 	
 </ul>
 
-<br class="clear"/>
 
 <div id="loader"><img src="{{ asset('bundles/applicationanuncios/images/loader.gif') }}"/></div>
 
-<div class="pill-content">
+<div class="tab-content">
 
 
 
@@ -230,83 +229,83 @@ var linkedin_user, dribbble_user, flickr_user, github_user, forrst_user, stackov
 
 
 
-<div class="active" id="info">
+	<div class="tab-pane active" id="info">
 
 
-	{% if badges %}
-		<div style="background:#E0F2FF;margin-top:-20px;padding-bottom:5px;margin-bottom:10px">
-			<img src="{{ asset('bundles/applicationanuncios/images/badges/trofeo.png') }}" width="40" height="40" style="float:left;margin:11px 0 0 11px"/>
-		    {% for badge in badges %}
-				<a href="{{ path('test_show', { 'id': badge.id }) }}" data-original-title="{{ badge.title }}" rel="twipsy" style="float:left;margin:11px 0 0 11px"><img src="{{ asset('bundles/applicationanuncios/images/badges/') }}{{ badge.id }}.png" width="40" height="40"/></a>
-		    {% endfor %}
-			<br class="clear"/>
-		</div>
-	{% endif %}
-
-
-
-	{% if entity.body %}
-		<pre>{{ entity.body}}</pre>
-	{% else %}
-		<pre>El usuario todavía no ha completado su descripción :(</pre>
-	{% endif %}
+		{% if badges %}
+			<div style="background:#E0F2FF;margin-top:-10px;padding-bottom:5px;margin-bottom:10px">
+				<img src="{{ asset('bundles/applicationanuncios/images/badges/trofeo.png') }}" width="40" height="40" style="float:left;margin:11px 0 0 11px"/>
+			    {% for badge in badges %}
+					<a href="{{ path('test_show', { 'id': badge.id }) }}" data-original-title="{{ badge.title }}" rel="twipsy" style="float:left;margin:11px 0 0 11px"><img src="{{ asset('bundles/applicationanuncios/images/badges/') }}{{ badge.id }}.png" width="40" height="40"/></a>
+			    {% endfor %}
+				<br class="clear"/>
+			</div>
+		{% endif %}
 
 
 
+		{% if entity.body %}
+			<pre>{{ entity.body}}</pre>
+		{% else %}
+			<pre>El usuario todavía no ha completado su descripción :(</pre>
+		{% endif %}
 
 
-</div>
 
 
 
-<div id="linkedin"></div>
-<div id="dribbble">
-	<ul class="media-grid carrusel" id="dribbble_images"></ul>
-	<ul class="media-grid" id="dribbble_big"><li></li></ul>
-</div>
-<div id="flickr">
-	<ul class="media-grid carrusel" id="flickr_images"></ul>
-	<ul class="media-grid" id="flickr_big"><li></li></ul>
-</div>
-<div id="github">
-	<div id="github_graph"></div>
-	<ul id="github_projects" class="list"></ul>
-</div>
-<div id="forrst">
-	<ul id="forrst_list" class="unstyled"></ul>
-</div>
-<div id="stackoverflow">
-	<ul id="stackoverflow_list" class="list"></ul>
-</div>
-<div id="masterbranch"></div>
-<div id="youtube">
-	<ul class="media-grid carrusel" id="youtube_list"></ul>
-	<div id="youtube_big"></div>
-</div>
-<div id="vimeo">
-	<ul class="media-grid carrusel" id="vimeo_list"></ul>
-	<div id="vimeo_big"></div>
-</div>
-<div id="android">
-	<ul id="android_list"></ul>
-</div>
-<div id="itunes">
-	<ul id="itunes_list"></ul>
-</div>
-<div id="chrome">
-	<ul id="chrome_list"></ul>
-</div>
-<div id="twitterstatus">
-	<div id="twitterstatus_info" class="clear"></div>
-	<ul id="twitterstatus_list"></ul>
-</div>
-<div id="twitter"></div>
-<div id="delicious">
-	<ul id="delicious_list" class="clear"></ul>
-</div>
-<div id="pinboard">
-	<ul id="pinboard_list" class="clear"></ul>
-</div>
+	</div>
+
+
+
+	<div class="tab-pane" id="linkedin"></div>
+	<div class="tab-pane" id="dribbble">
+		<ul class="thumbnails carrusel" id="dribbble_images"></ul>
+		<ul class="thumbnails" id="dribbble_big"><li></li></ul>
+	</div>
+	<div class="tab-pane" id="flickr">
+		<ul class="thumbnails carrusell" id="flickr_images"></ul>
+		<ul class="thumbnails" id="flickr_big"><li></li></ul>
+	</div>
+	<div class="tab-pane" id="github">
+		<div id="github_graph"></div>
+		<ul id="github_projects" class="list"></ul>
+	</div>
+	<div class="tab-pane"v id="forrst">
+		<ul id="forrst_list" class="unstyled"></ul>
+	</div>
+	<div class="tab-pane" id="stackoverflow">
+		<ul id="stackoverflow_list" class="list"></ul>
+	</div>
+	<div class="tab-pane" id="masterbranch"></div>
+	<div class="tab-pane" id="youtube">
+		<ul class="thumbnails carrusel" id="youtube_list"></ul>
+		<div id="youtube_big"></div>
+	</div>
+	<div class="tab-pane" id="vimeo">
+		<ul class="thumbnails carrusel" id="vimeo_list"></ul>
+		<div id="vimeo_big"></div>
+	</div>
+	<div class="tab-pane"v id="android">
+		<ul id="android_list"></ul>
+	</div>
+	<div class="tab-pane" id="itunes">
+		<ul id="itunes_list"></ul>
+	</div>
+	<div class="tab-pane" id="chrome">
+		<ul id="chrome_list"></ul>
+	</div>
+	<div class="tab-pane" id="twitterstatus">
+		<div id="twitterstatus_info" class="clear"></div>
+		<ul id="twitterstatus_list"></ul>
+	</div>
+	<div class="tab-pane" id="twitter"></div>
+	<div class="tab-pane" id="delicious">
+		<ul id="delicious_list" class="clear"></ul>
+	</div>
+	<div class="tab-pane" id="pinboard">
+		<ul id="pinboard_list" class="clear"></ul>
+	</div>
 
 
 

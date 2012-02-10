@@ -4,9 +4,9 @@
 
 
 {% block sidebar %}
-	<a href="{{ path('place_new') }}" class="btn large primary">Publicar espacio</a>
+	<a href="{{ path('place_new') }}" class="btn btn-large btn-primary">Publicar espacio</a>
 
-	<br/><b>Top ciudades</b><br/><br/>
+	<b>Top ciudades</b><br/><br/>
 
 	<ul>
     {% for city in cities %}
@@ -20,7 +20,11 @@
 
 {% block content %}
 
-
+<ul class="breadcrumb">
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li><a href="{{ path('place') }}">Espacios coworking</a> <span class="divider">/</span></li>
+  <li class="active">{{ city.name }}, {{ country.name }}</li>
+</ul>
 
 
 <h1>Espacios coworking en {{ city.name }}, {{ country.name }}</h1>
@@ -37,7 +41,7 @@
 			<br/>
             {{ entity.body|truncate(200) }}
 			<br/>
-			<a href="{{ path('city_show', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>
+			<a href="{{ path('place_city', { 'id': entity.getCityId() }) }}" class="date">{{ entity.location }}</a>
 			
 			{% if entity.users %}
 				<div style="padding-top:5px">

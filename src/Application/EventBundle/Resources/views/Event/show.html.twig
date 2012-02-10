@@ -15,7 +15,7 @@
 {% block sidebar %}
 
 
-<div style="background:#666;padding:15px;color:white;display:block">
+<div style="background:#666;padding:15px 15px 0 15px;color:white;display:block">
 
 	<div style="background:url('{{ asset('bundles/applicationanuncios/images/calendarb.png') }}') no-repeat left center;padding:5px 0 10px 55px">
 	<b style="font-size:17px">{{ pretty_date }}</b><br/>
@@ -38,7 +38,7 @@
 	{% endif %}
 	
 	
-	<div style="border-top:1px #b3b3b3 solid;padding:15px 0 5px 0;">
+	<div style="border-top:1px #b3b3b3 solid;padding:15px 0 10px 0;">
 		<a href="http://maps.google.es/maps?q={{ entity.address }}, {{ location }}" target="_blank" style="padding-left:30px;padding-top:0;min-height:29px;background:url('{{ asset('bundles/applicationanuncios/images/marker.png') }}') no-repeat left top;color:white">
 		{{ entity.address }}, {{ location }}
 		</a>
@@ -47,13 +47,13 @@
 
 
 	{% if user.id == false %}
-		<a class="btn primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a>
+		<a class="btn btn-primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a>
 	{% else %}
 	
 		{% if apuntado == false %}
-			<a class="btn primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a>
+			<a class="btn btn-primary" href="{{ path('event_go', { 'id': entity.id, 'value': 1 }) }}">Me apunto</a>
 		{% else %}
-			<a class="btn danger" href="{{ path('event_go', { 'id': entity.id, 'value': 0 }) }}">No voy a ir</a>
+			<a class="btn btn-danger" href="{{ path('event_go', { 'id': entity.id, 'value': 0 }) }}">No voy a ir</a>
 		{% endif %}
 		
 	{% endif %}
@@ -88,7 +88,7 @@
 	
 	<iframe src="http://www.facebook.com/plugins/like.php?href={{ share_url }}&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:21px;" allowTransparency="true"></iframe>
 
-	<br/>
+	<br/><br/>
 	
 	<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{ entity.title }}&dates={{ entity.getGDateStart() }}/{{ entity.getGDateEnd() }}&details=&location={{ entity.address }}, {{ location }}&trp=false&sprop=&sprop=name:" target="_blank"><img src="http://www.google.com/calendar/images/ext/gc_button1.gif" alt="0" border="0"></a>
 
@@ -102,8 +102,7 @@
 
 
 <style>
-.filters{border:0;}
-.filters a.btn{margin-top:10px;width:160px;}
+.filters a.btn{width:160px;}
 </style>
 
 <ul class="breadcrumb">
@@ -135,14 +134,36 @@
 		<br/><br/>
 		
 
-	
-		{% for user in users %}
-			<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="38" height="38"/></a>
+		{% for key, users_cat in users %} 
+		
+		
+		
+		
+		
+		<div class="accordion" id="accordion2">
+
+
+			<div class="accordion-group">
+				<div class="accordion-heading group_edit">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#coll{{ loop.index }}">{{ categories[ key ] }} ({{ users_cat | length }})</a>
+				</div>
+				<div id="coll{{ loop.index }}" class="accordion-body collapse in">
+					<div class="accordion-inner">
+						{% for user in users_cat  %}
+							<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" rel="twipsy" style="float:left;margin:0 10px 10px 0;width:240px"><img src="{{ user.getAvatar('normal') }}" width="24" height="24" align="absmiddle"/> {{ user.getName() }}</a>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+		
+		
+
 		{% endfor %}
-	
-	
-	
-		<br class="clear"/><br/>
+
 	{% endif %}
 	
 	
@@ -167,3 +188,8 @@
 {% endblock %}
 
 
+{% block script_load %}
+
+	$(".accordion").collapse().css('height','auto');
+	
+{% endblock %}

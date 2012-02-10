@@ -5,10 +5,10 @@
 
 {% block sidebar %}
 	
-<b>Registrate en 1 minuto</b><br/>
+<b>Registrate en 1 minuto</b><br/><br/>
 
-<a href="{{ path('user_register') }}" class="btn primary" style="font-weight:bold;font-size:20px;margin-top:15px">Registrarte</a>
-<a href="{{ path('user_login') }}" class="btn" style="margin-top:10px;margin-bottom:15px">Iniciar sesión</a>
+<a href="{{ path('user_register') }}" class="btn btn-large btn-primary">Registrarte</a>
+<a href="{{ path('user_login') }}" class="btn">Iniciar sesión</a>
 <a href="{{ path('user_fblogin') }}"><img src="{{ asset('bundles/applicationanuncios/images/fblogin.png') }}"/></a>
 <iframe src="https://www.facebook.com/plugins/facepile.php?app_id=194718703877738&amp;max_rows=2" scrolling="no" frameborder="0" allowTransparency="true" style="border:none;overflow:hidden; width:190px; height:120px;"></iframe>
 
@@ -20,7 +20,7 @@
 
 {% block content %}
 
-<div class="alert-message warning" style="text-align:center;display:none" id="alert">Para seguir tienes que registrarte</div>
+<div class="alert" style="text-align:center;display:none" id="alert">Para seguir tienes que registrarte</div>
 
 <h1 style="font-size:40px;letter-spacing:-1px;line-height:40px;margin-bottom:30px">Amplia tu red de contactos, trabaja en la mejor startup</h1>
 
@@ -29,7 +29,7 @@
 	<div class="span1">
 		<img src="{{ asset('bundles/applicationanuncios/images/startups.png') }}"/>
 	</div>
-	<div class="span6">
+	<div class="span5">
 		<b>Portal de empleo dedicado a startups</b><br/>
 		Publica ofertas de trabajo y encuentra el mejor candidato sea programador frontend, programador móvil, diseñador, community manager, etc.
 	</div>
@@ -41,7 +41,7 @@
 	<div class="span1">
 		<img src="{{ asset('bundles/applicationanuncios/images/team.png') }}"/>
 	</div>
-	<div class="span6">
+	<div class="span5">
 		<b>Forma un equipo para crear una startup</b><br/>
 		Busca el perfil en el directorio o publica un anuncio con la idea que quieres desarrollar y los perfiles que buscas.
 	</div>
@@ -53,7 +53,7 @@
 	<div class="span1">
 		<img src="{{ asset('bundles/applicationanuncios/images/talent.png') }}"/>
 	</div>
-	<div class="span6">
+	<div class="span5">
 		<b>Demuestra tu talento</b><br/>
 		Introduce tus perfiles, muestra tus últimos trabajos y demuestra lo que eres capaz de hacer.
 	</div>

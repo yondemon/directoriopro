@@ -4,9 +4,9 @@
 
 
 {% block sidebar %}
-	<a href="{{ path('place_new') }}" class="btn large primary" style="font-weight:bold;font-size:20px;">Publicar espacio</a>
+	<a href="{{ path('place_new') }}" class="btn btn-large btn-primary">Publicar espacio</a>
 
-	<br/><b>Top ciudades</b><br/><br/>
+	<b>Top ciudades</b><br/><br/>
 
 	<ul>
     {% for city in cities %}
@@ -20,7 +20,10 @@
 
 {% block content %}
 
-
+<ul class="breadcrumb">
+  <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
+  <li class="active">Espacios coworking</li>
+</ul>
 
 
 <h1>Espacios coworking</h1>

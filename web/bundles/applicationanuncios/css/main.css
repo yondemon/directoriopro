@@ -2,14 +2,12 @@
 /* bootstrap rewrite */
 
 html, body {
-  background-color: #eee;
+  background: #eee url('http://betabeers.com/wp-content/themes/mejorandola/images/bg.jpg');
 }
 body {
   padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
 }
-.container > footer p {
-  text-align: center; /* center align it with the container */
-}
+
 .container {
   width: 820px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
 }
@@ -21,51 +19,19 @@ body {
   background-color: #fff;
   padding: 20px;
   margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
-  /*-webkit-border-radius: 0 0 6px 6px;
-     -moz-border-radius: 0 0 6px 6px;
-          border-radius: 0 0 6px 6px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-          box-shadow: 0 1px 2px rgba(0,0,0,.15);
-	*/
 }
 
-/* Page header tweaks */
-.page-header {
-  background-color: #f5f5f5;
-  padding: 20px 20px 10px;
-  margin: -20px -20px 20px;
-}
-
-/* Styles you shouldn't keep as they are for displaying this base example only */
-.content .span10,
-.content .span4 {
-  min-height: 500px;
-}
-/* Give a quick and non-cross-browser friendly divider */
-.content .span4 {
-  margin-left: 0;
-  padding-left: 19px;
-  border-left: 1px solid #eee;
-}
-
-.topbar .btn {
-  border: 0;
-}
-
-html, body {background:#fff}
-.content{-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none}
 
 PRE{background:white;border:0;padding:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;}
-.filters a.btn, .filters button.btn{width:179px;text-align:center;padding-left:0;padding-right:0}
+.filters a.btn, .filters button.btn{width:179px;text-align:center;padding-left:0;padding-right:0;margin-bottom:15px}
 
-.fixed{position:fixed}
+
 /* other */
 
 .footer{margin:0 -20px 0 -20px;padding:25px 0}
 	
 
-.wrap{width:750px;margin:auto;padding:10px}
+
 .floatL{float:left}
 .floatR{float:right}
 .clear{clear:both}
@@ -77,9 +43,10 @@ A.title{font-size:20px}
 .votes{background:url('../images/thumbsup.png') no-repeat left center;padding-left:20px;font-weight:bold;color:orange;margin-left:10px}
 .users{background:url('../images/portafolio.png') no-repeat left center;padding-left:20px;font-weight:bold;color:#33CC00;margin-left:10px}
 
-/*.filters{padding-left:20px;border-left:1px #efefef solid;width:190px}*/
+
 .filters{padding-left:15px;width:190px}
-	.filters A{display:block;padding-top:10px}
+
+	
 
 A.ico{background-repeat:no-repeat;background-position:left center;padding-left:23px}
 A.portafolio{background-image:url('../images/portafolio.png')}
@@ -129,7 +96,7 @@ UL.list LI{clear:both;margin-bottom:10px}
 #loader{display:none;clear:both;text-align:center;padding:10px}
 
 /* user edit */
-.group_edit{font-weight:bold;padding:10px;background:#efefef;border-bottom:1px #ccc solid;margin-bottom:10px}
+.group_edit{background:#efefef;font-weight:bold}
 .help_edit{float:right;margin-top:10px;color:#AAA}
 .help_a{float:right;margin-top:10px}
 .help_arrow{position:absolute;background:url('../images/arrow.png') no-repeat left bottom;font-size:12px;color:red;margin-left:150px;padding:0 0 10px 30px;margin-top:-25px}
@@ -137,66 +104,28 @@ UL.list LI{clear:both;margin-bottom:10px}
 
 
 /* redesign topbar */
-/*body{padding-top:0}
-.topbar{position:relative}*/
-/*
-.topbar-inner, .topbar .fill{
-  background-repeat: repeat-x;
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#fff), to(#f5f5f5));
-  background-image: -moz-linear-gradient(top, #fff, #f5f5f5);
-  background-image: -ms-linear-gradient(top, #fff, #f5f5f5);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #f5f5f5));
-  background-image: -webkit-linear-gradient(top, #fff, #f5f5f5);
-  background-image: -o-linear-gradient(top, #fff, #f5f5f5);
-  background-image: linear-gradient(top, #fff, #f5f5f5);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#f5f5f5', GradientType=0);
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  border-bottom:1px #ccc solid;
-  background-color: white;
-}
-.topbar a{text-shadow:none}
-.nav a{color:#000}
+.navbar .brand{color:#F30;padding-left:0;}
 
-.topbar div > ul a:hover, .nav a:hover {color:#000;background-color:#F7F7F7;}
-.topbar div > ul li.active > a, .nav li.active > a{color:black;background-color:#efefef;}
-
-ul.nav li.open{background-color:#191919}
-.topbar div > ul a, .nav a{padding:10px 10px 11px 11px;}
-*/
-
-
-.topbar h3 a, .topbar .brand{color:#F30;font-weight:normal;padding-right:10px;padding-left:0}
-	.topbar .brand:hover{text-decoration:none}
-
-#query {background-color:#fff;margin-top:1px;border: 1px solid #666;background-image:url('../images/icon_search.png');background-repeat:no-repeat;background-position:10px center;color:#000;-webkit-border-radius:14px;border-radius:14px;padding:4px 9px 4px 30px;width:50px}
+#query{width:50px;/*background-color:#fff;margin-top:1px;border: 1px solid #666;background-image:url('../images/icon_search.png');background-repeat:no-repeat;background-position:10px center;color:#000;-webkit-border-radius:14px;border-radius:14px;padding:4px 9px 4px 30px;*/}
 #query:focus{width:135px}
+
 
 /* buscador */
 #menu_options{position:absolute;background:#fff;color:white;width:210px;display:none;border:1px #AFAFAF solid;-webkit-box-shadow:1px 1px 4px #888;box-shadow:1px 1px 4px #888;-moz-box-shadow:1px 1px 4px #888}
 	#menu_options a{color:#0063DC;display:block;padding:10px;border-bottom:1px #ccc solid}
 		#menu_options a:hover{background:#C3DDFF;text-decoration:none}
 
-/* triangle menu dropdown */
-.dropdown li.hide_op{display:none;}
-/*a.menu:after,.dropdown-toggle:after{width:0;height:0;display:inline-block;content:"&darr;";text-indent:-99999px;vertical-align:top;margin-top:8px;margin-left:4px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid #000;filter:alpha(opacity=50);-khtml-opacity:0.5;-moz-opacity:0.5;opacity:0.5;}
-.open a.dropdown-toggle:after{border-top:4px solid #fff}
-*/
+
 
 .breadcrumb{background:none;padding:0;border:0}
 
 
-/*#topbar a.config{font-size:0;background:url('../images/config.png') no-repeat center center;}
-#topbar li.open a.config{background-image:url('../images/config2.png')}*/
-#topbar a.config{font-size:0;background:url('../images/config2.png') no-repeat center center;}
-#topbar a.config::after{opacity:0}
 
 
 
 
 /* redesign primary */
-.btn.primary{
+.btn.btn-primary{
   background-color: #6B9A00;
   background-image: -khtml-gradient(linear, left top, left bottom, from(#BADB22), to(#85C200));
   background-image: -moz-linear-gradient(top, #BADB22, #85C200);
@@ -207,33 +136,9 @@ ul.nav li.open{background-color:#191919}
   background-image: linear-gradient(top, #BADB22, #85C200);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#BADB22', endColorstr='#85C200', GradientType=0);
 }
-.btn:hover{background-position: 0 -40px;}
+.btn:hover{background-position: 0 -50px;}
 
-/* fix buscador (placeholder) */
-:-moz-placeholder {
-  color: #aaa;
-}
-::-webkit-input-placeholder {
-  color: #aaa;
-}
-.topbar input:-moz-placeholder {
-  color: #aaa;
-}
-.topbar input::-webkit-input-placeholder {
-  color: #aaa;	
-}
-:-moz-placeholder {
-  color: #aaa;
-}
-::-webkit-input-placeholder {
-  color: #aaa;
-}
-.topbar input:-moz-placeholder {
-  color: #aaa;
-}
-.topbar input::-webkit-input-placeholder {
-  color: #aaa;
-}
+#sidebar .btn-large{font-size:20px;font-weight:bold}
 
 /* form error fix */
 div.error ul{list-style-type:none;display:inline;float:auto}
@@ -248,8 +153,11 @@ LI.featured{background:#FEFBF3}
 /* jquery ui */
 .ui-autocomplete-loading { background: white url('../images/ui-anim_basic_16x16.gif') right center no-repeat; }
 
-html, body{background:url('http://betabeers.com/wp-content/themes/mejorandola/images/bg.jpg');}
+
 
 .pagination{margin-bottom:0}
 
-.topbar div > ul.secondary-nav, .nav.secondary-nav{margin-left:0;margin-right:-20px}
+
+
+.alert{color:black}
+

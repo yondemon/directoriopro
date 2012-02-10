@@ -5,11 +5,13 @@
 
 
 {% block sidebar %}
-	<a href="{{ path('event_new') }}" class="btn large primary" style="font-weight:bold;font-size:20px;">Publicar evento</a>
+	<a href="{{ path('event_new') }}" class="btn btn-large btn-primary">Publicar evento</a>
 
 
 
-	<br/><b>Top ciudades</b><br/><br/>
+	
+	
+	<b>Top ciudades</b><br/><br/>
 
 	<ul>
     {% for city in cities %}
@@ -33,16 +35,16 @@
 
 <ul class="breadcrumb">
   <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
-  <li class="active"><a href="{{ path('event') }}">Eventos</a></li>
+  <li class="active">Eventos</li>
 </ul>
 
 <h1>Eventos</h1>
 
-<ul id="tabs" class="tabs">
-  <li class="active"><a href="{{ path('event') }}">Próximos</a></li>
-  <li><a href="{{ path('event_resources') }}">Recursos</a></li>
-</ul>
 
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{{ path('event') }}">Próximos</a></li>
+	<li><a href="{{ path('event_resources') }}">Recursos</a></li>
+</ul>
 
 
 <ul style="clear:both;list-style-type:none;margin:0">

@@ -5,15 +5,15 @@
 
 {% block sidebar %}
 
-	
 
-
-	<b>Filtrar por categoría</b><br/>
+	<b>Categorías</b><br/><br/>
+	<ul>
 	{% for category in categories_aux %}
 		{% if category.category_id != 0 and category.category_id != 13 %}
-			<a href="{{ path('user_admin') }}?c={{ category.category_id }}"><b>{{ category.total }}</b> &nbsp;{{ categories[ category.category_id ] }}</a>
+			<li><a href="{{ path('user_admin') }}?c={{ category.category_id }}"><b>{{ category.total }}</b> &nbsp;{{ categories[ category.category_id ] }}</a></li>
 		{% endif %}
 	{% endfor %}
+	</ul>
 
 {% endblock %}
 
@@ -28,7 +28,7 @@
 
 {% if entities %}
 
-	<table class="zebra-striped">
+	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
 				<th>Usuario</th>

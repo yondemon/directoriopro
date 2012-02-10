@@ -1,34 +1,38 @@
 {% if contact_form %}
 
-<button data-controls-modal="contact_form" data-backdrop="true" data-keyboard="true" class="btn large primary">{{ btn_send }}</button> 
+<button data-toggle="modal" data-target="#contact_form" class="btn btn-large btn-primary">{{ btn_send }}</button> 
+
+
 <div id="contact_form" class="modal hide fade">
 <div class="modal-header">
-  <a href="#" class="close">&times;</a>
+  <a href="#" class="close" data-dismiss="modal">&times;</a>
   <h3>Contactar</h3>
 </div>
 
+{% form_theme contact_form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
+<form action="{{ form_url }}" method="post" class="form-horizontal">
+<div class="modal-body">
 
-	{% form_theme contact_form 'ApplicationAnunciosBundle:Form:fields.html.twig' %}
-	<form action="{{ form_url }}" method="post">
-  <div class="modal-body">
+{{ form_row(contact_form._token) }}
+{{ form_row(contact_form.name, { 'label': 'Nombre' }) }}
+   {{ form_row(contact_form.email, { 'label': 'Email' }) }}
+   {{ form_row(contact_form.subject, { 'label': 'Asunto' }) }}
+   {{ form_row(contact_form.body, { 'label': 'Mensaje' }) }}
 
-
-	{{ form_row(contact_form._token) }}
-	{{ form_row(contact_form.name, { 'label': 'Nombre' }) }}
-       {{ form_row(contact_form.email, { 'label': 'Email' }) }}
-       {{ form_row(contact_form.subject, { 'label': 'Asunto' }) }}
-       {{ form_row(contact_form.body, { 'label': 'Mensaje' }) }}
-
-  </div>
-  <div class="modal-footer">
-	<a href="#" class="btn secondary" onclick="$('#contact_form').modal('hide')">Cancelar</a>
-	<input type="submit" value="Enviar mensaje" class="btn primary"/>
-  </div>
-</form>
-
-	
-
-	
 
 </div>
+
+<div class="modal-footer">
+	<input type="button" class="btn" data-dismiss="modal" value="Cancelar"/>
+	<input type="submit" value="Enviar mensaje" class="btn btn-primary"/>
+</div>
+
+
+</form>
+
+</div>
+
+
+
+
 {% endif %}

@@ -6,20 +6,20 @@
 {% block sidebar %}
 
 	{% if app.session.get('name') %}
-		<a href="{{ path('user_invite') }}" class="btn primary" style="font-weight:bold;font-size:20px;">Invitar contactos</a>
+		<a href="{{ path('user_invite') }}" class="btn btn-large btn-primary">Invitar contactos</a>
 	{% else %}
-		<a href="{{ path('user_register') }}" class="btn primary" style="font-weight:bold;font-size:20px;">Registrarte</a>
+		<a href="{{ path('user_register') }}" class="btn btn-large btn-primary">Registrarte</a>
 	{% endif %}
 	
 	
 	<br/>
 
-	<b>Filtrar por categoría</b><br/>
+	<b>Filtrar por categoría</b><br/><br/>
+	<ul>
 	{% for category in categories %}
-		<a href="{{ path('user') }}?c={{loop.index0}}">{{category}}</a>
+		<li><a href="{{ path('user') }}?c={{loop.index0}}">{{category}}</a></li>
 	{% endfor %}
-
-	<br/><br/>
+	</ul>
 
 
 {% endblock %}
@@ -31,12 +31,24 @@
 
 <ul class="breadcrumb">
   <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
-  <li class="active"><a href="{{ path('user') }}">Profesionales</a></li>
+  <li class="active">Profesionales</li>
+</ul>
+
+<h1>Profesionales</h1>
+
+
+
+
+
+
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{{ path('user') }}">Profesionales</a></li>
+	<li><a href="{{ path('user_freelance') }}">Freelance</a></li>
+	<li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
 </ul>
 
 
-
-<div style="background:#FFFFCC;padding:10px;margin-bottom:20px">
+<div class="alert" style="margin-bottom:20px">
 <b style="display:block;margin-bottom:10px;font-weight:bold">Ranking semanal de personas que más invitan</b>
 
 {% if users_ref %}
@@ -64,16 +76,8 @@
 </div>
 
 
-<h1>Profesionales</h1>
-
-
-<ul id="tabs" class="tabs">
-  <li class="active"><a href="{{ path('user') }}">Profesionales</a></li>
-  <li><a href="{{ path('user_freelance') }}">Freelance</a></li>
-  <li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
-</ul>
-
 {% if entities %}
+
 	<ul style="list-style-type:none;margin:0;padding:0;width:480px">
 	    {% for entity in entities %}
 	        <li>

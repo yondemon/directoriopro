@@ -1,22 +1,24 @@
 {% set nav_user = 1 %}
 {% extends "ApplicationAnunciosBundle::layout.html.twig" %}
 
-{% block title "Profesionales" %}
+{% block title "Profesionales freelance" %}
 
 {% block sidebar %}
 
 	{% if app.session.get('name') %}
-		<a href="{{ path('user_invite') }}" class="btn primary" style="font-weight:bold;font-size:20px;">Invitar contactos</a>
+		<a href="{{ path('user_invite') }}" class="btn btn-large btn-primary">Invitar contactos</a>
 	{% else %}
-		<a href="{{ path('user_register') }}" class="btn primary" style="font-weight:bold;font-size:20px;">Registrarte</a>
+		<a href="{{ path('user_register') }}" class="btn btn-large btn-primary">Registrarte</a>
 	{% endif %}
 
-	<br/>
 
-	<b>Filtrar por categoría</b><br/>
+
+	<b>Filtrar por categoría</b><br/><br/>
+	<ul>
 	{% for category in categories %}
-		<a href="{{ path('user_freelance') }}?c={{loop.index0}}">{{category}}</a>
+		<li><a href="{{ path('user_freelance') }}?c={{loop.index0}}">{{category}}</a></li>
 	{% endfor %}
+	</ul>
 {% endblock %}
 
 {% block content %}
@@ -25,18 +27,19 @@
 
 <ul class="breadcrumb">
   <li><a href="{{ path('post') }}">Inicio</a> <span class="divider">/</span></li>
-  <li class="active"><a href="{{ path('user') }}">Profesionales</a></li>
+  <li><a href="{{ path('user') }}">Profesionales</a> <span class="divider">/</span></li>
+  <li class="active">Profesionales freelance</li>
 </ul>
 
 
 <h1>Profesionales freelance</h1>
 
-
-<ul id="tabs" class="tabs">
-  <li><a href="{{ path('user') }}">Profesionales</a></li>
-  <li class="active"><a href="{{ path('user_freelance') }}">Freelance</a></li>
-  <li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
+<ul class="nav nav-tabs">
+	<li><a href="{{ path('user') }}">Profesionales</a></li>
+	<li class="active"><a href="{{ path('user_freelance') }}">Freelance</a></li>
+	<li><a href="{{ path('user_comments_all') }}">Recomendaciones</a></li>
 </ul>
+
 
 {% if entities %}
 	<ul style="list-style-type:none;margin:0;padding:0;width:480px">

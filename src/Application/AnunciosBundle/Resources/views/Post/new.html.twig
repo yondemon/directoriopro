@@ -9,12 +9,12 @@
 
 <style>
 TEXTAREA.xlarge{width:430px}
-#application_anunciosbundle_posttype_type label{float:none;margin:0 20px 0 5px}
+#application_anunciosbundle_posttype_type label{display:inline;margin:0 20px 0 5px}
 </style>
 
 {% if app.session.get('id') %}
 
-<form action="{{ path('post_create') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('post_create') }}" method="post" class="form-horizontal" {{ form_enctype(form) }}>
 
 	{{ form_errors(form) }}
 
@@ -22,9 +22,9 @@ TEXTAREA.xlarge{width:430px}
 	{{ form_row(form.type, { 'label': 'Tipo' }) }}
 
 	
-	<div class="clearfix">
-		<label>Perfil</label>
-		<div class="input">
+	<div class="control-group">
+		<label class="control-label">Perfil</label>
+		<div class="controls">
 			<select id="application_anunciosbundle_posttype_category_id" name="application_anunciosbundle_posttype[category_id]">
 				{% for category in categories %}
 					{% if loop.index0 > 0 %}
@@ -56,10 +56,10 @@ TEXTAREA.xlarge{width:430px}
 	</div>
 
 
+    <div class="form-actions">
+       <button type="submit" class="btn btn-primary" style="width:150px">Publicar</button>
+     </div>
 
-	<div class="actions">
-        <button type="submit" class="btn primary" style="width:150px">Publicar</button>
-	</div>
 
 	{{ form_row(form._token) }}
 

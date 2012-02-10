@@ -7,13 +7,13 @@
 {% block sidebar %}
 
 
-	<div class="alert-message block-message warning">
+	<div class="alert" style="padding-right:0">
 
 
 	{% if entity.categoryid != 0 and entity.name != '' and entity.body != '' and entity.location != '' and entity.url != '' and entity.twitterurl != '' %}
 
 		<b>Descarga gratis</b><br/><br/>
-		<a href="http://bit.ly/wvVBdl" target="_blank" class="btn" style="padding:10px;">eBook con entrevistas</a>
+		<a href="http://bit.ly/wvVBdl" target="_blank" class="btn" style="padding:10px;">Libro entrevistas</a>
 		<br/><br/>
 	
 	{% else %}
@@ -85,7 +85,7 @@
 TEXTAREA.xlarge{width:430px}
 .filters{border:0}
 .span3 a{padding-top:0;display:inline}
-input.xlarge{width:230px}
+input.xlarge{width:170px}
 #content{padding-top:30px}
 </style>
 
@@ -98,33 +98,33 @@ input.xlarge{width:230px}
 
 
 
-
-
-
-
-
-<ul id="tabs" class="tabs">
-  <li class="active"><a href="#info" style="font-weight:bold">1. Completa tu perfil</a></li>
-  <li><a href="#networks">2. Perfiles</a></li>
-  <li><a href="#options">3. Opciones</a></li>
+<ul class="nav nav-tabs tabs">
+	<li class="active"><a href="#info" data-toggle="tab" style="font-weight:bold">1. Completa tu perfil</a></li>
+	<li><a href="#networks" data-toggle="tab">2. Perfiles</a></li>
+	<li><a href="#options" data-toggle="tab">3. Opciones</a></li>
 </ul>
 
 
-<br class="clear"/>
-
-<form id="tabs_content" action="{{ path('user_edit') }}" method="post" {{ form_enctype(edit_form) }}>
 
 
 
 
-	{{ form_errors(edit_form) }}
+
+
+
+<form class="form-horizontal" id="tabs_content" action="{{ path('user_edit') }}" method="post" {{ form_enctype(edit_form) }}>
+
+
+
+
+{{ form_errors(edit_form) }}
 	
 
-	<div class="pill-content">
+<div class="tab-content">
 
-	<div id="info" class="active">
+	<div id="info" class="tab-pane active">
 
-		<div class="clearfix alert-message block-message info">
+		<div class="alert alert-info">
 
 
 			<ul style="margin:0 0 0 15px">
@@ -138,9 +138,9 @@ input.xlarge{width:230px}
 		
 
 		
-		<div class="clearfix">
+		<div class="control-group">
 			<label>Especialidad</label>
-			<div class="input">
+			<div class="controls">
 				<select id="application_userbundle_usertype_category_id" name="application_userbundle_usertype[category_id]">
 					{% for category in categories %}
 						{% if loop.index0 > 0 %}
@@ -166,9 +166,9 @@ input.xlarge{width:230px}
 		{{ form_row(edit_form.email, { 'label': 'Email' }) }}
 		{{ form_row(edit_form.phone, { 'label': 'Telefono' }) }}
 
-		<div class="clearfix">
+		<div class="control-group">
 			<label for="application_userbundle_usertype_avatar_type">Avatar</label>
-			<div class="input">
+			<div class="controls">
 				<select id="application_userbundle_usertype_avatar_type" name="application_userbundle_usertype[avatar_type]">
 					{% for key, value in avatars %}
 						<option value="{{key}}" {% if key == entity.getAvatarType() %}selected="selected"{% endif %} >{{value}}</a>
@@ -181,66 +181,117 @@ input.xlarge{width:230px}
 	</div>
 
 	
-	<div id="networks">
+	<div class="tab-pane" id="networks">
 	
-		<div class="clearfix alert-message block-message info" style="text-align:center">
+		<div class="alert alert-info" style="text-align:center">
 			Demuestra tus conocimientos y trabajos, indica tus perfiles en la red - <a href="{{ path('user_show', { 'id': entity.getId(), 'slug': entity.getSlug() }) }}" target="_blank">Ejemplo</a><br/>
 		</div>
 
-		<div class="group_edit">Comunicación</div>
-		<span class="help_edit">Ejemplo: miquelcamps</span>
-		{{ form_row(edit_form.twitter_url, { 'label': 'Twitter' }) }}
-		<span class="help_edit">Ej: http://miquelcamps.com</span>
-		{{ form_row(edit_form.url, { 'label': 'URL portafolio' }) }}
-		<span class="help_edit">Ejemplo: miquelcamps</span>
-		{{ form_row(edit_form.linkedin_url, { 'label': 'Linkedin' }) }}
-		<span class="help_edit">Ejemplo: viciao2k3</span>
-		{{ form_row(edit_form.youtube_url, { 'label': 'Youtube' }) }}
-		<span class="help_edit">Ejemplo: user820547</span>
-		{{ form_row(edit_form.vimeo_url, { 'label': 'Vimeo' }) }}
-		
-		<div class="group_edit">¿Programas?</div>
 
-		<span class="help_edit">Ejemplo: miquelcamps</span>
-		{{ form_row(edit_form.github_url, { 'label': 'Github' }) }}
-		<span class="help_edit">Ejemplo: 543644</span>
-		{{ form_row(edit_form.stackoverflow_url, { 'label': 'Id stackoverflow' }) }}
-		<span class="help_edit">Ejemplo: miquel.camps-orteza</span>
-		{{ form_row(edit_form.masterbranch_url, { 'label': 'Masterbranch' }) }}
-		<a href="http://dirbeta.tumblr.com/post/11547225386/desarrollas-extensiones-de-chrome-muestra-tus" target="_blank" class="help_a">¿Cómo saber tu usuario?</a>
-		{{ form_row(edit_form.chrome_url, { 'label': 'Chrome web store' }) }}
+		<div class="accordion" id="accordion2">
 		
-		<div class="group_edit">¿Programas aplicaciones móviles?</div>
 		
-		<a href="http://dirbeta.tumblr.com/post/11528134993/eres-desarrollador-de-android-muestra-tus-apps-en-tu" target="_blank" class="help_a">¿Cómo saber tu usuario?</a>
-		{{ form_row(edit_form.android_url, { 'label': 'Android market' }) }}
 		
-		<a href="http://dirbeta.tumblr.com/post/11506524530/eres-desarrollador-de-ios-muestra-tus-apps-en-tu" target="_blank" class="help_a">¿Cómo saber tu usuario?</a>
-		{{ form_row(edit_form.itunes_url, { 'label': 'Appstore iOS' }) }}
-		
-		<div class="group_edit">¿Diseñas?</div>
-		<span class="help_edit">Ejemplo: ftp2nuke</span>
-		{{ form_row(edit_form.flickr_url, { 'label': 'Flickr' }) }}
-		<span class="help_edit">Ejemplo: miquelcamps</span>
-		{{ form_row(edit_form.dribbble_url, { 'label': 'Dribbble' }) }}
-		<span class="help_edit">Ejemplo: miquelcamps</span>
-		{{ form_row(edit_form.forrst_url, { 'label': 'Forrst' }) }}
+			<div class="accordion-group">
+				<div class="accordion-heading group_edit">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#coll1">Comunicación</a>
+				</div>
+				<div id="coll1" class="accordion-body collapse in">
+					<div class="accordion-inner">
+						<span class="help_edit">Ejemplo: miquelcamps</span>
+						{{ form_row(edit_form.twitter_url, { 'label': 'Twitter' }) }}
+						<span class="help_edit">Ej: http://miquelcamps.com</span>
+						{{ form_row(edit_form.url, { 'label': 'URL portafolio' }) }}
+						<span class="help_edit">Ejemplo: miquelcamps</span>
+						{{ form_row(edit_form.linkedin_url, { 'label': 'Linkedin' }) }}
+						<span class="help_edit">Ejemplo: viciao2k3</span>
+						{{ form_row(edit_form.youtube_url, { 'label': 'Youtube' }) }}
+						<span class="help_edit">Ejemplo: user820547</span>
+						{{ form_row(edit_form.vimeo_url, { 'label': 'Vimeo' }) }}
+					</div>
+				</div>
+			</div>
+			
+			<div class="accordion-group">
+				<div class="accordion-heading group_edit">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#coll2">¿Programas?</a>
+				</div>
+				<div id="coll2" class="accordion-body collapse">
+					<div class="accordion-inner">
+						<span class="help_edit">Ejemplo: miquelcamps</span>
+						{{ form_row(edit_form.github_url, { 'label': 'Github' }) }}
+						<span class="help_edit">Ejemplo: 543644</span>
+						{{ form_row(edit_form.stackoverflow_url, { 'label': 'Id stackoverflow' }) }}
+						<span class="help_edit">Ejemplo: miquel.camps-orteza</span>
+						{{ form_row(edit_form.masterbranch_url, { 'label': 'Masterbranch' }) }}
+						<a href="http://dirbeta.tumblr.com/post/11547225386/desarrollas-extensiones-de-chrome-muestra-tus" target="_blank" class="help_a">¿Cómo saber tu usuario?</a>
+						{{ form_row(edit_form.chrome_url, { 'label': 'Chrome web store' }) }}
+					</div>
+				</div>
+			</div>
 
-		<div class="group_edit">Favoritos</div>
-		<span class="help_edit">Ejemplo: miquelcamps</span>
-		{{ form_row(edit_form.delicious_url, { 'label': 'Delicious' }) }}
-		<span class="help_edit">Ejemplo: miquelcamps</span>
-		{{ form_row(edit_form.pinboard_url, { 'label': 'Pinboard' }) }}
+			<div class="accordion-group">
+				<div class="accordion-heading group_edit">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#coll3">¿Programas aplicaciones móviles?</a>
+				</div>
+				<div id="coll3" class="accordion-body collapse">
+					<div class="accordion-inner">
+						<a href="http://dirbeta.tumblr.com/post/11528134993/eres-desarrollador-de-android-muestra-tus-apps-en-tu" target="_blank" class="help_a">¿Cómo saber tu usuario?</a>
+						{{ form_row(edit_form.android_url, { 'label': 'Android market' }) }}
+
+						<a href="http://dirbeta.tumblr.com/post/11506524530/eres-desarrollador-de-ios-muestra-tus-apps-en-tu" target="_blank" class="help_a">¿Cómo saber tu usuario?</a>
+						{{ form_row(edit_form.itunes_url, { 'label': 'Appstore iOS' }) }}
+					</div>
+				</div>
+			</div>
+
+			<div class="accordion-group">
+				<div class="accordion-heading group_edit">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#coll4">¿Diseñas?</a>
+				</div>
+				<div id="coll4" class="accordion-body collapse">
+					<div class="accordion-inner">
+						<span class="help_edit">Ejemplo: ftp2nuke</span>
+						{{ form_row(edit_form.flickr_url, { 'label': 'Flickr' }) }}
+						<span class="help_edit">Ejemplo: miquelcamps</span>
+						{{ form_row(edit_form.dribbble_url, { 'label': 'Dribbble' }) }}
+						<span class="help_edit">Ejemplo: miquelcamps</span>
+						{{ form_row(edit_form.forrst_url, { 'label': 'Forrst' }) }}
+					</div>
+				</div>
+			</div>
+
+			<div class="accordion-group">
+				<div class="accordion-heading group_edit">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#coll5">Favoritos</a>
+				</div>
+				<div id="coll5" class="accordion-body collapse">
+					<div class="accordion-inner">
+						<span class="help_edit">Ejemplo: miquelcamps</span>
+						{{ form_row(edit_form.delicious_url, { 'label': 'Delicious' }) }}
+						<span class="help_edit">Ejemplo: miquelcamps</span>
+						{{ form_row(edit_form.pinboard_url, { 'label': 'Pinboard' }) }}
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+
+
+
+
 	</div>
 
-	<div id="options">
+	<div class="tab-pane" id="options">
 	
-		<div class="clearfix alert-message block-message info" style="text-align:center">
+		<div class="alert alert-info" style="text-align:center">
 			Ayúdanos a conocerte mejor para ofrecerte un mejor servicio
 		</div>
 		
-		<div class="input">
-		    <ul class="inputs-list">
+		<div class="controls">
+		    <ul style="margin-left:0;list-style-type:none">
 	        <li>
 	          <label for="application_userbundle_usertype_unemployed" class=" required">
 	            <input type="checkbox" {% if entity.getUnemployed() == 1 %}checked="checked"{% endif %} id="application_userbundle_usertype_unemployed" name="application_userbundle_usertype[unemployed]" value="1">
@@ -276,24 +327,25 @@ input.xlarge{width:230px}
 	
 		<br/>
 	
-		<div class="clearfix">
+		<div class="control-group">
 			<label>Contraseña</label>
-			<div class="input"><br/>
+			<div class="controls">
 				<a href="{{ path('user_forgotpass', { 'token': token, 'id': entity.id }) }}">Cambiar contraseña</a>
 			</div>
 		</div>
 	
 	
 	</div>
+	
 	</div>
 
 
-    <div class="actions">
-        <button type="submit" class="btn primary">Guardar cambios</button> &nbsp;
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button> &nbsp;
 
 		<!--
 		{% if updated == 1 %}
-			<a href="{{ path('user_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="btn success">¡Actualizado! Visitar mi perfil</a>
+			<a href="{{ path('user_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="btn btn-success">¡Actualizado! Visitar mi perfil</a>
 		{% else %}
 			<a href="{{ path('user_show', { 'id': entity.id, 'slug': entity.slug }) }}" class="btn">Visitar mi perfil</a>
 		{% endif %}
@@ -347,8 +399,7 @@ input.xlarge{width:230px}
 
 	autoGeo();
 
-	$('.tabs').tabs();
-	
+	$(".accordion").collapse().css('height','auto');
 	
 	// avatar preview
 	gravatar_id = '{{ entity.getGravatarId() }}';

@@ -1,4 +1,4 @@
-{% set btn_send = "Me interesa la oferta" %}
+{% set btn_send = "Me interesa" %}
 
 {% if entity.type == 0 %}
 	{% set nav_post = 1 %}
@@ -17,14 +17,14 @@
 {% block sidebar %}
 	{% include "ApplicationAnunciosBundle:Form:contact.html.twig" %}
 	
-	<br/><br/>
+
 			
 	{% if user.id == app.session.get('id') or app.session.get('admin') == 1 %}
-		<a class="btn" href="{{ path('post_edit', { 'id': entity.id }) }}">Editar anuncio</a><br/>
+		<a class="btn" href="{{ path('post_edit', { 'id': entity.id }) }}">Editar anuncio</a>
 	{% endif %}
 	
 
-	
+	<br/>
 	
 	<b>Compartir</b>
 	
@@ -64,9 +64,7 @@
 
 {% block content %}
 
-<style>
-#sidebar{position: fixed;top: 60px;}
-</style>
+
 
 
 <ul class="breadcrumb">
@@ -80,11 +78,11 @@
 
 
 {% if entity.type == 0 %}
-	<span class="label success">Empleo</span>
+	<span class="label label-success">Empleo</span>
 {% elseif entity.type == 1 %}
-	<span class="label notice">Freelance</span>
+	<span class="label label-info">Freelance</span>
 {% else %}
-	<span class="label warning">Prácticas</span>
+	<span class="label label-warning">Prácticas</span>
 {% endif %}
 
 <br/>
