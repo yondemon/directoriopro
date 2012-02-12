@@ -122,10 +122,10 @@
 
 <ul class="nav nav-tabs tabs">
 	<li class="active"><a href="#info" data-toggle="tab">Información</a></li>
-	<li><a href="#map" data-toggle="tab" id="tab_map">Mapa</a></li>
 	{% if users %}
 		<li><a href="#users" data-toggle="tab" id="tab_users">{{ entity.users }} apuntados</a></li>
 	{% endif %}
+	<li><a href="#map" data-toggle="tab" id="tab_map">Mapa</a></li>
 </ul>
  
 <div class="tab-content">
@@ -142,6 +142,21 @@
 	
 	
 	Publicado por <a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas
+
+
+
+	{% if related_events %}
+		<div style="border-top:1px #efefef solid;padding-top:15px;margin-top:25px">
+			<b>Eventos relacionados</b><br/><br/>
+			<ul>
+			{% for event in related_events %}
+				<li>
+					<a href="{{ path('event_show', { 'id': event.id, 'slug': event.slug }) }}">{{ event.title }} - {{ event.getPrettyDate('%e %B') }}</a>
+				</li>
+	    	{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
 
 
 </div>
@@ -172,18 +187,7 @@
 </div>
 
 
-	{% if related_events %}
-		<div style="border-top:1px #efefef solid;padding-top:15px;margin-top:25px">
-			<b>Eventos relacionados</b><br/><br/>
-			<ul>
-			{% for event in related_events %}
-				<li>
-					<a href="{{ path('event_show', { 'id': event.id, 'slug': event.slug }) }}">{{ event.title }} - {{ event.getPrettyDate('%e %B') }}</a>
-				</li>
-	    	{% endfor %}
-			</ul>
-		</div>
-	{% endif %}
+
 
 
 {% endblock %}
