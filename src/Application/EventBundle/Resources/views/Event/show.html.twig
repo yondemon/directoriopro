@@ -129,6 +129,7 @@
 </ul>
  
 <div class="tab-content">
+
 <div class="tab-pane active" id="info">
 
 <pre>
@@ -160,10 +161,7 @@
 
 
 </div>
-<div class="tab-pane" id="map">
-	<div id="address">{{ entity.address }}, {{ location }}</div><br/>
-	<div id="map_canvas" style="width:500px;height:300px"></div>
-</div>
+
 <div class="tab-pane" id="users">
 
 	<div class="accordion" id="accordion2">
@@ -184,11 +182,13 @@
 	</div>
 
 </div>
+
+<div class="tab-pane" id="map">
+	<div id="address">{{ entity.address }}, {{ location }}</div><br/>
+	<div id="map_canvas" style="width:500px;height:300px"></div>
 </div>
 
-
-
-
+</div>
 
 {% endblock %}
 
@@ -207,42 +207,9 @@
 	$(".accordion").collapse().css('height','auto');
 	
 	
-
 	$('#tab_map').click(function(){
-		if( $('#map_canvas').html() == '' ){
-			initialize();
-		}
+		getMap();
 	});
 
-	  var geocoder;
-	  var map;
-	  function initialize() {
-	    geocoder = new google.maps.Geocoder();
-	    var myOptions = {
-	      zoom: 15,
-	      mapTypeId: google.maps.MapTypeId.ROADMAP
-	    }
-	    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-		codeAddress();
-	  }
-
-	  function codeAddress() {
-	    var address = $('#address').html();
-
-	    geocoder.geocode( { 'address': address}, function(results, status) {
-	      if (status == google.maps.GeocoderStatus.OK) {
-	        map.setCenter(results[0].geometry.location);
-	        var marker = new google.maps.Marker({
-	            map: map, 
-	            position: results[0].geometry.location
-	        });
-	      } else {
-	        //alert("Geocode was not successful for the following reason: " + status);
-	      }
-	    });
-	  }
-
-	
-	
 	
 {% endblock %}

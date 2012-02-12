@@ -800,3 +800,32 @@ $.datepicker.regional['es'] = {
 	                yearSuffix: ''};
 
 $.datepicker.setDefaults($.datepicker.regional['es']);
+
+
+
+function getMap(){
+	// 	var geocoder, map;
+	if( $('#map_canvas').html() == '' ){
+	    geocoder = new google.maps.Geocoder();
+	    var myOptions = {
+	      zoom: 15,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	    }
+	    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+	    var address = $('#address').html();
+
+	    geocoder.geocode( { 'address': address}, function(results, status) {
+	      if (status == google.maps.GeocoderStatus.OK) {
+	        map.setCenter(results[0].geometry.location);
+	        var marker = new google.maps.Marker({
+	            map: map, 
+	            position: results[0].geometry.location
+	        });
+	      } else {
+	        //alert("Geocode was not successful for the following reason: " + status);
+	      }
+	    });
+
+	}
+}

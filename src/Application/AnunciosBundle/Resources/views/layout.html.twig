@@ -1,4 +1,4 @@
-{% set static_id = 41 %}
+{% set static_id = 42 %}
 
 {% set categories = ["Todos", "Programador frontend", "Programador backend", "Programador apps móvil", "Blogger", "Community manager", "Marketing", "SEO", "Diseñador", "Usabilidad", "Sysadmin", "Traductor", "Betatester", "Otros", "Maquetador"] %}
 
@@ -210,8 +210,8 @@
 
 
 
-<script src="{{ asset('bundles/applicationanuncios/js/general.js') }}?v={{ static_id }}"></script>
 {% block load_src %}{% endblock %}
+<script src="{{ asset('bundles/applicationanuncios/js/general.js') }}?v={{ static_id }}"></script>
 <script type="text/javascript">
 /* onload */
 $().ready(function(){

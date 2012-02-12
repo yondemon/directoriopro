@@ -88,38 +88,57 @@
 
 
 
-	<h1 style="display:inline">{{ entity.title }}</h1>
-	{% if entity.price %}<span style="color:#3C0;padding-left:10px">{{ entity.price }}</span>{% endif %}
-
-
-	<br/><br/>
+<h1 style="display:inline">{{ entity.title }}</h1>
 
 
 
-	<pre>{{ entity.body }}</pre>
-	
-	
-	
+<br/><br/>
+
+
+
+<ul class="nav nav-tabs tabs">
+	<li class="active"><a href="#info" data-toggle="tab">Información</a></li>
 	{% if users %}
-		<b>{{ users | length }} apuntados</b>
-		<br/><br/>
-		
-
-	
-		{% for user in users %}
-			<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="38" height="38"/></a>
-		{% endfor %}
-	
-	
-	
-		<br class="clear"/>
+		<li><a href="#users" data-toggle="tab" id="tab_users">{{ entity.users }} apuntados</a></li>
 	{% endif %}
+	<li><a href="#map" data-toggle="tab" id="tab_map">Mapa</a></li>
+</ul>
 
+<div class="tab-content">
+
+<div class="tab-pane active" id="info">
+	{% if entity.price %}Precio: {{ entity.price }}<br/><br/>{% endif %}
+	<pre>{{ entity.body }}</pre>
 	<br/><br/>
 	<p>Publicado por <a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas</p>
+</div>
 
+<div class="tab-pane" id="users">	
+	{% for user in users %}
+		<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="38" height="38"/></a>
+	{% endfor %}	
+	<br class="clear"/>
+</div>
 
+<div class="tab-pane" id="map">
+	<div id="address">{{ entity.address }}, {{ location }}</div><br/>
+	<div id="map_canvas" style="width:500px;height:300px"></div>
+</div>
 
+</div>
 
 {% endblock %}
 
+
+{% block load_src %}
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+{% endblock %}
+
+
+{% block script_load %}
+
+	$('#tab_map').click(function(){
+		getMap();
+	});
+	
+{% endblock %}
