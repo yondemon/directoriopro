@@ -217,7 +217,8 @@
 	});
 	
 	$('#tab_tweets').click(function(){
-			if( $('#tweets').html() == '' ){
+		if( $('#tweets').html() == '' ){
+			$("#tweets").html( 'cargando...' );
 			$.ajax({
 				dataType: 'jsonp',
 				success: function(data){
