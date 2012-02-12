@@ -223,9 +223,19 @@ class PlaceController extends Controller
 		$qb->add('select', 'u')
 		   ->add('from', 'ApplicationUserBundle:User u, ApplicationPlaceBundle:PlaceUser pu')
 		   ->andWhere('u.id = pu.user_id')
-		   ->andWhere('pu.place_id = :id')->setParameter('id', $id);
+		   ->andWhere('pu.place_id = :id')->setParameter('id', $id)
+		   ->add('orderBy', 'u.category_id ASC, u.name ASC');
 		$query = $qb->getQuery();
-		$users = $query->getResult();
+		$users_aux = $query->getResult();
+		
+		$users = array();
+		if( $users_aux ){
+			foreach( $users_aux as $user ){
+				$users[ $user->getCategoryId() ][] = $user;
+			}
+		}
+		
+		
 		
 		$city = $em->getRepository('ApplicationCityBundle:City')->find( $entity->getCityId() );
 		

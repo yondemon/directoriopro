@@ -109,15 +109,29 @@
 <div class="tab-pane active" id="info">
 	{% if entity.price %}Precio: {{ entity.price }}<br/><br/>{% endif %}
 	<pre>{{ entity.body }}</pre>
-	<br/><br/>
+	<br/>
 	<p>Publicado por <a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas</p>
 </div>
 
 <div class="tab-pane" id="users">	
-	{% for user in users %}
-		<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" data-original-title="<b>{{ categories[ user.getCategoryId() ] }}</b><br/>{{ user.getName() }}" rel="twipsy" style="float:left;margin-right:5px"><img src="{{ user.getAvatar('normal') }}" width="38" height="38"/></a>
-	{% endfor %}	
-	<br class="clear"/>
+
+	<div class="accordion" id="accordion2">
+	{% for key, users_cat in users %} 
+		<div class="accordion-group">
+			<div class="accordion-heading group_edit">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#coll{{ loop.index }}">{{ categories[ key ] }} ({{ users_cat | length }})</a>
+			</div>
+			<div id="coll{{ loop.index }}" class="accordion-body collapse">
+				<div class="accordion-inner">
+					{% for user in users_cat  %}
+						<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" style="float:left;margin:0 10px 10px 0;width:240px"><img src="{{ user.getAvatar('normal') }}" width="24" height="24" align="absmiddle"/> {{ user.getName() }}</a>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+
 </div>
 
 <div class="tab-pane" id="map">
@@ -136,6 +150,8 @@
 
 
 {% block script_load %}
+
+	$(".accordion").collapse().css('height','auto');
 
 	$('#tab_map').click(function(){
 		getMap();
