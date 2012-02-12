@@ -225,7 +225,7 @@
 					html = '';
 					if( data.results.length ){
 					    $.each(data.results, function(i,item){
-							html += '<img src="' + item.profile_image_url + '" style="width:35px;height:35px;float:left;margin-right:15px"><div style="float:left;width:500px"><a href="http://twitter.com/' + item.from_user + '" target="_blank">@' + item.from_user + '</a><br/>' + replaceURLWithHTMLLinks( item.text ) + '</div><br class="clear"/><br/></li>';
+							html += '<a href="http://twitter.com/' + item.from_user + '" target="_blank" style="width:35px;height:35px;float:left;margin-right:15px"><img src="' + item.profile_image_url + '"></a><div style="float:left;width:500px">' + replaceURLWithHTMLLinks( item.text ) + '</div><br class="clear"/><br/></li>';
 					    });
 						$("#tweets").html(html);
 					}else{
