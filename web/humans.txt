@@ -10,9 +10,11 @@
   Developer: Miquel Camps
   Twitter: @miquelcamps
 
+  Special thanks to: http://dir.betabeers.com/page/thanks
+
 
 /* SITE */
   
   Code languages: PHP5, HTML5, CSS2 & CSS3, JavaScript
   Components: Symfony 2, jQuery, Bootstrap
-  Open source: http://dir.betabeers.com/page/opensource
+  Used open source: http://dir.betabeers.com/page/opensource
