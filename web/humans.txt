@@ -2,13 +2,10 @@
   
   Developed by: Miquel Camps
   Twitter: @miquelcamps
-  Site: http://dir.betabeers.com
+  Site: http://miquelcamps.com
 
 
 /* TEAM */
-  
-  Designer: 
-  Twitter:
   
   Developer: Miquel Camps
   Twitter: @miquelcamps
@@ -16,5 +13,6 @@
 
 /* SITE */
   
-  Code languages: PHP5, XHTML, CSS2 & CSS3, JavaScript
-  Components: Symfony 2, jQuery
+  Code languages: PHP5, HTML5, CSS2 & CSS3, JavaScript
+  Components: Symfony 2, jQuery, Bootstrap
+  Open source: http://dir.betabeers.com/page/opensource
