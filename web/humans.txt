@@ -1,0 +1,20 @@
+/* MAIN */
+  
+  Developed by: Miquel Camps
+  Twitter: @miquelcamps
+  Site: http://dir.betabeers.com
+
+
+/* TEAM */
+  
+  Designer: 
+  Twitter:
+  
+  Developer: Miquel Camps
+  Twitter: @miquelcamps
+
+
+/* SITE */
+  
+  Code languages: PHP5, XHTML, CSS2 & CSS3, JavaScript
+  Components: Symfony 2, jQuery
