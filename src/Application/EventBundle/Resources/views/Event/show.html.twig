@@ -33,7 +33,7 @@
 
 	{% if entity.hashtag %}
 		<div style="border-top:1px #b3b3b3 solid;padding-bottom:10px">
-			<a href="http://twitter.com/search/%23{{ entity.hashtag }}" target="_blank" style="color:white;font-size:18px;margin-top:7px;display:block">#{{ entity.hashtag }}</a>
+			<a href="http://twitter.com/search/%23{{ entity.hashtag }}" target="_blank" style="color:white;font-size:18px;margin-top:7px;display:block" id="hashtag">#{{ entity.hashtag }}</a>
 		</div>
 	{% endif %}
 	
@@ -126,6 +126,9 @@
 		<li><a href="#users" data-toggle="tab" id="tab_users">{{ entity.users }} apuntados</a></li>
 	{% endif %}
 	<li><a href="#map" data-toggle="tab" id="tab_map">Mapa</a></li>
+	{% if entity.hashtag %}
+		<li><a href="#tweets" data-toggle="tab" id="tab_tweets">Tweets</a></li>
+	{% endif %}
 </ul>
  
 <div class="tab-content">
@@ -188,6 +191,8 @@
 	<div id="map_canvas" style="width:500px;height:300px"></div>
 </div>
 
+<div class="tab-pane" id="tweets"></div>
+
 </div>
 
 {% endblock %}
@@ -209,6 +214,27 @@
 	
 	$('#tab_map').click(function(){
 		getMap();
+	});
+	
+	$('#tab_tweets').click(function(){
+			if( $('#tweets').html() == '' ){
+			$.ajax({
+				dataType: 'jsonp',
+				success: function(data){
+					html = '';
+					if( data.results.length ){
+					    $.each(data.results, function(i,item){
+							html += '<img src="' + item.profile_image_url + '" style="width:35px;height:35px;float:left;margin-right:15px"><div style="float:left;width:500px"><a href="http://twitter.com/' + item.from_user + '" target="_blank">@' + item.from_user + '</a><br/>' + item.text + '</div><br class="clear"/><br/></li>';
+					    });
+						$("#tweets").html(html);
+					}else{
+						$('#tweets').html('sin resultados');
+					}
+				},
+				type: 'GET',
+				url: 'http://search.twitter.com/search.json?rpp=10&q=' + encodeURIComponent( $('#hashtag').html() )
+			});
+		}
 	});
 
 	
