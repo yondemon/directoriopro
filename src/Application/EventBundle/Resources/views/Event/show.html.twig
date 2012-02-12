@@ -39,9 +39,8 @@
 	
 	
 	<div style="border-top:1px #b3b3b3 solid;padding:15px 0 10px 0;">
-		<a href="http://maps.google.es/maps?q={{ entity.address }}, {{ location }}" target="_blank" style="float:left;padding-left:30px;padding-top:0;min-height:29px;background:url('{{ asset('bundles/applicationanuncios/images/marker.png') }}') no-repeat left top;color:white">
-		{{ entity.address }}, {{ location }}
-		</a><br class="clear"/>
+		<a href="http://maps.google.es/maps?q={{ entity.address }}, {{ location }}" target="_blank" style="float:left;padding-left:30px;padding-top:0;min-height:29px;background:url('{{ asset('bundles/applicationanuncios/images/marker.png') }}') no-repeat left top;color:white">{{ entity.address }}, {{ location }}</a>
+		<br class="clear"/>
 	</div>
 	
 
@@ -120,8 +119,18 @@
 
 
 
-		
-		
+
+<ul class="nav nav-tabs tabs">
+	<li class="active"><a href="#info" data-toggle="tab">Información</a></li>
+	<li><a href="#map" data-toggle="tab" id="tab_map">Mapa</a></li>
+	{% if users %}
+		<li><a href="#users" data-toggle="tab" id="tab_users">{{ entity.users }} apuntados</a></li>
+	{% endif %}
+</ul>
+ 
+<div class="tab-content">
+<div class="tab-pane active" id="info">
+
 <pre>
 {{ entity.body|bbcode|raw }}
 {% if entity.resources %}<div style="margin-top:15px;padding:10px;width:300px;background:#FEFBF3;"><b>Recursos</b><br/>{{ entity.resources|bbcode|raw }}</div>{% endif %}
@@ -129,33 +138,38 @@
 		
 
 	
-	{% if users %}
-		<b>{{ entity.users }} apuntados</b>
-		<br/><br/>
 
-		
-		<div class="accordion" id="accordion2">
-		{% for key, users_cat in users %} 
-			<div class="accordion-group">
-				<div class="accordion-heading group_edit">
-					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#coll{{ loop.index }}">{{ categories[ key ] }} ({{ users_cat | length }})</a>
-				</div>
-				<div id="coll{{ loop.index }}" class="accordion-body collapse">
-					<div class="accordion-inner">
-						{% for user in users_cat  %}
-							<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" style="float:left;margin:0 10px 10px 0;width:240px"><img src="{{ user.getAvatar('normal') }}" width="24" height="24" align="absmiddle"/> {{ user.getName() }}</a>
-						{% endfor %}
-					</div>
-				</div>
-			</div>
-		{% endfor %}
-		</div>
-
-	{% endif %}
 	
 	
 	Publicado por <a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}">{{ user.name }}</a> el {{ entity.date|date('d/m/Y') }} - {{ entity.visits }} visitas
 
+
+</div>
+<div class="tab-pane" id="map">
+	<div id="address">{{ entity.address }}, {{ location }}</div><br/>
+	<div id="map_canvas" style="width:500px;height:300px"></div>
+</div>
+<div class="tab-pane" id="users">
+
+	<div class="accordion" id="accordion2">
+	{% for key, users_cat in users %} 
+		<div class="accordion-group">
+			<div class="accordion-heading group_edit">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#coll{{ loop.index }}">{{ categories[ key ] }} ({{ users_cat | length }})</a>
+			</div>
+			<div id="coll{{ loop.index }}" class="accordion-body collapse">
+				<div class="accordion-inner">
+					{% for user in users_cat  %}
+						<a href="{{ path('user_show', { 'id': user.id, 'slug': user.slug }) }}" style="float:left;margin:0 10px 10px 0;width:240px"><img src="{{ user.getAvatar('normal') }}" width="24" height="24" align="absmiddle"/> {{ user.getName() }}</a>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+
+</div>
+</div>
 
 
 	{% if related_events %}
@@ -175,8 +189,56 @@
 {% endblock %}
 
 
+
+
+
+
+{% block load_src %}
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+{% endblock %}
+
+
 {% block script_load %}
 
 	$(".accordion").collapse().css('height','auto');
+	
+	
+
+	$('#tab_map').click(function(){
+		if( $('#map_canvas').html() == '' ){
+			initialize();
+		}
+	});
+
+	  var geocoder;
+	  var map;
+	  function initialize() {
+	    geocoder = new google.maps.Geocoder();
+	    var myOptions = {
+	      zoom: 15,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	    }
+	    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+		codeAddress();
+	  }
+
+	  function codeAddress() {
+	    var address = $('#address').html();
+
+	    geocoder.geocode( { 'address': address}, function(results, status) {
+	      if (status == google.maps.GeocoderStatus.OK) {
+	        map.setCenter(results[0].geometry.location);
+	        var marker = new google.maps.Marker({
+	            map: map, 
+	            position: results[0].geometry.location
+	        });
+	      } else {
+	        //alert("Geocode was not successful for the following reason: " + status);
+	      }
+	    });
+	  }
+
+	
+	
 	
 {% endblock %}
